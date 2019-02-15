@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # @Author: LogicJake
 # @Date:   2019-02-15 20:12:43
-# @Last Modified time: 2019-02-15 23:42:36
+# @Last Modified time: 2019-02-16 00:31:49
 import requests
 import re
 import feedparser
@@ -10,7 +10,6 @@ from flask import Flask
 from werkzeug.contrib.cache import SimpleCache
 import os
 from app.config import logger
-from html.parser import HTMLParser
 
 cache = SimpleCache()
 PER = int(os.getenv("PER"))
@@ -39,15 +38,13 @@ def parse_rss(author, rss_url):
         try:
             item = {}
             item['author'] = author
-            item['title'] = HTMLParser().unescape(single_post.title)
+            item['title'] = single_post.title
             if single_post.has_key('content'):
-                item['description'] = HTMLParser().unescape(
-                    single_post.content[0].value)
+                item['description'] = single_post.content[0].value
             elif single_post.has_key('summary'):
-                item['description'] = HTMLParser().unescape(
-                    single_post.summary)
+                item['description'] = single_post.summary
             else:
-                item['description'] = HTMLParser().unescape(single_post.title)
+                item['description'] = single_post.title
             item['link'] = single_post.link
             item['pubDate'] = time.strftime(
                 "%Y-%m-%d %H:%M:%S", single_post.updated_parsed)
