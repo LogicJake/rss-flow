@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # @Author: LogicJake
 # @Date:   2019-02-15 20:12:43
-# @Last Modified time: 2019-02-16 11:05:00
+# @Last Modified time: 2019-02-16 12:43:53
 import requests
 import re
 import feedparser
@@ -10,6 +10,9 @@ from flask import Flask
 from werkzeug.contrib.cache import SimpleCache
 import os
 from app.config import logger
+from func_timeout import func_set_timeout
+import func_timeout
+import multiprocessing
 
 cache = SimpleCache()
 PER = int(os.getenv("PER"))
@@ -32,40 +35,58 @@ def get_rss_list():
     return rss_list
 
 
+@func_set_timeout(30)
 def parse_rss(author, rss_url):
     feeds = feedparser.parse(rss_url)
     items = []
 
     for single_post in feeds.entries[:PER]:
-        try:
-            item = {}
-            item['author'] = author
-            item['title'] = single_post.title
-            if single_post.has_key('content'):
-                item['description'] = single_post.content[0].value
-            elif single_post.has_key('summary'):
-                item['description'] = single_post.summary
-            else:
-                item['description'] = single_post.title
-            item['link'] = single_post.link
-            item['pubDate'] = time.strftime(
-                "%Y-%m-%d %H:%M:%S", single_post.updated_parsed)
+        item = {}
+        item['author'] = author
+        item['title'] = single_post.title
+        if single_post.has_key('content'):
+            item['description'] = single_post.content[0].value
+        elif single_post.has_key('summary'):
+            item['description'] = single_post.summary
+        else:
+            item['description'] = single_post.title
+        item['link'] = single_post.link
+        item['pubDate'] = time.strftime(
+            "%Y-%m-%d %H:%M:%S", single_post.updated_parsed)
 
-            items.append(item)
-        except Exception as e:
-            logger.error(single_post.link)
-            logger.error(e)
+        items.append(item)
 
-    logger.info(rss_url + ' over')
     return items
+
+
+def time_limit_parse(author, rss_url):
+    try:
+        items = parse_rss(author, rss_url)
+        logger.info(rss_url + ' over')
+        return items
+    except func_timeout.exceptions.FunctionTimedOut as e:
+        logger.error(rss_url)
+        logger.error(e)
+        return None
 
 
 def generate_all():
     rss_list = get_rss_list()
 
     items = []
+    results = []
+    pool = multiprocessing.Pool(int(os.getenv('PROCESSES')))
     for author, rss_url in rss_list:
-        items += parse_rss(author, rss_url)
+        results.append(pool.apply_async(time_limit_parse, (author, rss_url, )))
+
+    pool.close()
+    pool.join()
+
+    for res in results:
+        item = res.get()
+        if item is not None:
+            items += item
+
     items.sort(key=lambda item: item['pubDate'], reverse=True)
     return items
 
