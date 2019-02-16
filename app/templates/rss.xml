@@ -3,7 +3,7 @@
     <channel>
         <title><![CDATA[{{title|safe}}]]></title>
         <link>{{link}}</link>
-        <generator>{{config['SITE_NAME']}}</generator>
+        <generator>{{generator}}</generator>
         <lastBuildDate>{{ lastBuildDate }}</lastBuildDate>
         <ttl>{{ ttl }}</ttl>
         {% for item in items %}<item>

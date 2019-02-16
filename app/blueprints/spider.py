@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # @Author: LogicJake
 # @Date:   2019-02-15 20:12:43
-# @Last Modified time: 2019-02-16 00:31:49
+# @Last Modified time: 2019-02-16 11:05:00
 import requests
 import re
 import feedparser
@@ -15,6 +15,8 @@ cache = SimpleCache()
 PER = int(os.getenv("PER"))
 EXPIRE = int(os.getenv("EXPIRE"))
 URL = os.getenv("URL")
+TITLE = os.getenv("TITLE")
+ADMIN_NAME = os.getenv("ADMIN_NAME")
 
 
 def get_rss_list():
@@ -74,16 +76,12 @@ def ctx():
         logger.info('not hit cache')
         items = generate_all()
         content = {
-            'title': 'NUAA',
-            'description': 'NUAA',
-            'author': 'NUAA',
             'items': items,
             'link': URL,
+            'title': TITLE,
+            'generator': ADMIN_NAME,
             'lastBuildDate': time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()),
             'ttl': EXPIRE * 60
         }
         cache.set('content', content, timeout=EXPIRE * 60)
     return content
-
-if __name__ == '__main__':
-    parse_rss('1', 'https://www.logicjake.xyz/?feed=rss2')
