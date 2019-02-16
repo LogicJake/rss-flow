@@ -10,6 +10,7 @@
             <title><![CDATA[{{item.title|safe}}]]></title>
             <description><![CDATA[{{item.description|safe}}]]></description>
             {% if item.pubDate %}<pubDate>{{ item.pubDate }}</pubDate>{% endif %}
+            {% if item.author %}<author><![CDATA[{{item.author|safe}}]]></author>{% endif %}
             <guid>{{ item.link }}</guid>
             <link>{{ item.link }}</link>
         </item>{% endfor %}
