@@ -1,4 +1,4 @@
-预览地址:	http://123.207.214.55:5000/
+预览地址:	https://nuaa-rss.herokuapp.com/
 ## 流程：
 - 从 https://blogroll.a2os.club 获取所有rss地址
 - 遍历解析每一条rss，取每个rss的第一个item
