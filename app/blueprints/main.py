@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 # @Author: LogicJake
 # @Date:   2019-02-15 20:04:12
-# @Last Modified time: 2019-02-15 21:35:28
-from flask import Blueprint, render_template, request
+# @Last Modified time: 2019-04-02 15:37:29
+from flask import Blueprint, render_template, request, Response
+import json
 bp = Blueprint('main', __name__)
 
 
@@ -26,6 +27,12 @@ def filter_content(ctx):
     ctx = ctx.copy()
     ctx['items'] = items
     return ctx
+
+
+@bp.route('/json')
+def data():
+    from .spider import ctx
+    return Response(json.dumps(ctx()), mimetype='application/json')
 
 
 @bp.route('/')
