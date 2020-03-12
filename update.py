@@ -65,7 +65,7 @@ def time_limit_parse(author, rss_url):
         return None
 
 
-rss_list = get_rss_list()[:1]
+rss_list = get_rss_list()
 
 items = []
 for author, rss_url in tqdm(rss_list):
