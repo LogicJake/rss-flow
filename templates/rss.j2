@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <generator>NUAA</generator>
+    <title>NUAARSS</title>
+    <updated>{{update}}</updated>
+    <link href="https://blogroll.a2os.club"/>
+    <author>
+        <name>NUAARSS</name>
+    </author>
+    
+    {% for item in items %}
+    <entry>
+        <id>{{item.url}}</id>
+        <title><![CDATA[{{item.title|safe}}]]></title>
+        <updated>{{item.pubDate}}</updated>
+        <link href="{{item.link}}"/>
+        <summary>{{item.description}}</summary>
+        <content type="text/html" src="{{item.link}}"><![CDATA[{{item.description|safe}}]]></content>
+        <author>
+            <name><![CDATA[{{item.author}}]]></name>
+        </author>
+    </entry>
+    {% endfor %}
+</feed>
