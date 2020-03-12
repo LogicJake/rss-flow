@@ -17,6 +17,7 @@ if os.path.exists(dotenv_path):
 
 PER = int(os.getenv("PER"))
 URL = os.getenv("URL")
+STANDARD_TIME_FORMAT = '%Y-%m-%dT%H:%M:%S+08:00'
 
 
 def get_rss_list():
@@ -48,7 +49,7 @@ def parse_rss(author, rss_url):
         else:
             item['description'] = single_post.title
         item['link'] = single_post.link
-        item['pubDate'] = time.strftime("%Y-%m-%d %H:%M:%S",
+        item['pubDate'] = time.strftime(STANDARD_TIME_FORMAT,
                                         single_post.updated_parsed)
 
         items.append(item)
@@ -74,8 +75,7 @@ for author, rss_url in tqdm(rss_list):
         items += item
 items.sort(key=lambda item: item['pubDate'], reverse=True)
 
-STANDARD_TIME_FORMAT = '%Y-%m-%dT%H:%M:%S+0800'
-update = datetime.utcnow() + timedelta(hours=8)
+update = datetime.utcnow()
 update = update.strftime(STANDARD_TIME_FORMAT)
 
 env = Environment(loader=FileSystemLoader('./templates'))
