@@ -3,12 +3,25 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2020-03-12T10:32:01+08:00</updated>
+    <updated>2020-03-12T10:47:05+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
     </author>
     
+    
+    <entry>
+        <id>https://miaotony.xyz/2020/03/12/CTF_2020JetBrainsQuest/</id>
+        <title><![CDATA[CTF | JetBrains Quest 1&2 WriteUp/攻略]]></title>
+        <updated>2020-03-12T10:36:02+08:00</updated>
+        <link href="https://miaotony.xyz/2020/03/12/CTF_2020JetBrainsQuest/"/>
+        <content type="text/html" src="https://miaotony.xyz/2020/03/12/CTF_2020JetBrainsQuest/"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>昨晚在 Telegram 里看到朋友发了一个 JetBrains Quest 的 twitter 链接，据说难度不大，还可以白嫖他家的产品授权。</p>
+<p>感兴趣就来体验一下吧！</p>
+<p>于是体验了]]></content>
+        <author>
+            <name><![CDATA[MiaoTony]]></name>
+        </author>
+    </entry>
     
     <entry>
         <id>https://blog.zeddyu.info/2020/03/04/Dom-Clobbering/</id>
@@ -197,17 +210,6 @@ fastcgi_buffer_size       256k;
 fastcgi_busy_buffers_size 512k;</code></pre><p>对于使用 <code>proxy_pass</code> 代理的情况，有等价的 <code>proxy_buffer_size</code> 等指令，用法完全一样。</p><p>于是……我的网站就这样支持了正体中文。</p>]]></content>
         <author>
             <name><![CDATA[R·ex / Zeng]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://miaotony.xyz/2020/02/11/Idea_Huginn_AAONoticeAutoPush/</id>
-        <title><![CDATA[小想法 | 利用Huginn&TelegramBot实现教务通知自动爬取与推送]]></title>
-        <updated>2020-02-27T08:42:34+08:00</updated>
-        <link href="https://miaotony.xyz/2020/02/11/Idea_Huginn_AAONoticeAutoPush/"/>
-        <content type="text/html" src="https://miaotony.xyz/2020/02/11/Idea_Huginn_AAONoticeAutoPush/"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>前不久在服务器上装好了Huginn（<a]]></content>
-        <author>
-            <name><![CDATA[MiaoTony]]></name>
         </author>
     </entry>
     
