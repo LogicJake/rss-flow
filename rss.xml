@@ -3,12 +3,34 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2020-03-13T18:05:43+08:00</updated>
+    <updated>2020-03-14T00:09:28+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
     </author>
     
+    
+    <entry>
+        <id>https://miaotony.xyz/2020/03/14/CTF_2020JetBrainsQuest3/</id>
+        <title><![CDATA[CTF | JetBrains Quest 3 WriteUp/攻略]]></title>
+        <updated>2020-03-13T19:37:37+08:00</updated>
+        <link href="https://miaotony.xyz/2020/03/14/CTF_2020JetBrainsQuest3/"/>
+        <content type="text/html" src="https://miaotony.xyz/2020/03/14/CTF_2020JetBrainsQuest3/"><![CDATA[JetBrains Quest 3出来了，又来体验了一波，最后的礼品是20% discount on an All Products Pack subscription，这里随手写写攻略吧。]]></content>
+        <author>
+            <name><![CDATA[MiaoTony]]></name>
+        </author>
+    </entry>
+    
+    <entry>
+        <id>https://miaotony.xyz/2020/03/12/CTF_2020JetBrainsQuest/</id>
+        <title><![CDATA[CTF | JetBrains Quest 1&2 WriteUp/攻略]]></title>
+        <updated>2020-03-13T16:43:42+08:00</updated>
+        <link href="https://miaotony.xyz/2020/03/12/CTF_2020JetBrainsQuest/"/>
+        <content type="text/html" src="https://miaotony.xyz/2020/03/12/CTF_2020JetBrainsQuest/"><![CDATA[体验了一下JetBrainsQuest1&2，白嫖了3+3个月的JB家全产品授权，这里记录一下通关过程，也算是攻略/WriteUp吧。]]></content>
+        <author>
+            <name><![CDATA[MiaoTony]]></name>
+        </author>
+    </entry>
     
     <entry>
         <id>https://invariant.me/a-comparison-between-webassembly-and-risc-v/</id>
@@ -120,17 +142,6 @@
         <content type="text/html" src="http://leonezz.github.io/2020/03/13/%E4%BD%BF%E7%94%A8frp%E5%92%8C%E9%98%BF%E9%87%8C%E4%BA%91ECS%E5%AE%9E%E7%8E%B0%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%92%8C%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2%E8%BF%9E%E6%8E%A5%E5%86%85%E7%BD%91%E6%9C%BA%E5%99%A8/"><![CDATA[<h1 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h1><p>我们都知道，由于万恶资本主义国家对国际互联网的垄断，国内的公网IP资源十分匮乏。我们大多数的个人互联网设备都是运行在内网中的，然后由NAT（网络地址转换）路由器进行公网IP的复用，才使得我们大多数的计算机得以正常访问互联网。然而，如果我们想在外网访问或者远程连接到一台内网设备（访问的电脑和被访问的电脑不在同一局域网下），就需要内网穿透技术。</p><p>由于我有一台长期运行的台式电脑工作在内网环境下，以前常用的TeamViewer最近又老是抽风登陆不上，所以我搭建了这样一个服务应用（其实是因为领了两周的阿里云服务器）。至于需求，大概只是为了把台式机上的电影下载到我笔记本上:)。</p><h1 id="frp-和阿里云ECS"><a href="#frp-和阿里云ECS" class="headerlink" title="frp 和阿里云ECS"></a><code>frp</code> 和阿里云ECS</h1><p><a href="https://github.com/fatedier/frp/blob/master/README_zh.md" target="_blank" rel="noopener">frp</a> 是一个可用于内网穿透的高性能的反向代理应用，支持 tcp, udp 协议，为 http 和 https 应用协议提供了额外的能力，且尝试性支持了点对点穿透。</p><p>阿里云ECS提供带有公网IP的云服务器，如果是新用户，一般可以在100块钱以下一年的价格拿下一台。</p><p>利用这两个工具，稍加配置，便可随时随地访问你的内网机器。</p><h1 id="服务端配置"><a href="#服务端配置" class="headerlink" title="服务端配置"></a>服务端配置</h1><p>我的服务器运行的是CentOS操作系统，其他的Linux操作系统的配置应该也是大同小异。</p><h2 id="首先，下载安装frp"><a href="#首先，下载安装frp" class="headerlink" title="首先，下载安装frp :"></a>首先，下载安装frp :</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">yum install -y wget <span class="comment">#已经安装wget的可跳过此句</span></span><br><span class="line">wget https://github.com/fatedier/frp/releases/download/v0.32.0/frp_0.32.0_linux_amd64.tar.gz    <span class="comment">#到frp的github release页面下载最新版本，推荐使用其他工具下载好手动安装，因为github release 下载很容易失败</span></span><br><span class="line">tar -zxvf frp_0.32.0_linux_amd64.tar.gz <span class="comment">#解压下载的安装包</span></span><br><span class="line">mv frp_0.32.0_linux_amd64 frp   <span class="comment">#改个好记的名字</span></span><br></pre></td></tr></table></figure><p>此时的<code>home/frp</code>文件夹里应该有<code>frps,frps.ini,frpc,frpc.ini</code>几个文件。其中，<code>frps和frps.ini</code>是我们在服务端需要关注的。</p><h2 id="修改服务端配置"><a href="#修改服务端配置" class="headerlink" title="修改服务端配置"></a>修改服务端配置</h2><p>使用命令<code>vim frp/frps.ini</code>打开文件，修改成：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[common]</span><br><span class="line">bind_addr &#x3D; 0.0.0.0</span><br><span class="line">bind_port &#x3D; 7000</span><br><span class="line"></span><br><span class="line">dashboard_user &#x3D; xxxxx #监控的用户名</span><br><span class="line">dashboard_pwd &#x3D; xxxxxx #监控的密码</span><br><span class="line">dashboard_port &#x3D; 7500</span><br></pre></td></tr></table></figure><p>其中，<code>dashboard</code>是你可以在浏览器中访问监控frp运行状态的配置。</p><p>修改完成后，运行<code>frp/frps -c frp/frps.ini</code>启动服务。出现下图说明启动成功。</p><p><img src="../images/frp/1.png" alt=""></p><p>此时应该去<a href="https://account.alibabacloud.com/login/login.htm?&utm_content=se_1002670506&gclid=Cj0KCQjw3qzzBRDnARIsAECmryp33cjv9L_MgK9oXcU4or_RdD3EteR6wrxYHptDqySMHB8ovhBg-84aAh2eEALw_wcB" target="_blank" rel="noopener">阿里云控制台</a>打开服务器的7000-7500端口，否则会访问失败(我就在这里踩坑了半天:)</p><p>具体的打开方法是：</p><p>进入控制台的实例详情页面</p><p><img src="../images/frp/2.png" alt=""></p><p>点击<code>本实例安全组&gt;配置规则</code></p><p><img src="../images/frp/3.png" alt=""></p><p>点击右上角的<code>添加安全组规则</code></p><p><img src="../images/frp/4.png" alt=""></p><p>按照下图填写即可：</p><p><img src="../images/frp/5.png" alt=""></p><p>设置完成后，打开浏览器访问<code>http://你的服务器公网IP:7500</code>，出现下图界面说明frp dashboard启动成功。</p><p><img src="../images/frp/6.png" alt=""></p><h1 id="客户端配置"><a href="#客户端配置" class="headerlink" title="客户端配置"></a>客户端配置</h1><p>首先在<a href="https://github.com/fatedier/frp/releases/" target="_blank" rel="noopener">release页面</a>下载对应的版本，解压到你准备被访问的内网机器上。</p><p>打开<code>frp/frpc.ini</code>做如下修改：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[common]</span><br><span class="line">server_addr &#x3D; xx.xx.xx.xx #服务器的ip地址</span><br><span class="line">server_port &#x3D; 7000</span><br><span class="line"></span><br><span class="line">[ssh]</span><br><span class="line">type &#x3D; tcp</span><br><span class="line">local_ip &#x3D; 127.0.0.1</span><br><span class="line">local_port &#x3D; 3389   #windows远程桌面默认端口</span><br><span class="line">remote_port &#x3D; 7001  #前文我们开放了服务器的7000-7500端口，因此这里使用7001。</span><br></pre></td></tr></table></figure><p>修改完成后，在frp文件夹打开命令行运行命令<code>frpc -c frpc.ini</code>启动客户端。（注意运行此命令的命令行应该常驻，否则frp进程会随之关闭）</p><p>出现如下输出说明启动和连接成功</p><p><img src="../images/frp/7.png" alt=""></p><p>现在可以使用windows原生的远程桌面连接你的内网机器了！</p><p><img src="../images/frp/8.png" alt=""></p><p>其中计算机字段填写你的服务器IP，端口是客户端配置中的<code>remote_port</code>字段。</p><p>注意连接的用户名和密码是你的内网机器上登录的用户名和密码。</p><h2 id="开机自启动"><a href="#开机自启动" class="headerlink" title="开机自启动"></a>开机自启动</h2><p>为了防止内网机器意外关闭导致无法连接，可以使用<a href="https://link.zhihu.com/?target=https%3A//github.com/kohsuke/winsw">WINSW</a>把frp设置成开机自启动。</p><h3 id="设置方法"><a href="#设置方法" class="headerlink" title="设置方法"></a>设置方法</h3><ol><li>下载<a href="https://github.com/kohsuke/winsw/releases" target="_blank" rel="noopener">对应版本</a></li><li>把下载的应用程序放到frp文件夹下，改成一个好写的名字<code>winsw.exe</code></li><li>frp文件夹下新建<code>winsw.xml</code>文件，修改为以下内容。详细配置详见<a href="https://github.com/kohsuke/winsw/blob/master/doc/xmlConfigFile.md" target="_blank" rel="noopener">这里</a>。<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">service</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">id</span>&gt;</span>frp<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>frp<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">description</span>&gt;</span>frp remote control<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">executable</span>&gt;</span>frpc<span class="tag">&lt;/<span class="name">executable</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">arguments</span>&gt;</span>-c frpc.ini<span class="tag">&lt;/<span class="name">arguments</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">logmode</span>&gt;</span>reset<span class="tag">&lt;/<span class="name">logmode</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">service</span>&gt;</span></span><br></pre></td></tr></table></figure></li><li>frp文件夹下使用管理员身份打开cmd运行以下命令<code>winsw install&amp;&amp;winsw start</code>(这里我还没整，不知道成功了啥样子)</li></ol><h1 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h1><p>虽然阿里云只有1M的宽带，远程体验完全不如我在同一局域网下时的丝滑（废话）。但是可以在任意有互联网的地方访问机器，感觉还是挺酷的。</p><h1 id="reference"><a href="#reference" class="headerlink" title="reference"></a>reference</h1><ol><li><a href="https://zhuanlan.zhihu.com/p/55306067" target="_blank" rel="noopener">windows下基于frp的内网穿透部署</a></li><li><a href="https://github.com/fatedier/frp/blob/master/README_zh.md#%E9%80%9A%E8%BF%87-ssh-%E8%AE%BF%E9%97%AE%E5%85%AC%E5%8F%B8%E5%86%85%E7%BD%91%E6%9C%BA%E5%99%A8" target="_blank" rel="noopener">frp中文文档</a></li></ol>]]></content>
         <author>
             <name><![CDATA[zhuwenq的博客]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://miaotony.xyz/2020/03/12/CTF_2020JetBrainsQuest/</id>
-        <title><![CDATA[CTF | JetBrains Quest 1&2 WriteUp/攻略]]></title>
-        <updated>2020-03-12T14:58:06+08:00</updated>
-        <link href="https://miaotony.xyz/2020/03/12/CTF_2020JetBrainsQuest/"/>
-        <content type="text/html" src="https://miaotony.xyz/2020/03/12/CTF_2020JetBrainsQuest/"><![CDATA[体验了一下JetBrainsQuest1&2，白嫖了3+3个月的JB家全产品授权，这里记录一下通关过程，也算是攻略/WriteUp吧。]]></content>
-        <author>
-            <name><![CDATA[MiaoTony]]></name>
         </author>
     </entry>
     
@@ -406,17 +417,6 @@ fastcgi_busy_buffers_size 512k;</code></pre><p>对于使用 <code>proxy_pass</co
         <updated>2020-02-20T14:43:56+08:00</updated>
         <link href="https://miaotony.xyz/2020/02/18/FrontEnd_HTML_Advanced/"/>
         <content type="text/html" src="https://miaotony.xyz/2020/02/18/FrontEnd_HTML_Advanced/"><![CDATA[看完了一些基础的HTML知识，这回来学一点HTML中进阶的内容吧。]]></content>
-        <author>
-            <name><![CDATA[MiaoTony]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://miaotony.xyz/2020/02/14/FrontEnd_HTML_Basic/</id>
-        <title><![CDATA[FrontEnd | HTML 基础入门学习笔记]]></title>
-        <updated>2020-02-17T09:46:32+08:00</updated>
-        <link href="https://miaotony.xyz/2020/02/14/FrontEnd_HTML_Basic/"/>
-        <content type="text/html" src="https://miaotony.xyz/2020/02/14/FrontEnd_HTML_Basic/"><![CDATA[最近想系统一点学一学前端，这一篇博客就简要记录一些前端中HTML基础入门的学习笔记吧。]]></content>
         <author>
             <name><![CDATA[MiaoTony]]></name>
         </author>
