@@ -3,7 +3,7 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2020-03-23T12:05:39+08:00</updated>
+    <updated>2020-03-23T18:05:25+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
@@ -11,46 +11,13 @@
     
     
     <entry>
-        <id>http://leonezz.github.io/2020/03/23/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E6%A0%91%E5%92%8C%E6%A0%91%E7%9A%84%E8%A1%A8%E7%A4%BA/</id>
-        <title><![CDATA[数据结构--树和树的表示]]></title>
-        <updated>2020-03-23T11:26:41+08:00</updated>
-        <link href="http://leonezz.github.io/2020/03/23/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E6%A0%91%E5%92%8C%E6%A0%91%E7%9A%84%E8%A1%A8%E7%A4%BA/"/>
-        <content type="text/html" src="http://leonezz.github.io/2020/03/23/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E6%A0%91%E5%92%8C%E6%A0%91%E7%9A%84%E8%A1%A8%E7%A4%BA/"><![CDATA[<h1 id="写在前面"><a class="markdownIt-Anchor" href="#写在前面"></a> 写在前面</h1><p>客观世界中许多事物存在层次关系，如人类的族谱，社会组织的结构等。这些分层次的结构在管理方面具有一定的效率优势，树就是类似的一种具有层次结构关系的数据结构。</p><h2 id="二分查找"><a class="markdownIt-Anchor" href="#二分查找"></a> 二分查找</h2><p>二分查找<code>binarySearch</code>作为一种时间复杂度为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mi>log</mi><mo>⁡</mo><mi>n</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(\log n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">n</span><span class="mclose">)</span></span></span></span>的优秀查找算法，其在数据管理的查询方面具有重要地位。二分查找接受被查找元素所属的序列<code>list</code>（有序的，假设为升序）和被查找元素的值<code>target</code>两个参数，它的基本流程如下：</p><ol><li>定义两个变量<code>left</code>和<code>right</code>指向序列的左端和右端，变量<code>mid</code>指向两端的中间位置，查找将在这两端之间进行。</li><li>初始化<code>left = 1</code>，<code>right = list.length</code>，<code>mid = (left + right) / 2</code>。</li><li>比较<code>mid</code>处的元素与待查找元素<code>target</code>之间的关系：<ul><li>若<code>list[mid] = target</code>，说明在<code>mid</code>处找到了元素<code>target</code>，返回<code>mid</code>。</li><li>若<code>list[mid] &lt; target</code>，说明<code>target</code>在<code>mid</code>的右侧，这时应把<code>left</code>右移为<code>mid + 1</code>，然后更新<code>mid</code>为<code>(left + right) / 2</code>，重复过程 3。</li><li>若<code>list[mid] &gt; target</code>，说明<code>target</code>在<code>mid</code>的左侧，这时应把<code>right</code>左移到<code>mid - 1</code>，然后更新<code>mid</code>为<code>(left + right) / 2</code>，重复过程 3。</li></ul></li><li>最后若始终未从过程3.1跳出，则会导致左右交叉即<code>left &gt; right</code>，此时说明元素未查找到，应退出程序。</li></ol><p>算法C语言代码（伪）如下：</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">binarySearch</span><span class="params">(ElementType *<span class="built_in">list</span>, <span class="keyword">int</span> listLength, ElementType target)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> left = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> right = listLength - <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">int</span> mid = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span> (left &lt;= right)</span><br><span class="line">    &#123;</span><br><span class="line">        mid = (left + right) / <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">list</span>[mid] == target)</span><br><span class="line">            <span class="keyword">return</span> mid;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (<span class="built_in">list</span>[mid] &gt; target)</span><br><span class="line">            right = mid - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            left = mid + <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>; <span class="comment">//means not frond!</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>二分查找算法之所以能获得较高的时间效率，原因之一就是它的搜索过程实际上是一颗搜索树。例如序列<code>[1,2,3,4,5,6,7,8,9,10,11]</code>，按照二分法建立树状结构如下：</p><p><img src="../images/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84--%E6%A0%91%E4%B8%8E%E6%A0%91%E7%9A%84%E8%A1%A8%E7%A4%BA/1.png" alt></p><p>则对于任何一个元素的搜索次数都将不超过树的深度<code>4</code>。而对于一颗有<code>n</code>个节点的树（长度为<code>n</code>的序列），其搜索树的深度为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mo><mi>log</mi><mo>⁡</mo></mo><mn>2</mn></msub><mi>n</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\log_2 n + 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.93858em;vertical-align:-0.24414em;"></span><span class="mop"><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.20696799999999996em;"><span style="top:-2.4558600000000004em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.24414em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>，因此二分搜索的最坏时间复杂度是<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><msub><mo><mi>log</mi><mo>⁡</mo></mo><mn>2</mn></msub><mi>n</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(\log_2 n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mop"><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.20696799999999996em;"><span style="top:-2.4558600000000004em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.24414em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">n</span><span class="mclose">)</span></span></span></span></p><h1 id="树"><a class="markdownIt-Anchor" href="#树"></a> 树</h1><h2 id="定义"><a class="markdownIt-Anchor" href="#定义"></a> 定义</h2><p>树是由<code>n</code>个元素构成的有穷集合。当<code>n = 0</code>时，称为空树。对于任何一颗非空树，它具有以下性质：</p><ul><li>一颗树有一个根节点<code>root</code></li><li>其余节点可分为<code>m</code>个互不相交的有限集<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>T</mi><mn>1</mn></msub><mo separator="true">,</mo><msub><mi>T</mi><mn>2</mn></msub><mo separator="true">,</mo><msub><mi>T</mi><mn>3</mn></msub><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><msub><mi>T</mi><mi>m</mi></msub></mrow><annotation encoding="application/x-tex">T_1,T_2,T_3...T_m</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord">.</span><span class="mord">.</span><span class="mord">.</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">m</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>，其中每个集合本身又可以视为一颗树，称为原树的子树<code>SubTree</code>。</li></ul><h2 id="术语解释"><a class="markdownIt-Anchor" href="#术语解释"></a> 术语解释</h2><p>树的一些基本术语：</p><ol><li>节点的度<code>Degree</code>：节点的子树个数</li><li>树的度：树的所有节点中最大的度数</li><li>叶节点<code>Leaf</code>：度为0的节点</li><li>父节点<code>Parent</code>：有子树的节点是其子树根节点的父节点</li><li>子节点<code>Child</code>：若<code>A</code>是<code>B</code>的父节点，则<code>B</code>是<code>A</code>的子节点</li><li>兄弟节点<code>Sibling</code>：具有同一父节点的各节点彼此之间是兄弟节点</li><li>路径和路径长度：从节点<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>n</mi><mn>1</mn></msub><mi mathvariant="normal">到</mi><msub><mi>n</mi><mi>k</mi></msub></mrow><annotation encoding="application/x-tex">n_1到n_k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord cjk_fallback">到</span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.03148em;">k</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>的路径是一个节点序列<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>n</mi><mn>1</mn></msub><mo separator="true">,</mo><msub><mi>n</mi><mn>2</mn></msub><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><msub><mi>n</mi><mi>k</mi></msub></mrow><annotation encoding="application/x-tex">n_1,n_2...n_k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord">.</span><span class="mord">.</span><span class="mord">.</span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.03148em;">k</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>，其中<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>n</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">n_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>是<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>n</mi><mrow><mi>i</mi><mo>+</mo><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">n_{i+1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.638891em;vertical-align:-0.208331em;"></span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mbin mtight">+</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.208331em;"><span></span></span></span></span></span></span></span></span></span>的父节点。路径所包含的边的条数是路径长度</li><li>祖先节点<code>Ancestor</code>：沿着从根节点到某一节点<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>n</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">n_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>的路径所包含的所有节点都是节点<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>n</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">n_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>的祖先节点</li><li>子孙节点<code>Descendant</code>：某一节点的子树中的所有节点都是这个节点的子孙节点</li><li>节点的层次<code>Level</code>：规定根节点在1层，其他节点的层次为其父节点层次+1</li><li>树的深度<code>Depth</code>：树中所有节点的最大层次称为树的深度</li></ol><h2 id="树的表示"><a class="markdownIt-Anchor" href="#树的表示"></a> 树的表示</h2><p>对于下图所示的树：</p><p><img src="../images/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84--%E6%A0%91%E4%B8%8E%E6%A0%91%E7%9A%84%E8%A1%A8%E7%A4%BA/2.png" alt></p><p>可以用链表表示节点：</p><p><img src="../images/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84--%E6%A0%91%E4%B8%8E%E6%A0%91%E7%9A%84%E8%A1%A8%E7%A4%BA/3.png" alt></p><p>问题：节点规格不统一，有的节点度为1，有的节点度为3。为了统一而采用树的度作为节点中需要保存的子节点个数过于浪费空间，可采用<strong>儿子-兄弟表示法</strong></p><p>如图所示采用每个节点中保存一个子节点和相邻的兄弟节点的结构：</p><p><img src="../images/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84--%E6%A0%91%E4%B8%8E%E6%A0%91%E7%9A%84%E8%A1%A8%E7%A4%BA/4.png" alt></p><p>节点结构如下图：</p><p><img src="../images/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84--%E6%A0%91%E4%B8%8E%E6%A0%91%E7%9A%84%E8%A1%A8%E7%A4%BA/5.png" alt></p><p>这样的结构保证了节点的统一也保证了空间的利用效率，由于每个节点结构上连接其他两个节点，也成为<code>二叉树</code>。</p><h1 id="最后"><a class="markdownIt-Anchor" href="#最后"></a> 最后</h1><p>二叉树是一般树的基础结构，同时也是树结构研究中的核心和主要内容，学习树这一数据结构的最重点内容就是理解二叉树的结构和操作。</p>]]></content>
+        <id>https://miaotony.xyz/2020/03/23/CTF_BJDCTF2nd/</id>
+        <title><![CDATA[CTF | BJDCTF 2nd WriteUp]]></title>
+        <updated>2020-03-23T15:55:50+08:00</updated>
+        <link href="https://miaotony.xyz/2020/03/23/CTF_BJDCTF2nd/"/>
+        <content type="text/html" src="https://miaotony.xyz/2020/03/23/CTF_BJDCTF2nd/"><![CDATA[划水划水~周末水了一下BJDCTF 2nd，据说是萌新赛，于是来玩了一下，嗯让我知道了我的确就是萌新。]]></content>
         <author>
-            <name><![CDATA[zhuwenq的博客]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>http://leonezz.github.io/2020/03/20/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E5%A0%86%E6%A0%88/</id>
-        <title><![CDATA[数据结构--堆栈]]></title>
-        <updated>2020-03-21T13:44:11+08:00</updated>
-        <link href="http://leonezz.github.io/2020/03/20/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E5%A0%86%E6%A0%88/"/>
-        <content type="text/html" src="http://leonezz.github.io/2020/03/20/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E5%A0%86%E6%A0%88/"><![CDATA[<h1 id="写在前面"><a class="markdownIt-Anchor" href="#写在前面"></a> 写在前面</h1><p>堆栈<code>(Stack)</code>是计算机中重要的数据结构，在程序函数调用等重要操作中都需要这一数据结构。</p><h2 id="后缀表达式"><a class="markdownIt-Anchor" href="#后缀表达式"></a> 后缀表达式</h2><p>数学中常见的运算表达式如<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi><mo>+</mo><mi>b</mi><mo>∗</mo><mi>c</mi><mo>+</mo><mi>d</mi><mi mathvariant="normal">/</mi><mi>e</mi></mrow><annotation encoding="application/x-tex">a+b*c+d/e</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">a</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">b</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">c</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">d</span><span class="mord">/</span><span class="mord mathdefault">e</span></span></span></span>称为中缀表达式，它的一个特点就是运算符号如<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>+</mo><mi mathvariant="normal">，</mi><mo>−</mo><mi mathvariant="normal">，</mi><mo>∗</mo><mi mathvariant="normal">，</mi><mi mathvariant="normal">/</mi></mrow><annotation encoding="application/x-tex">+，-，*，/</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">+</span><span class="mord cjk_fallback">，</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.46528em;vertical-align:0em;"></span><span class="mord cjk_fallback">，</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord cjk_fallback">，</span><span class="mord">/</span></span></span></span>都是位于运算符的数据中间的。把运算符拿到数据的后面，如<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi><mi>b</mi><mi>c</mi><mo>∗</mo><mo>+</mo><mi>d</mi><mi>e</mi><mi mathvariant="normal">/</mi><mo>+</mo></mrow><annotation encoding="application/x-tex">abc*+de/+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">a</span><span class="mord mathdefault">b</span><span class="mord mathdefault">c</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">+</span><span class="mord mathdefault">d</span><span class="mord mathdefault">e</span><span class="mord">/</span><span class="mord">+</span></span></span></span>就称位后缀表达式。在使用计算机计算普通的中缀表达式求值时，一般就需要先把中缀表达式转换为后缀表达式，这是因为后缀表达式包含了表达式中各运算符的优先级信息，计算机解析执行起来逻辑清晰，容易实现。</p><p>而在中缀表达式转换为后缀表达式以及计算机解析执行后缀表达式时，就需要堆栈<code>(Stack)</code>这一数据结构。</p><h1 id="堆栈"><a class="markdownIt-Anchor" href="#堆栈"></a> 堆栈</h1><p>堆栈是一种只能在一端（栈顶）进行插入<code>(push)</code>，和删除<code>pop</code>操作的线性表，因此他也是一中后入先出<code>(Last In First Out)</code>的数据结构。</p><h2 id="操作集"><a class="markdownIt-Anchor" href="#操作集"></a> 操作集</h2><p>堆栈应具有以下基本操作：</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Stack *<span class="title">createEmpty</span><span class="params">()</span></span>;                      <span class="comment">//生成空栈</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">isFull</span><span class="params">(Stack *<span class="built_in">stack</span>)</span></span>;                  <span class="comment">//查询是否满栈</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">isEmpty</span><span class="params">(Stack *<span class="built_in">stack</span>)</span></span>;                 <span class="comment">//查询是否空栈</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">push</span><span class="params">(Stack *<span class="built_in">stack</span>, ElementType item)</span></span>; <span class="comment">//在栈顶插入元素</span></span><br><span class="line"><span class="function">ElementType <span class="title">pop</span><span class="params">(Stack *<span class="built_in">stack</span>)</span></span>;             <span class="comment">//删除并返回栈顶元素</span></span><br></pre></td></tr></table></figure><h2 id="实现"><a class="markdownIt-Anchor" href="#实现"></a> 实现</h2><h3 id="链式结构"><a class="markdownIt-Anchor" href="#链式结构"></a> 链式结构</h3><ol start="0"><li><p>首先实现数据结构原型：<br>使用链表储存数据时，链表的头节点指向栈顶，为了便于操作，头节点的<code>next</code>节点指向的是堆栈的第一个元素，即头节点只作为指示作用。</p> <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ElementType int</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">stack</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    ElementType data;</span><br><span class="line">    Stack* next;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li><li><p>生成空表<br>创建一个空的链表节点并返回：</p> <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Stack* <span class="title">createEmpty</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Stack* top = (Stack*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(Stack));</span><br><span class="line">    top-&gt;next = <span class="literal">NULL</span>;</span><br><span class="line">    <span class="keyword">return</span> top;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li><li><p>查询是否满栈<br>链式结构不存在满栈</p></li><li><p>查询是否为空栈<br>由于链式结构的堆栈始终指向头节点，因此只要头节点的<code>next</code>节点不为<code>NULL</code>，栈就不是空的：</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">isEmpty</span><span class="params">(Stack *<span class="built_in">stack</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">stack</span>-&gt;next == <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li><li><p>在栈顶插入元素<br>创建一个空节点<code>temp</code>，并把空节点的<code>next</code>指针指向头节点<code>top</code>的下一节点，然后把头节点的<code>next</code>指针指向<code>temp</code>。（<code>temp</code>的值初始化为要插入的值<code>item</code>）</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">push</span><span class="params">(Stack *<span class="built_in">stack</span>, ElementType item)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Stack *temp = (Stack *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(Stack));</span><br><span class="line">    temp-&gt;data = item;</span><br><span class="line">    temp-&gt;next = <span class="built_in">stack</span>-&gt;next;</span><br><span class="line">    <span class="built_in">stack</span>-&gt;next = temp;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li><li><p>删除并返回栈顶元素<br>如果栈非空，首先把栈顶元素(<code>top</code>节点的<code>next</code>指针指向的节点的值<code>targetValue</code>)储存下来，然后删除栈顶节点，返回<code>targetValue</code>。</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">ElementType <span class="title">pop</span><span class="params">(Stack *<span class="built_in">stack</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (isEmpty(<span class="built_in">stack</span>))</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span>; <span class="comment">//error!Empty stack</span></span><br><span class="line">    &#125;</span><br><span class="line">    ElementType targetValue = <span class="built_in">stack</span>-&gt;next-&gt;data;</span><br><span class="line">    Stack *target = <span class="built_in">stack</span>-&gt;next;</span><br><span class="line">    <span class="built_in">stack</span>-&gt;next = target-&gt;next;</span><br><span class="line">    <span class="built_in">free</span>(target);</span><br><span class="line">    <span class="keyword">return</span> targetValue;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li></ol><h3 id="顺序结构数组"><a class="markdownIt-Anchor" href="#顺序结构数组"></a> 顺序结构（数组）</h3><ol start="0"><li><p>首先实现数据结构原型<br>在顺序结构中，由于数据在数组中储存，需要使用数组下标访问元素。因此需要一个下标始终指向栈顶。同时堆栈在创建时也需要指定最大的空间大小<code>MaxSize</code>.</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ElementType int</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">stack</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    ElementType *data;</span><br><span class="line">    <span class="keyword">int</span> top;</span><br><span class="line">&#125;Stack;</span><br></pre></td></tr></table></figure></li><li><p>生成空表<br>由于需要指定堆栈最大长度，因此需要有一个参数传入。同时，堆栈的内存空间将在堆栈创建时分配完成。</p><p>堆栈中指示栈顶位置的变量将被初始化为<code>-1</code>，它代表这是一个空栈。</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Stack *<span class="title">createEmpty</span><span class="params">(<span class="keyword">const</span> <span class="keyword">int</span> maxSize)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ElementType *data = (ElementType *)<span class="built_in">malloc</span>(maxSize * <span class="keyword">sizeof</span>(ElementType));</span><br><span class="line">    Stack *<span class="built_in">stack</span> = (Stack *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(Stack));</span><br><span class="line">    <span class="built_in">stack</span>-&gt;data = data;</span><br><span class="line">    <span class="built_in">stack</span>-&gt;top = <span class="number">-1</span>;<span class="comment">//means an Empty Stack</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li><li><p>查询是否满栈<br>由于数组实现的堆栈中不含堆栈长度的信息，因此被查询堆栈的大小需要显式传参。通过比交传入的大小数据和栈顶位置<code>top</code>，可以轻易得到堆栈是否满栈。</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">isFull</span><span class="params">(Stack *<span class="built_in">stack</span>, <span class="keyword">int</span> maxSize)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">stack</span>-&gt;top &gt;= maxSize;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li><li><p>查询是否为空栈<br>当为空栈时，<code>top</code>值为<code>-1</code></p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">isEmpty</span><span class="params">(Stack *<span class="built_in">stack</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">stack</span>-&gt;top == <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li><li><p>在栈顶插入元素<br>在栈未满的情况下，<code>push</code>操作可以简单地把<code>top</code>指示器<code>+1</code>并把栈顶赋值为要插入的元素完成：</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">push</span><span class="params">(Stack *<span class="built_in">stack</span>, ElementType item, <span class="keyword">const</span> <span class="keyword">int</span> maxSize)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (isFull(<span class="built_in">stack</span>, maxSize))</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span>; <span class="comment">//Error!stack overflow</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">stack</span>-&gt;data[<span class="built_in">stack</span>-&gt;top++] = item;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li><li><p>删除并返回栈顶元素<br>栈不为空时，删除操作可以简单地把<code>top</code>指示器<code>-1</code>完成，此时虽然原栈顶元素仍在<code>data</code>数组中，但是由于栈顶指示器已经下移，原栈顶地址处于可擦写的状态，相当于删除。并且由于栈的内存空间在栈被构建时已经申请完毕，在栈上进行的操作将不会影响栈所占用的内存大小。</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">ElementType <span class="title">pop</span><span class="params">(Stack *<span class="built_in">stack</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (isEmpty(<span class="built_in">stack</span>))</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>; <span class="comment">//Error!stack is Empty</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">stack</span>-&gt;data[<span class="built_in">stack</span>-&gt;top--];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li></ol><h1 id="最后"><a class="markdownIt-Anchor" href="#最后"></a> 最后</h1><p>栈的两种C语言（伪）实现大致如上，下面看看后缀表达式如何工作的。</p><h2 id="转换中缀表达式为后缀表达式"><a class="markdownIt-Anchor" href="#转换中缀表达式为后缀表达式"></a> 转换中缀表达式为后缀表达式</h2><p>首先建里堆栈用于储存运算符，然后顺序读取表达式每个对象（数值，符号等），对于每个对象，按如下法则处理：</p><ol><li>若对象是运算数值，直接输出</li><li>若对象是左括号<code>'('</code>，压入<code>(push)</code>堆栈</li><li>若对象是右括号<code>')'</code>，将栈内的运算符挨个弹出，直到遇到左括号<code>'('</code></li><li>若对象是运算符，将其与栈顶运算符比较：<ol><li>若优先级大于栈顶运算符，则把该运算符压栈</li><li>若优先级小于栈顶运算符，则把栈顶运算符弹出，继续与新的栈顶运算符比较，直到其优先级大于栈顶运算符为止。</li></ol></li><li>若表达式中的对象读取完毕，挨个弹出栈内所有运算符。</li></ol><p>这样就把一个中缀表达式转换为了后缀表达式，看这个例子：<br><img src="../images/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84--%E5%A0%86%E6%A0%88/1.png" alt></p><h2 id="计算后缀表达式"><a class="markdownIt-Anchor" href="#计算后缀表达式"></a> 计算后缀表达式</h2><p>首先建立堆栈用于储存计算结果，然后顺序读取后缀表达式每个对象，并按如下法则处理：</p><ol><li>如果对象是运算数，压栈</li><li>如果对象是操作符，弹出栈内的两个元素按该操作符计算，并把结果压栈</li><li>处理完所有对象后，栈顶的对象就是运算结果</li></ol>]]></content>
-        <author>
-            <name><![CDATA[zhuwenq的博客]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>http://leonezz.github.io/2020/03/21/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E9%98%9F%E5%88%97/</id>
-        <title><![CDATA[数据结构--队列]]></title>
-        <updated>2020-03-21T13:41:28+08:00</updated>
-        <link href="http://leonezz.github.io/2020/03/21/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E9%98%9F%E5%88%97/"/>
-        <content type="text/html" src="http://leonezz.github.io/2020/03/21/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E9%98%9F%E5%88%97/"><![CDATA[<h1 id="写在前面"><a class="markdownIt-Anchor" href="#写在前面"></a> 写在前面</h1><p>队列<code>(Queue)</code>也是线性表中的一种重要数据结构，队列中的元素只能在队列的头部<code>(front)</code>出队<code>(delete)</code>，只能在队列的尾部<code>(rear)</code>入队<code>(add)</code>。因此它是一种先入先出<code>(First In First Out)</code>的数据结构。</p><h1 id="队列"><a class="markdownIt-Anchor" href="#队列"></a> 队列</h1><h2 id="操作集"><a class="markdownIt-Anchor" href="#操作集"></a> 操作集</h2><p>一个队列应有以下操作集：</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Queue *<span class="title">createQueue</span><span class="params">()</span></span>;                     <span class="comment">//生成队列</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">isFull</span><span class="params">(Queue *<span class="built_in">queue</span>)</span></span>;                 <span class="comment">//查询队列是否为满队列</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">add</span><span class="params">(Queue *<span class="built_in">queue</span>, ElementType item)</span></span>; <span class="comment">//入队</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">isEmpty</span><span class="params">(Queue *<span class="built_in">queue</span>)</span></span>;                <span class="comment">//查询队列是否为空</span></span><br><span class="line"><span class="function">ElementType <span class="title">delete</span> <span class="params">(Queue *<span class="built_in">queue</span>)</span></span>;        <span class="comment">//出队</span></span><br></pre></td></tr></table></figure><h2 id="实现"><a class="markdownIt-Anchor" href="#实现"></a> 实现</h2><h3 id="链式结构"><a class="markdownIt-Anchor" href="#链式结构"></a> 链式结构</h3><p>链式结构的队列由两个节点域组成，它们分别是<code>front</code>和<code>rear</code>节点，指向链表头和链表尾。</p><h4 id="0-原型"><a class="markdownIt-Anchor" href="#0-原型"></a> 0. 原型</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ElementType int</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">queueNode</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    ElementType data;</span><br><span class="line">    QueueNode *next;</span><br><span class="line">&#125; QueueNode;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">queue_list_based</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    QueueNode *front;   <span class="comment">//指向头节点</span></span><br><span class="line">    QueueNode *rear;    <span class="comment">//指向尾节点</span></span><br><span class="line">&#125; Queue;</span><br></pre></td></tr></table></figure><h4 id="1-生成空队列"><a class="markdownIt-Anchor" href="#1-生成空队列"></a> 1. 生成空队列</h4><p>生成一个<code>Queue</code>结构体，并把它的<code>front</code>和<code>rear</code>节点赋值为<code>NULL</code>。</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Queue *<span class="title">createQueue</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Queue *<span class="built_in">queue</span> = (Queue *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(Queue));</span><br><span class="line">    <span class="built_in">queue</span>-&gt;front = <span class="literal">NULL</span>;</span><br><span class="line">    <span class="built_in">queue</span>-&gt;rear = <span class="literal">NULL</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">queue</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h4 id="2-查询是否为满队列"><a class="markdownIt-Anchor" href="#2-查询是否为满队列"></a> 2. 查询是否为满队列</h4><p>链式实现的队列不存在满队列</p><h4 id="3-查询是否为空队列"><a class="markdownIt-Anchor" href="#3-查询是否为空队列"></a> 3. 查询是否为空队列</h4><p>当且仅当链式实现的队列为空队列时，它的头节点<code>front</code>为<code>NULL</code>。</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">isEmpty</span><span class="params">(Queue *<span class="built_in">queue</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">queue</span>-&gt;front == <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h4 id="4-入队"><a class="markdownIt-Anchor" href="#4-入队"></a> 4. 入队</h4><p>入队时，若队列不为空把尾节点的<code>next</code>节点赋值为要入队的节点，然后把尾节点移动到新插入的节点，否则，把头节点赋值为新插入的节点。</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">add</span><span class="params">(Queue *<span class="built_in">queue</span>, ElementType item)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    QueueNode *node = (QueueNode *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(QueueNode));</span><br><span class="line">    node-&gt;data = item;</span><br><span class="line">    node-&gt;next = <span class="literal">NULL</span>;</span><br><span class="line">    <span class="keyword">if</span> (isEmpty(<span class="built_in">queue</span>))</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">queue</span>-&gt;front = node;</span><br><span class="line">        <span class="built_in">queue</span>-&gt;rear = node;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">queue</span>-&gt;rear-&gt;next = node;</span><br><span class="line">        <span class="built_in">queue</span>-&gt;rear = node;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h4 id="5-出队"><a class="markdownIt-Anchor" href="#5-出队"></a> 5. 出队</h4><p>出队时，若队列不为空，先把头节点保存下来，然后把头节点后移，最后删除并返回原头节点。</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">ElementType <span class="title">delete</span> <span class="params">(Queue *<span class="built_in">queue</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (isEmpty(<span class="built_in">queue</span>))</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>; <span class="comment">//Error!queue is Empty</span></span><br><span class="line">    &#125;</span><br><span class="line">    QueueNode *frontNode = <span class="built_in">queue</span>-&gt;front;</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">queue</span>-&gt;front == <span class="built_in">queue</span>-&gt;rear)</span><br><span class="line">    &#123; <span class="comment">//if queue has just one element,make it empty.</span></span><br><span class="line">        <span class="built_in">queue</span>-&gt;front = <span class="literal">NULL</span>;</span><br><span class="line">        <span class="built_in">queue</span>-&gt;rear = <span class="literal">NULL</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">queue</span>-&gt;front = <span class="built_in">queue</span>-&gt;front-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">    ElementType frontNodeValue = frontNode-&gt;data;</span><br><span class="line">    <span class="built_in">free</span>(frontNode);</span><br><span class="line">    <span class="keyword">return</span> frontNodeValue;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="顺序结构"><a class="markdownIt-Anchor" href="#顺序结构"></a> 顺序结构</h3><h4 id="0-原型-2"><a class="markdownIt-Anchor" href="#0-原型-2"></a> 0. 原型</h4><p>顺序结构的队列使用一个数组存放数据，它的内部维护两个整形变量<code>front</code>和<code>rear</code>分别指示队列头部和尾部节点的位置。</p><p>由于队列的入队和出队的操作将改变队列元素在内部数组中的起始和终止位置，因此顺序结构的队列常常是一个循环队列，即内部数组循环使用，数组下标对数组长度取模，这样可以提高空间的利用效率。</p><p>容易知道，当队列的<code>front</code>和<code>rear</code>值相同时，队列是空的，同时，当队列处于满的状态时，<code>front</code>和<code>rear</code>也是相同的，这种情况将使我们无法分辨队列的满空状态。</p><p>这种情况的出现是必然的，比如对于一个长度为<code>10</code>的队列，它的内部可以有<code>0,1,2,3...10</code>个元素，即<code>11</code>个状态，我们使用头尾差值即<code>front - rear</code>的值表征这<code>11</code>中状态。然而<code>front - rear</code>只有<code>10</code>种可能的结果，无法表征<code>11</code>种状态。</p><p>这种矛盾的解决方案十分简单，我们可以在队列的内部增加一个<code>counter</code>计数器来记录队列内部的元素个数。或者我们可以让头节点<code>front</code>指向队列中第一个元素的前一位置，这样，队列内部实际只能储存数组长度减一个元素，头尾节点便不会因为队列满而相遇了。</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ElementType int</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">queue_array_based</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    ElementType *data;</span><br><span class="line">    <span class="keyword">int</span> front;</span><br><span class="line">    <span class="keyword">int</span> rear;</span><br><span class="line">&#125;Queue;</span><br></pre></td></tr></table></figure><h4 id="1-生成队列"><a class="markdownIt-Anchor" href="#1-生成队列"></a> 1. 生成队列</h4><p>生成最大长度为<code>maxSize - 1</code>的队列，并把<code>front,rear</code>赋值为<code>0</code>，标志为空队列。</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Queue *<span class="title">createQueue</span><span class="params">(<span class="keyword">const</span> <span class="keyword">int</span> maxSize)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Queue *<span class="built_in">queue</span> = (Queue *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(Queue));</span><br><span class="line">    <span class="built_in">queue</span>-&gt;data = (ElementType *)<span class="built_in">malloc</span>(maxSize * <span class="keyword">sizeof</span>(ElementType));</span><br><span class="line">    <span class="built_in">queue</span>-&gt;front = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">queue</span>-&gt;rear = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">queue</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h4 id="2-查询队列是否为满队列"><a class="markdownIt-Anchor" href="#2-查询队列是否为满队列"></a> 2. 查询队列是否为满队列</h4><p>当且仅当队列满时，<code>rear</code>和<code>front</code>必定是相邻位置，且<code>rear</code>在<code>front</code>后面，因此，通过判断<code>front + 1</code>与数组长度的余与<code>rear</code>比较，可以获知队列是否已满。</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">isFull</span><span class="params">(Queue *<span class="built_in">queue</span>, <span class="keyword">const</span> <span class="keyword">int</span> maxSize)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> ((<span class="built_in">queue</span>-&gt;front + <span class="number">1</span>) % maxSize) == (<span class="built_in">queue</span>-&gt;rear);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h4 id="3-查询队列是否为空"><a class="markdownIt-Anchor" href="#3-查询队列是否为空"></a> 3. 查询队列是否为空</h4><p>当且仅当队列空时，<code>front</code>和<code>rear</code>的值相等。</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">isEmpty</span><span class="params">(Queue *<span class="built_in">queue</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">queue</span>-&gt;front == <span class="built_in">queue</span>-&gt;rear;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h4 id="4-入队-2"><a class="markdownIt-Anchor" href="#4-入队-2"></a> 4. 入队</h4><p>入队时，若队列未满，<code>rear</code>的值变为<code>rear + 1</code>对数组长度的取余，然后把入对的元素放在<code>rear</code>的位置。</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">add</span><span class="params">(Queue *<span class="built_in">queue</span>, ElementType item, <span class="keyword">const</span> <span class="keyword">int</span> maxSize)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (isFull(<span class="built_in">queue</span>, maxSize))</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span>; <span class="comment">//Error!queue is Full.</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">queue</span>-&gt;rear = (<span class="built_in">queue</span>-&gt;rear + <span class="number">1</span>) % maxSize;</span><br><span class="line">    <span class="built_in">queue</span>-&gt;data[<span class="built_in">queue</span>-&gt;rear] = item;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h4 id="5-出队-2"><a class="markdownIt-Anchor" href="#5-出队-2"></a> 5. 出队</h4><p>出队时，若队列非空，将<code>front</code>移到<code>front + 1</code>对数组长度取余的位置，然后返回<code>front</code>位置的元素。</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">ElementType <span class="title">delete</span> <span class="params">(Queue *<span class="built_in">queue</span>, <span class="keyword">const</span> <span class="keyword">int</span> maxSize)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (isEmpty(<span class="built_in">queue</span>))</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>; <span class="comment">//Error!queue is Empty.</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">queue</span>-&gt;front = (<span class="built_in">queue</span>-&gt;front + <span class="number">1</span>) % maxSize;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">queue</span>-&gt;data[<span class="built_in">queue</span>-&gt;front];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h1 id="最后"><a class="markdownIt-Anchor" href="#最后"></a> 最后</h1><p>略。。。</p>]]></content>
-        <author>
-            <name><![CDATA[zhuwenq的博客]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>http://leonezz.github.io/2020/03/19/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84--%E7%BA%BF%E6%80%A7%E8%A1%A8/</id>
-        <title><![CDATA[数据结构--线性表]]></title>
-        <updated>2020-03-20T08:43:32+08:00</updated>
-        <link href="http://leonezz.github.io/2020/03/19/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84--%E7%BA%BF%E6%80%A7%E8%A1%A8/"/>
-        <content type="text/html" src="http://leonezz.github.io/2020/03/19/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84--%E7%BA%BF%E6%80%A7%E8%A1%A8/"><![CDATA[<p>最近闲出个鸟了，打算系统学习下数据结构，算法方面的知识，这篇博客作为记录和笔记。</p><h1 id="0线性表"><a class="markdownIt-Anchor" href="#0线性表"></a> 0.线性表</h1><h2 id="0定义"><a class="markdownIt-Anchor" href="#0定义"></a> 0.定义</h2><p><strong>线性表是由同类型的数据元素构成的有序序列数据结构</strong>，表中的元素个数称为线性表的长度，无元素的线性表称为空表，表起始位置称为表头，结束位置称位表尾。</p><p>线性表的ADT描述如下：</p><p>类型名:线性表</p><p>数据对象集:由<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi><mo stretchy="false">(</mo><mi>n</mi><mo>&gt;</mo><mo>=</mo><mn>0</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">n(n&gt;=0)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">n</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&gt;</span></span><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">0</span><span class="mclose">)</span></span></span></span>元素构成的有序序列 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo stretchy="false">(</mo><msub><mi>a</mi><mn>1</mn></msub><mo separator="true">,</mo><msub><mi>a</mi><mn>2</mn></msub><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><msub><mi>a</mi><mi>n</mi></msub><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(a_1,a_2...a_n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord">.</span><span class="mord">.</span><span class="mord">.</span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">n</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></p><p>操作集:</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">List <span class="title">makeEmptyList</span><span class="params">()</span></span>;                        <span class="comment">//创建空表</span></span><br><span class="line"><span class="function">ElementType <span class="title">findKth</span><span class="params">(<span class="keyword">const</span> <span class="keyword">int</span> K,List <span class="built_in">list</span>)</span></span>;  <span class="comment">//找到第K个元素</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">find</span><span class="params">(<span class="keyword">const</span> ElementType ele,List <span class="built_in">list</span>)</span></span>;   <span class="comment">//找到元素ele第一次出现的位置</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">insert</span><span class="params">(ElementType ele,<span class="keyword">const</span> <span class="keyword">int</span> <span class="built_in">position</span>,List <span class="built_in">list</span>)</span></span>;  <span class="comment">//把元素ele插入position位置的前面</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">delete</span><span class="params">(<span class="keyword">const</span> <span class="keyword">int</span> <span class="built_in">position</span>,List <span class="built_in">list</span>)</span></span>;  <span class="comment">//删除位置position处的元素</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">length</span><span class="params">()</span></span>;       <span class="comment">//返回线性表的长度</span></span><br></pre></td></tr></table></figure><h2 id="1数据"><a class="markdownIt-Anchor" href="#1数据"></a> 1.数据</h2><p>线性表内部的数据可以使用顺序储存的数组实现，或者使用链表实现。</p><h1 id="1实现"><a class="markdownIt-Anchor" href="#1实现"></a> 1.实现</h1><h2 id="0链表实现"><a class="markdownIt-Anchor" href="#0链表实现"></a> 0.链表实现</h2><h3 id="0首先实现原型"><a class="markdownIt-Anchor" href="#0首先实现原型"></a> 0.首先实现原型</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ElementType int</span></span><br><span class="line"></span><br><span class="line"><span class="function">List *<span class="title">makeEmptyList</span><span class="params">()</span></span>;                                         <span class="comment">//创建空表</span></span><br><span class="line"><span class="function">List *<span class="title">findKth</span><span class="params">(<span class="keyword">const</span> <span class="keyword">int</span> K, List *<span class="built_in">list</span>)</span></span>;                        <span class="comment">//找到第K个元素</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">find</span><span class="params">(<span class="keyword">const</span> ElementType ele, List *<span class="built_in">list</span>)</span></span>;                   <span class="comment">//找到元素ele第一次出现的位置</span></span><br><span class="line"><span class="function">List *<span class="title">insert</span><span class="params">(ElementType ele, <span class="keyword">const</span> <span class="keyword">int</span> <span class="built_in">position</span>, List *<span class="built_in">list</span>)</span></span>; <span class="comment">//把元素ele插入position位置的前面</span></span><br><span class="line"><span class="function">List *<span class="title">delete</span> <span class="params">(<span class="keyword">const</span> <span class="keyword">int</span> <span class="built_in">position</span>, List *<span class="built_in">list</span>)</span></span>;                 <span class="comment">//删除位置position处的元素</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">length</span><span class="params">(List *<span class="built_in">list</span>)</span></span>;</span><br></pre></td></tr></table></figure><h3 id="1创建空表"><a class="markdownIt-Anchor" href="#1创建空表"></a> 1.创建空表</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">List *<span class="title">makeEmptyList</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    List *<span class="built_in">list</span> = (List *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(List));</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">list</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="2查找第k个元素"><a class="markdownIt-Anchor" href="#2查找第k个元素"></a> 2.查找第K个元素</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">List *<span class="title">findKth</span><span class="params">(<span class="keyword">const</span> <span class="keyword">int</span> K, List *<span class="built_in">list</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    List *listCopy = <span class="built_in">list</span>; <span class="comment">//make a copy</span></span><br><span class="line">    <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span> (listCopy &amp;&amp; i &lt; K)</span><br><span class="line">    &#123;</span><br><span class="line">        i++;</span><br><span class="line">        listCopy = listCopy-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> listCopy;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="3按值查找"><a class="markdownIt-Anchor" href="#3按值查找"></a> 3.按值查找</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">find</span><span class="params">(<span class="keyword">const</span> ElementType ele, List *<span class="built_in">list</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    List *listCopy = <span class="built_in">list</span>;</span><br><span class="line">    <span class="keyword">while</span> (listCopy &amp;&amp; listCopy-&gt;data != ele)</span><br><span class="line">    &#123;</span><br><span class="line">        listCopy = listCopy-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> listCopy;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="4插入"><a class="markdownIt-Anchor" href="#4插入"></a> 4.插入</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">List *<span class="title">insert</span><span class="params">(ElementType ele, <span class="keyword">const</span> <span class="keyword">int</span> <span class="built_in">position</span>, List *<span class="built_in">list</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">position</span> == <span class="number">1</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        List *n = makeEmptyList();</span><br><span class="line">        n-&gt;data = ele;</span><br><span class="line">        n-&gt;next = <span class="built_in">list</span>;</span><br><span class="line">        <span class="keyword">return</span> n;</span><br><span class="line">    &#125;</span><br><span class="line">    List *target = findKth(<span class="built_in">position</span> - <span class="number">1</span>, <span class="built_in">list</span>);</span><br><span class="line">    <span class="keyword">if</span> (target == <span class="literal">NULL</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>; <span class="comment">//error</span></span><br><span class="line">    &#125;</span><br><span class="line">    List *n = makeEmptyList();</span><br><span class="line">    n-&gt;data = ele;</span><br><span class="line">    n-&gt;next = target-&gt;next;</span><br><span class="line">    target-&gt;next = n;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">list</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="5删除节点"><a class="markdownIt-Anchor" href="#5删除节点"></a> 5.删除节点</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">List *<span class="title">delete</span> <span class="params">(<span class="keyword">const</span> <span class="keyword">int</span> <span class="built_in">position</span>, List *<span class="built_in">list</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">position</span> == <span class="number">1</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">list</span> == <span class="literal">NULL</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            List *copy = <span class="built_in">list</span>;</span><br><span class="line">            <span class="built_in">list</span> = <span class="built_in">list</span>-&gt;next;</span><br><span class="line">            <span class="built_in">free</span>(copy);</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">list</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    List *target = findKth(<span class="built_in">position</span> - <span class="number">1</span>, <span class="built_in">list</span>);</span><br><span class="line">    List *lastNode = target;</span><br><span class="line">    <span class="keyword">if</span> (target == <span class="literal">NULL</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (target-&gt;next == <span class="literal">NULL</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    target = target-&gt;next;</span><br><span class="line">    lastNode-&gt;next = target-&gt;next;</span><br><span class="line">    <span class="built_in">free</span>(target);</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">list</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="6获取长度"><a class="markdownIt-Anchor" href="#6获取长度"></a> 6.获取长度</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">length</span><span class="params">(List *<span class="built_in">list</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">    List *listCopy = <span class="built_in">list</span>;</span><br><span class="line">    <span class="keyword">while</span> (listCopy)</span><br><span class="line">    &#123;</span><br><span class="line">        listCopy = listCopy-&gt;next;</span><br><span class="line">        i++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> i;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="1数组实现"><a class="markdownIt-Anchor" href="#1数组实现"></a> 1.数组实现</h2><p>略。。。</p>]]></content>
-        <author>
-            <name><![CDATA[zhuwenq的博客]]></name>
+            <name><![CDATA[MiaoTony]]></name>
         </author>
     </entry>
     
@@ -73,17 +40,6 @@
         <content type="text/html" src="https://miaotony.xyz/2020/03/14/CTF_2020JetBrainsQuest3/"><![CDATA[JetBrains Quest 3出来了，又来体验了一波，最后的礼品是20% discount on an All Products Pack subscription，这里随手写写攻略吧。]]></content>
         <author>
             <name><![CDATA[MiaoTony]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>http://leonezz.github.io/2020/03/17/%E6%8A%8Ahexo%E5%8D%9A%E5%AE%A2%E9%83%A8%E7%BD%B2%E5%88%B0%E9%98%BF%E9%87%8C%E4%BA%91ECS/</id>
-        <title><![CDATA[把hexo博客部署到阿里云ECS]]></title>
-        <updated>2020-03-17T14:43:13+08:00</updated>
-        <link href="http://leonezz.github.io/2020/03/17/%E6%8A%8Ahexo%E5%8D%9A%E5%AE%A2%E9%83%A8%E7%BD%B2%E5%88%B0%E9%98%BF%E9%87%8C%E4%BA%91ECS/"/>
-        <content type="text/html" src="http://leonezz.github.io/2020/03/17/%E6%8A%8Ahexo%E5%8D%9A%E5%AE%A2%E9%83%A8%E7%BD%B2%E5%88%B0%E9%98%BF%E9%87%8C%E4%BA%91ECS/"><![CDATA[<h1 id="写在前面"><a class="markdownIt-Anchor" href="#写在前面"></a> 写在前面</h1><p>之前的博客是放在<code>Github Pages</code>上的，虽然足够稳定，但是一直苦于加载速度太慢。买了ECS之后，可以把hexo博客部署到ECS上，访问会快很多。</p><p>由于网站并没有备案，因此我没有启用80端口作为网站监听端口。</p><h1 id="服务器配置"><a class="markdownIt-Anchor" href="#服务器配置"></a> 服务器配置</h1><h2 id="安装nginx"><a class="markdownIt-Anchor" href="#安装nginx"></a> 安装<code>nginx</code></h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">yum install -y nginx    <span class="comment">#安装nginx</span></span><br><span class="line">systemctl start nginx   <span class="comment">#启动nginx</span></span><br><span class="line">systemctl <span class="built_in">enable</span> nginx.service   <span class="comment">#设置nginx开机启动</span></span><br></pre></td></tr></table></figure><h2 id="配置nginx路由"><a class="markdownIt-Anchor" href="#配置nginx路由"></a> 配置<code>nginx</code>路由</h2><p>想要让地址指向博客网页，还需要配置<code>nginx</code>的配置文件。</p><p><code>nginx</code>的主配置文件是位于<code>/etc/nginx</code>文件夹的<code>nginx.conf</code>文件，因为我计划在这台服务器上不止部署一个网站，因此这里用<code>include</code>的方式而不是直接修改主配置文件的方式修改配置。步骤如下</p><ol><li><p>首先在<code>/etc/nginx/</code>文件夹下新建文件夹<code>vhost</code>：<code>cd /etc/nginx &amp;&amp; mkdir vhost</code>，然后在<code>vhost</code>文件夹下新建文件<code>blog.conf</code>，最后编辑<code>blog.conf</code>：</p> <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># /etc/nginx/vhost/blog.conf</span></span><br><span class="line">server&#123;</span><br><span class="line">    listen 7010;     <span class="comment">#没有备案的网站无法访问80端口</span></span><br><span class="line">    root /home/www/blog;<span class="comment">#这里是网站的根目录，目前还没有建立</span></span><br><span class="line">    server_name youdomain;<span class="comment">#这里是你的域名，也可以填服务器公网IP</span></span><br><span class="line">    location /&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li><li><p>打开<code>/etc/nginx/nginx.conf</code>文件，把刚刚新建的<code>blog.conf</code>文件<code>include</code>进去：<br><img src="../images/%E6%8A%8Ahexo%E5%8D%9A%E5%AE%A2%E9%83%A8%E7%BD%B2%E5%88%B0%E9%98%BF%E9%87%8C%E4%BA%91ECS/1.png" alt><br>如图添加<code>include /etc/nginx/vhost/*.conf;</code>，把文件夹<code>vhost</code>下所有的<code>.conf</code>文件都包含进配置文件。这样，如果以后建立其他网站，直接在<code>vhost</code>文件夹中添加<code>.conf</code>文件就行了。</p></li></ol><h2 id="建立网站目录"><a class="markdownIt-Anchor" href="#建立网站目录"></a> 建立网站目录</h2><p>刚刚在<code>/etc/nginx/nginx.conf</code>文件中添加的<code>root /home/www/blog;</code>语句，实际上是把网站的根目录声明为<code>/home/www/blog</code>。首先建立该文件夹：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /home</span><br><span class="line">mkdir www</span><br><span class="line"><span class="built_in">cd</span> www</span><br><span class="line">mkdir blog</span><br></pre></td></tr></table></figure><p>现在网站的根目录是空的，下面配置提交与自动部署相关。</p><h2 id="安装git和nodejs"><a class="markdownIt-Anchor" href="#安装git和nodejs"></a> 安装<code>Git</code>和<code>Node.js</code></h2><ol><li><p>安装<code>Node.js</code></p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">curl -sL https://rpm.nodesource.com/setup_10.x | bash -</span><br><span class="line">yum install -y nodejs</span><br></pre></td></tr></table></figure><p>安装好之后输入<code>node -v&amp;&amp;npm -v</code>检查<code>node 和 npm</code>是否安装成功。</p></li><li><p>安装<code>Git</code>和配置git repo<br>hexo支持git部署网站，因此我们在服务器上配置一个远程git仓库<br>地址，就可以实现本地机器的博客自动部署到服务端。</p><ol><li><p>安装<code>Git</code></p>  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum install git  <span class="comment">#安装Git</span></span><br><span class="line">adduser git      <span class="comment">#添加一个名为git的用户</span></span><br></pre></td></tr></table></figure></li><li><p>配置git用户权限：</p> <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chmod 740 /etc/sudoers  <span class="comment">#提权</span></span><br><span class="line">vi /etc/sudoers         <span class="comment">#打开sudoers文件</span></span><br></pre></td></tr></table></figure><p><img src="../images/%E6%8A%8Ahexo%E5%8D%9A%E5%AE%A2%E9%83%A8%E7%BD%B2%E5%88%B0%E9%98%BF%E9%87%8C%E4%BA%91ECS/2.png" alt><br>如图添加<code>git ALL=(ALL) ALL</code>。<code>:wq</code>保存退出后，<code>chmod 400 /etc/sudoers</code>把文件<code>sudoers</code>的权限改回原样。</p><p>然后需要设置git用户的密码：<code>sudo passwd git</code>。</p></li><li><p>切换到git用户，配置ssh</p> <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">su git              <span class="comment">#切换git用户</span></span><br><span class="line"><span class="built_in">cd</span> ~&amp;&amp;mkdir .ssh    <span class="comment">#创建.ssh文件夹</span></span><br></pre></td></tr></table></figure><p>然后把本地机器的ssh公钥复制到服务器的.ssh文件夹：<code>scp -P 端口号 本地公钥文件地址 用户名@远程地址:.ssh/authorized_keys</code>。</p><p>最后修改公钥文件的权限：</p> <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">      chmod 600 ~/.ssh/authorized_keys</span><br><span class="line">chmod 700 ~/.ssh</span><br></pre></td></tr></table></figure></li><li><p>配置 <code>git repo</code><br>首先新建一个空的仓库：</p> <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">      <span class="built_in">cd</span> ~</span><br><span class="line">git init --bare blog.git</span><br></pre></td></tr></table></figure><p>然后在仓库的<code>hooks</code>文件夹新建一个<code>post-receive</code>钩子。</p> <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi ~/blog.git/hooks/post-receive</span><br></pre></td></tr></table></figure><p>添加以下代码：</p> <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/sh</span></span><br><span class="line">git --work-tree=/home/www/blog --git-dir=/home/git/blog.git checkout -f</span><br></pre></td></tr></table></figure><p>这段代码可以自动把git repo里的文件复制到网站的根目录。<br>保存退出之后使用命令<code>chmod +x ~/blog.git/hooks/post-receive</code>赋予脚本执行权限。</p></li></ol></li></ol><p>至此服务端就配置完了。</p><h1 id="本地博客配置"><a class="markdownIt-Anchor" href="#本地博客配置"></a> 本地博客配置</h1><p>打开博客文件夹下的<code>_config.yml</code>文件，修改代码端<code>deploy</code></p><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">  <span class="attr">repo:</span> </span><br><span class="line">    <span class="attr">github:</span> <span class="string">https://github.com/Leonezz/Leonezz.github.io.git</span></span><br><span class="line">    <span class="attr">AliCloud:</span> <span class="string">git@远程服务器IP:/home/git/blog.git</span>   <span class="comment">#添加这个远程repo</span></span><br><span class="line">  <span class="attr">branch:</span> <span class="string">master</span></span><br></pre></td></tr></table></figure><p>完成后使用命令<code>hexo clean&amp;&amp;hexo g&amp;&amp;hexo d</code>就可以把本地的博客同时部署到<code>Github Pages</code>和阿里云ECS了。</p><p>如果访问域名发现<code>403 forbidden</code>错误，很可能是因为运行nginx的用户权限不够导致的。打开<code>/etc/nginx/nginx.conf</code>把首行的:</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">User nginx</span><br><span class="line">``` </span><br><span class="line">修改为:</span><br><span class="line">```Bash</span><br><span class="line">User root</span><br></pre></td></tr></table></figure><p>即可。</p><h1 id="最后"><a class="markdownIt-Anchor" href="#最后"></a> 最后</h1><p>同时<code>nginx</code>也可以代理一些静态页面。</p><ol><li>在<code>/etc/nginx/vhost</code>文件夹新建<code>.conf</code>文件，大致内容与上文<code>blog.conf</code>文件相同，只有端口<code>listen</code>，网站根目录<code>root</code>和域名<code>server_name</code>不同。</li><li>在上步填写的网站目录中放入<code>index.html</code>文件以及相关的静态资源等文件，使用命令<code>nginx -s reload</code>重新加载配置就可以访问了。</li></ol><h1 id="references"><a class="markdownIt-Anchor" href="#references"></a> references</h1><ol><li><a href="https://juejin.im/post/5d54f29af265da03cc08b45a" target="_blank" rel="noopener">从零搭建Hexo博客并部署阿里云服务器(奶妈级教学)</a></li><li><a href="https://zhuanlan.zhihu.com/p/58654392" target="_blank" rel="noopener">Hexo 从 GitHub 到阿里云</a></li></ol>]]></content>
-        <author>
-            <name><![CDATA[zhuwenq的博客]]></name>
         </author>
     </entry>
     
@@ -418,17 +374,6 @@
         <updated>2020-03-04T08:39:52+08:00</updated>
         <link href="https://miaotony.xyz/2020/03/03/Server_ObtainIPv6ViaTunnelBroker/"/>
         <content type="text/html" src="https://miaotony.xyz/2020/03/03/Server_ObtainIPv6ViaTunnelBroker/"><![CDATA[最近折腾了一下，利用Hurricane Electric提供的免费IPv6 Tunnel Broker，让阿里云的ECS拥有了IPv6地址（非原生）。]]></content>
-        <author>
-            <name><![CDATA[MiaoTony]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://miaotony.xyz/2020/02/27/Server_OpticalModem/</id>
-        <title><![CDATA[光猫折腾记 | 获取超级管理员密码&开启telnet&IPv6&桥接宽带]]></title>
-        <updated>2020-03-03T15:36:57+08:00</updated>
-        <link href="https://miaotony.xyz/2020/02/27/Server_OpticalModem/"/>
-        <content type="text/html" src="https://miaotony.xyz/2020/02/27/Server_OpticalModem/"><![CDATA[最近折腾了一下家里的光猫，获取了超级管理员密码，开启了Telnet管理，启用IPv6，并尝试了宽带桥接的改造等等。]]></content>
         <author>
             <name><![CDATA[MiaoTony]]></name>
         </author>
@@ -1064,6 +1009,271 @@ GLU_TESS_WINDING_ABS_GEQ_TWO：如果结果大于等于 2 则被填充</code></p
         <content type="text/html" src="https://yuwenjie.cc/2019-iwanttofly.html"><![CDATA[<p>这篇文章我肚子里想了好多好多的标题，从最早的《从 mynuaa 到 nuaa》，到《从校服到版对婚礼》，到很多很多很多很多，听起来非常有仪式感的名字。但是每次都感觉，我没有办法驾驭那么高的标题，倒闭文章如果写的不好，会成为很多人心里永远的结，而且这个结真的真的是再也没有机会去纠正了。</p><p>————写在前边</p><blockquote><p>--“iwanttofly，全部小写”<br>--“to是2还是T, O啊”<br>--“to”<br>--“....这是不是和没说一样”<br>--“俩字母的那个”</p></blockquote><p>这是我和 rex 比较“早（you）期（chi）”的一段对话。</p><p>不知道从什么时候开始，<code>iwanttofly</code>就是办公室的 WIFI 密码，从最早的单频<code>ZFJ-office</code>，到后来有了双频，<code>ZFJ-5G</code>，密码一直都是这个。其实 rex 的那段对话之后，没有翻译给我这句话是什么意思，记得他当时是在打太鼓还是和新生工作组的小（nv）朋（hai）友（zi）聊来着。当时我自己琢磨，这个密码还蛮有两航特色的咯，我想上天，很主旋律。</p><p>我这么想是因为，我没有去2016年纸飞机的那一场新生晚会。</p><p>其实我去了，那次在三食堂的三楼，被一个小姐姐以已经坐满了为理由，把我赶回去了。</p><p>更令人生气的是，那天晚上黑灯瞎火，我也没认出来他是谁（现在严重怀疑就是林青2333。</p><p>所以，在很久之后的蛋蛋晚会，我才知道了这个小slogan的含义——</p><p>这里是离梦想最近的地方呀。</p><p>在之后的很多很多年里，我每天晚上在办公室里，对着来修电脑的大小朋友们，说了一次又一次的<code>iwanttofly</code>，大部分人其实也没有问我当时问的那个问题；当然，可能更也没有去想，这句话到底是什么意思，这个办公室里这群疯狂的人，到底为什么老是想着上天？</p><p>那年蛋蛋晚会的时候，开会讨论怎么宣传，我提了一个修改自己宿舍里的WIFI名和在教室布置AP/手机热点的方法，可能碍于当时只是一个小干事，身份卑微，可怜巴巴的没有人采用这个中二的想法，只能自己改成了这个，现在还存在记事本的第二行——大学的新开的一个记事本。</p><p><img src="https://cdn.jsdelivr.net/gh/seiry/img-outer@img//2016.1225-wifi.png" alt="蛋蛋wifi" title="蛋蛋wifi"></p><p>那年的蛋蛋晚会，rex说不想用斗鱼的直播，要用自己的技术，那时候自己（rex自己，我看着）编译nginx，看<code>flv.js</code>，看<code>hls.js</code>，夹杂着<code>diygod</code>的生平故事，后来顶着南航校园网无敌的qos策略和网络质量，顶着沈学姐本部跑来跑去的保密协议申请，勉强实现了个位数并发的推流直播。</p><p>结束之后，收拾东西，从地上揭起网线的时候，我明白了 rex 对于自己做直播的执念——</p><p>我们的梦想，终究是只属于我们的。</p><p>当时b站的直播还没有做大，斗鱼也远远没有被腾讯纳入版图，对于技术的执念，使我们依然没有选择妥协，宁可在南航这片稍显贫瘠的土地上，去带着镣铐舞蹈。</p><p>下一次的直播加上了七牛的cdn，那年的七牛，也不用太实名认证，还可以用二级域名，流畅度终于还是能满足老人们看一眼的心愿。十分惭愧的是，rex走了之后，我没有再用那一套系统，上一年达叔找我帮我直播16院毕业晚会的时候，我也妥协选择了b站的现成轮子。</p><p>同样的obs，同样的16级毕业晚会，甚至是同一台电视台的摄像机，同样的送走一帮人，只是这次走的是达叔耗子哥哥和邓理juju，上次离开的是大白rex。惭愧的是我，有一些东西没有能够继承下来。</p><p>同样的那个舞台的位置，也是我做部长的成员大会的地方，欠款￥5000的地方。那天大家都穿的正装，女孩子们都花了口红，那次小菜妮的口红真的画的很拙略，宋梦娜给我系的领带也很拙略，我和王娟的自拍照片也很拙略。但是丝毫不影响，之后大家走出的精彩的路，和那次书记读错纸飞机的名字。</p><p>不知道还有多少人记得那次蛋蛋晚会的快闪。叫做快闪，可能也不是为了被人永远的记住，只是参与者永远的记住了吧。那天新的站衫还有没有到，我第一次穿的是老人们的上一年的站衫，而现在，我已经有那么多那么多件的站衫了，那是永远穿出去不会丢人的东西。</p><p>不过站衫的材质，随着世风的日下，变得越来越不好了，也很痛心的看到，小孩子们买的越来越少；也很难受让他们去买，以此来给组织提供经济支持。我以前有个蛮神奇合理的想法——一个人，最多只能拥有三件纸飞机的站衫，后来觉得不妥，应该是三套，毕竟春夏秋冬；又觉得还是不妥，rex就有四年的；到了现在四年的也不妥了，因为我还往前嫖了好多年的，现在穿着六周年的那件t恤，自豪感十足，身份和地位的象征。</p><p>我之前说过，一个学校好，不代表在学校里的你会好——因为我们通常说的名校，更多的指的是他的上限。其实我是不知道，正式发公告的第二天是学校的校庆——又有多少人记得呢。“死在黎明的前夜”，乍一听还是个满浪漫的说法的。依附于这样的一个日子，大家在追思纸飞机的时候，就有一个标记了，这样南航就变成了纸飞机的粽子，纸飞机一直是南航的屈原。<code>mynuaa</code>是纸飞机的官方英文名字，但是不知道啥时候开始，差不多是我这一届的小朋友，开始叫更多地写成<code>nuaazfj</code>，两个英文名都有很多好玩的谐音梗，“买南航”“卖南航”“马原南航”，“nuaa政府军”“nuaa造反军”“nuaa执法局”。我是更喜欢<code>mynuaa</code>一点——我在意的区别其实my是nuaa的定语，nuaa是zfj的定语。zfj可能只有一个，但是my，有千千万万个，千千万万个my背后，是千千万万个善良单纯的梦想。有人教导我们，在大的利益面前，要妥协，要退让，要牺牲小的利益，牺牲小我，因此<code>nuaa</code>如此的洪亮，每年吸引了多少善男信女；但是吸引他们的是南航的头部，头部也正需要更多人的加入来垫起脚跟。纸飞机曾经很让我以之为傲的就是，技术部的部长都好nb啊，bat可以各种拉满，这对年级小的时候的我，充满了无穷的偶像吸引。虽然每个人的观察都是有偏差的，几乎每个人都找得到工作，每个人都饿不死，每个人也都因为围城而惦记着进进出出，但是bat三个字母，代表真的是优秀。他们和我听说的那些读书学霸并不一样，高数大物无限补考重修，教务处内网游泳片叶不沾，走南闯北无所不能，赚钱养家经济独立，每一个特质我都好喜欢，当时我应该算是“悄悄地”下定决心吧，也要成为像他们一样的人，尽管有一些东西可能是坏的。在我看来，他们在选择就业时的从容，选择余地的开阔，才是大学带来的最有用的东西——当然这最有用的东西，对于一个学校也只是一个数字，理应如此。所以我也看来，他们是真正代表这个学校头部的那些人。</p><p>有一个学长，开玩笑说，“等谁以后nb了，回学校，就问问校长，纸飞机现在在干啥”。真正的头部，永远不会在当下去想尽办法得到别人的点头认同——ta是隽永而深远的。</p><p>所以，当<code>mynuaa</code>变成了<code>nuaa</code>，失去的是它的<code>prefix</code>，它的头部，也是它曾经鲜明的一面旗帜。</p><p>今年又是一年招新已经结束了，小朋友们多多少少去了各种各样学生组织学生社团，或是背着南航的旗帜在工作，或是背着自己的爱好在工作，他们口中的“我航”，什么时候回变成“你航”呢？</p><p><img src="https://cdn.jsdelivr.net/gh/seiry/img-outer@img//bandui.png" alt="版对" title="版对"></p><p>虽然我现在也觉得，学生组织不是个找对象的最佳实践，但是对于大部分写代码的男孩子来说，纸飞机真的曾经是个神奇的地方。有共同的追求和信仰，共同激励过困难，这是产生火花的重要因素。曾经版主之间的火花，就是尤其强烈的。多少人曾经做过校服到礼服的华丽美梦呀，又有多少人能实现呢？大学的互联网藩篱被移动互联网推到，大家加入了更大的池子，那个有趣的灵魂，也就越来越难和你在无规则运动的时候碰到了，的确也只能惋惜了。</p><p>清补凉的老板，一直是纸飞机的吉祥物，或者说是技术部的吉祥物。他和曾经的后街各家店一起，是纸飞机共同的回忆。但是豆花店换了一个又一个的老板，煎饺也一次又一次的变味，没有人知道南航共同的胃还能坚持多久。但是这不影响涉世未深的新人——他们的第一口，就是这样的；他们的第一眼，正新鸡排也就是10块钱的；眼里的学生会，也就是四个部门的；眼里的社联，也就是社团管理部；眼里的团委，也就是红星闪闪，引领前进方向的排头马。</p><p>写的太乱太乱了，因为断断续续写下来，心情也变过很多次，主题也变过很多次，我也不知道，对于解散这件事情，应该隐晦？应该直白？应该辞藻华丽？太多太多的答案，11年的成长岁月里，真的真的不足以解答；但是闪闪夺目的11年岁月，又是再华丽的词汇句式不能表达的。</p><p>但是至少有一点，我可以坚信的是，纸飞机在这片土地上，的的确确不存在了；因此我们就坚信，纸飞机已经飞到了我们的梦想地方，在那里等我们。</p><p>四年前，纸飞机告诉我们，这里是离梦想最近地方；现在纸飞机告诉你，她很好，她在那里等着你，你一定要坚持走下去呀！</p>]]></content>
         <author>
             <name><![CDATA[善良单纯的板の窝]]></name>
+        </author>
+    </entry>
+    
+    <entry>
+        <id>https://www.noisyfox.io/moe-native-types.html</id>
+        <title><![CDATA[Working with native types: Advanced]]></title>
+        <updated>2019-09-22T05:23:17+08:00</updated>
+        <link href="https://www.noisyfox.io/moe-native-types.html"/>
+        <content type="text/html" src="https://www.noisyfox.io/moe-native-types.html"><![CDATA[<p>After using MOE for several years we discovered some common problems when dealing with native types (Core Foundation Types &amp; Cocoa Types). Here are some of our findings.</p>
+
+
+
+<h1>Container Types (NSArray, NSDictionary, CFArrayRef, etc.)</h1>
+
+
+
+<ol><li>The content in those containers must be corresponding native types, e.g., values of a <code>NSArray</code> must all be <code>NSObject</code>s, while values of a <code>CFArrayRef</code> must all be <code>OpaquePtr</code>s.<ol><li>NatJ does not automatically convert Java-only types (include primitive types) to compatible native types and vice versa when dealing with containers. When adding values to those containers you need to manually convert it to a corresponding native type. And when reading the value you also need to explicitly convert it to a Java type.</li><li>If you try to store a <strong>Core Foundation</strong> type in a <strong>Cocoa</strong> container, you need to cast it using the <strong>Toll-Free Bridging</strong> which I will talk about later.</li></ol></li><li>Arrays and dictionaries can not have <code>null</code> as either key or value.</li></ol>
+
+
+
+<p>If you ever used the iOS <strong>KeyChain</strong> APIs you may did something similar as follows in Objective-C(simplified):</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="kotlin" data-enlighter-theme="" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">CFErrorRef error = NULL;
+
+SecAccessControlRef access =
+SecAccessControlCreateWithFlags(kCFAllocatorDefault,
+                                kSecAttrAccessibleWhenUnlockedThisDeviceOnly,
+                                kSecAccessControlPrivateKeyUsage|kSecAccessControlUserPresence,
+                                &amp;error);
+
+NSData* tag = [@"some tag" dataUsingEncoding:NSUTF8StringEncoding];
+
+NSDictionary* attributes =
+@{ (id)kSecClass:                   (id)kSecClassKey,
+   (id)kSecAttrKeyType:             (id)kSecAttrKeyTypeECSECPrimeRandom,
+   (id)kSecAttrKeySizeInBits:       @256,
+   (id)kSecAttrTokenID:             (id)kSecAttrTokenIDSecureEnclave,
+   (id)kSecPrivateKeyAttrs:
+       @{ (id)kSecAttrIsPermanent:    @YES,
+          (id)kSecAttrApplicationTag:  tag,
+          (id)kSecAttrAccessControl:  (__bridge id)access
+        },
+   };
+
+SecKeyRef privateKey = SecKeyCreateRandomKey((__bridge CFDictionaryRef)attributes,
+                                             &amp;error);</pre>
+
+
+
+<p>The corresponding Kotlin code will be:</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="kotlin" data-enlighter-theme="" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">val pError = PtrFactory.newOpaquePtrReference(CFErrorRef::class.java)
+
+val access = Security.SecAccessControlCreateWithFlags(
+    CoreFoundation.CFAllocatorGetDefault(),
+    Security.kSecAttrAccessibleWhenUnlockedThisDeviceOnly(),
+    SecAccessControlCreateFlags.PrivateKeyUsage or SecAccessControlCreateFlags.UserPresence,
+    pError
+)
+val tag = NSString.stringWithString("some tag").dataUsingEncoding(NSUTF8StringEncoding)
+
+// Helper function to convert a CF type to Cocoa type
+fun OpaquePtr.toNSObject() = ObjCRuntime.cast(this, NSObject::class.java)
+
+val privateKeyAttrs = NSMutableDictionary.dictionary&lt;Any, Any>() as NSMutableDictionary&lt;Any, Any>
+privateKeyAttrs[Security.kSecAttrIsPermanent().toNSObject()] = NSNumber.numberWithBool(true) // Convert Java `boolean` to Cocoa type
+privateKeyAttrs[Security.kSecAttrApplicationTag().toNSObject()] = tag
+privateKeyAttrs[Security.kSecAttrAccessControl().toNSObject()] = access.toNSObject()
+
+val attributes = NSMutableDictionary.dictionary&lt;Any, Any>() as NSMutableDictionary&lt;Any, Any>
+attributes[Security.kSecClass().toNSObject()] = Security.kSecClassKey().toNSObject()
+attributes[Security.kSecAttrKeyType().toNSObject()] = Security.kSecAttrKeyTypeECSECPrimeRandom().toNSObject()
+attributes[Security.kSecAttrKeySizeInBits().toNSObject()] = NSNumber.numberWithInt(256) // Convert Java `int` to Cocoa type
+attributes[Security.kSecAttrTokenID().toNSObject()] = Security.kSecAttrTokenIDSecureEnclave().toNSObject()
+attributes[Security.kSecPrivateKeyAttrs().toNSObject()] = privateKeyAttrs
+
+// Cast NSDictionary to CFDictionaryRef
+val cfAttributes = ObjCRuntime.cast(attributes, CFDictionaryRef::class.java)
+
+val privateKey = Security.SecKeyCreateRandomKey(cfAttributes, pError)</pre>
+
+
+
+<p>With the help of <a href="https://github.com/Noisyfox/NatJ-Kotlin">this library</a> I created, the code can be simplified as:</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="kotlin" data-enlighter-theme="" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">val pError = PtrFactory.newOpaquePtrReference(CFErrorRef::class.java)
+
+val access = Security.SecAccessControlCreateWithFlags(
+    CoreFoundation.CFAllocatorGetDefault(),
+    Security.kSecAttrAccessibleWhenUnlockedThisDeviceOnly(),
+    SecAccessControlCreateFlags.PrivateKeyUsage or SecAccessControlCreateFlags.UserPresence,
+    pError
+)
+
+val attributes = mapOf&lt;Any,Any>(
+    Security.kSecClass() to Security.kSecClassKey(),
+    Security.kSecAttrKeyType() to Security.kSecAttrKeyTypeECSECPrimeRandom(),
+    Security.kSecAttrKeySizeInBits() to 256,
+    Security.kSecAttrTokenID() to Security.kSecAttrTokenIDSecureEnclave(),
+    Security.kSecPrivateKeyAttrs() to mapOf&lt;Any,Any>(
+        Security.kSecAttrIsPermanent() to true,
+        Security.kSecAttrApplicationTag() to "some tag".toNSData(),
+        Security.kSecAttrAccessControl() to access
+    )
+).toNSDictionary()
+
+val privateKey = Security.SecKeyCreateRandomKey(attributes.bridge(), pError)</pre>
+
+
+
+<p>This library also has a help function for creating <code>NSArray</code> from a Java <code>Collection</code>:</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="kotlin" data-enlighter-theme="" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">val nsArray = listOf(1, 2, 3, "some string", someCFRef, someNSType).toNSArray()</pre>
+
+
+
+<h1>Toll-Free Bridging &amp; Memory Management</h1>
+
+
+
+<p>iOS developers are most likely to be familiar with&nbsp;<strong>Cocoa Touch</strong>&nbsp;frameworks/APIs (does&nbsp;<strong>Foundation</strong>&nbsp;framework sound familiar to you?), which use the programming languages&nbsp;<strong>Objective-C</strong>&nbsp;or&nbsp;<strong>Swift</strong>. </p>
+
+
+
+<p>However, you may also heard about another framework called&nbsp;<strong>Core Foundation</strong>.&nbsp;It is a pure&nbsp;<strong>C</strong>&nbsp;framework and provides access to lower level APIs and types.</p>
+
+
+
+<p>For iOS development, most frameworks you will use are all designed based on the&nbsp;<strong>Foundation</strong>&nbsp;framework which means the types they use are all&nbsp;<code>NSObject</code>s so&nbsp;<strong>ARC</strong>&nbsp;manages the memory for you and the memory will be automatically released when the object is no longer used.&nbsp;<strong>MOE</strong> does some tricks so&nbsp;<strong>Java</strong>&#8216;s&nbsp;<strong>GC</strong>&nbsp;also helps when you use those types on&nbsp;<strong>Java</strong>&nbsp;side.</p>
+
+
+
+<p>However some low level functions (such as&nbsp;<strong>Security</strong>&nbsp;framework if you try to use&nbsp;<strong>TouchId</strong>) are available in only&nbsp;<strong>C</strong>&nbsp;functions. Hens they use&nbsp;<strong>Core Foundation</strong>&nbsp;types which does not have&nbsp;<strong>ARC</strong>&nbsp;and requires manual memory management. Sadly&nbsp;<strong>Java</strong>&#8216;s&nbsp;<strong>GC</strong>&nbsp;does no help here (and may even create new issues which I will talk about later).</p>
+
+
+
+<h2 id="ownership-cfretain-and-cfrelease">Ownership, CFRetain() and CFRelease()</h2>
+
+
+
+<p>Anyone has any&nbsp;<strong>C</strong>&nbsp;experience might still remember those good old days struggling with&nbsp;<code>malloc()</code>&nbsp;and&nbsp;<code>free()</code>&nbsp;while&nbsp;<strong>Core Foundation</strong>&nbsp;brings you&nbsp;<code>CFRetain()</code>&nbsp;and&nbsp;<code>CFRelease()</code>.</p>
+
+
+
+<p>Apple has a fantastic document that tells you how&nbsp;<em>Ownership</em>&nbsp;works in manual memory management and when you should use&nbsp;<code>CFRetain()</code>and&nbsp;<code>CFRelease()</code>&nbsp;respectively. I highly recommend you to read it first:</p>
+
+
+
+<p>Link:&nbsp;<a href="https://developer.apple.com/library/archive/documentation/CoreFoundation/Conceptual/CFMemoryMgmt/Concepts/Ownership.html">Memory Management Programming Guide for Core Foundation &#8211; Ownership Policy</a></p>
+
+
+
+<p>Basically if an Core Foundation object is owned by you, you need to call&nbsp;<code>CFRelease()</code>&nbsp;once you are done with it; if it&#8217;s NOT owned by you, in most cases, you need to&nbsp;<code>CFRetain()</code>&nbsp;it, use it, then&nbsp;<code>CFRelease()</code>&nbsp;it afterwards:</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="c" data-enlighter-theme="" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">// Create a CFString, which is owned by you
+CFStringRef urlStr = CFStringCreateWithCString(kCFAllocatorDefault,
+    "https://www.noisyfox.io", kCFStringEncodingUTF8);
+
+/* Do something with urlStr here. */
+
+// Release it afterwards
+CFRelease(urlStr);
+</pre>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="c" data-enlighter-theme="" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">// Get something from a dict, which is not owned, so a CFRetain() is required
+CFStringRef title = (CFStringRef)CFRetain(CFDictionaryGetValue(dict, CFSTR("title")));
+
+/* Do something with title here. */
+
+// Release it afterwards
+CFRelease(urlStr);
+</pre>
+
+
+
+<p>You can easily convert above code to&nbsp;<strong>Java</strong>&nbsp;since MOE bindings provide all necessary functions. And with a little help from my library, you could write something like these in&nbsp;<strong>Kotlin</strong>:</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="kotlin" data-enlighter-theme="" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">CFStringCreateWithCString(kCFAllocatorDefault(), "title", CFStringBuiltInEncodings.UTF8).use { key ->
+
+    CFDictionaryGetValue(dict, key).cast&lt;CFStringRef>().retain().use { title ->
+        /* Do something with title here. */
+    }
+}
+// CFRelease is automatically called when block returns
+</pre>
+
+
+
+<p>The&nbsp;<code>action</code>&nbsp;block of&nbsp;<code>.use()</code>&nbsp;is wrapped in a&nbsp;<code>try</code>&nbsp;block so the resource is guaranteed to be released even if&nbsp;<strong>Exception</strong>&nbsp;is raised in the block.</p>
+
+
+
+<h2 id="autoreleasepool-for-core-foundation-types"><code>autoreleasepool</code>&nbsp;for&nbsp;<strong>Core Foundation</strong>&nbsp;types</h2>
+
+
+
+<p><code>.use()</code>&nbsp;mentioned above will create a lot of nested scopes if you have a lot of those&nbsp;<strong>Core Foundation</strong>&nbsp;objects. That makes the code unreadable. With the help of&nbsp;<code>autoreleasepool</code>&nbsp;you could rewrite the above code to something like this:</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="kotlin" data-enlighter-theme="" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">autoreleasepool {
+    val key = CFStringCreateWithCString(kCFAllocatorDefault(), "title", CFStringBuiltInEncodings.UTF8).autorelease()
+    val title = CFDictionaryGetValue(dict, key).cast&lt;CFStringRef>().retain().autorelease()
+
+    /* Do something with title here. */
+}
+// CFRelease is automatically called for each object that called .autorelease() when autoreleasepool block ends
+</pre>
+
+
+
+<p><strong>NB</strong>: Make sure the&nbsp;<code>autoreleasepool</code>&nbsp;you called is imported from package&nbsp;<code>io.noisyfox.moe.natj</code>&nbsp;since&nbsp;<strong>NatJ</strong>&nbsp;has it&#8217;s own impl&nbsp;<code>org.moe.natj.objc.ObjCRuntime#autoreleasepool(java.lang.Runnable)</code>&nbsp;which is not a&nbsp;<strong>Kotlin</strong>&nbsp;<code>inline</code>&nbsp;function which doesn&#8217;t support certain features (such as&nbsp;<a href="https://kotlinlang.org/docs/reference/inline-functions.html#non-local-returns">non-local returns</a>&nbsp;and&nbsp;<a href="https://kotlinlang.org/docs/reference/inline-functions.html#reified-type-parameters">reified type parameters</a>).</p>
+
+
+
+<h2 id="type-bridging">Type Bridging</h2>
+
+
+
+<p>WIP</p>
+
+
+
+<h1>Misc</h1>
+
+
+
+<p>The library also contains some other help functions for converting between Java types and native types such as <code>ByteArray</code> &lt;=&gt; <code>NSData</code>. I won&#8217;t list all functions here since you could easily find them in source code.</p>
+
+
+
+<h1>The library &#8211; <strong><a href="https://github.com/Noisyfox/NatJ-Kotlin">NatJ-Kotlin</a></strong></h1>
+
+
+
+<p>This is a library I created that contains some helper functions I used in my work. It&#8217;s currently available in only source code form. I will create a jar release and publish it to jcenter ASAP.</p>
+
+
+
+<p>The library is written in Kotlin but most of the functions can also be used in Java.</p>
+
+
+
+<h1>Discussion</h1>
+
+
+
+<p>Any idea of  library improving are welcomed. If you found any mistake in my post, or have any other problem that is not covered, please not hesitate to share with us by leaving comments.</p>
+<p><a rel="nofollow" href="https://www.noisyfox.io/moe-native-types.html">Working with native types: Advanced</a>，首发于<a rel="nofollow" href="https://www.noisyfox.io">狐狸的小小窝</a>。</p>]]></content>
+        <author>
+            <name><![CDATA[狐狸的小小窝]]></name>
         </author>
     </entry>
     
@@ -2100,6 +2310,286 @@ void start_coroutine(struct Coroutine *co) {
     </entry>
     
     <entry>
+        <id>https://www.noisyfox.io/foxwinshave2.html</id>
+        <title><![CDATA[FoxWinShave 2 中文使用手册]]></title>
+        <updated>2019-01-12T08:45:27+08:00</updated>
+        <link href="https://www.noisyfox.io/foxwinshave2.html"/>
+        <content type="text/html" src="https://www.noisyfox.io/foxwinshave2.html"><![CDATA[<p>FoxWinShave 2 现已上架 GameMaker: Marketplace，支持 GM8, GMS 1.4 和 GMS 2。<a href="https://marketplace.yoyogames.com/assets/7696/foxwinshave" target="_blank" rel="noreferrer noopener" aria-label="（在新窗口打开）">点此从Marketplace下载最新版本</a>。</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2>0. 前置条件</h2>
+
+
+
+<ul><li>仅支持 Windows 平台。</li><li>支持 Windows XP, Windows Vista, Windows 7, Windows 8, Windows 8.1, Windows 10。</li><li>支持 GameMaker 7, GameMaker 8, GameMaker 8.1, GameMaker Studio 1.4.x, GameMaker Studio 2 Desktop。</li></ul>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2>1. 安装插件</h2>
+
+
+
+<h3>1.0 GM 7, 8, 8.1</h3>
+
+
+
+<p>菜单栏 File-&gt; Import Resources&#8230; 选择 FoxWinShave-GM8.gmres 导入插件及 Demo。</p>
+
+
+
+<ul><li>在弹出的 Importing Resources 对话框中，请务必勾选 Scripts 和 Include Files 以导入插件运行所必须的文件和脚本。</li><li>如需同时导入 Demo 代码及素材，请将 Sprites，Objects 和 Rooms 一并勾选上。</li></ul>
+
+
+
+<h3>1.1 GMS 1.4.x 及 GMS 2 Desktop</h3>
+
+
+
+<div class="wp-block-image"><figure class="aligncenter"><a href="https://www.noisyfox.io/wp-content/uploads/2019/01/image.png" target="_blank" rel="noreferrer noopener"><img src="https://www.noisyfox.io/wp-content/uploads/2019/01/image-300x189.png" alt="" class="wp-image-569" srcset="https://www.noisyfox.io/wp-content/uploads/2019/01/image-300x189.png 300w, https://www.noisyfox.io/wp-content/uploads/2019/01/image-768x483.png 768w, https://www.noisyfox.io/wp-content/uploads/2019/01/image-1024x644.png 1024w, https://www.noisyfox.io/wp-content/uploads/2019/01/image.png 1588w" sizes="(max-width: 300px) 100vw, 300px" /></a><figcaption>Import resources: FoxWinShave 对话框</figcaption></figure></div>
+
+
+
+<ol><li>在 GameMaker: Marketplace 上购买本插件。<a rel="noreferrer noopener" aria-label="（在新窗口打开）" href="https://marketplace.yoyogames.com/assets/7696/foxwinshave" target="_blank">（点此购买）</a></li><li>在 GMS 中菜单栏选择 Marketplace -&gt; MyLibrary，找到 FoxWinShave，点击 Download。</li><li>下载完成后，点击 Import。</li><li>在弹出的 Import resources: FoxWinShave 对话框中，选中 Scripts 和 Included Files，然后点击中间的 Add 按钮以导入插件运行所必须的文件和脚本。</li><li>如需同时导入 Demo 代码及素材，那就直接点击中间的 Add All 按钮。</li><li>点击左下角 Import 按钮完成插件的导入。</li></ol>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2>2. 插件入门 101</h2>
+
+
+
+<h3>2.0 基础准备</h3>
+
+
+
+<p>请务必在游戏设置中将窗口设置为无边框（borderless window）:</p>
+
+
+
+<div class="wp-block-image"><figure class="aligncenter"><a href="https://www.noisyfox.io/wp-content/uploads/2019/01/image-2.png" target="_blank" rel="noreferrer noopener"><img src="https://www.noisyfox.io/wp-content/uploads/2019/01/image-2-300x240.png" alt="" class="wp-image-592" srcset="https://www.noisyfox.io/wp-content/uploads/2019/01/image-2-300x240.png 300w, https://www.noisyfox.io/wp-content/uploads/2019/01/image-2.png 512w" sizes="(max-width: 300px) 100vw, 300px" /></a><figcaption>GM 8 设置无边框</figcaption></figure></div>
+
+
+
+<div class="wp-block-image"><figure class="aligncenter"><a href="https://www.noisyfox.io/wp-content/uploads/2019/01/image-1.png" target="_blank" rel="noreferrer noopener"><img src="https://www.noisyfox.io/wp-content/uploads/2019/01/image-1-300x237.png" alt="" class="wp-image-591" srcset="https://www.noisyfox.io/wp-content/uploads/2019/01/image-1-300x237.png 300w, https://www.noisyfox.io/wp-content/uploads/2019/01/image-1.png 695w" sizes="(max-width: 300px) 100vw, 300px" /></a><figcaption>GMS 2 设置无边框</figcaption></figure></div>
+
+
+
+<p>稍后将会解释需要设置为无边框的原因。</p>
+
+
+
+<h3>2.1 插件初始化</h3>
+
+
+
+<p>使用本插件的任何脚本前需要先进行插件的初始化。建议在首个 Room 的 Creation Code 内或者某个控制用的 Object 的 Game Start 事件里执行：</p>
+
+
+<pre class="brush: cpp; title: ; notranslate">
+NF_WS_Init();
+</pre>
+
+
+<p>插件初始化后请勿再次调用该函数。</p>
+
+
+
+<h3>2.2 插件释放</h3>
+
+
+
+<p>当不再需要更改窗口形状后，可以执行以下函数将插件卸载以释放资源：</p>
+
+
+<pre class="brush: cpp; highlight: [2]; title: ; notranslate">
+NF_WS_ResetWindow(); // 重置窗口形状为默认，非必要
+NF_WS_Free(); // 释放插件
+</pre>
+
+
+<p>在释放插件后如果需要再次使用本插件，需要重新进行插件的初始化。</p>
+
+
+
+<h3>2.3 基础原理解释</h3>
+
+
+
+<h4>2.3.0 窗口坐标系</h4>
+
+
+
+<p>将游戏窗口想象成一个画布，按照窗口的边框开始算左上角坐标为 (0, 0)，右下角边框最外处坐标为 (viewport_width + 左边框宽 + 右边框宽, viewport_height + 上边框高 + 下边框高)，如下图所示：</p>
+
+
+
+<div class="wp-block-image"><figure class="aligncenter"><a href="https://www.noisyfox.io/wp-content/uploads/2019/01/win-coord-1.png" target="_blank" rel="noreferrer noopener"><img src="https://www.noisyfox.io/wp-content/uploads/2019/01/win-coord-1.png" alt="" class="wp-image-635" srcset="https://www.noisyfox.io/wp-content/uploads/2019/01/win-coord-1.png 574w, https://www.noisyfox.io/wp-content/uploads/2019/01/win-coord-1-300x234.png 300w" sizes="(max-width: 574px) 100vw, 574px" /></a><figcaption> <br>窗口坐标系统 </figcaption></figure></div>
+
+
+
+<p>然而问题在于窗口的边框宽度是由 Windows 系统定义的，不同 Windows 版本或者不同的主题都有可能带有不同尺寸的边框，给在定义窗口的形状时计算坐标带来了麻烦。因此如上文所述，请<strong>务必</strong>在游戏全局设置中关闭窗口边框的显示，这样窗口的坐标系统就和游戏 View Port 的坐标系统的原点能够统一，便于将窗口形状与游戏绘制内容对齐。</p>
+
+
+
+<p>下文在描述坐标时将默认使用无边框窗口。</p>
+
+
+
+<h4>2.3.1 游戏绘制与 View Port</h4>
+
+
+
+<p>GM 支持在一个窗口中同时显示多个 View Port。View Port 的作用是将 Room 的一部分内容按一定比例、缩放和位移映射在窗口中显示出来。用户实际看到的内容是经过 View Port 变换后的结果，并不（一定）是游戏中调用绘制代码时使用的坐标。</p>
+
+
+
+<p>由于我们只关心用户实际看到了什么，因此下文中提到的<strong>“游戏绘制内容”</strong>的尺寸、坐标，皆为经过 View Port 变换后映射到窗口坐标系中的尺寸和坐标。</p>
+
+
+
+<p>更多关于 View Port 的内容，请参考 GM 官方文档，下文将不再赘述。</p>
+
+
+
+<h4>2.3.2 窗口形状遮罩</h4>
+
+
+
+<p>本插件采用遮罩形式设置窗口形状，支持根据 Sprite 和 Surface（仅限 GMS）设置窗口遮罩。以下核心函数</p>
+
+
+<pre class="brush: cpp; title: ; notranslate">
+NF_WS_ShaveWindow(sprite, subimage, x, y);
+NF_WS_ShaveWindowAlpha(sprite, subimage, x, y, alpha);
+NF_WS_ShaveWindowExt(sprite, subimage, x, y, xscale, yscale, alpha);
+NF_WS_ShaveWindowSurfaceExt(surface, x, y, xscale, yscale, alpha); // 仅限 GMS
+</pre>
+
+
+<p>与 draw_sprite_* 系列绘制函数有着十分类似的形式，除了不支持 rot 和  <br>colour参数，同时 alpha 参数有不同的意义。可以理解为将给定的 Sprite / Surface 用提供的参数放置于窗口坐标系内作为遮罩（不经过 View Port 等任何变换），同时将窗口没有被遮罩覆盖的区域给“消去”变为透明：</p>
+
+
+
+<div class="wp-block-image"><figure class="aligncenter"><a href="https://www.noisyfox.io/wp-content/uploads/2019/01/mask.png" target="_blank" rel="noreferrer noopener"><img src="https://www.noisyfox.io/wp-content/uploads/2019/01/mask.png" alt="" class="wp-image-654" srcset="https://www.noisyfox.io/wp-content/uploads/2019/01/mask.png 640w, https://www.noisyfox.io/wp-content/uploads/2019/01/mask-300x225.png 300w" sizes="(max-width: 640px) 100vw, 640px" /></a><figcaption>“遮罩层”内容</figcaption></figure></div>
+
+
+
+<p>如图所示，红色部分的窗口会被保留下来，其余部分将会被消去。需要注意的是上图所谓的“遮罩层”是一个与窗口同样大小的位于窗口之上的想象出的一层，并不是实际存在的可见图层，其内容仅为了作为遮罩所用，并不会显示出来。</p>
+
+
+
+<p>遮罩层使用的图像为彩色图像带 Alpha 通道。在实际运行时色彩通道会被完全忽略，最终窗口形状仅受遮罩层的 Alpha 通道影响。默认情况下每个 Alpha 通道值为 0 的像素（即纯透明像素）被认为是窗口需要被消去的部分。这个值可以通过上文所述的几个函数中的 alpha 参数（范围 [0, 1.0]）来改变。任何 Alpha 通道值 &lt;= 该参数的像素将被认为是需要消去的。注意，这意味着如果你传入的 alpha 参数为 1，则<strong>任何</strong>像素都会被认定为透明像素。</p>
+
+
+
+<p>另外，如果使用 Surface 来传入遮罩内容，请注意 Surface 的背景需要用透明色填充：</p>
+
+
+<pre class="brush: cpp; highlight: [2]; title: ; notranslate">
+surface_set_target(mask_surface);
+draw_clear_alpha(c_white, 0); // Alpha = 0, 使用的颜色无所谓.
+</pre>
+
+
+<h4>2.3.3 遮罩对齐</h4>
+
+
+
+<p>使用本插件的目的通常是想将游戏窗口的形状，裁剪成游戏绘制的有意义的内容的形状：</p>
+
+
+
+<div class="wp-block-image"><figure class="aligncenter"><a href="https://www.noisyfox.io/wp-content/uploads/2019/01/purpose.png" target="_blank" rel="noreferrer noopener"><img src="https://www.noisyfox.io/wp-content/uploads/2019/01/purpose-1.png" alt="" class="wp-image-661" srcset="https://www.noisyfox.io/wp-content/uploads/2019/01/purpose-1.png 640w, https://www.noisyfox.io/wp-content/uploads/2019/01/purpose-1-300x225.png 300w" sizes="(max-width: 640px) 100vw, 640px" /></a><figcaption>游戏实际绘制内容</figcaption></figure></div>
+
+
+
+<p>上图中，女牛仔的部分是有意义的、需要保留的部分，而黑色背景需要被裁剪掉，也就意味着我们在遮罩层“绘制”的遮罩需要与女牛仔的位置、形状相同。</p>
+
+
+
+<p>这乍一听似乎很容易，只要使用相同的 x，y 参数将同样的女牛仔 Sprite 绘制到 Application Surface 和遮罩层即可。但是正如上文所说，用户实际看到的内容是经过 View Port 变换过的，因此其实际显示的坐标和尺寸可能与绘制时传入的参数不同；然而遮罩层是不受 View Port 影响的，因此开发者需要自行计算遮罩层图像的位置和尺寸，用以对齐经过 View Port 变换后的游戏内容。建议不要用过于复杂的 View Port 设置。</p>
+
+
+
+<h4>2.3.4 窗口形状更新时间与绘制事件顺序</h4>
+
+
+
+<p>由于 GM 运行原理所致，游戏绘制的内容并不会在绘制语句执行的瞬间显示出来，而是要等到当前 Step 所有绘制完成后才会刷新绘制缓存以显示绘制的内容。这意味着窗口外形的更新需要与绘制内容的刷新同步发生，否则就会发生窗口形状与所显示内容有所偏差的问题（比如游戏仍然显示的是上一帧的内容，但是窗口形状已经被裁剪成了下一帧所需的形状）：</p>
+
+
+
+<div class="wp-block-image"><figure class="aligncenter"><a href="https://www.noisyfox.io/wp-content/uploads/2019/01/image-4.png" target="_blank" rel="noreferrer noopener"><img src="https://www.noisyfox.io/wp-content/uploads/2019/01/image-4.png" alt="" class="wp-image-669"/></a><figcaption> <br>绘制内容与窗口形状没有同步更新 </figcaption></figure></div>
+
+
+
+<p>由于 Windows 窗口外形更新时机所限，本插件需要在 GM 的每个 Step 中，于每个 Step 开始 （Begin Step）至 Draw 系列事件开始之前对窗口形状进行更新，以保证窗口形状的更新与绘制内容的更新能够同步完成。如果在 Draw 系列事件中进行窗口形状的修改，则会发生窗口形状与绘制内容不同步的问题，请务必注意。建议在 End Step 事件之中更新窗口形状。</p>
+
+
+
+<p>再次提示，请<strong>不要</strong>在 Draw <strong>系列</strong>事件中更新窗口形状！除非你十分清楚可能发生的后果！</p>
+
+
+
+<h3>2.4 复杂遮罩</h3>
+
+
+
+<p>多次执行以下任意核心函数来改变窗口形状，则后一次的遮罩将会覆盖前一次的遮罩，<strong>并不会</strong>互相叠加：</p>
+
+
+<pre class="brush: cpp; title: ; notranslate">
+NF_WS_ShaveWindow(sprite, subimage, x, y);
+NF_WS_ShaveWindowAlpha(sprite, subimage, x, y, alpha);
+NF_WS_ShaveWindowExt(sprite, subimage, x, y, xscale, yscale, alpha);
+NF_WS_ShaveWindowSurfaceExt(surface, x, y, xscale, yscale, alpha); // 仅限 GMS
+</pre>
+
+
+<p>这意味着如果所需的遮罩是由多个元素组合而成的复杂形状，则需要开发者自行准备好已经事先组合好所有元素的<strong>单张</strong> Sprite / Surface 用作实际的遮罩。</p>
+
+
+
+<p>举例来说，如果你需要在屏幕上显示两位女牛仔，那么你需要准备如下的<strong>一张</strong> Sprite / Surface 作为遮罩：</p>
+
+
+
+<div class="wp-block-image"><figure class="aligncenter"><a href="https://www.noisyfox.io/wp-content/uploads/2019/01/complex.png" target="_blank" rel="noreferrer noopener"><img src="https://www.noisyfox.io/wp-content/uploads/2019/01/complex.png" alt="" class="wp-image-678" srcset="https://www.noisyfox.io/wp-content/uploads/2019/01/complex.png 640w, https://www.noisyfox.io/wp-content/uploads/2019/01/complex-300x225.png 300w" sizes="(max-width: 640px) 100vw, 640px" /></a><figcaption>复杂遮罩</figcaption></figure></div>
+
+
+
+<p>连续调用两次 NF_WS_ShaveWindow_* 函数并不能实现如上所述的需求。假设第一次传入了左侧牛仔的遮罩，第二次传入了右侧的遮罩，则只有右侧会正常显示出来，而第一次设置的遮罩会被覆盖而失效。</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2>3. 常见问题</h2>
+
+
+
+<ol><li>使用 Sprite 做遮罩时要注意所用 Sprite 的 xoffset 和 yoffset。</li></ol>
+<p><a rel="nofollow" href="https://www.noisyfox.io/foxwinshave2.html">FoxWinShave 2 中文使用手册</a>，首发于<a rel="nofollow" href="https://www.noisyfox.io">狐狸的小小窝</a>。</p>]]></content>
+        <author>
+            <name><![CDATA[狐狸的小小窝]]></name>
+        </author>
+    </entry>
+    
+    <entry>
         <id>https://doublemice.github.io/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6%E6%94%BB%E5%87%BB%E9%9D%A2%E5%8F%8Actf%E5%87%BA%E9%A2%98%E6%8C%87%E5%8D%97/</id>
         <title><![CDATA[智能合约攻击面及ctf出题指南]]></title>
         <updated>2019-01-03T00:00:00+08:00</updated>
@@ -2760,6 +3250,275 @@ resolve_file=php%3A%2F%2Ffilter%2Fread%3Dconvert.base64-encode%2Fresource%3D../.
     </entry>
     
     <entry>
+        <id>https://www.noisyfox.io/logrotate.html</id>
+        <title><![CDATA[Logrotate 日志滚动 解决日志占用空间过大]]></title>
+        <updated>2017-05-03T16:23:04+08:00</updated>
+        <link href="https://www.noisyfox.io/logrotate.html"/>
+        <content type="text/html" src="https://www.noisyfox.io/logrotate.html"><![CDATA[<h1>起因</h1>
+<p>前几天发现自己的博客没有办法登录了，每次输完密码登录完都会重新跳回登录界面。一开始是怀疑登录的session出了什么问题，因为浏览器开隐身模式后就能登录进去。然而开隐身模式进后台的时候又会出现403错误，于是打算连进数据库把session删除再试试。</p>
+<p>然而当我试图连接数据库时却一直提示失败，于是试图重启数据库服务，但是系统提示启动失败。电脑坏了怎么办？重启大法！然而数据库服务依旧无法启动，当时我也是摸不着头脑。明明以前一直好好的服务器怎么说炸就炸呢？</p>
+<h1>真相</h1>
+<p>后来我机智的看了下磁盘的占用情况：</p>
+<pre class="brush: bash; title: ; notranslate">df -hl</pre>
+<p><a href="https://www.noisyfox.cn/wp-content/uploads/2017/05/df-hl.png"><img class="aligncenter size-full wp-image-483" src="https://www.noisyfox.cn/wp-content/uploads/2017/05/df-hl.png" alt="df -hl" width="543" height="152" srcset="https://www.noisyfox.io/wp-content/uploads/2017/05/df-hl.png 543w, https://www.noisyfox.io/wp-content/uploads/2017/05/df-hl-300x84.png 300w" sizes="(max-width: 543px) 100vw, 543px" /></a></p>
+<p>然后我就震惊了！！<span style="color: #000000;"><del>震惊！过气博主硬盘为何被榨干！这背后究竟是人性的&#8230;（啪</del></span></p>
+<p>经过一番折腾，终于找到了问题的所在：</p>
+<pre class="brush: bash; title: ; notranslate">du -sh .</pre>
+<p><a href="https://www.noisyfox.cn/wp-content/uploads/2017/05/du-sh.png"><img class="aligncenter size-full wp-image-484" src="https://www.noisyfox.cn/wp-content/uploads/2017/05/du-sh.png" alt="df -hl" width="481" height="96" srcset="https://www.noisyfox.io/wp-content/uploads/2017/05/du-sh.png 481w, https://www.noisyfox.io/wp-content/uploads/2017/05/du-sh-300x60.png 300w" sizes="(max-width: 481px) 100vw, 481px" /></a></p>
+<p>Nginx 的日志文件居然占用了14G的空间！Why？</p>
+<h1>论日志</h1>
+<p>日志文件通常情况下是未压缩的明文文本文件，在一个运行时间较长的系统中日志文件的体积会越来越大，甚至远超你的预期。</p>
+<p>默认情况下一个服务的同一个日志流（如 Nginx 默认就有 error.log access.log 两个日志流）是输出到同一个日志文件中的，也就是说随着时间的推移，这一日志文件中包含的日志的天数也会越来越多，这就给查看某一特定时间段的日志带来了麻烦（试想一下在一个容量10G，包含了一整年数据的日志文件中查找5月份的日志信息，而且还没有日志辅助工具的帮助，是一件多么痛苦的事情）。并且如果日志文件占用了过大的存储空间，那么人们通常会优先删除最老的日志，保留最近一段时间的日志。如果所有日志信息都储存在同一个文件中，那么想要只删除部分数据也不是一件轻松的活。</p>
+<p>再者，日志数据通常都是纯文本数据，并且内容重复度非常之高，如果能够将其压缩存储，那么会大大减小体积。然而日志系统是没有办法将数据追加到一个压缩过的日志文件中去的。如果要压缩日志，那么势必需要将日志数据划分成新、旧两部分，其中旧日志压缩后单独存放，新日志即是当前系统活动的日志文件，仍然是纯文本形式。</p>
+<p>综上所述，一个好的日志系统至少需要满足以下几个需求：</p>
+<ul>
+<li>能够将日志按一定规律拆分成多个文件</li>
+<li>能够将非活动的日志压缩</li>
+<li>能够控制日志文件体积和数量，当条件满足时自动删除旧日志以释放空间</li>
+<li>日志文件名满足一定规律便于排序和筛选</li>
+</ul>
+<p>以上的需求，通常称为<strong>日志滚动</strong><del>（必考）</del>。</p>
+<h1>日志滚动</h1>
+<p>道理我都懂，但是Linux的日志系统没有提供这些功能，总不能每天手动重命名、压缩、清空、删除日志吧？</p>
+<p><del>天空一声巨响，英雄闪亮登场！</del>这时候一个叫做 <strong>logrotate</strong> 的程序就派上了用处。</p>
+<p>根据使用的系统不同，logrotate的安装方式也不尽相同，有些系统更是自带了 logrotate 并且带有很多默认的配置（比如我所使用的 Ubuntu Server）。</p>
+<p>你可以在自己的系统上查看一下 /var/log/ 目录下的日志文件，如果见到了类似“服务名.log.0”、“服务名.log.1”等一大堆具有相同服务名称但是带有后缀序号的日志文件，那么可以99%肯定这个系统已经安装了 logrotate 并且能够工作。</p>
+<p><a href="https://www.noisyfox.cn/wp-content/uploads/2017/05/logs.png"><img class="aligncenter size-full wp-image-492" src="https://www.noisyfox.cn/wp-content/uploads/2017/05/logs.png" alt="logrotate" width="663" height="579" srcset="https://www.noisyfox.io/wp-content/uploads/2017/05/logs.png 663w, https://www.noisyfox.io/wp-content/uploads/2017/05/logs-300x262.png 300w" sizes="(max-width: 663px) 100vw, 663px" /></a></p>
+<p>如果你的系统没有带logrotate，别担心，百度一下就能装上啦！而且配置巨简单！</p>
+<p>在 /etc/logrotate.d/ 目录下（不同系统可能有所区别）通常会有很多配置文件，这些文件的名字通常对应了该文件所管辖的服务（文件名仅仅是便于管理，和实际内容没有必然关联）。</p>
+<p><a href="https://www.noisyfox.cn/wp-content/uploads/2017/05/logrotate_cfg.png"><img class="aligncenter size-full wp-image-494" src="https://www.noisyfox.cn/wp-content/uploads/2017/05/logrotate_cfg.png" alt="logrotate config" width="663" height="435" srcset="https://www.noisyfox.io/wp-content/uploads/2017/05/logrotate_cfg.png 663w, https://www.noisyfox.io/wp-content/uploads/2017/05/logrotate_cfg-300x197.png 300w" sizes="(max-width: 663px) 100vw, 663px" /></a></p>
+<p>而这些配置文件的格式非常的简要，如图所示。通常第一行以目标日志文件路径起头，可以使用通配符，而后面的花括号内部则是需要应用于该日志文件的滚动规则。</p>
+<p>其中几个常用的规则在这里稍微解释一下，通常就够用了。更详细的规则可以自行查找，不再赘述。</p>
+<pre class="brush: bash; title: ; notranslate">
+
+/var/log/nginx/*.log {
+    daily  # 滚动频率，每天滚动一次。其它可选项为 hourly weekly monthly yearly
+    missingok
+    rotate 14  # 最多保留14次滚动，超过则删除最老的日志
+    maxsize 100M  # 重要！活动日志的最大尺寸，超过该尺寸则强制滚动一次
+    compress  # 重要！压缩不活动的日志，默认使用gzip
+    delaycompress
+    notifempty  # 如果日志为空则不滚动
+    create 0640 www-data adm
+    sharedscripts
+    prerotate  # 在每次滚动前执行的脚本，通常是通知该服务“我要滚动日志啦！先别生成新日志咯！”
+        if [ -d /etc/logrotate.d/httpd-prerotate ]; then \
+        run-parts /etc/logrotate.d/httpd-prerotate; \
+        fi \
+    endscript
+    postrotate  # 在滚动完成后执行的脚本，通常是通知该服务“日志滚动完成啦！请把后续日志写到新的活动日志文件中去！”
+        invoke-rc.d nginx rotate &gt;/dev/null 2&gt;&amp;1
+    endscript
+}
+
+</pre>
+<p>如果发现日志滚动后 nginx 依旧在向 access.log.1 中写入日志，而新创建的 access.log 大小始终是0，那么请将上文中的 postrotate 代码改为：</p>
+<pre class="brush: bash; title: ; notranslate">
+
+service nginx rotate &gt;/dev/null 2&gt;&amp;1
+
+</pre>
+<h1>划重点</h1>
+<p>同学A：慢着！刚刚不是说你服务器跑的 Ubuntu Server 默认启用了 logrotate 么？那么为什么你的硬盘还是被这些日志文件吃了个精光呢？按说一共就保留14份日志，也就只有14天的份，还都是压缩过的，怎么会占用这么多呢？</p>
+<p>我：<del>谢尔曼M1，坐！</del></p>
+<p>问题来了，这个 logrotate 的默认配置文件，少了 <em>maxsize 100M</em> 这一行，也就是说如果说在第二天的滚动开始前，日志就已经占用了过大的空间，以至于剩余空间不足以储存对应日志的压缩文件（因为得先压缩完才能删除原始文件，于是整个过程所需的最大空间是 <em>原始文件体积+压缩后的体积</em>，毕竟不可能一边压缩一边删除原始文件嘛）的话，整个日志滚动就会失败。而我的实际情况就是 access.log.0 文件占用了13G的空间（剩下的13个压缩后的日志一共才1G不到，完美的体现了压缩的好处），剩余的空间不足以对其进行压缩，于是整个日志滚动彻底失效了。</p>
+<p>当然了，理想的情况下，如果能够将其设置成全部日志加起来的体积超过一个临界点（比如日志一共5G）那么就自动删除最老的一份日志，那是坠吼嘀！然而 logrotate 并没有提供这样的整体体积限制的功能，于是只好用一些小技巧。注意这两行：</p>
+<pre class="brush: bash; title: ; notranslate">
+rotate 14 # 最多保留14次滚动，超过则删除最老的日志
+maxsize 100M # 重要！活动日志的最大尺寸，超过该尺寸则强制滚动一次
+</pre>
+<p>通过限制活动日志的体积（也就是尾号是0或者没有后缀的那个日志文件）和保留日志滚动数量，我们能够限制整体的日志大小，也即不超过 14 * 100M = 1.4G。当然这样的缺点就是如果某一天的日志特别多，那么那一天的日志会被拆分成多个（课外题：自行百度，将日志文件后缀设置为当前的日期时间）。</p>
+<h1>总结</h1>
+<p>不限制日志体积真是坑啊！</p>
+<p><a rel="nofollow" href="https://www.noisyfox.io/logrotate.html">Logrotate 日志滚动 解决日志占用空间过大</a>，首发于<a rel="nofollow" href="https://www.noisyfox.io">狐狸的小小窝</a>。</p>]]></content>
+        <author>
+            <name><![CDATA[狐狸的小小窝]]></name>
+        </author>
+    </entry>
+    
+    <entry>
+        <id>https://www.noisyfox.io/cecpq1-nginx-boringssl.html</id>
+        <title><![CDATA[Use CECPQ1 On Your Website with Nginx & BoringSSL]]></title>
+        <updated>2016-09-13T06:38:13+08:00</updated>
+        <link href="https://www.noisyfox.io/cecpq1-nginx-boringssl.html"/>
+        <content type="text/html" src="https://www.noisyfox.io/cecpq1-nginx-boringssl.html"><![CDATA[<h2>Deprecated / 已弃用</h2>
+<p>In 2016, the experimental use in Chrome ended and it was planned to disable CECPQ1 in a later Chrome update.</p>
+<p>CECPQ1的实验已经结束，目前的chrome stable已经移除了对其的支持。</p>
+<hr />
+<h2>What is CECPQ1</h2>
+<p>CECPQ1 是谷歌提出的一种“<a href="https://en.wikipedia.org/wiki/Post-quantum_cryptography" target="_blank" rel="noopener noreferrer">后量子时代</a>”的密钥交换算法。</p>
+<p>所谓的后量子时代算法，大意是说该算法难以被将来可能出现的量子计算机轻易破解。<br />
+而目前常用的非对称加密/密钥交换算法的安全性大多依赖于大数分解以及逆推椭圆曲线的难度。而这些问题可能对于量子计算机来说可以轻松解决。故而需要一种新的加密原理来对抗量子计算机的威胁。</p>
+<p>当然将来能不能制造出大型的量子计算机并破解现有的加密算法依旧是个未知数。<a href="https://community.letsencrypt.org/t/google-is-experimenting-with-post-quantum-crypto-for-tls/17720" target="_blank" rel="noopener noreferrer">不过谷歌在前段时间开始已经在自己的 chrome 以及服务器上启用了该密钥交换算法</a>，使用 Chrome 54+ 访问谷歌的服务，可以看到类似下图的结果：<br />
+<a href="https://www.noisyfox.cn/wp-content/uploads/2016/09/QQ截图20160913150853.png"><img class="aligncenter size-full wp-image-416" src="https://www.noisyfox.cn/wp-content/uploads/2016/09/QQ截图20160913150853.png" alt="CECPQ1 on Google" width="642" height="401" /></a></p>
+<p>其中的“CECPQ1_ECDSA”即表明了其采用了 CECPQ1 密钥交换 + ECDSA 签名算法。</p>
+<p>当然纯粹是好玩，我也装修了一下我的小窝，让它也支持了这种厉害的算法~<br />
+<a href="https://www.noisyfox.cn/wp-content/uploads/2016/09/QQ截图20160913151547.png"><img class="aligncenter size-full wp-image-418" src="https://www.noisyfox.cn/wp-content/uploads/2016/09/QQ截图20160913151547.png" alt="CECPQ1 on Noisyfox" width="642" height="401" /></a></p>
+<p>不过由于我的证书是 RSA 签名的，故图中采用的是“CECPQ1_RSA”而不是 ECDSA。</p>
+<p>如果你也想让自己的网站支持这种算法，那么就跟着狐狸我一步一步来配置你的网站吧~</p>
+<hr />
+<h2>教程环境</h2>
+<ul>
+<li>Ubuntu 14.04.4 LTS</li>
+<li>nginx-1.10.1</li>
+<li>BoringSSL</li>
+</ul>
+<p>由于目前仅有 BoringSSL 支持 CECPQ1 算法，故我们需要自行采用 BoringSSL 来编译 nginx。</p>
+<p>对于 Debian 用户，以及 Ubuntu 14.04 之前的用户，可以采用<a href="https://github.com/ajhaydock/BoringNginx" target="_blank" rel="noopener noreferrer">BoringNginx</a>项目来一键编译、安装。</p>
+<p>对于 Ubuntu 14.04 及以后的用户，由于 Ubuntu 采用了 Systemd 替换了 upstart，故 BoringNginx 脚本会出问题。同时 BoringNginx 要求脚本必须在非 root 用户下执行，这对于大部分习惯用 root 用户来配置服务器的用户来说十分不便，故需采用手动编译、安装。</p>
+<hr />
+<h2>编译 BoringSSL &amp; Nginx</h2>
+<p><em>注：该部分教程参考了 Jerry Qu 《<a href="https://imququ.com/post/optimize-ssl-ciphers-with-boringssl.html" target="_blank" rel="noopener noreferrer">使用 BoringSSL 优化 HTTPS 加密算法选择</a>》一文，在此表示感谢。</em></p>
+<p>首先建立一个文件夹，并下载 Nginx 和 BoringSSL 源码。</p>
+<p>Nginx 从 1.7.4 开始支持 BoringSSL，这里我使用的是最新的稳定版 Nginx：</p>
+<pre class="brush: bash; title: ; notranslate">
+mkdir nginx &amp;&amp; cd nginx
+wget http://nginx.org/download/nginx-1.10.1.tar.gz
+tar xzf nginx-1.10.1.tar.gz
+
+git clone https://boringssl.googlesource.com/boringssl
+</pre>
+<p>现在你的 nginx 文件夹里应该会有这两个子目录：</p>
+<pre class="brush: bash; title: ; notranslate">
+boringssl/
+nginx-1.10.1/
+</pre>
+<p>接下来还需要做一些准备工作：</p>
+<pre class="brush: bash; title: ; notranslate">
+# 安装编译 BoringSSL 所需的 Golang 和 cmake
+sudo apt-get install golang cmake
+
+# 安装编译 Nginx 所需的工具和依赖库
+sudo apt-get install build-essential libpcre3 libpcre3-dev zlib1g-dev
+
+# 忽略编译过程中的 Warning（不加这个，编到一半会因为 Warning 太多无法继续）
+export CFLAGS=&quot;-Wno-error&quot;
+</pre>
+<p>随后编译 BoringSSL：</p>
+<pre class="brush: bash; title: ; notranslate">
+# 进入 BoringSSL 源码根目录
+cd boringssl
+
+# 创建 build 目录并编译，完成后回到 BoringSSL 源码根目录
+mkdir build &amp;&amp; cd build &amp;&amp; cmake ../ &amp;&amp; make &amp;&amp; cd ../
+
+# 创建 .openssl 目录，并将库文件和编译后的文件放进去
+mkdir -p .openssl/lib &amp;&amp; cd .openssl &amp;&amp; ln -s ../include . &amp;&amp; cd ../
+cp build/crypto/libcrypto.a build/ssl/libssl.a .openssl/lib
+
+cd ../
+</pre>
+<p>然后就可以用 BoringSSL 来编译 Nginx 了：</p>
+<pre class="brush: bash; title: ; notranslate">
+# 进入 Nginx 源码根目录
+cd nginx-1.10.1
+
+# 指定使用 BoringSSL 作为 SSL 库
+# 这里的参数比原文要多了许多，是为了兼容采用 apt 安装的 Nginx 的配置
+./configure --with-openssl=../boringssl \
+--prefix=/usr/share/nginx \
+--sbin-path=/usr/sbin/nginx \
+--conf-path=/etc/nginx/nginx.conf \
+--error-log-path=/var/log/nginx/error.log \
+--http-log-path=/var/log/nginx/access.log \
+--pid-path=/run/nginx.pid \
+--lock-path=/run/lock/subsys/nginx \
+--user=www-data \
+--group=www-data \
+--with-threads \
+--with-file-aio \
+--with-ipv6 \
+--with-http_ssl_module \
+--with-http_v2_module \
+--with-http_realip_module \
+--with-http_gunzip_module \
+--with-http_gzip_static_module \
+--with-http_slice_module \
+--with-http_stub_status_module \
+--without-select_module \
+--without-poll_module \
+--without-mail_pop3_module \
+--without-mail_imap_module \
+--without-mail_smtp_module
+
+# 修改时间，避免 Nginx 再次编译 BoringSSL
+touch ../boringssl/.openssl/include/openssl/ssl.h
+</pre>
+<p>然后就可以开始编译 Nginx 了， 直接执行：</p>
+<pre class="brush: bash; title: ; notranslate">
+make
+</pre>
+<p>一切正常的话，即可在 objs 目录里找到编译好的 Nginx。<br />
+执行：</p>
+<pre class="brush: bash; title: ; notranslate">
+cd objs
+./nginx -V
+</pre>
+<p>应该可以看到类似这样的输出：</p>
+<pre class="brush: bash; title: ; notranslate">
+nginx version: nginx/1.10.1
+built with OpenSSL 1.0.2 (compatible; BoringSSL) (running with BoringSSL)
+TLS SNI support enabled
+configure arguments: --with-openssl=../boringssl --prefix=/usr/share/nginx --sbin-path=/usr/sbin/nginx --conf-path=/etc/nginx/nginx.conf --error-log-path=/var/log/nginx/error.log --http-log-path=/var/log/nginx/access.log --pid-path=/run/nginx.pid --lock-path=/run/lock/subsys/nginx --user=www-data --group=www-data --with-threads --with-file-aio --with-ipv6 --with-http_ssl_module --with-http_v2_module --with-http_realip_module --with-http_gunzip_module --with-http_gzip_static_module --with-http_slice_module --with-http_stub_status_module --without-select_module --without-poll_module --without-mail_pop3_module --without-mail_imap_module --without-mail_smtp_module
+</pre>
+<p>表明编译成功了。下面我们要将该 Nginx 安装至系统中。</p>
+<hr />
+<h2>安装 Nginx with BoringSSL</h2>
+<p>由于配置服务需要一些额外的知识，因此为了简单起见，我采用了 <em>使用 apt 安装原版 Nginx 然后替换可执行文件</em> 的方式来简化安装和服务的配置。这也是为什么在上文中我建议使用和 apt 安装的 Nginx 相仿的配置来编译自己的 Nginx。</p>
+<p>首先用 apt 来安装原版 Nginx：</p>
+<pre class="brush: bash; title: ; notranslate">
+# 从 Ubuntu 16.04 开始系统自带源的 nginx 就是1.10 版本的
+apt-get install nginx
+</pre>
+<p>或者</p>
+<pre class="brush: bash; title: ; notranslate">
+# 先添加 Nginx 官方软件源
+add-apt-repository ppa:nginx/stable
+apt-get update
+apt-get install nginx
+</pre>
+<p>然后替换原版 Nginx 为我们自己编译的版本：</p>
+<pre class="brush: bash; title: ; notranslate">
+# 先停止 Nginx 服务
+service nginx stop
+
+# 备份原版可执行文件
+cp /usr/sbin/nginx  ./nginx.bak
+
+# 替换 Nginx 可执行文件
+cp nginx /usr/sbin/nginx
+
+# 删除 Nginx 默认的 modules， 否则可能启动时报二进制不兼容的错误
+rm /etc/nginx/modules-enabled/*
+</pre>
+<p>这样一来，就成功的将系统中的 Nginx 替换为我们自己编译的版本，同时又保留了原版的服务控制方式，非常方便。</p>
+<hr />
+<h2>配置 Cipher Suite</h2>
+<p>在这里假定你已经知道如何配置 Nginx + SSL 了，如果不会，请百度或者谷歌一下。</p>
+<p>为了启用 CECPQ1 算法，需要配置正确的 Cipher Suit：</p>
+<pre class="brush: plain; title: ; notranslate">
+ssl_ciphers &quot;[CECPQ1-ECDSA-AES256-GCM-SHA384|CECPQ1-ECDSA-CHACHA20-POLY1305-SHA256]:[CECPQ1-RSA-AES256-GCM-SHA384|CECPQ1-RSA-CHACHA20-POLY1305-SHA256]:[ECDHE-ECDSA-AES128-GCM-SHA256|ECDHE-ECDSA-CHACHA20-POLY1305-SHA256]:[ECDHE-RSA-AES128-GCM-SHA256|ECDHE-RSA-CHACHA20-POLY1305-SHA256]:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES128-SHA:ECDHE-ECDSA-AES256-SHA:ECDHE-RSA-AES256-SHA:RSA-AES128-GCM-SHA256:RSA-AES256-GCM-SHA384:RSA-AES128-SHA:RSA-AES256-SHA:RSA-3DES-EDE-SHA&quot;;
+ssl_prefer_server_ciphers on;
+</pre>
+<p>其中最先出现的几个以“CECPQ1”开头的算法就是本文提到的算法。<br />
+关于该 Cipher Suite 的格式和意思，也请参考《<a href="https://imququ.com/post/optimize-ssl-ciphers-with-boringssl.html" target="_blank" rel="noopener noreferrer">使用 BoringSSL 优化 HTTPS 加密算法选择</a>》一文。</p>
+<p>同时我们编译出的 Nginx 是支持 HTTP/2 以及 ALPN 的，在你的配置里写上：</p>
+<pre class="brush: plain; title: ; notranslate">
+listen 443 ssl http2;
+</pre>
+<p>即可启用最新最炫酷的 h2 啦！<br />
+（当然谷歌又弄了个 QUIC 协议，目前不太容易在 Nginx 上实现，残念。）</p>
+<hr />
+<h2> 结束</h2>
+<p>这篇教程到这里就结束啦~如果各位读者老爷发现有什么错误或不当之处，还请回复指正~</p>
+<p>也欢迎各位共同探讨相关技术~</p>
+<p><a rel="nofollow" href="https://www.noisyfox.io/cecpq1-nginx-boringssl.html">Use CECPQ1 On Your Website with Nginx &#038; BoringSSL</a>，首发于<a rel="nofollow" href="https://www.noisyfox.io">狐狸的小小窝</a>。</p>]]></content>
+        <author>
+            <name><![CDATA[狐狸的小小窝]]></name>
+        </author>
+    </entry>
+    
+    <entry>
         <id>https://www.summershrimp.com/2016/08/appium-android-ui-test/</id>
         <title><![CDATA[Appium在Android UI测试中的应用]]></title>
         <updated>2016-08-18T15:29:08+08:00</updated>
@@ -2945,6 +3704,64 @@ dr.close()</pre>
 <p>&nbsp;</p>]]></content>
         <author>
             <name><![CDATA[0xe799bde88f9c]]></name>
+        </author>
+    </entry>
+    
+    <entry>
+        <id>https://www.noisyfox.io/unmanaged-exports.html</id>
+        <title><![CDATA[Unmanaged Exports 修正版 .NET导出非托管函数]]></title>
+        <updated>2016-06-19T07:05:21+08:00</updated>
+        <link href="https://www.noisyfox.io/unmanaged-exports.html"/>
+        <content type="text/html" src="https://www.noisyfox.io/unmanaged-exports.html"><![CDATA[<p>Unmanaged Exports 是一个将.NET编写的静态托管函数导出成可供C/C++等直接调用的非托管函数的工具。</p>
+<hr />
+<h2>它是如何工作的？</h2>
+<p>创建一个新的或者修改已经存在的类库。<br />
+然后加入 UnmanagedExports <a href="https://nuget.org/packages/UnmanagedExports" target="_blank">Nuget 包</a>。<br />
+这基本就是所有要做的事情了。<br />
+然后你就可以随便写一些静态方法，用[DllExport]装饰它，然后在原生代码中使用了。<br />
+它很像 DllImport，你可以用MarshalAsAttribute来定义该函数的参数和结果的格式。<br />
+在编译时，这个工具会自动修改IL代码增加导出声明。</p>
+<h2>限制</h2>
+<ul>
+<li>你不能导出在同一个class中的重载函数，即便你指定了不同的导出名称。</li>
+<li>另一个限制是你不能递归调用导出函数。</li>
+</ul>
+<p>这看起来是运行时的限制，并且我并不想为了规避这些限制而再把你的函数做一次包装。</p>
+<hr />
+<p>首先用C#（其它.NET语言也可）创建一个windows经典桌面dll，然后在Nuget中搜索并安装Unmanaged Exports这个包。</p>
+<p>随后编写你要导出的静态函数，并添加[DllExport]注解，范例如下：</p>
+<p><pre data-enlighter-language="csharp" class="EnlighterJSRAW">
+class Test
+{
+  [DllExport(&quot;add&quot;, CallingConvention = CallingConvention.Cdecl)]
+  public static int TestExport(int left, int right)
+  {
+     return left + right;
+  } 
+}
+</pre></p>
+<p>然后生成平台选择一个具体的平台（不能是AnyCPU否则该工具不生效），生成解决方案即可。<br />
+该工具最新版只支持vs2008以后的vs，因为vs2008及以前的版本不支持nuget。</p>
+<hr />
+<p>工具官方网站及详细说明：<br />
+<a href="https://sites.google.com/site/robertgiesecke/Home/uploads/unmanagedexports" target="_blank">https://sites.google.com/site/robertgiesecke/Home/uploads/unmanagedexports</a></p>
+<hr />
+<p>关于编译错误<br />
+该工具在非英文操作系统上可能会出现编译错误的问题，具体表现如下：<br />
+<a href="http://stackoverflow.com/questions/20288469/cant-create-unmanaged-dll-using-c-sharp-and-robert-gieseckes-unmanaged-exports" target="_blank">http://stackoverflow.com/questions/20288469/cant-create-unmanaged-dll-using-c-sharp-and-robert-gieseckes-unmanaged-exports</a><br />
+<a href="https://www.noisyfox.cn/wp-content/uploads/2016/06/QQ截图20160619143947.png"><img class="aligncenter size-full wp-image-402" src="https://www.noisyfox.cn/wp-content/uploads/2016/06/QQ截图20160619143947.png" alt="Unmanaged Exports 编译错误" width="1452" height="90" /></a><br />
+主要原因是因为非英文操作系统中IL代码中含有非英文注释导致插件工作异常。<br />
+虽然将系统语言切换成英文可以解决这个问题，但是这个方法过于麻烦，故本人修改了这个工具，修正了其在非英文操作系统上不能正常使用的问题。</p>
+<p>文末附上修改后的文件，解压后将其中的两个dll替换进项目NuGet包中packages\UnmanagedExports.1.2.7\tools文件夹下的两个同名dll即可。<br />
+改修正版仅针对Unmanaged Exports 1.2.7版本制作，其它版本未测，可能不能正常使用。<br />
+替换完成后即可正常编译：<br />
+<a href="https://www.noisyfox.cn/wp-content/uploads/2016/06/QQ截图20160619145913.png"><img class="aligncenter size-full wp-image-403" src="https://www.noisyfox.cn/wp-content/uploads/2016/06/QQ截图20160619145913.png" alt="Unmanaged Exports 编译正常" width="662" height="65" /></a><br />
+<div class="sdm_download_item "><div class="sdm_download_item_top"><div class="sdm_download_thumbnail"></div><div class="sdm_download_title">DllExport-Fixed-1.2.7.7z</div></div><div style="clear:both;"></div><div class="sdm_download_description"><p>修正了非英文系统编译错误的Unmanaged Exports 1.2.7</p>
+<h1></h1>
+</div><div class="sdm_download_link"><span class="sdm_download_button"><a href="https://www.noisyfox.io/?smd_process_download=1&download_id=404" class="sdm_download green" title="DllExport-Fixed-1.2.7.7z" target="_blank">Download Now!</a></span><span class="sdm_download_item_count"><span class="sdm_item_count_number">846</span><span class="sdm_item_count_string"> Downloads</span></span></div></div><div class="sdm_clear_float"></div></p>
+<p><a rel="nofollow" href="https://www.noisyfox.io/unmanaged-exports.html">Unmanaged Exports 修正版 .NET导出非托管函数</a>，首发于<a rel="nofollow" href="https://www.noisyfox.io">狐狸的小小窝</a>。</p>]]></content>
+        <author>
+            <name><![CDATA[狐狸的小小窝]]></name>
         </author>
     </entry>
     
