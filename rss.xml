@@ -3,7 +3,7 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2020-03-24T06:05:43+08:00</updated>
+    <updated>2020-03-24T12:06:13+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
@@ -18,6 +18,20 @@
         <content type="text/html" src="https://miaotony.xyz/2020/03/23/CTF_BJDCTF2nd/"><![CDATA[划水划水~周末水了一下BJDCTF 2nd，据说是萌新赛，于是来玩了一下，嗯让我知道了我的确就是萌新。]]></content>
         <author>
             <name><![CDATA[MiaoTony]]></name>
+        </author>
+    </entry>
+    
+    <entry>
+        <id>https://blog.creedowl.com/posts/renew/</id>
+        <title><![CDATA[重新开始]]></title>
+        <updated>2020-03-19T13:28:13+08:00</updated>
+        <link href="https://blog.creedowl.com/posts/renew/"/>
+        <content type="text/html" src="https://blog.creedowl.com/posts/renew/"><![CDATA[<p>突然发现距上一篇blog发布已经过去了快一年的时间，原先的blog也疏于打理，只有寥寥几篇文章，图床基本失效。主要因为我比较懒，认真整理一篇blog也是费时费力的事情。但自己整理一些文章是很有意义的事情，能记录下自己的学习历程，总结知识，再次遇到相同的问题也可以回头参考。</p>
+<p>blog一直没更新有个诱因是微博图床开启了防盗链，导致blog中许多图片都无法访问了<del>老王背锅</del>，又懒得修复。同时看上了<a href="https://gohugo.io/">hugo</a>这个框架，正好也在学习<code>golang</code>，就想从<code>hexo</code>更换到<code>hugo</code>。但这两个框架有个很大的区别<del>我觉得</del>，就是<code>hexo</code>是一堆前端工程师搞的，而<code>hugo</code>是一堆后端工程师搞的，这就导致了<code>hugo</code>没有啥好看的主题，也就一直鸽下去了。</p>
+<p>去年年中的时候就打算和@queensferry写一个Hugo主题<a href="https://github.com/queensferryme/hugo-theme-verse">verse</a>，立项的时候很多想法，但做起来就不想动了。摸完页面框架后就鸽了，一方面实在不会设计，另一方面调各种样式是真的蛋疼。鸽了半年又捡起来<del>虽然我没写啥</del>，不过渐渐也有点样子了。但今天发现了一个很棒的主题<a href="https://github.com/Track3/hermit">hermit</a>，几乎就是我想要的，里面很多设计就是我当初构想的内容，马上捡起了blog。</p>
+<p>这一年来也计划整理个人笔记软件，在尝试了数个软件后，有印象笔记，为知笔记，有道云笔记，onenote及一堆开源笔记应用，都不太满足我的需求。最后发现了notion这个东西贼香（主要对学生免费了），最后就选择了它。不过这也导致我手上一堆笔记分散在各处，打算后面整理清楚<del>水</del>几篇blog出来。</p>]]></content>
+        <author>
+            <name><![CDATA[Creedowl’s Blog]]></name>
         </author>
     </entry>
     
@@ -1826,13 +1840,345 @@ apply plugin: 'org.springframework.boot'
     </entry>
     
     <entry>
-        <id>https://blog.creedowl.com/2019/04/13/vue-demo-instruction/</id>
+        <id>https://blog.creedowl.com/posts/vue-demo-instruction/</id>
         <title><![CDATA[Vue.js 从入坑到入土]]></title>
-        <updated>2019-04-13T10:46:08+08:00</updated>
-        <link href="https://blog.creedowl.com/2019/04/13/vue-demo-instruction/"/>
-        <content type="text/html" src="https://blog.creedowl.com/2019/04/13/vue-demo-instruction/"><![CDATA[<h1 id="Vue-js-从入坑到入土"><a href="#Vue-js-从入坑到入土" class="headerlink" title="Vue.js 从入坑到入土"></a>Vue.js 从入坑到入土</h1><p>近年来前端领域发展飞速，从最早的直接写html, js, css 到使用jQuery快速开发，再到近年来使用Vuejs，Reactjs 实现工程化开发，也就短短十几年。虽然前端项目结构越来越复杂，但也越来越规范，清晰，更加工程化。当前较为流行的前端框架有Vuejs、Reactjs、Angularjs 等，而Vuejs由于其灵(zhong)活(wen)轻(wen)便(dang)，较为流行。虽然Vuejs有完善的中文文档，但文档主要在介绍其用法，缺少如何实现一个完整项目的指导，本文就介绍如何用Vuejs创建一个完整的前端项目，并与后端进行交互。</p><p><strong>本文基于<a href="mailto:Vuejs@2.x" target="_blank" rel="noopener">Vuejs@2.x</a>及<a href="mailto:VueCLI@3.x" target="_blank" rel="noopener">VueCLI@3.x</a></strong></p><ol><li><p>所需技术栈：html, javascript, css基础知识，其中js建议了解<strong>ES2015</strong>标准，特别要掌握<strong>promise</strong>的使用</p></li><li><p>使用的工具：<del>宇宙第一编辑器</del> VSCode —— 现在对vue项目的支持已经很好了，可以自动安装vue项目需要的插件</p></li></ol><h1 id="0x0-安装"><a href="#0x0-安装" class="headerlink" title="0x0 安装"></a>0x0 安装</h1><blockquote><p>推荐使用<a href="https://yarnpkg.com/lang/zh-hans" target="_blank" rel="noopener">yarn</a>代替npm作为包管理器</p></blockquote><h2 id="安装VueCLI"><a href="#安装VueCLI" class="headerlink" title="安装VueCLI"></a>安装VueCLI</h2><blockquote><p> VueCLI是Vuejs官方推出的项目脚手架工具，可以方便的创建、管理Vue项目，还提供优雅的web管理界面</p></blockquote><p>全局安装<a href="https://cli.vuejs.org/zh/" target="_blank" rel="noopener">VueCLI</a></p><pre><code class="shell">yarn global add @vue/cli</code></pre><h2 id="安装Vue-devtools"><a href="#安装Vue-devtools" class="headerlink" title="安装Vue-devtools"></a>安装Vue-devtools</h2><blockquote><p><a href="https://github.com/vuejs/vue-devtools" target="_blank" rel="noopener">Vue-devtools</a> 是vue官方的浏览器开发插件，可以方便的在浏览器中调试vue应用</p></blockquote><p>Vue-devtools 提供多平台的浏览器插件可以直接安装使用</p><p><a href="https://github.com/vuejs/vue-devtools#installation" target="_blank" rel="noopener">installation</a></p><h1 id="0x1-新建项目"><a href="#0x1-新建项目" class="headerlink" title="0x1 新建项目"></a>0x1 新建项目</h1><p>使用 <code>vue create vue_demo</code> 创建新项目，接下来会出现一个交互式命令行帮你配置项目。</p><p><strong>注意此处不要使用默认的配置！具体配置参考下图</strong></p><blockquote><p>坑x1 默认的配置十分简单，新手经常不知道怎么写多页面，弄不明白项目怎么组织的，所以需要自定义配置，添加vue-router插件实现多页面跳转</p></blockquote><p><a href="https://asciinema.org/a/240155" target="_blank" rel="noopener"><img src="https://asciinema.org/a/240155.svg" alt="asciicast"></a></p><h1 id="0x2-项目框架"><a href="#0x2-项目框架" class="headerlink" title="0x2 项目框架"></a>0x2 项目框架</h1><p>此时项目已经创建成功，如果你按照提示启动项目就能看到经典的vue启动页</p><p><img src="http://ww1.sinaimg.cn/large/0071ouepgy1g1yg2r5ysxj30up0mx3zv.jpg" alt="image"></p><p>当前的项目结构如下</p><pre><code class="shell">.                     项目根目录├── README.md ├── babel.config.js├── package.json      项目主配置文件├── public            公共资源文件夹│   ├── favicon.ico│   └── index.html    入口html├── src               源码根目录│   ├── App.vue       入口文件│   ├── assets        资源文件夹│   │   └── logo.png│   ├── components    组件文件夹│   │   └── HelloWorld.vue │   ├── main.js       入口配置文件│   ├── router.js     路由文件│   ├── store.js      状态管理│   └── views         页面文件夹│       ├── About.vue│       └── Home.vue└── yarn.lock         依赖文件</code></pre><p>在下面的章节具体介绍各个文件、文件夹的用处和如何组织项目。</p><h1 id="0x3-项目结构"><a href="#0x3-项目结构" class="headerlink" title="0x3 项目结构"></a>0x3 项目结构</h1><p>用vue开发的项目一般是<a href="https://zh.wikipedia.org/wiki/%E5%8D%95%E9%A1%B5%E5%BA%94%E7%94%A8" target="_blank" rel="noopener">SPA(单页应用)</a>，通过动态重写当前页面来与用户交互，而不会重新加载整个新页面。所以要组织多页面就要通过vue-router来组织页面，而vuex用来保存状态。</p><p>作为单页应用，当然需要一个入口html文件，也就是 <code>public/index.html</code> :</p><pre><code class="html">public/index.html&lt;!DOCTYPE html&gt;&lt;html lang=&quot;en&quot;&gt;  &lt;head&gt;    &lt;meta charset=&quot;utf-8&quot;&gt;    &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge&quot;&gt;    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1.0&quot;&gt;    &lt;link rel=&quot;icon&quot; href=&quot;&lt;%= BASE_URL %&gt;favicon.ico&quot;&gt;    &lt;title&gt;vue_demo&lt;/title&gt;  &lt;/head&gt;  &lt;body&gt;    &lt;noscript&gt;      &lt;strong&gt;We&#39;re sorry but vue_demo doesn&#39;t work properly without JavaScript enabled. Please enable it to continue.&lt;/strong&gt;    &lt;/noscript&gt;    &lt;div id=&quot;app&quot;&gt;&lt;/div&gt;    &lt;!-- built files will be auto injected --&gt;  &lt;/body&gt;&lt;/html&gt;</code></pre><p>这是默认生成的 <code>index.html</code> ，而编译好的文件（网页内容）会被自动注入到 <code>&lt;div id=&quot;app&quot;&gt;&lt;/div&gt;</code> 中，也就意味着要使用vue开发的应用，浏览器必须支持js。</p><p>而#app所绑定的vue实例，则位于 <code>src/main.js</code> </p><hr><pre><code class="javascript">src/main.jsimport Vue from &#39;vue&#39;import App from &#39;./App.vue&#39;import router from &#39;./router&#39;import store from &#39;./store&#39;Vue.config.productionTip = falsenew Vue({  router, // 使用vue-router插件  store, // 使用vuex插件  render: h =&gt; h(App) // 渲染页面}).$mount(&#39;#app&#39;) // 绑定到 index.html -&gt; div#app</code></pre><p>其中渲染的页面位于 <code>src/App.vue</code> </p><hr><blockquote><p>xxx.vue 是vue中的<a href="https://cn.vuejs.org/v2/guide/single-file-components.html" target="_blank" rel="noopener">单文件组件</a>，将 <code>html css javascript</code> 集合在同一个文件，便于组织管理</p></blockquote><pre><code class="html">src/App.vue&lt;template&gt;  &lt;div id=&quot;app&quot;&gt;    &lt;div id=&quot;nav&quot;&gt;      &lt;router-link to=&quot;/&quot;&gt;Home&lt;/router-link&gt;      &lt;router-link to=&quot;/about&quot;&gt;About&lt;/router-link&gt;    &lt;/div&gt;    &lt;router-view/&gt;  &lt;/div&gt;&lt;/template&gt;&lt;style&gt;#app {  font-family: &#39;Avenir&#39;, Helvetica, Arial, sans-serif;  -webkit-font-smoothing: antialiased;  -moz-osx-font-smoothing: grayscale;  text-align: center;  color: #2c3e50;}#nav {  padding: 30px;}#nav a {  font-weight: bold;  color: #2c3e50;}#nav a.router-link-exact-active {  color: #42b983;}&lt;/style&gt;</code></pre><p>其中 <code>&lt;template&gt;&lt;/template&gt;</code> 是页面的 <code>html</code> 元素，<code>style</code> 是样式元素，还可以添加一个 <code>javascript</code> 为js元素。其中 <code>&lt;router-view/&gt;</code> 是路由组件，会被自动渲染成当前路由对应的页面</p><hr><pre><code class="javascript">src/router.jsimport Vue from &#39;vue&#39;import Router from &#39;vue-router&#39;import Home from &#39;./views/Home.vue&#39;Vue.use(Router)export default new Router({  mode: &#39;history&#39;,  base: process.env.BASE_URL,  routes: [    {      path: &#39;/&#39;,      name: &#39;home&#39;,      component: Home    },    {      path: &#39;/about&#39;,      name: &#39;about&#39;,      // route level code-splitting      // this generates a separate chunk (about.[hash].js) for this route      // which is lazy-loaded when the route is visited.      component: () =&gt; import(/* webpackChunkName: &quot;about&quot; */ &#39;./views/About.vue&#39;)    }  ]})</code></pre><p>如 <code>http://localhost:8080/</code> 下 <code>&lt;router-view/&gt;</code> 被渲染成 <code>home</code> 页面，<code>http://localhost:8080/about</code> 下 <code>&lt;router-view/&gt;</code> 被渲染成 <code>about</code> 页面。</p><blockquote><p>技巧 这里加载组件使用函数加载，就可以实现懒加载以优化性能。</p></blockquote><hr><p><code>src/views/</code> 则是保存页面文件，例如</p><pre><code class="html">src/views/Home.vue&lt;template&gt;  &lt;div class=&quot;home&quot;&gt;    &lt;img alt=&quot;Vue logo&quot; src=&quot;../assets/logo.png&quot;&gt;    &lt;HelloWorld msg=&quot;Welcome to Your Vue.js App&quot;/&gt;  &lt;/div&gt;&lt;/template&gt;&lt;script&gt;// @ is an alias to /srcimport HelloWorld from &#39;@/components/HelloWorld.vue&#39;export default {  name: &#39;home&#39;,  components: {    HelloWorld  }}&lt;/script&gt;</code></pre><p>这就是路由 <code>home</code> 对应的页面，其中用到了 <code>HelloWorld</code> 组件，需要在js中引入。</p><hr><p><code>src/components/</code> 里面保存可复用的组件，例如上面的 <code>&lt;HelloWorld/&gt;</code> 就是一个独立的组件（component）</p><pre><code class="html">src/components/HelloWorld.vue&lt;template&gt;  &lt;div class=&quot;hello&quot;&gt;    &lt;h1&gt;{{ msg }}&lt;/h1&gt;    &lt;p&gt;      For a guide and recipes on how to configure / customize this project,&lt;br&gt;      check out the      &lt;a href=&quot;https://cli.vuejs.org&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;vue-cli documentation&lt;/a&gt;.    &lt;/p&gt;  &lt;/div&gt;&lt;/template&gt;&lt;script&gt;export default {  name: &#39;HelloWorld&#39;,  props: {    msg: String  }}&lt;/script&gt;&lt;!-- Add &quot;scoped&quot; attribute to limit CSS to this component only --&gt;&lt;style scoped&gt;h1 {  margin: 40px 0 0;}&lt;/style&gt;</code></pre><p>这就是一个典型的组件，结构就是一个正常的单文本组件，说明组件就是把一部分页面逻辑抽出来组成一个文件。这样的好处是分离与页面无关的组件，使页面逻辑更加清晰，同时也便于复用组件。如果有以下情况，我建议把部分代码分离成独立的组件：</p><ol><li>需要多次复用的组件，如基础按钮、表单等</li><li>较为复杂但与页面逻辑无关的，如页面的Header、Footer等</li></ol><blockquote><p>技巧 在 <code>style</code> 表情上添加 <code>scoped</code> 属性可以限制CSS生效范围为该组件，不会影响其他元素，在编译时vue解释器会给这些css属性加上随机的hash保证唯一</p></blockquote><hr><p>vue还提供了一个状态管理模式 <a href="https://vuex.vuejs.org/zh/" target="_blank" rel="noopener">vuex</a>，可以很方便的管理所有组件的状态。对应文件 <code>src/store.js</code></p><pre><code class="javascript">src/store.jsimport Vue from &#39;vue&#39;import Vuex from &#39;vuex&#39;Vue.use(Vuex)export default new Vuex.Store({  state: {  },  mutations: {  },  actions: {  }})</code></pre><p><del>由于我还没用过 <code>vuex</code> 所以自己看文档吧</del></p><p>对于简单的应用也可以不用 <code>vuex</code> ，一个简单的 <a href="https://cn.vuejs.org/v2/guide/state-management.html#%E7%AE%80%E5%8D%95%E7%8A%B6%E6%80%81%E7%AE%A1%E7%90%86%E8%B5%B7%E6%AD%A5%E4%BD%BF%E7%94%A8" target="_blank" rel="noopener"><code>store</code> 模式</a> 就足够了</p><h1 id="0x4-开发指引"><a href="#0x4-开发指引" class="headerlink" title="0x4 开发指引"></a>0x4 开发指引</h1><p>有了上面的基础，我们就可以开始写代码了，这里以添加一个 <code>Foo</code> 页面展示从远端获得的数据为例</p><h2 id="1-给页面添加一个-Tab"><a href="#1-给页面添加一个-Tab" class="headerlink" title="1. 给页面添加一个 Tab"></a>1. 给页面添加一个 <code>Tab</code></h2><p><code>Tab</code> 属于与页面逻辑无关，但又处处要使用的元素，所以我们将其独立成为一个组件</p><pre><code class="html">src/components/Tab.vue&lt;template&gt;  &lt;div id=&quot;tab&quot;&gt;    &lt;div class=&quot;item&quot; @click=&quot;router(&#39;/&#39;)&quot;&gt;      &lt;span&gt;home&lt;/span&gt;    &lt;/div&gt;    &lt;div class=&quot;item&quot; @click=&quot;router(&#39;/about&#39;)&quot;&gt;      &lt;span&gt;about&lt;/span&gt;    &lt;/div&gt;    &lt;div class=&quot;item&quot; @click=&quot;router(&#39;/foo&#39;)&quot;&gt;      &lt;span&gt;foo&lt;/span&gt;    &lt;/div&gt;  &lt;/div&gt;&lt;/template&gt;&lt;script&gt;export default {  name: &#39;Tab&#39;,  methods: {    router (url){      this.$router.push(url)    }  }}&lt;/script&gt;&lt;style scoped&gt;#tab {  display: flex;`  justify-content: space-around;  align-items: center;  bottom: 0px;  position: fixed;  height: 65px;  left: 0px;  width: 100%;  background-color: aquamarine;}.item {  padding-top: 5px;  display: flex;  flex-direction: column;  justify-content: center;  align-items: center;  height: 50px;}&lt;/style&gt;</code></pre><p>在这里我们创建了一个底部导航栏，有三个 <code>Tab</code> ，并且对应跳转到不同的页面</p><h2 id="2-创建-Foo-vue-相关逻辑并与后端交互"><a href="#2-创建-Foo-vue-相关逻辑并与后端交互" class="headerlink" title="2. 创建 Foo.vue 相关逻辑并与后端交互"></a>2. 创建 <code>Foo.vue</code> 相关逻辑并与后端交互</h2><p>因为我们需要从远端API获取数据并进行展示，就涉及网络请求。在vue中，官方推荐使用 <a href="https://github.com/axios/axios" target="_blank" rel="noopener">axios</a> 发起请求。<code>axios</code> 是一个基于 <code>promise</code> 的异步网络请求库，相关用法可参考文档或网上教程</p><p>安装 <code>axios</code></p><pre><code class="shell">yarn add axios</code></pre><p>接着在 <code>src/main.js</code> 中加入以下语句启用 <code>axios</code></p><pre><code class="javascript">import Axios from &#39;axios&#39;// 把axios添加到原型链Vue.prototype.$axios = Axios</code></pre><p>现在就可以在vue实例中用 <code>this.$router</code> 来访问路由了</p><hr><p>接着来创建 <code>Foo.vue</code></p><pre><code class="html">src/views/Foo.vue&lt;template&gt;  &lt;div id=&quot;foo&quot;&gt;    &lt;p&gt;{{ result }}&lt;/p&gt;    &lt;button @click=&quot;bar()&quot;&gt;bar&lt;/button&gt;  &lt;/div&gt;&lt;/template&gt;&lt;script&gt;export default {  name: &#39;Foo&#39;,  data(){    return {      result : &#39;naive&#39;    }  },  methods: {    bar(){      /* eslint-disable */      this.result = &#39;loading...&#39;      this.$axios.post(&#39;http://httpbin.org/post&#39;)        .then(res =&gt; {this.result = res})        .catch(res =&gt; {console.error(res)})    }  }}&lt;/script&gt;&lt;style&gt;&lt;/style&gt;</code></pre><p><del>具体实现代码里面很清楚了</del> 这个文件的作用就是请求 <code>http://httpbin.org/get</code> 并把结果显示在界面上</p><p><strong>注意前后端分离的项目会有<a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Access_control_CORS" target="_blank" rel="noopener">跨域(CORS)问题</a>，这个问题比较复杂，巨坑，网上也有较多解决的文章<del>咕咕咕</del></strong></p><h1 id="0x5-技巧及坑们"><a href="#0x5-技巧及坑们" class="headerlink" title="0x5 技巧及坑们"></a>0x5 技巧及坑们</h1><p>这里介绍一些我写vue项目遇到的坑和使用的技巧</p><h2 id="data-methods-computed-props-的区别"><a href="#data-methods-computed-props-的区别" class="headerlink" title="data methods computed props 的区别"></a>data methods computed props 的区别</h2><p><del>TODO</del></p><p>vue中存储数据有几种方式——data、</p><h1 id="0x6-结语"><a href="#0x6-结语" class="headerlink" title="0x6 结语"></a>0x6 结语</h1><p>到此，一个简单的vue项目就完成了，对于如何组织项目，前后端如何交互应该已经有了初步了解。本文也会持续更新，欢迎关注我的<a href="https://blog.creedowl.com/">blog</a></p><blockquote><p>本文的实例请访问<a href="https://github.com/creedowl/vue_demo/" target="_blank" rel="noopener">github</a></p></blockquote>]]></content>
+        <updated>2019-04-23T13:25:25+08:00</updated>
+        <link href="https://blog.creedowl.com/posts/vue-demo-instruction/"/>
+        <content type="text/html" src="https://blog.creedowl.com/posts/vue-demo-instruction/"><![CDATA[<h1 id="vuejs-从入坑到入土">Vue.js 从入坑到入土</h1>
+<p>近年来前端领域发展飞速，从最早的直接写html, js, css 到使用jQuery快速开发，再到近年来使用Vuejs，Reactjs 实现工程化开发，也就短短十几年。虽然前端项目结构越来越复杂，但也越来越规范，清晰，更加工程化。当前较为流行的前端框架有Vuejs、Reactjs、Angularjs 等，而Vuejs由于其灵(zhong)活(wen)轻(wen)便(dang)，较为流行。虽然Vuejs有完善的中文文档，但文档主要在介绍其用法，缺少如何实现一个完整项目的指导，本文就介绍如何用Vuejs创建一个完整的前端项目，并与后端进行交互。</p>
+<p><strong>本文基于<a href="mailto:Vuejs@2.x">Vuejs@2.x</a>及<a href="mailto:VueCLI@3.x">VueCLI@3.x</a></strong></p>
+<ol>
+<li>所需技术栈：html, javascript, css基础知识，其中js建议了解<strong>ES2015</strong>标准，特别要掌握<strong>promise</strong>的使用</li>
+<li>使用的工具：<del>宇宙第一编辑器</del> VSCode —— 现在对vue项目的支持已经很好了，可以自动安装vue项目需要的插件</li>
+</ol>
+<h1 id="0x0-安装">0x0 安装</h1>
+<blockquote>
+<p>推荐使用<a href="https://yarnpkg.com/lang/zh-hans">yarn</a>代替npm作为包管理器</p>
+</blockquote>
+<h2 id="安装vuecli">安装VueCLI</h2>
+<blockquote>
+<p>VueCLI是Vuejs官方推出的项目脚手架工具，可以方便的创建、管理Vue项目，还提供优雅的web管理界面</p>
+</blockquote>
+<p>全局安装<a href="https://cli.vuejs.org/zh/">VueCLI</a></p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">yarn global add @vue/cli
+</code></pre></div><h2 id="安装vue-devtools">安装Vue-devtools</h2>
+<blockquote>
+<p><a href="https://github.com/vuejs/vue-devtools">Vue-devtools</a> 是vue官方的浏览器开发插件，可以方便的在浏览器中调试vue应用</p>
+</blockquote>
+<p>Vue-devtools 提供多平台的浏览器插件可以直接安装使用</p>
+<p><a href="https://github.com/vuejs/vue-devtools#installation">installation</a></p>
+<h1 id="0x1-新建项目">0x1 新建项目</h1>
+<p>使用 <code>vue create vue_demo</code> 创建新项目，接下来会出现一个交互式命令行帮你配置项目。</p>
+<p><strong>注意此处不要使用默认的配置！具体配置参考下图</strong></p>
+<blockquote>
+<p>坑x1 默认的配置十分简单，新手经常不知道怎么写多页面，弄不明白项目怎么组织的，所以需要自定义配置，添加vue-router插件实现多页面跳转</p>
+</blockquote>
+<p><a href="https://asciinema.org/a/240155"><img src="https://asciinema.org/a/240155.svg" alt="asciicast"></a></p>
+<h1 id="0x2-项目框架">0x2 项目框架</h1>
+<p>此时项目已经创建成功，如果你按照提示启动项目就能看到经典的vue启动页</p>
+<p><img src="http://ww1.sinaimg.cn/large/0071ouepgy1g1yg2r5ysxj30up0mx3zv.jpg" alt="image"></p>
+<p>当前的项目结构如下</p>
+<div class="highlight"><pre class="chroma"><code class="language-text" data-lang="text">.                     项目根目录
+├── README.md 
+├── babel.config.js
+├── package.json      项目主配置文件
+├── public            公共资源文件夹
+│   ├── favicon.ico
+│   └── index.html    入口html
+├── src               源码根目录
+│   ├── App.vue       入口文件
+│   ├── assets        资源文件夹
+│   │   └── logo.png
+│   ├── components    组件文件夹
+│   │   └── HelloWorld.vue 
+│   ├── main.js       入口配置文件
+│   ├── router.js     路由文件
+│   ├── store.js      状态管理
+│   └── views         页面文件夹
+│       ├── About.vue
+│       └── Home.vue
+└── yarn.lock         依赖文件
+</code></pre></div><p>在下面的章节具体介绍各个文件、文件夹的用处和如何组织项目。</p>
+<h1 id="0x3-项目结构">0x3 项目结构</h1>
+<p>用vue开发的项目一般是<a href="https://zh.wikipedia.org/wiki/%E5%8D%95%E9%A1%B5%E5%BA%94%E7%94%A8">SPA(单页应用)</a>，通过动态重写当前页面来与用户交互，而不会重新加载整个新页面。所以要组织多页面就要通过vue-router来组织页面，而vuex用来保存状态。</p>
+<p>作为单页应用，当然需要一个入口html文件，也就是 <code>public/index.html</code> :</p>
+<div class="highlight"><pre class="chroma"><code class="language-html" data-lang="html">public/index.html
+
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;en&#34;</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">&#34;utf-8&#34;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">http-equiv</span><span class="o">=</span><span class="s">&#34;X-UA-Compatible&#34;</span> <span class="na">content</span><span class="o">=</span><span class="s">&#34;IE=edge&#34;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;viewport&#34;</span> <span class="na">content</span><span class="o">=</span><span class="s">&#34;width=device-width,initial-scale=1.0&#34;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&#34;icon&#34;</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;&lt;%= BASE_URL %&gt;favicon.ico&#34;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>vue_demo<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">noscript</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">strong</span><span class="p">&gt;</span>We&#39;re sorry but vue_demo doesn&#39;t work properly without JavaScript enabled. Please enable it to continue.<span class="p">&lt;/</span><span class="nt">strong</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">noscript</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;app&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+    <span class="c">&lt;!-- built files will be auto injected --&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</code></pre></div><p>这是默认生成的 <code>index.html</code> ，而编译好的文件（网页内容）会被自动注入到 `` 中，也就意味着要使用vue开发的应用，浏览器必须支持js。</p>
+<p>而#app所绑定的vue实例，则位于 <code>src/main.js</code></p>
+<hr>
+<div class="highlight"><pre class="chroma"><code class="language-js" data-lang="js"><span class="nx">src</span><span class="o">/</span><span class="nx">main</span><span class="p">.</span><span class="nx">js</span>
+
+<span class="kr">import</span> <span class="nx">Vue</span> <span class="nx">from</span> <span class="s1">&#39;vue&#39;</span>
+<span class="kr">import</span> <span class="nx">App</span> <span class="nx">from</span> <span class="s1">&#39;./App.vue&#39;</span>
+<span class="kr">import</span> <span class="nx">router</span> <span class="nx">from</span> <span class="s1">&#39;./router&#39;</span>
+<span class="kr">import</span> <span class="nx">store</span> <span class="nx">from</span> <span class="s1">&#39;./store&#39;</span>
+<span class="nx">Vue</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">productionTip</span> <span class="o">=</span> <span class="kc">false</span>
+<span class="k">new</span> <span class="nx">Vue</span><span class="p">({</span>
+  <span class="nx">router</span><span class="p">,</span> <span class="c1">// 使用vue-router插件
+</span><span class="c1"></span>  <span class="nx">store</span><span class="p">,</span> <span class="c1">// 使用vuex插件
+</span><span class="c1"></span>  <span class="nx">render</span><span class="o">:</span> <span class="nx">h</span> <span class="p">=&gt;</span> <span class="nx">h</span><span class="p">(</span><span class="nx">App</span><span class="p">)</span> <span class="c1">// 渲染页面
+</span><span class="c1"></span><span class="p">}).</span><span class="nx">$mount</span><span class="p">(</span><span class="s1">&#39;#app&#39;</span><span class="p">)</span> <span class="c1">// 绑定到 index.html -&gt; div#app
+</span></code></pre></div><p>其中渲染的页面位于 <code>src/App.vue</code></p>
+<hr>
+<blockquote>
+<p>xxx.vue 是vue中的<a href="https://cn.vuejs.org/v2/guide/single-file-components.html">单文件组件</a>，将 <code>html css javascript</code> 集合在同一个文件，便于组织管理</p>
+</blockquote>
+<div class="highlight"><pre class="chroma"><code class="language-html" data-lang="html">src/App.vue
+
+<span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;app&#34;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;nav&#34;</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">router-link</span> <span class="na">to</span><span class="o">=</span><span class="s">&#34;/&#34;</span><span class="p">&gt;</span>Home<span class="p">&lt;/</span><span class="nt">router-link</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">router-link</span> <span class="na">to</span><span class="o">=</span><span class="s">&#34;/about&#34;</span><span class="p">&gt;</span>About<span class="p">&lt;/</span><span class="nt">router-link</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">router-view</span><span class="p">/&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span>
+<span class="p">#</span><span class="nn">app</span> <span class="p">{</span>
+  <span class="k">font-family</span><span class="p">:</span> <span class="s1">&#39;Avenir&#39;</span><span class="p">,</span> <span class="n">Helvetica</span><span class="p">,</span> <span class="n">Arial</span><span class="p">,</span> <span class="kc">sans-serif</span><span class="p">;</span>
+  <span class="kp">-webkit-</span><span class="n">font-smoothing</span><span class="p">:</span> <span class="n">antialiased</span><span class="p">;</span>
+  <span class="kp">-moz-</span><span class="n">osx-font-smoothing</span><span class="p">:</span> <span class="n">grayscale</span><span class="p">;</span>
+  <span class="k">text-align</span><span class="p">:</span> <span class="kc">center</span><span class="p">;</span>
+  <span class="k">color</span><span class="p">:</span> <span class="mh">#2c3e50</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="p">#</span><span class="nn">nav</span> <span class="p">{</span>
+  <span class="k">padding</span><span class="p">:</span> <span class="mi">30</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="p">#</span><span class="nn">nav</span> <span class="nt">a</span> <span class="p">{</span>
+  <span class="k">font-weight</span><span class="p">:</span> <span class="kc">bold</span><span class="p">;</span>
+  <span class="k">color</span><span class="p">:</span> <span class="mh">#2c3e50</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="p">#</span><span class="nn">nav</span> <span class="nt">a</span><span class="p">.</span><span class="nc">router-link-exact-active</span> <span class="p">{</span>
+  <span class="k">color</span><span class="p">:</span> <span class="mh">#42b983</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+</code></pre></div><p>其中 <code>是页面的 `html` 元素，`style` 是样式元素，还可以添加一个 `javascript` 为js元素。其中</code> 是路由组件，会被自动渲染成当前路由对应的页面</p>
+<hr>
+<div class="highlight"><pre class="chroma"><code class="language-js" data-lang="js"><span class="nx">src</span><span class="o">/</span><span class="nx">router</span><span class="p">.</span><span class="nx">js</span>
+
+<span class="kr">import</span> <span class="nx">Vue</span> <span class="nx">from</span> <span class="s1">&#39;vue&#39;</span>
+<span class="kr">import</span> <span class="nx">Router</span> <span class="nx">from</span> <span class="s1">&#39;vue-router&#39;</span>
+<span class="kr">import</span> <span class="nx">Home</span> <span class="nx">from</span> <span class="s1">&#39;./views/Home.vue&#39;</span>
+<span class="nx">Vue</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">Router</span><span class="p">)</span>
+<span class="kr">export</span> <span class="k">default</span> <span class="k">new</span> <span class="nx">Router</span><span class="p">({</span>
+  <span class="nx">mode</span><span class="o">:</span> <span class="s1">&#39;history&#39;</span><span class="p">,</span>
+  <span class="nx">base</span><span class="o">:</span> <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">BASE_URL</span><span class="p">,</span>
+  <span class="nx">routes</span><span class="o">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="nx">path</span><span class="o">:</span> <span class="s1">&#39;/&#39;</span><span class="p">,</span>
+      <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;home&#39;</span><span class="p">,</span>
+      <span class="nx">component</span><span class="o">:</span> <span class="nx">Home</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="nx">path</span><span class="o">:</span> <span class="s1">&#39;/about&#39;</span><span class="p">,</span>
+      <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;about&#39;</span><span class="p">,</span>
+      <span class="c1">// route level code-splitting
+</span><span class="c1"></span>      <span class="c1">// this generates a separate chunk (about.[hash].js) for this route
+</span><span class="c1"></span>      <span class="c1">// which is lazy-loaded when the route is visited.
+</span><span class="c1"></span>      <span class="nx">component</span><span class="o">:</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="kr">import</span><span class="p">(</span><span class="cm">/* webpackChunkName: &#34;about&#34; */</span> <span class="s1">&#39;./views/About.vue&#39;</span><span class="p">)</span>
+    <span class="p">}</span>
+  <span class="p">]</span>
+<span class="p">})</span>
+</code></pre></div><p>如 <code>http://localhost:8080/</code> 下 <code>被渲染成 `home` 页面，`http://localhost:8080/about` 下</code> 被渲染成 <code>about</code> 页面。</p>
+<blockquote>
+<p>技巧 这里加载组件使用函数加载，就可以实现懒加载以优化性能。</p>
+</blockquote>
+<hr>
+<p><code>src/views/</code> 则是保存页面文件，例如</p>
+<div class="highlight"><pre class="chroma"><code class="language-html" data-lang="html">src/views/Home.vue
+
+<span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;home&#34;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">img</span> <span class="na">alt</span><span class="o">=</span><span class="s">&#34;Vue logo&#34;</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;../assets/logo.png&#34;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">HelloWorld</span> <span class="na">msg</span><span class="o">=</span><span class="s">&#34;Welcome to Your Vue.js App&#34;</span><span class="p">/&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="c1">// @ is an alias to /src
+</span><span class="c1"></span><span class="kr">import</span> <span class="nx">HelloWorld</span> <span class="nx">from</span> <span class="s1">&#39;@/components/HelloWorld.vue&#39;</span>
+<span class="kr">export</span> <span class="k">default</span> <span class="p">{</span>
+  <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;home&#39;</span><span class="p">,</span>
+  <span class="nx">components</span><span class="o">:</span> <span class="p">{</span>
+    <span class="nx">HelloWorld</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</code></pre></div><p>这就是路由 <code>home</code> 对应的页面，其中用到了 <code>HelloWorld</code> 组件，需要在js中引入。</p>
+<hr>
+<p><code>src/components/</code> 里面保存可复用的组件，例如上面的 `` 就是一个独立的组件（component）</p>
+<div class="highlight"><pre class="chroma"><code class="language-html" data-lang="html">src/components/HelloWorld.vue
+
+<span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;hello&#34;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>{{ msg }}<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>
+      For a guide and recipes on how to configure / customize this project,<span class="p">&lt;</span><span class="nt">br</span><span class="p">&gt;</span>
+      check out the
+      <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;https://cli.vuejs.org&#34;</span> <span class="na">target</span><span class="o">=</span><span class="s">&#34;_blank&#34;</span> <span class="na">rel</span><span class="o">=</span><span class="s">&#34;noopener&#34;</span><span class="p">&gt;</span>vue-cli documentation<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>.
+    <span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="kr">export</span> <span class="k">default</span> <span class="p">{</span>
+  <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;HelloWorld&#39;</span><span class="p">,</span>
+  <span class="nx">props</span><span class="o">:</span> <span class="p">{</span>
+    <span class="nx">msg</span><span class="o">:</span> <span class="nb">String</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="c">&lt;!-- Add &#34;scoped&#34; attribute to limit CSS to this component only --&gt;</span>
+<span class="p">&lt;</span><span class="nt">style</span> <span class="na">scoped</span><span class="p">&gt;</span>
+<span class="nt">h1</span> <span class="p">{</span>
+  <span class="k">margin</span><span class="p">:</span> <span class="mi">40</span><span class="kt">px</span> <span class="mi">0</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+</code></pre></div><p>这就是一个典型的组件，结构就是一个正常的单文本组件，说明组件就是把一部分页面逻辑抽出来组成一个文件。这样的好处是分离与页面无关的组件，使页面逻辑更加清晰，同时也便于复用组件。如果有以下情况，我建议把部分代码分离成独立的组件：</p>
+<ol>
+<li>需要多次复用的组件，如基础按钮、表单等</li>
+<li>较为复杂但与页面逻辑无关的，如页面的Header、Footer等</li>
+</ol>
+<blockquote>
+<p>技巧 在 <code>style</code> 表情上添加 <code>scoped</code> 属性可以限制CSS生效范围为该组件，不会影响其他元素，在编译时vue解释器会给这些css属性加上随机的hash保证唯一</p>
+</blockquote>
+<hr>
+<p>vue还提供了一个状态管理模式 <a href="https://vuex.vuejs.org/zh/">vuex</a>，可以很方便的管理所有组件的状态。对应文件 <code>src/store.js</code></p>
+<div class="highlight"><pre class="chroma"><code class="language-js" data-lang="js"><span class="nx">src</span><span class="o">/</span><span class="nx">store</span><span class="p">.</span><span class="nx">js</span>
+
+<span class="kr">import</span> <span class="nx">Vue</span> <span class="nx">from</span> <span class="s1">&#39;vue&#39;</span>
+<span class="kr">import</span> <span class="nx">Vuex</span> <span class="nx">from</span> <span class="s1">&#39;vuex&#39;</span>
+<span class="nx">Vue</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">Vuex</span><span class="p">)</span>
+<span class="kr">export</span> <span class="k">default</span> <span class="k">new</span> <span class="nx">Vuex</span><span class="p">.</span><span class="nx">Store</span><span class="p">({</span>
+  <span class="nx">state</span><span class="o">:</span> <span class="p">{</span>
+  <span class="p">},</span>
+  <span class="nx">mutations</span><span class="o">:</span> <span class="p">{</span>
+  <span class="p">},</span>
+  <span class="nx">actions</span><span class="o">:</span> <span class="p">{</span>
+  <span class="p">}</span>
+<span class="p">})</span>
+</code></pre></div><p><del>由于我还没用过 <code>vuex</code> 所以自己看文档吧</del></p>
+<p>对于简单的应用也可以不用 <code>vuex</code> ，一个简单的 <a href="https://cn.vuejs.org/v2/guide/state-management.html#%E7%AE%80%E5%8D%95%E7%8A%B6%E6%80%81%E7%AE%A1%E7%90%86%E8%B5%B7%E6%AD%A5%E4%BD%BF%E7%94%A8"><code>store</code> 模式</a> 就足够了</p>
+<h1 id="0x4-开发指引">0x4 开发指引</h1>
+<p>有了上面的基础，我们就可以开始写代码了，这里以添加一个 <code>Foo</code> 页面展示从远端获得的数据为例</p>
+<h2 id="1-给页面添加一个-tab">1. 给页面添加一个 <code>Tab</code></h2>
+<p><code>Tab</code> 属于与页面逻辑无关，但又处处要使用的元素，所以我们将其独立成为一个组件</p>
+<div class="highlight"><pre class="chroma"><code class="language-html" data-lang="html">src/components/Tab.vue
+
+<span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;tab&#34;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;item&#34;</span> <span class="err">@</span><span class="na">click</span><span class="o">=</span><span class="s">&#34;router(&#39;/&#39;)&#34;</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">span</span><span class="p">&gt;</span>home<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;item&#34;</span> <span class="err">@</span><span class="na">click</span><span class="o">=</span><span class="s">&#34;router(&#39;/about&#39;)&#34;</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">span</span><span class="p">&gt;</span>about<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;item&#34;</span> <span class="err">@</span><span class="na">click</span><span class="o">=</span><span class="s">&#34;router(&#39;/foo&#39;)&#34;</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">span</span><span class="p">&gt;</span>foo<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="kr">export</span> <span class="k">default</span> <span class="p">{</span>
+  <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;Tab&#39;</span><span class="p">,</span>
+  <span class="nx">methods</span><span class="o">:</span> <span class="p">{</span>
+    <span class="nx">router</span> <span class="p">(</span><span class="nx">url</span><span class="p">){</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">$router</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">url</span><span class="p">)</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">style</span> <span class="na">scoped</span><span class="p">&gt;</span>
+<span class="p">#</span><span class="nn">tab</span> <span class="p">{</span>
+  <span class="k">display</span><span class="p">:</span> <span class="kc">flex</span><span class="p">;</span>
+  <span class="k">justify-content</span><span class="p">:</span> <span class="kc">space</span><span class="o">-</span><span class="n">around</span><span class="p">;</span>
+  <span class="k">align-items</span><span class="p">:</span> <span class="kc">center</span><span class="p">;</span>
+  <span class="k">bottom</span><span class="p">:</span> <span class="mi">0</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">position</span><span class="p">:</span> <span class="kc">fixed</span><span class="p">;</span>
+  <span class="k">height</span><span class="p">:</span> <span class="mi">65</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">left</span><span class="p">:</span> <span class="mi">0</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">width</span><span class="p">:</span> <span class="mi">100</span><span class="kt">%</span><span class="p">;</span>
+  <span class="k">background-color</span><span class="p">:</span> <span class="kc">aquamarine</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="p">.</span><span class="nc">item</span> <span class="p">{</span>
+  <span class="k">padding-top</span><span class="p">:</span> <span class="mi">5</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">display</span><span class="p">:</span> <span class="kc">flex</span><span class="p">;</span>
+  <span class="k">flex-direction</span><span class="p">:</span> <span class="kc">column</span><span class="p">;</span>
+  <span class="k">justify-content</span><span class="p">:</span> <span class="kc">center</span><span class="p">;</span>
+  <span class="k">align-items</span><span class="p">:</span> <span class="kc">center</span><span class="p">;</span>
+  <span class="k">height</span><span class="p">:</span> <span class="mi">50</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+</code></pre></div><p>在这里我们创建了一个底部导航栏，有三个 <code>Tab</code> ，并且对应跳转到不同的页面</p>
+<h2 id="2-创建-foovue-相关逻辑并与后端交互">2. 创建 <code>Foo.vue</code> 相关逻辑并与后端交互</h2>
+<p>因为我们需要从远端API获取数据并进行展示，就涉及网络请求。在vue中，官方推荐使用 <a href="https://github.com/axios/axios">axios</a> 发起请求。<code>axios</code> 是一个基于 <code>promise</code> 的异步网络请求库，相关用法可参考文档或网上教程</p>
+<p>安装 <code>axios</code></p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">yarn add axios
+</code></pre></div><p>接着在 <code>src/main.js</code> 中加入以下语句启用 <code>axios</code></p>
+<div class="highlight"><pre class="chroma"><code class="language-js" data-lang="js"><span class="kr">import</span> <span class="nx">Axios</span> <span class="nx">from</span> <span class="s1">&#39;axios&#39;</span>
+<span class="c1">// 把axios添加到原型链
+</span><span class="c1"></span><span class="nx">Vue</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">$axios</span> <span class="o">=</span> <span class="nx">Axios</span>
+</code></pre></div><p>现在就可以在vue实例中用 <code>this.$router</code> 来访问路由了</p>
+<hr>
+<p>接着来创建 <code>Foo.vue</code></p>
+<div class="highlight"><pre class="chroma"><code class="language-vue" data-lang="vue"><span class="nx">src</span><span class="o">/</span><span class="nx">views</span><span class="o">/</span><span class="nx">Foo</span><span class="p">.</span><span class="nx">vue</span>
+
+<span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;foo&#34;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;{{</span> <span class="nx">result</span> <span class="p">}}&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">button</span> <span class="nt">@click</span><span class="s">=&#34;bar()&#34;</span><span class="p">&gt;</span><span class="na">bar</span><span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="kr">export</span> <span class="k">default</span> <span class="p">{</span>
+  <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;Foo&#39;</span><span class="p">,</span>
+  <span class="nx">data</span><span class="p">(){</span>
+    <span class="k">return</span> <span class="p">{</span>
+      <span class="nx">result</span> <span class="o">:</span> <span class="s1">&#39;naive&#39;</span>
+    <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="nx">methods</span><span class="o">:</span> <span class="p">{</span>
+    <span class="nx">bar</span><span class="p">(){</span>
+      <span class="cm">/* eslint-disable */</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">result</span> <span class="o">=</span> <span class="s1">&#39;loading...&#39;</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">$axios</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">&#39;http://httpbin.org/post&#39;</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="p">=&gt;</span> <span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">result</span> <span class="o">=</span> <span class="nx">res</span><span class="p">})</span>
+        <span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="nx">res</span> <span class="p">=&gt;</span> <span class="p">{</span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="nx">res</span><span class="p">)})</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+</code></pre></div><p><del>具体实现代码里面很清楚了</del> 这个文件的作用就是请求 <code>http://httpbin.org/get</code> 并把结果显示在界面上</p>
+<p><strong>注意前后端分离的项目会有<a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Access_control_CORS">跨域(CORS)问题</a>，这个问题比较复杂，巨坑，网上也有较多解决的文章<del>咕咕咕</del></strong></p>
+<h1 id="0x5-技巧及坑们">0x5 技巧及坑们</h1>
+<p>这里介绍一些我写vue项目遇到的坑和使用的技巧</p>
+<h2 id="data-methods-computed-props-的区别">data methods computed props 的区别</h2>
+<p><del>TODO</del></p>
+<p>vue中存储数据有几种方式——data、</p>
+<h1 id="0x6-结语">0x6 结语</h1>
+<p>到此，一个简单的vue项目就完成了，对于如何组织项目，前后端如何交互应该已经有了初步了解。本文也会持续更新，欢迎关注我的<a href="https://blog.creedowl.com/">blog</a></p>
+<p>本文的实例请访问<a href="https://github.com/creedowl/vue_demo/">github</a></p>]]></content>
         <author>
-            <name><![CDATA[Creedowl’s 嘤嘤嘤]]></name>
+            <name><![CDATA[Creedowl’s Blog]]></name>
         </author>
     </entry>
     
@@ -1848,13 +2194,67 @@ apply plugin: 'org.springframework.boot'
     </entry>
     
     <entry>
-        <id>https://blog.creedowl.com/2019/04/04/IPv6_and_NAT6_in_NUAA/</id>
+        <id>https://blog.creedowl.com/posts/ipv6_and_nat6_in_nuaa/</id>
         <title><![CDATA[南航校园网OpenWRT配置IPv6 NAT6]]></title>
-        <updated>2019-04-04T15:41:38+08:00</updated>
-        <link href="https://blog.creedowl.com/2019/04/04/IPv6_and_NAT6_in_NUAA/"/>
-        <content type="text/html" src="https://blog.creedowl.com/2019/04/04/IPv6_and_NAT6_in_NUAA/"><![CDATA[<h1 id="南航校园网OpenWRT配置IPv6-NAT6"><a href="#南航校园网OpenWRT配置IPv6-NAT6" class="headerlink" title="南航校园网OpenWRT配置IPv6 NAT6"></a>南航校园网OpenWRT配置IPv6 NAT6</h1><blockquote><p>当前IPv6越来越流行，不但解决了IPv4地址不够用的问题，还能给接入的设备提供公网访问的支持。但由于校园网的特殊性，虽然很早就有了IPv6支持，大部分学校在IPv6地址分配上却有剧毒，无法向下游设备分配独立的IPv6地址（正常家庭网络环境中路由器及下游设备都能自动分配独立的公网IPv6地址），以南航为例，OpenWRT上虽然获取到了2001开头，/64结尾的公网IPv6地址，但下游设备却无IPv6访问权限。本文介绍南航校园网环境下如何在OpenWRT下获取IPv6并配置NAT6使下游设备拥有IPv6访问权限。</p></blockquote><h2 id="0：软硬件需求"><a href="#0：软硬件需求" class="headerlink" title="0：软硬件需求"></a>0：软硬件需求</h2><p><strong>硬件</strong>：支持OpenWRT固件的路由器或软路由（推荐使用软路由，性能更好，支持启用更多服务，且不需要考虑太多兼容性问题，x86版本OpenWRT一把梭）</p><p><strong>软件</strong>：较新版本的OpenWRT或其衍生版本（lede，pandorabox等，但原版OpenWRT最佳）</p><p><strong>OpenWRT内核需高于3.7</strong>， linux kernel在3.7版本开始支持NAT6</p><p><del>内核版本不够高且无法升级可以尝试早年由北邮大佬开发的NAT66项目，但不推荐</del></p><p>所需软件包：</p><pre><code class="shell">ip6tables kmod-ipt-nat6 kmod-ip6tables kmod-ip6tables-extra luci-proto-ipv6 iputils-traceroute6</code></pre><p>较新版本已经自带IPv6支持，老版本需要自己安装相关软件包，但兼容性较差，或者内核版本不足，建议找较新版本或者自行编译。</p><h2 id="1：OpenWRT配置获取IPv6"><a href="#1：OpenWRT配置获取IPv6" class="headerlink" title="1：OpenWRT配置获取IPv6"></a>1：OpenWRT配置获取IPv6</h2><p><img src="http://ww1.sinaimg.cn/large/0071ouepgy1g1pisgc9yhj319v0p2tco.jpg" alt="IPv6_setting_1"></p><h3 id="1-修改IPv6-ULA前缀为fd开头（默认为dd开头）"><a href="#1-修改IPv6-ULA前缀为fd开头（默认为dd开头）" class="headerlink" title="1. 修改IPv6 ULA前缀为fd开头（默认为dd开头）"></a>1. 修改IPv6 ULA前缀为fd开头（默认为dd开头）</h3><h3 id="2-修改wan6口配置（如下图所示）"><a href="#2-修改wan6口配置（如下图所示）" class="headerlink" title="2. 修改wan6口配置（如下图所示）"></a>2. 修改wan6口配置（如下图所示）</h3><p><img src="http://ww1.sinaimg.cn/large/0071ouepgy1g1pivtmkrbj30p00eumyi.jpg" alt="IPv6_setting_2"></p><h3 id="3-修改lan口DHCP服务器配置（如下图所示）"><a href="#3-修改lan口DHCP服务器配置（如下图所示）" class="headerlink" title="3. 修改lan口DHCP服务器配置（如下图所示）"></a>3. 修改lan口DHCP服务器配置（如下图所示）</h3><p><img src="http://ww1.sinaimg.cn/large/0071ouepgy1g1piynr74fj30ta0adwfe.jpg" alt="IPv6_setting_3"></p><p><img src="http://ww1.sinaimg.cn/large/0071ouepgy1g1pizho2fmj30nu0bymy5.jpg" alt="IPv6_setting_4"></p><p>此时稍等片刻，在概况中应该就能看到获取到的IPv6地址及下游设备DHCPv6分配内网IPv6地址</p><p><img src="http://ww1.sinaimg.cn/large/0071ouepgy1g1pj4uxq0hj30rd08xaar.jpg" alt="IPv6_setting_5"></p><p><img src="http://ww1.sinaimg.cn/large/0071ouepgy1g1pj5feonfj311806ldgn.jpg" alt="IPv6_setting_6"></p><p>现在你的路由器已经可以使用IPv6了，但下游设备并不行，就需要配置NAT6。</p><h2 id="2：配置NAT6"><a href="#2：配置NAT6" class="headerlink" title="2：配置NAT6"></a>2：配置NAT6</h2><p>虽然NAT6并不符合IPv6的设计哲学，但却能解决一些问题，如安全隔离，或者像我们这样通过单一地址转发给多个设备使用。</p><h3 id="1-修改防火墙"><a href="#1-修改防火墙" class="headerlink" title="1. 修改防火墙"></a>1. 修改防火墙</h3><p><img src="http://ww1.sinaimg.cn/large/0071ouepgy1g1pjfj32f5j30su0gvn00.jpg" alt="IPv6_setting_7"></p><p>加入以下自定义规则</p><pre><code class="shell">WAN6=pppoe-wanLAN=br-lanip6tables -t nat -A POSTROUTING -o $WAN6 -j MASQUERADEip6tables -A FORWARD -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPTip6tables -A FORWARD -i $LAN -j ACCEPT</code></pre><p><strong>注意这里WAN6和LAN要改为外网IPv6和内网网卡名字，在终端使用ifconfig查看</strong></p><p><img src="http://ww1.sinaimg.cn/large/0071ouepgy1g1pjk4cddbj30ll0jwq71.jpg" alt="IPv6_setting_8"></p><h3 id="2-配置网关"><a href="#2-配置网关" class="headerlink" title="2. 配置网关"></a>2. 配置网关</h3><p>   在终端执行 <code>ip -6 r</code> 查看默认网关（default开头），如果是类似</p><p>   <code>default from 2001:xxxx:xxxx:xxxx::/64 via fe80::ded2:fcff:fe98:64f7 dev pppoe-wan proto static metric 512 pref medium</code></p><p>这样蛋疼的网关，需要去掉<code>from 2001:xxxx:xxxx:xxxx::/64</code> 这段再添加默认网关，例如</p><p><code>ip -6 route add default via fe80::ded2:fcff:fe98:64f7 dev pppoe-wan proto static metric 512</code></p><p>可以建立一个<code>/etc/hotplug.d/iface/99-ipv6</code>实现自动配置</p><pre><code class="shell">#!/bin/sh[ &quot;$ACTION&quot; = ifup ] || exit 0iface=wan6[ -z &quot;$iface&quot; -o &quot;$INTERFACE&quot; = &quot;$iface&quot; ] || exit 0ip -6 route add `ip -6 route show default|sed -e &#39;s/from [^ ]* //&#39;`logger -t IPv6 &quot;Add IPv6 default route.&quot;</code></pre><p>最后别忘了修改权限</p><p><code>chmod +x /etc/hotplug.d/iface/99-ipv6</code></p><p>重启路由器就可以愉快的玩耍了。</p><p><del>本来还想折腾IPv6端口转发，但一直无法配置成功。后来突然发现南航校园网下没有对IPv4做严格隔离（除了80端口基本上都能直接访问），就直接做IPv4端口转发配合DDNS，连接校园WIFI（nuaa.portal，<strong>付费版本</strong>）就可以直接使用，速度还挺快。。。就真香了。。不过配置IPv6端口转发还是有意义，比如可以从非校园网访问，校园网访问IPv6无需认证（不要充钱了），相关教程有空再补上（咕咕咕）有需求可以参考<a href="https://shura.eu.org/2018/12/06/ipv6-NAT%E5%90%8E%E9%85%8D%E7%BD%AE%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91/" target="_blank" rel="noopener">ipv6 NAT后配置端口转发</a></del></p><h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><blockquote><p><a href="https://github.com/tuna/ipv6.tsinghua.edu.cn/blob/master/openwrt.md" target="_blank" rel="noopener">清华OpenWRT 路由器作为 IPv6 网关的配置</a></p></blockquote>]]></content>
+        <updated>2019-04-04T15:29:39+08:00</updated>
+        <link href="https://blog.creedowl.com/posts/ipv6_and_nat6_in_nuaa/"/>
+        <content type="text/html" src="https://blog.creedowl.com/posts/ipv6_and_nat6_in_nuaa/"><![CDATA[<blockquote>
+<p>当前IPv6越来越流行，不但解决了IPv4地址不够用的问题，还能给接入的设备提供公网访问的支持。但由于校园网的特殊性，虽然很早就有了IPv6支持，大部分学校在IPv6地址分配上却有剧毒，无法向下游设备分配独立的IPv6地址（正常家庭网络环境中路由器及下游设备都能自动分配独立的公网IPv6地址），以南航为例，OpenWRT上虽然获取到了2001开头，/64结尾的公网IPv6地址，但下游设备却无IPv6访问权限。本文介绍南航校园网环境下如何在OpenWRT下获取IPv6并配置NAT6使下游设备拥有IPv6访问权限。</p>
+</blockquote>
+<h2 id="0软硬件需求">0：软硬件需求</h2>
+<p><strong>硬件</strong>：支持OpenWRT固件的路由器或软路由（推荐使用软路由，性能更好，支持启用更多服务，且不需要考虑太多兼容性问题，x86版本OpenWRT一把梭）</p>
+<p><strong>软件</strong>：较新版本的OpenWRT或其衍生版本（lede，pandorabox等，但原版OpenWRT最佳）</p>
+<p><strong>OpenWRT内核需高于3.7</strong>， linux kernel在3.7版本开始支持NAT6</p>
+<p><del>内核版本不够高且无法升级可以尝试早年由北邮大佬开发的NAT66项目，但不推荐</del></p>
+<p>所需软件包：</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">ip6tables kmod-ipt-nat6 kmod-ip6tables kmod-ip6tables-extra luci-proto-ipv6 iputils-traceroute6
+</code></pre></div><p>较新版本已经自带IPv6支持，老版本需要自己安装相关软件包，但兼容性较差，或者内核版本不足，建议找较新版本或者自行编译。</p>
+<h2 id="1openwrt配置获取ipv6">1：OpenWRT配置获取IPv6</h2>
+<p><img src="http://ww1.sinaimg.cn/large/0071ouepgy1g1pisgc9yhj319v0p2tco.jpg" alt="IPv6_setting_1"></p>
+<h3 id="1-修改ipv6-ula前缀为fd开头默认为dd开头">1. 修改IPv6 ULA前缀为fd开头（默认为dd开头）</h3>
+<h3 id="2-修改wan6口配置如下图所示">2. 修改wan6口配置（如下图所示）</h3>
+<p><img src="http://ww1.sinaimg.cn/large/0071ouepgy1g1pivtmkrbj30p00eumyi.jpg" alt="IPv6_setting_2"></p>
+<h3 id="3-修改lan口dhcp服务器配置如下图所示">3. 修改lan口DHCP服务器配置（如下图所示）</h3>
+<p><img src="http://ww1.sinaimg.cn/large/0071ouepgy1g1piynr74fj30ta0adwfe.jpg" alt="IPv6_setting_3"></p>
+<p><img src="http://ww1.sinaimg.cn/large/0071ouepgy1g1pizho2fmj30nu0bymy5.jpg" alt="IPv6_setting_4"></p>
+<p>此时稍等片刻，在概况中应该就能看到获取到的IPv6地址及下游设备DHCPv6分配内网IPv6地址</p>
+<p><img src="http://ww1.sinaimg.cn/large/0071ouepgy1g1pj4uxq0hj30rd08xaar.jpg" alt="IPv6_setting_5"></p>
+<p><img src="http://ww1.sinaimg.cn/large/0071ouepgy1g1pj5feonfj311806ldgn.jpg" alt="IPv6_setting_6"></p>
+<p>现在你的路由器已经可以使用IPv6了，但下游设备并不行，就需要配置NAT6。</p>
+<h2 id="2配置nat6">2：配置NAT6</h2>
+<p>虽然NAT6并不符合IPv6的设计哲学，但却能解决一些问题，如安全隔离，或者像我们这样通过单一地址转发给多个设备使用。</p>
+<h3 id="1-修改防火墙">1. 修改防火墙</h3>
+<p><img src="http://ww1.sinaimg.cn/large/0071ouepgy1g1pjfj32f5j30su0gvn00.jpg" alt="IPv6_setting_7"></p>
+<p>加入以下自定义规则</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="nv">WAN6</span><span class="o">=</span>pppoe-wan
+<span class="nv">LAN</span><span class="o">=</span>br-lan
+ip6tables -t nat -A POSTROUTING -o <span class="nv">$WAN6</span> -j MASQUERADE
+ip6tables -A FORWARD -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+ip6tables -A FORWARD -i <span class="nv">$LAN</span> -j ACCEPT
+</code></pre></div><p><strong>注意这里WAN6和LAN要改为外网IPv6和内网网卡名字，在终端使用ifconfig查看</strong></p>
+<p><img src="http://ww1.sinaimg.cn/large/0071ouepgy1g1pjk4cddbj30ll0jwq71.jpg" alt="IPv6_setting_8"></p>
+<h3 id="2-配置网关">2. 配置网关</h3>
+<p>在终端执行 <code>ip -6 r</code> 查看默认网关（default开头），如果是类似</p>
+<p><code>default from 2001:xxxx:xxxx:xxxx::/64 via fe80::ded2:fcff:fe98:64f7 dev pppoe-wan proto static metric 512 pref medium</code></p>
+<p>这样蛋疼的网关，需要去掉<code>from 2001:xxxx:xxxx:xxxx::/64</code> 这段再添加默认网关，例如</p>
+<p><code>ip -6 route add default via fe80::ded2:fcff:fe98:64f7 dev pppoe-wan proto static metric 512</code></p>
+<p>可以建立一个<code>/etc/hotplug.d/iface/99-ipv6</code>实现自动配置</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="cp">#!/bin/sh
+</span><span class="cp"></span><span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$ACTION</span><span class="s2">&#34;</span> <span class="o">=</span> ifup <span class="o">]</span> <span class="o">||</span> <span class="nb">exit</span> <span class="m">0</span>
+<span class="nv">iface</span><span class="o">=</span>wan6
+<span class="o">[</span> -z <span class="s2">&#34;</span><span class="nv">$iface</span><span class="s2">&#34;</span> -o <span class="s2">&#34;</span><span class="nv">$INTERFACE</span><span class="s2">&#34;</span> <span class="o">=</span> <span class="s2">&#34;</span><span class="nv">$iface</span><span class="s2">&#34;</span> <span class="o">]</span> <span class="o">||</span> <span class="nb">exit</span> <span class="m">0</span>
+ip -6 route add <span class="sb">`</span>ip -6 route show default<span class="p">|</span>sed -e <span class="s1">&#39;s/from [^ ]* //&#39;</span><span class="sb">`</span>
+logger -t IPv6 <span class="s2">&#34;Add IPv6 default route.&#34;</span>
+</code></pre></div><p>最后别忘了修改权限</p>
+<p><code>chmod +x /etc/hotplug.d/iface/99-ipv6</code></p>
+<p>重启路由器就可以愉快的玩耍了。</p>
+<p><del>本来还想折腾IPv6端口转发，但一直无法配置成功。后来突然发现南航校园网下没有对IPv4做严格隔离（除了80端口基本上都能直接访问），就直接做IPv4端口转发配合DDNS，连接校园WIFI（nuaa.portal，<strong>付费版本</strong>）就可以直接使用，速度还挺快。。。就真香了。。不过配置IPv6端口转发还是有意义，比如可以从非校园网访问，校园网访问IPv6无需认证（不要充钱了），相关教程有空再补上（咕咕咕）有需求可以参考<a href="https://shura.eu.org/2018/12/06/ipv6-NAT%E5%90%8E%E9%85%8D%E7%BD%AE%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91/">ipv6 NAT后配置端口转发</a></del></p>
+<h2 id="参考资料">参考资料</h2>
+<blockquote>
+<p><a href="https://github.com/tuna/ipv6.tsinghua.edu.cn/blob/master/openwrt.md">清华OpenWRT 路由器作为 IPv6 网关的配置</a></p>
+</blockquote>]]></content>
         <author>
-            <name><![CDATA[Creedowl’s 嘤嘤嘤]]></name>
+            <name><![CDATA[Creedowl’s Blog]]></name>
         </author>
     </entry>
     
@@ -1870,24 +2270,82 @@ apply plugin: 'org.springframework.boot'
     </entry>
     
     <entry>
-        <id>https://blog.creedowl.com/2019/02/03/postgres-handbook/</id>
+        <id>https://blog.creedowl.com/posts/postgres-handbook/</id>
         <title><![CDATA[PostgreSQL 简介与常用命令]]></title>
-        <updated>2019-02-03T13:47:37+08:00</updated>
-        <link href="https://blog.creedowl.com/2019/02/03/postgres-handbook/"/>
-        <content type="text/html" src="https://blog.creedowl.com/2019/02/03/postgres-handbook/"><![CDATA[<h1 id="PostgreSQL-简介与常用命令"><a href="#PostgreSQL-简介与常用命令" class="headerlink" title="PostgreSQL 简介与常用命令"></a>PostgreSQL 简介与常用命令</h1><p>PostgreSQL，简称postgres，是继mysql被收购之后极为热门的开源关系型数据库，这篇文章简单记录一些使用过程中的基本用法。</p><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>为了保证宿主机环境的纯净，这里使用docker来安装postgres</p><pre><code class="shell">docker run --name postgres -p 5432:5432 -e POSTGRES_PASSWORD=password -d postgres</code></pre><p>常用环境变量</p><blockquote><p>POSTGRES_USER: 数据库用户，缺省postgres</p><p>POSTGRES_PASSWORD: 数据库密码 ps. 若从localhost连接则默认trust，不需要填写</p><p>POSTGRES_DB: 数据库名，缺省postgres</p></blockquote><p>更多docker相关内容参考<a href="https://hub.docker.com/_/postgres" target="_blank" rel="noopener">postgres官方docker镜像页面</a></p><h2 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h2><p><strong>连接数据库</strong></p><pre><code class="shell">psql -U user -d database -h host -p port</code></pre><p><strong>导入数据</strong></p><pre><code class="shell">psql database &lt; db.sql</code></pre><p><strong>控制台命令</strong></p><blockquote><p>\h：查看SQL命令的解释，比如\h select。</p><p>\?：查看psql命令列表。</p><p>\l：列出所有数据库。</p><p>\c [database_name]：连接其他数据库。</p><p>\d：列出当前数据库的所有表格。</p><p>\d [table_name]：列出某一张表格的结构。</p><p>\du：列出所有用户。</p><p>\e：打开文本编辑器。</p><p>\conninfo：列出当前数据库和连接的信息。</p></blockquote><p><strong>数据库操作</strong></p><p><em>采用基本sql语法</em></p><pre><code class="sql"># 建表CREATE TABLE IF NOT EXISTS user (    id SERIAL PRIMARY KEY,    name TEXT NOT NULL);# 插入INSERT INTO user (name) VALUES (&#39;username&#39;);# 选择SELECT * FROM user；# 更新UPDATE user SET name = &#39;qwer&#39; WHERE id = 1;# 删除DELETE FROM user WHERE id = 1;# 添加栏位ALTER TABLE user ADD gender VARCHAR(2);# 更新表结构ALTER TABLE user ALTER COLUMN gender SET NOT NULL；# 字段更名ALTER TABLE user RENAME COLUMN name TO username;# 删除字段ALTER TABLE user DROP COLUMN gender;# 表名更改ALTER TABLE user RENAME TO users;# 删除表格DROP TABLE users;</code></pre><h2 id="相关链接"><a href="#相关链接" class="headerlink" title="相关链接"></a>相关链接</h2><blockquote><p><a href="http://www.ruanyifeng.com/blog/2013/12/getting_started_with_postgresql.html" target="_blank" rel="noopener">PostgreSQL新手入门</a></p></blockquote>]]></content>
+        <updated>2019-02-03T10:32:39+08:00</updated>
+        <link href="https://blog.creedowl.com/posts/postgres-handbook/"/>
+        <content type="text/html" src="https://blog.creedowl.com/posts/postgres-handbook/"><![CDATA[<h1 id="postgresql-简介与常用命令">PostgreSQL 简介与常用命令</h1>
+<p>PostgreSQL，简称postgres，是继mysql被收购之后极为热门的开源关系型数据库，这篇文章简单记录一些使用过程中的基本用法。</p>
+<h2 id="安装">安装</h2>
+<p>为了保证宿主机环境的纯净，这里使用docker来安装postgres</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">docker run --name postgres -p 5432:5432 -e <span class="nv">POSTGRES_PASSWORD</span><span class="o">=</span>password -d postgres
+</code></pre></div><p>常用环境变量</p>
+<blockquote>
+<p>POSTGRES_USER: 数据库用户，缺省postgres</p>
+<p>POSTGRES_PASSWORD: 数据库密码 ps. 若从localhost连接则默认trust，不需要填写</p>
+<p>POSTGRES_DB: 数据库名，缺省postgres</p>
+</blockquote>
+<p>更多docker相关内容参考<a href="https://hub.docker.com/_/postgres">postgres官方docker镜像页面</a></p>
+<h2 id="常用命令">常用命令</h2>
+<p><strong>连接数据库</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">psql -U user -d database -h host -p port
+</code></pre></div><p><strong>导入数据</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">psql database &lt; db.sql
+</code></pre></div><p><strong>控制台命令</strong></p>
+<blockquote>
+<p>\h：查看SQL命令的解释，比如\h select。</p>
+<p>?：查看psql命令列表。</p>
+<p>\l：列出所有数据库。</p>
+<p>\c [database_name]：连接其他数据库。</p>
+<p>\d：列出当前数据库的所有表格。</p>
+<p>\d [table_name]：列出某一张表格的结构。</p>
+<p>\du：列出所有用户。</p>
+<p>\e：打开文本编辑器。</p>
+<p>\conninfo：列出当前数据库和连接的信息。</p>
+</blockquote>
+<p><strong>数据库操作</strong></p>
+<p><em>采用基本sql语法</em></p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="o">#</span> <span class="err">建表</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="k">IF</span> <span class="k">NOT</span> <span class="k">EXISTS</span> <span class="k">user</span> <span class="p">(</span>
+	<span class="n">id</span> <span class="nb">SERIAL</span> <span class="k">PRIMARY</span> <span class="k">KEY</span><span class="p">,</span>
+    <span class="n">name</span> <span class="nb">TEXT</span> <span class="k">NOT</span> <span class="k">NULL</span>
+<span class="p">);</span>
+
+<span class="o">#</span> <span class="err">插入</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="k">user</span> <span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">);</span>
+
+<span class="o">#</span> <span class="err">选择</span>
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="k">user</span><span class="p">;</span>
+
+<span class="o">#</span> <span class="err">更新</span>
+<span class="k">UPDATE</span> <span class="k">user</span> <span class="k">SET</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;qwer&#39;</span> <span class="k">WHERE</span> <span class="n">id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+<span class="o">#</span> <span class="err">删除</span>
+<span class="k">DELETE</span> <span class="k">FROM</span> <span class="k">user</span> <span class="k">WHERE</span> <span class="n">id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+<span class="o">#</span> <span class="err">添加栏位</span>
+<span class="k">ALTER</span> <span class="k">TABLE</span> <span class="k">user</span> <span class="k">ADD</span> <span class="n">gender</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+
+<span class="o">#</span> <span class="err">更新表结构</span>
+<span class="k">ALTER</span> <span class="k">TABLE</span> <span class="k">user</span> <span class="k">ALTER</span> <span class="k">COLUMN</span> <span class="n">gender</span> <span class="k">SET</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">;</span>
+
+<span class="o">#</span> <span class="err">字段更名</span>
+<span class="k">ALTER</span> <span class="k">TABLE</span> <span class="k">user</span> <span class="k">RENAME</span> <span class="k">COLUMN</span> <span class="n">name</span> <span class="k">TO</span> <span class="n">username</span><span class="p">;</span>
+
+<span class="o">#</span> <span class="err">删除字段</span>
+<span class="k">ALTER</span> <span class="k">TABLE</span> <span class="k">user</span> <span class="k">DROP</span> <span class="k">COLUMN</span> <span class="n">gender</span><span class="p">;</span>
+
+<span class="o">#</span> <span class="err">表名更改</span>
+<span class="k">ALTER</span> <span class="k">TABLE</span> <span class="k">user</span> <span class="k">RENAME</span> <span class="k">TO</span> <span class="n">users</span><span class="p">;</span>
+
+<span class="o">#</span> <span class="err">删除表格</span>
+<span class="k">DROP</span> <span class="k">TABLE</span> <span class="n">users</span><span class="p">;</span>
+</code></pre></div><h2 id="相关链接">相关链接</h2>
+<blockquote>
+<p><a href="http://www.ruanyifeng.com/blog/2013/12/getting_started_with_postgresql.html">PostgreSQL新手入门</a></p>
+</blockquote>]]></content>
         <author>
-            <name><![CDATA[Creedowl’s 嘤嘤嘤]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://blog.creedowl.com/2019/01/26/js-differences-between-var-and-let/</id>
-        <title><![CDATA[var和let声明变量的区别]]></title>
-        <updated>2019-01-29T13:55:38+08:00</updated>
-        <link href="https://blog.creedowl.com/2019/01/26/js-differences-between-var-and-let/"/>
-        <content type="text/html" src="https://blog.creedowl.com/2019/01/26/js-differences-between-var-and-let/"><![CDATA[<h1 id="var和let声明变量的区别"><a href="#var和let声明变量的区别" class="headerlink" title="var和let声明变量的区别"></a>var和let声明变量的区别</h1><blockquote><p>今天因为全局变量重复声明的问题被let坑了好久，就研究了一下var和let的区别</p></blockquote><h2 id="var"><a href="#var" class="headerlink" title="var"></a>var</h2><p>var是最早的变量标识符（但在js中声明变量也不一定要标识符。。），兼容性也是最好的，但也存在一些问题，如</p><ol><li>变量提升，即函数和变量的声明都将被提升到函数的最顶部。但初始化并不会提升</li></ol><pre><code class="javascript">{    // 变量a未声明    console.log(a) // error: Uncaught ReferenceError: a is not defined}{    // 变量声明提升，但未初始化    console.log(a) // undefined    var a = 2 // 初始化a    console.log(a) // 2}</code></pre><ol start="2"><li>可重复声明</li></ol><pre><code class="javascript">var a = 2var a = &#39;3&#39;</code></pre><ol start="3"><li>没有局部变量，变量作用域都是全局容易导致</li></ol><h2 id="let"><a href="#let" class="headerlink" title="let"></a>let</h2><p>为了解决var的一些奇奇怪怪的问题，es6新增了let命令用于声明变量。与var相比，let更像其他语言（如c艹）</p><ol><li>不存在变量提升，所以类似上面的写法会抛出未定义的错误</li></ol><pre><code class="javascript">{    console.log(a) // error: Uncaught ReferenceError: a is not defined    let a = 2 // 初始化a    console.log(a) // 2}</code></pre><ol start="2"><li>不可重复声明</li></ol><pre><code class="javascript">let a = 1let a = 2 // SyntaxError: Identifier &#39;a&#39; has already been declared</code></pre><ol start="3"><li>有块级作用域等特性，所以如循环变量等局部变量等不会影响外部的变量</li></ol>]]></content>
-        <author>
-            <name><![CDATA[Creedowl’s 嘤嘤嘤]]></name>
+            <name><![CDATA[Creedowl’s Blog]]></name>
         </author>
     </entry>
     
@@ -1903,13 +2361,58 @@ apply plugin: 'org.springframework.boot'
     </entry>
     
     <entry>
-        <id>https://blog.creedowl.com/2018/11/03/python-decorator/</id>
-        <title><![CDATA[decorator 装饰器]]></title>
-        <updated>2019-01-17T07:35:12+08:00</updated>
-        <link href="https://blog.creedowl.com/2018/11/03/python-decorator/"/>
-        <content type="text/html" src="https://blog.creedowl.com/2018/11/03/python-decorator/"><![CDATA[<h2 id="decorator-装饰器"><a href="#decorator-装饰器" class="headerlink" title="decorator 装饰器"></a>decorator 装饰器</h2><p><img src="https://ws4.sinaimg.cn/large/006tNbRwgy1fxlsbrfedaj30rs13ahdt.jpg" alt=""></p><h3 id="普通装饰器"><a href="#普通装饰器" class="headerlink" title="普通装饰器"></a>普通装饰器</h3><p>有个计算a+b的函数</p><pre><code class="python">def add(a, b):    return a+b</code></pre><p>现在想要在函数执行前后进行操作，可以用装饰器</p><pre><code class="python">from functools import wrapsdef log(func):    @wraps(func) # 避免原函数的__name__等属性发生变化    def wrapper(*args, **kwargs)        print(&#39;before func&#39;)        func(*args, **kwargs) # 执行原函数，若不调用则不执行原函数        print(&#39;after func&#39;)    return wrapper@log # @:装饰器语法糖def add(a, b):    return a+b&#39;&#39;&#39;add(1, 2)output: before func3after func&#39;&#39;&#39;</code></pre><h3 id="带参数的装饰器"><a href="#带参数的装饰器" class="headerlink" title="带参数的装饰器"></a>带参数的装饰器</h3><p>要实现带参数的装饰器，只需要再用一个函数包装普通装饰器就行</p><pre><code class="python">from functools import wrapsdef log(text):    def decorator(func):        @wraps(func) # 避免原函数的__name__等属性发生变化        def wrapper(*args, **kwargs)            print(text)            func(*args, **kwargs) # 执行原函数，若不调用则不执行原函数            print(&#39;after func&#39;)        return wrapper    return decorator@log(&#39;log&#39;) # @:装饰器语法糖def add(a, b):    return a+b&#39;&#39;&#39;add(1, 2)output: log3after func&#39;&#39;&#39;</code></pre>]]></content>
+        <id>https://blog.creedowl.com/posts/js-differences-between-var-and-let/</id>
+        <title><![CDATA[var和let声明变量的区别]]></title>
+        <updated>2019-01-26T13:59:14+08:00</updated>
+        <link href="https://blog.creedowl.com/posts/js-differences-between-var-and-let/"/>
+        <content type="text/html" src="https://blog.creedowl.com/posts/js-differences-between-var-and-let/"><![CDATA[<h1 id="var和let声明变量的区别">var和let声明变量的区别</h1>
+<blockquote>
+<p>今天因为全局变量重复声明的问题被let坑了好久，就研究了一下var和let的区别</p>
+</blockquote>
+<h2 id="var">var</h2>
+<p>var是最早的变量标识符（但在js中声明变量也不一定要标识符。。），兼容性也是最好的，但也存在一些问题，如</p>
+<ol>
+<li>变量提升，即函数和变量的声明都将被提升到函数的最顶部。但初始化并不会提升</li>
+</ol>
+<div class="highlight"><pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="p">{</span>
+    <span class="c1">// 变量a未声明
+</span><span class="c1"></span>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span> <span class="c1">// error: Uncaught ReferenceError: a is not defined
+</span><span class="c1"></span><span class="p">}</span>
+
+<span class="p">{</span>
+    <span class="c1">// 变量声明提升，但未初始化
+</span><span class="c1"></span>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span> <span class="c1">// undefined
+</span><span class="c1"></span>    <span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">2</span> <span class="c1">// 初始化a
+</span><span class="c1"></span>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span> <span class="c1">// 2
+</span><span class="c1"></span><span class="p">}</span>
+</code></pre></div><ol start="2">
+<li>可重复声明</li>
+</ol>
+<div class="highlight"><pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="s1">&#39;3&#39;</span>
+</code></pre></div><ol start="3">
+<li>没有局部变量，变量作用域都是全局容易导致</li>
+</ol>
+<h2 id="let">let</h2>
+<p>为了解决var的一些奇奇怪怪的问题，es6新增了let命令用于声明变量。与var相比，let更像其他语言（如c艹）</p>
+<ol>
+<li>不存在变量提升，所以类似上面的写法会抛出未定义的错误</li>
+</ol>
+<div class="highlight"><pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span> <span class="c1">// error: Uncaught ReferenceError: a is not defined
+</span><span class="c1"></span>    <span class="kd">let</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">2</span> <span class="c1">// 初始化a
+</span><span class="c1"></span>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span> <span class="c1">// 2
+</span><span class="c1"></span><span class="p">}</span>
+</code></pre></div><ol start="2">
+<li>不可重复声明</li>
+</ol>
+<div class="highlight"><pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="kd">let</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="kd">let</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">2</span> <span class="c1">// SyntaxError: Identifier &#39;a&#39; has already been declared
+</span></code></pre></div><ol start="3">
+<li>有块级作用域等特性，所以如循环变量等局部变量等不会影响外部的变量</li>
+</ol>]]></content>
         <author>
-            <name><![CDATA[Creedowl’s 嘤嘤嘤]]></name>
+            <name><![CDATA[Creedowl’s Blog]]></name>
         </author>
     </entry>
     
