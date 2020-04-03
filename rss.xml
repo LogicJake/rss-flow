@@ -3,12 +3,276 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2020-04-03T12:05:47+08:00</updated>
+    <updated>2020-04-03T18:04:22+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
     </author>
     
+    
+    <entry>
+        <id>https://blog.creedowl.com/posts/gpg/</id>
+        <title><![CDATA[GPG使用笔记]]></title>
+        <updated>2020-04-02T06:47:31+08:00</updated>
+        <link href="https://blog.creedowl.com/posts/gpg/"/>
+        <content type="text/html" src="https://blog.creedowl.com/posts/gpg/"><![CDATA[<h2 id="why-gpg">Why GPG?</h2>
+<p><a href="https://zh.wikipedia.org/wiki/GnuPG">GPG</a> 是一个密码学软件，用于加密、签名通信内容及管理非对称密码学的密钥，具体历史、介绍可以在wiki中看到，<a href="https://gnupg.org/">官网</a></p>
+<p>而我使用 GPG 的缘由是，在 Github 上提交时，如果使用 GPG 对提交进行签名，会有一个<code>Verified</code>标识<del>看起来很nb</del></p>
+<p><img src="https://blog-1251984664.cos.ap-shanghai.myqcloud.com/UTOOLS1585795152275.png/compress" alt="UTOOLS1585795152275.png"></p>
+<p>当然使用 GPG 不仅是为了好看，它能确保你提供的信息是由你自己发布的，无法被别人篡改、冒充，前提是保护好自己的 GPG 私钥</p>
+<h2 id="安装">安装</h2>
+<p>这边以 MacOS 为示例进行操作</p>
+<p><strong>强烈建议 MacOS 用户使用 <a href="https://gpgtools.org/">GPG Suite</a> 进行操作，可以避免一些奇奇怪怪的问题</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">brew cask install gpg-suite
+</code></pre></div><p><del>仅安装 GPG 本体</del></p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># deprecated</span>
+brew install gpg
+</code></pre></div><h2 id="生成密钥">生成密钥</h2>
+<p>GPG 采用非对称加密，一切的操作都需要有密钥。网上一些教程中的操作与我使用的 GPG 版本 <code>gpg (GnuPG/MacGPG2) 2.2.17</code> 有点出入，以下操作都在我所使用的版本下进行</p>
+<p>有两个命令用于生成密钥，为<code>gpg --gen-key</code>和<code>gpg --full-gen-key</code>，区别是前者采用默认的配置不可更改，后者能自定义配置。我们采用后一种，首先选择密钥类型，默认的<code>1</code>就可以了</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">$ gpg --full-gen-key
+gpg <span class="o">(</span>GnuPG/MacGPG2<span class="o">)</span> 2.2.17<span class="p">;</span> Copyright <span class="o">(</span>C<span class="o">)</span> <span class="m">2019</span> Free Software Foundation, Inc.
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+
+请选择您要使用的密钥类型：
+   <span class="o">(</span>1<span class="o">)</span> RSA 和 RSA （默认）
+   <span class="o">(</span>2<span class="o">)</span> DSA 和 Elgamal
+   <span class="o">(</span>3<span class="o">)</span> DSA（仅用于签名）
+   <span class="o">(</span>4<span class="o">)</span> RSA（仅用于签名）
+您的选择是？ <span class="m">1</span>
+</code></pre></div><p>接着选择密钥长度，默认<code>2048</code>即可</p>
+<div class="highlight"><pre class="chroma"><code class="language-text" data-lang="text">RSA 密钥的长度应在 1024 位与 4096 位之间。
+您想要使用的密钥长度？(2048) 2048
+</code></pre></div><p>然后设定密钥的有效期限，我们没有特殊需求，设置永不过期即可</p>
+<div class="highlight"><pre class="chroma"><code class="language-text" data-lang="text">请设定这个密钥的有效期限。
+         0 = 密钥永不过期
+      &lt;n&gt;  = 密钥在 n 天后过期
+      &lt;n&gt;w = 密钥在 n 周后过期
+      &lt;n&gt;m = 密钥在 n 月后过期
+      &lt;n&gt;y = 密钥在 n 年后过期
+密钥的有效期限是？(0) 0
+</code></pre></div><p>确认上述设置后，依次输入姓名、邮箱和注释，这里我使用随机信息用于演示</p>
+<pre><code>GnuPG 需要构建用户标识以辨认您的密钥。
+
+真实姓名： naive
+电子邮件地址： naive@test.com
+注释： too young too simple
+您选定了此用户标识：
+    “naive (too young too simple) &lt;naive@test.com&gt;”
+
+更改姓名（N）、注释（C）、电子邮件地址（E）或确定（O）/退出（Q）？
+</code></pre>
+<p>确定后，需要设定密钥的密码，如果你采用了 <code>GPG Suite</code> ，会出现一个窗口，在此输入密码</p>
+<p><img src="https://blog-1251984664.cos.ap-shanghai.myqcloud.com/UTOOLS1585796741624.png/compress" alt="UTOOLS1585796741624.png"></p>
+<p>如果没使用<code>GPG Suite</code>，则会在你当前终端弹出一个全屏终端窗口，同样是输入密码。</p>
+<blockquote>
+<p>注意，在 mac 终端环境下，如果语言是中文的话，这个终端窗口可能会乱码，但不影响使用，也可以临时设置语言为英文解决这个问题<code>LANGUAGE=en gpg --full-generate-key</code>。但千万不要用<code>ctrl-c</code>结束这个进程，这会破坏当前终端环境，后面的输入会变得很奇怪，而且后台进程不会结束，会占满你的CPU</p>
+</blockquote>
+<div class="highlight"><pre class="chroma"><code class="language-text" data-lang="text">我们需要生成大量的随机字节。在质数生成期间做些其他操作（敲打键盘
+、移动鼠标、读写硬盘之类的）将会是一个不错的主意；这会让随机数
+发生器有更好的机会获得足够的熵。
+gpg: 密钥 4C26D2E451FFDAF1 被标记为绝对信任
+gpg: 目录‘/Users/creedowl/.gnupg/openpgp-revocs.d’已创建
+gpg: 吊销证书已被存储为‘/Users/creedowl/.gnupg/openpgp-revocs.d/0B3C52F1EF07B14EA7C45C9A4C26D2E451FFDAF1.rev’
+公钥和私钥已经生成并被签名。
+
+pub   rsa2048 2020-04-02 [SC]
+      0B3C52F1EF07B14EA7C45C9A4C26D2E451FFDAF1
+uid                      naive (too young too simple) &lt;naive@test.com&gt;
+sub   rsa2048 2020-04-02 [E]
+</code></pre></div><p>这样，密钥就生成完成，其中<code>4C26D2E451FFDAF1</code>就是你的密钥名，后续操作都需要通过这个密钥名选择密钥，但也可以通过之前设置的姓名或邮箱代替操作</p>
+<h2 id="gpg-常用操作">GPG 常用操作</h2>
+<p>GPG 最基础的操作就是对文件等信息进行加密、签名，首先创建一个测试文件<code>test.txt</code></p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="nb">echo</span> <span class="nb">test</span> &gt; test.txt
+</code></pre></div><h3 id="加密">加密</h3>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">gpg --recipient creedowl --output test.txt.gpg --encrypt test.txt
+</code></pre></div><p>其中<code>--recipient</code>指定接收者，简写为<code>-r</code>，设定接受者时需要你本地有接收者的<strong>公钥</strong>，可以用密钥名、姓名或者邮箱进行指定。<code>--output</code>指定输出文件名，可省略。<code>--encrypt</code>指定待加密的文件，简写为<code>-e</code>。这样在你当前目录下会生成一个<code>test.txt.gpg</code>即加密后的文件，你就可以把这个文件发送给接受者，不必担心文件内容被第三方读取</p>
+<p><strong>注意</strong>这里生成加密文件为二进制格式，有时候（如通过邮件发送）不便于操作，可以加上<code>--armor</code>参数（简写为<code>-a</code>）生成文本格式的密文，如</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">gpg -r creedowl -ae test.txt
+</code></pre></div><p>生成的加密文件为<code>test.txt.asc</code></p>
+<div class="highlight"><pre class="chroma"><code class="language-text" data-lang="text">-----BEGIN PGP MESSAGE-----
+
+hQEMA9KmvDhAMTGrAQf+KITqx4HTpWsevIEfRFlw5g+jt8l8ol3fuww0gBoMEPBG
+KaqxCmjIpHZdGmaXwBSKadmeieZGLsm1CYuf4gbv4FpdWgveVWnLvB/HmwuvnmJt
+YhTtapNgkQ++mwPbH4WKeOFQ58U5dZ7C+R8rrucRRYQBRTH6AJQY82aV1KXTqyF1
+D8c/2ANW7aCWr8W/ogCbEqH47VE3foP+aSD+JMPtdnaYWIPzyr5x5lw6ASwxD4hB
+ikOUcJTxp+GyFLTd3n1zCvSP9ZQzvolur7soqZVP8t4hxlALGL+KYN4YgubcPt5y
+bucMYWkbLlZM+AuAYzSCLaSmkgkiYUFEkwKJWdLr+NJGAY5Mk+bnEP2k/kKxl9vo
+/LVsloiYbg9M184LxUNfZRBnKcI9vKw/C6uU2Ee5wKUMsy3Epnp60Fe5u5fj5yn7
+0JjMBmY+gQ==
+=8K/i
+-----END PGP MESSAGE-----
+</code></pre></div><h3 id="解密">解密</h3>
+<p>有了密文就要对其进行解密得到原文。注意要进行解密，你必须有接受者的<strong>私钥</strong>。公钥是公开的，任何人都可以查看、使用，而<strong>私钥</strong>是私有的，一定要保管好，如果泄露了这个 GPG 密钥就等同于失效了，需要吊销。这就是非对称加密</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">	gpg --decrypt test.txt.asc --output out.txt
+</code></pre></div><p>其中<code>--decrypt</code>声明该命令进行解密，简写为<code>-d</code>，<code>--output</code>指定输出文件，默认输出到终端。注意解密时需要输入你密钥的密码，所以也一定要保管好密码</p>
+<h3 id="签名">签名</h3>
+<p>有的时候不需要对文件进行签名，只需要确保文件是由本人发出的，这个时候就可以用到签名</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">gpg --sign test.txt
+</code></pre></div><p>会生成二进制的签名文件<code>test.txt.gpg</code>，如果想生成文本类型的签名，使用</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">gpg --clearsign test.txt
+</code></pre></div><p>会生成文本类型的签名文件<code>test.txt.asc</code></p>
+<p>注意以上两种方式原文和签名是在同一个文件中，查看<code>test.txt.asc</code></p>
+<div class="highlight"><pre class="chroma"><code class="language-text" data-lang="text">-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
+
+test
+-----BEGIN PGP SIGNATURE-----
+
+iQFDBAEBCAAtFiEECzxS8e8HsU6nxFyaTCbS5FH/2vEFAl6FX+cPHG5haXZlQHRl
+c3QuY29tAAoJEEwm0uRR/9rxGNsH/AmjJiT19q5caq9Pe8tMRnR2yvZIGWbMD3Ch
+UTkyGMkSPMIo6XRpYPlANe2/dddBT2l7EAPy2lAxaa8LcjsxtRhJG4GxMaCcujik
+M6MX3IOfa1m9aDP1IY3Sh2U07j3t+8dawahR8EUF2D+rtvx24ybnwpWpKbDVsGyp
+Mt06BI3pWC3opMRYPCl21IBhPhaPPnvXF7X8DMP+2VqZye2juX2oG1KMkZWQuiBb
+/D7DYlx6/ainu0cJw6UL8YXHag7tkUeKtTPQbBpCsszOuxJZ74gduIUzDcokayCB
+DM9qB/GpUyVOOTwfLMBta6JP5BO8ppPaPdPX46kKDqLKG7eh4bQ=
+=Q4/W
+-----END PGP SIGNATURE-----
+</code></pre></div><p>因为是签名，不会对内容进行加密，所以直接显示原文。如果想把原始文件分离出来，使用</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">gpg --output out.txt -d test.txt.gpg
+</code></pre></div><p>分离的同时还顺便校验了签名。注意这里<code>test.txt.gpg</code>是上面生成的二进制<strong>签名</strong>文件，也可以用<code>test.txt.asc</code></p>
+<p>如果每次都要分离，就很麻烦，而且没有安装 GPG 的用户就无法使用源文件了。所以更好的方式是分离源文件和签名文件</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">gpg --detach-sign --armor test.txt
+</code></pre></div><p>这样会生成一个单独的、文本类型的签名文件<code>test.txt.sig</code></p>
+<blockquote>
+<p>注意：如果有多个私钥，可以用<code>-u</code>参数选择</p>
+</blockquote>
+<h3 id="签名校验">签名校验</h3>
+<p>收到文件和签名文件后，需要对签名进行校验</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">gpg --verify test.txt.sig test.txt
+</code></pre></div><p>如果签名校验成功，会显示</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">gpg: 签名建立于 四  4/ <span class="m">2</span> 11:49:35 <span class="m">2020</span> CST
+gpg:               使用 RSA 密钥 34B368EFC6FA8941B4A096CFFA4C884FBE8164D7
+gpg: 完好的签名，来自于 “creedowl &lt;creedowl@gmail.com&gt;” <span class="o">[</span>绝对<span class="o">]</span>
+</code></pre></div><h3 id="导入导出">导入导出</h3>
+<p>当你需要与他人交换数据时，需要导出自己的公钥，同时导入他人的公钥；而如果你更换电脑，就需要导出自己的私钥。这就涉及到了密钥的导入导出</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">gpg -a --output public_key.txt --export naive
+</code></pre></div><p>上述命令用于导出公钥，相关参数在上文都有介绍。接着你就可以把<code>public_key.txt</code>发布给他人</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">gpg -a --output private_key.txt --export-secret-keys naive
+</code></pre></div><p>上述命令用于导出私钥，一定要保管好，建议在脱机情况下进行操作</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">gpg --improt <span class="o">[</span>密钥文件<span class="o">]</span>
+</code></pre></div><p>上述命令用于导入密钥，不区分公钥私钥</p>
+<h3 id="查看所有密钥">查看所有密钥</h3>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">gpg -k
+</code></pre></div><h3 id="生成吊销证书">生成吊销证书</h3>
+<p>当你的私钥泄露或者更换时，需要吊销失效的密钥，这时就需要使用吊销证书</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">gpg --gen-revoke naive
+</code></pre></div><p>接着选择吊销原因，就能生成吊销证书</p>
+<div class="highlight"><pre class="chroma"><code class="language-text" data-lang="text">sec  rsa2048/4C26D2E451FFDAF1 2020-04-02 naive (too young too simple) &lt;naive@test.com&gt;
+
+要为这个密钥创建一个吊销证书吗？(y/N) y
+请选择吊销的原因：
+  0 = 未指定原因
+  1 = 密钥已泄漏
+  2 = 密钥被替换
+  3 = 密钥不再使用
+  Q = 取消
+（也许您会想要在这里选择 1）
+您的决定是什么？ 1
+请输入描述（可选）；以空白行结束：
+&gt;
+吊销原因：密钥已泄漏
+（未给定描述）
+这样可以吗？ (y/N) y
+已强行使用 ASCII 字符封装过的输出。
+-----BEGIN PGP PUBLIC KEY BLOCK-----
+Comment: This is a revocation certificate
+
+****
+-----END PGP PUBLIC KEY BLOCK-----
+已创建吊销证书。
+
+请把这个文件转移到一个您可以藏起来的介质上；如果坏人获取到了这
+份证书的话，那么他就能使用它并让您的密钥无法继续使用。把此证书
+打印出来再存放到安全的地方也是很好的方法，以免您的保存媒体变得
+不可读。但是千万小心：您机器上的打印系统可能会在打印过程中储存
+这些数据，并使得其他人看到！
+</code></pre></div><p>只需要保存中间的吊销证书，当密钥泄露时将其发送到公钥服务器，就可以吊销旧密钥</p>
+<h3 id="编辑密钥">编辑密钥</h3>
+<p>有时候需要对密钥进行编辑，如修改信任度，生成子密钥等，使用以下命令</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">gpg --edit-key naive
+</code></pre></div><p>接着就会进入交互模式等待命令，输入<code>help</code>可以查看所有操作</p>
+<div class="highlight"><pre class="chroma"><code class="language-text" data-lang="text">gpg (GnuPG/MacGPG2) 2.2.17; Copyright (C) 2019 Free Software Foundation, Inc.
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+
+私钥可用。
+
+sec  rsa2048/4C26D2E451FFDAF1
+     创建于：2020-04-02  有效至：永不       可用于：SC
+     信任度：绝对        有效性：绝对
+ssb  rsa2048/A86AB46BDC677F8F
+     创建于：2020-04-02  有效至：永不       可用于：E
+[ 绝对 ] (1). naive (too young too simple) &lt;naive@test.com&gt;
+
+gpg&gt;
+</code></pre></div><h2 id="使用-gpg-签名-git-commit">使用 GPG 签名 Git Commit</h2>
+<p>这就是我使用 GPG 的原因，下面开始配置，首先配置 git</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 设置全局默认密钥</span>
+git config --global user.signingkey &lt;密钥ID&gt;
+
+<span class="c1"># 设置强制使用GPG签名</span>
+git config --global commit.gpgsign <span class="nb">true</span>
+</code></pre></div><p>之后在提交时，只需要带上<code>-S</code>参数，就能对提交进行签名</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">git commit -S -m <span class="s2">&#34;xxx&#34;</span>
+</code></pre></div><p>查看 git 日志时，带上<code>--show-signature</code>参数就能看到签名信息</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">git log --show-signature
+</code></pre></div><p>最后一步，需要把你的公钥提交到 github，否则它怎么知道这个签名是你的呢？将之前生成的文本类型的公钥<code>public_key.txt</code>提交到 <a href="https://github.com/settings/keys">github</a>，之后你的提交在 github 上就有像开头那样的绿色小勾了</p>
+<h2 id="faq">FAQ</h2>
+<h3 id="解决git提交时出现error-gpg-failed-to-sign-the-data">解决git提交时出现<code>error: gpg failed to sign the data</code></h3>
+<p>以下是原始解决方案，虽然能解决问题，但体验不好，在 IDE 中提交时难以输入密码，建议 MacOS 用户采用上面说的 <code>GPG Suite</code>进行操作，它可以接管密码输入操作，弹出一个独立窗口用于输入，还能将密码添加到 iCloud 钥匙串中，避免重复输入密码。如果你已经在使用<code>GPG Suite</code>，但仍然遇到了这个问题，可以尝试重装<code>GPG Suite</code></p>
+<ol>
+<li>
+<p>导出密钥（私钥）<strong>重要</strong></p>
+</li>
+<li>
+<p>卸载 GPG</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">brew uninstall gnupg gnutls
+   
+brew cask uninstall gpg-suite
+</code></pre></div></li>
+<li>
+<p>删除 gpg 文件夹，<strong>请确认已经导出密钥</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">rm -rf ~/.gnupg
+</code></pre></div></li>
+<li>
+<p>重新安装<code>GPG Suite</code>，<strong>不需要手动安装 GPG</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">brew cask install gpg-suite
+</code></pre></div></li>
+<li>
+<p>导入密钥</p>
+</li>
+</ol>
+<p>这时 <code>GPG Suite</code>应该已经可以正常工作了</p>
+<hr>
+<p><em>原始方案</em></p>
+<p>首先测试<code>gpg</code>工作是否正常</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="nb">echo</span> <span class="s2">&#34;test&#34;</span> <span class="p">|</span> gpg --clearsign
+</code></pre></div><p>如果出现下面的错误</p>
+<div class="highlight"><pre class="chroma"><code class="language-text" data-lang="text">-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
+
+test
+gpg: 签名时失败： Inappropriate ioctl for device
+gpg: [stdin]: clear-sign failed: Inappropriate ioctl for device
+</code></pre></div><p>说明<code>gpg</code>无法打开输入密码的窗口。在生成<code>gpg key</code>时，如果指定了密码，在签名时就需要输入。而这时<code>gpg</code>不知道从哪里读取输入，所以可以用以下的命令指定<code>tty</code></p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="nb">export</span> <span class="nv">GPG_TTY</span><span class="o">=</span><span class="k">$(</span>tty<span class="k">)</span> 
+</code></pre></div><p>这样就可以正常弹出输入密码的窗口。</p>
+<hr>
+<p>但我不喜欢这个全屏窗口，主要是在mac上<code>gpg</code>语言为中文时，这个窗口会乱码，所以用另一个方法解决。编辑<code>~/.gnupg/gpg.conf</code>，添加以下内容</p>
+<div class="highlight"><pre class="chroma"><code class="language-text" data-lang="text">use-agent 
+pinentry-mode loopback
+</code></pre></div><p>再编辑<code>~/.gnupg/gpg-agent.conf</code>，添加以下内容</p>
+<div class="highlight"><pre class="chroma"><code class="language-text" data-lang="text">allow-loopback-pinentry
+</code></pre></div><p>最后输入<code>echo RELOADAGENT | gpg-connect-agent</code>重启<code>agent</code>就生效了，这样可以直接在终端输入密码</p>
+<blockquote>
+<p><a href="https://d.sb/2016/11/gpg-inappropriate-ioctl-for-device-errors">source</a></p>
+</blockquote>]]></content>
+        <author>
+            <name><![CDATA[Creedowl’s Blog]]></name>
+        </author>
+    </entry>
     
     <entry>
         <id>https://miaotony.xyz/2020/03/23/CTF_BJDCTF2nd/</id>
@@ -88,6 +352,20 @@
     </entry>
     
     <entry>
+        <id>https://blog.creedowl.com/posts/renew/</id>
+        <title><![CDATA[重新开始]]></title>
+        <updated>2020-03-19T13:28:13+08:00</updated>
+        <link href="https://blog.creedowl.com/posts/renew/"/>
+        <content type="text/html" src="https://blog.creedowl.com/posts/renew/"><![CDATA[<p>突然发现距上一篇blog发布已经过去了快一年的时间，原先的blog也疏于打理，只有寥寥几篇文章，图床基本失效。主要因为我比较懒，认真整理一篇blog也是费时费力的事情。但自己整理一些文章是很有意义的事情，能记录下自己的学习历程，总结知识，再次遇到相同的问题也可以回头参考。</p>
+<p>blog一直没更新有个诱因是微博图床开启了防盗链，导致blog中许多图片都无法访问了<del>老王背锅</del>，又懒得修复。同时看上了<a href="https://gohugo.io/">hugo</a>这个框架，正好也在学习<code>golang</code>，就想从<code>hexo</code>更换到<code>hugo</code>。但这两个框架有个很大的区别<del>我觉得</del>，就是<code>hexo</code>是一堆前端工程师搞的，而<code>hugo</code>是一堆后端工程师搞的，这就导致了<code>hugo</code>没有啥好看的主题，也就一直鸽下去了。</p>
+<p>去年年中的时候就打算和@queensferry写一个Hugo主题<a href="https://github.com/queensferryme/hugo-theme-verse">verse</a>，立项的时候很多想法，但做起来就不想动了。摸完页面框架后就鸽了，一方面实在不会设计，另一方面调各种样式是真的蛋疼。鸽了半年又捡起来<del>虽然我没写啥</del>，不过渐渐也有点样子了。但今天发现了一个很棒的主题<a href="https://github.com/Track3/hermit">hermit</a>，几乎就是我想要的，里面很多设计就是我当初构想的内容，马上捡起了blog。</p>
+<p>这一年来也计划整理个人笔记软件，在尝试了数个软件后，有印象笔记，为知笔记，有道云笔记，onenote及一堆开源笔记应用，都不太满足我的需求。最后发现了notion这个东西贼香（主要对学生免费了），最后就选择了它。不过这也导致我手上一堆笔记分散在各处，打算后面整理清楚<del>水</del>几篇blog出来。</p>]]></content>
+        <author>
+            <name><![CDATA[Creedowl’s Blog]]></name>
+        </author>
+    </entry>
+    
+    <entry>
         <id>https://miaotony.xyz/2020/03/15/CTF_2020XCTF_gxzy/</id>
         <title><![CDATA[CTF | XCTF高校战“疫”网络安全分享赛 WriteUp]]></title>
         <updated>2020-03-17T16:38:48+08:00</updated>
@@ -106,6 +384,108 @@
         <content type="text/html" src="https://miaotony.xyz/2020/03/14/CTF_2020JetBrainsQuest3/"><![CDATA[JetBrains Quest 3出来了，又来体验了一波，最后的礼品是20% discount on an All Products Pack subscription，这里随手写写攻略吧。]]></content>
         <author>
             <name><![CDATA[MiaoTony]]></name>
+        </author>
+    </entry>
+    
+    <entry>
+        <id>https://blog.invariant.cn/a-comparison-between-webassembly-and-risc-v/</id>
+        <title><![CDATA[WebAssembly 与 RISC-V 指令集架构的对比]]></title>
+        <updated>2020-03-15T09:51:51+08:00</updated>
+        <link href="https://blog.invariant.cn/a-comparison-between-webassembly-and-risc-v/"/>
+        <content type="text/html" src="https://blog.invariant.cn/a-comparison-between-webassembly-and-risc-v/"><![CDATA[<figure class="kg-card kg-bookmark-card"><a class="kg-bookmark-container" href="https://invariant.me/a-comparison-between-webassembly-and-risc-v/"><div class="kg-bookmark-content"><div class="kg-bookmark-title">A Comparison between WebAssembly and RISC-V</div><div class="kg-bookmark-description">WebAssembly and RISC-V are both new Instruction Set Architectures (ISAs) that evolved in the recent 10 years. Let’s do a comparison.</div><div class="kg-bookmark-metadata"><img class="kg-bookmark-icon" src="https://invariant.me/favicon.ico" alt="WebAssembly 与 RISC-V 指令集架构的对比"><span class="kg-bookmark-author">Heyang Zhou</span><span class="kg-bookmark-publisher">The Invariant</span></div></div><div class="kg-bookmark-thumbnail"><img src="https://invariant.me/content/images/2020/03/wasm-riscv.png" alt="WebAssembly 与 RISC-V 指令集架构的对比"></div></a></figure><img src="https://blog.invariant.cn/content/images/2020/03/wasm-riscv.png" alt="WebAssembly 与 RISC-V 指令集架构的对比"><p>WebAssembly 与 RISC-V 都是近十年内新出现的指令集架构。摘录一段 <a href="https://webassembly.org/">WebAssembly 官方网站</a>的介绍：</p><blockquote>WebAssembly (abbreviated <em><em>Wasm</em></em>) is a binary instruction format for a stack-based virtual machine. Wasm is designed as a portable target for compilation of high-level languages like C/C++/Rust, enabling deployment on the web for client and server applications.</blockquote><blockquote>WebAssembly （简写为 Wasm）是一种栈虚拟机的二进制指令格式。Wasm 被设计为 C/C++/Rust 等高级语言的可移植编译目标，从而允许客户端和服务器应用程序部署在 Web 上。</blockquote><p>和 <a href="https://riscv.org/">RISC-V 的官方介绍</a>：</p><blockquote>RISC-V is a free and open ISA enabling a new era of processor innovation through open standard collaboration. Born in academia and research, RISC-V ISA delivers a new level of free, extensible software and hardware freedom on architecture, paving the way for the next 50 years of computing design and innovation.</blockquote><blockquote>RISC-V 是一种自由、开放的指令集架构，通过开放标准协作使新的处理器创新成为可能。RISC-V 来自学术研究，提供了更加自由、可扩展的软硬件架构，为未来 50 年的计算技术设计与创新铺平道路。</blockquote><p>这两种指令集架构看起来很不一样。WebAssembly 的目标平台主要是 JIT 编译器（以及浏览器）；而 RISC-V 则专为硬件设计，其目标之一即是在 FPGA 和电路上的高效实现。WebAssembly 与 RISC-V 的关系似乎类似于早期的 Java 与 x86：一种字节码格式，和一个硬件指令集。它们有什么关系呢？</p><p>其实字节码格式与硬件指令集的分界线并不是非常清晰。例如在 x86 指令集的早期实现中，指令经过一层解码直接被分发到执行电路去执行。但近年的 Intel/AMD CPU 采用了不同的执行策略：每条 x86 指令首先被翻译为某种内部 RISC 指令，执行组件收到的指令其实已经是翻译后的 RISC 编码格式。这实际上相当于从 x86 到内部 RISC 指令集的某种“硬件实时编译”过程。同时，<a href="https://en.wikipedia.org/wiki/Java_processor">Java</a> 与 <a href="https://github.com/piranna/wasmachine">WebAssembly</a> 也有实验性的硬件实现，虽然它们还不能赶上 JIT 编译器在现代 CPU 上所能达到的效率。</p><blockquote>我们已经可以看到 RISC-V 指令集<a href="https://github.com/nervosnetwork/ckb-vm">被用于区块链的智能合约</a>，而 WebAssembly 此前几乎是原生语言智能合约的唯一选择。</blockquote><p>在这里我们对 WebAssembly 与 RISC-V 做一个比较。</p><!--kg-card-begin: markdown--><table>
+<thead>
+<tr>
+<th></th>
+<th>WebAssembly</th>
+<th>RISC-V</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong><font color="#512da8">开源</font></strong></td>
+<td>是</td>
+<td>是</td>
+</tr>
+<tr>
+<td><strong><font color="#512da8">内存架构</font></strong></td>
+<td>Load/Store</td>
+<td>Load/Store</td>
+</tr>
+<tr>
+<td><strong><font color="#512da8">浮点支持</font></strong></td>
+<td>是</td>
+<td>是 (定义于扩展)</td>
+</tr>
+<tr>
+<td><strong><font color="#512da8">SIMD</font></strong></td>
+<td>是</td>
+<td>是 (定义于扩展)</td>
+</tr>
+<tr>
+<td><strong><font color="#bb4d00">代码/数据分离</font></strong></td>
+<td>是</td>
+<td>否</td>
+</tr>
+<tr>
+<td><strong><font color="#bb4d00">指针宽度</font></strong></td>
+<td>32</td>
+<td>32/64</td>
+</tr>
+<tr>
+<td><strong><font color="#bb4d00">最大数据宽度</font></strong></td>
+<td>64</td>
+<td>32/64</td>
+</tr>
+<tr>
+<td><strong><font color="#bb4d00">静态类型</font></strong></td>
+<td>弱</td>
+<td>无</td>
+</tr>
+<tr>
+<td><strong><font color="#bb4d00">控制流约束</font></strong></td>
+<td>是</td>
+<td>否</td>
+</tr>
+<tr>
+<td><strong><font color="#bb4d00">机器模型</font></strong></td>
+<td>栈机</td>
+<td>寄存器机</td>
+</tr>
+<tr>
+<td><strong><font color="#bb4d00">内存布局</font></strong></td>
+<td>线性</td>
+<td>分页</td>
+</tr>
+<tr>
+<td><strong><font color="#bb4d00">内存保护</font></strong></td>
+<td>无</td>
+<td>RWX</td>
+</tr>
+<tr>
+<td><strong><font color="#bb4d00">多线程同步</font></strong></td>
+<td>CAS</td>
+<td>LL/SC</td>
+</tr>
+<tr>
+<td><strong><font color="#bb4d00">指令编码</font></strong></td>
+<td>变长</td>
+<td>定长 (2 或 4 字节)</td>
+</tr>
+<tr>
+<td><strong><font color="#bb4d00">与环境交互</font></strong></td>
+<td>导入函数</td>
+<td>系统调用</td>
+</tr>
+<tr>
+<td><strong><font color="#bb4d00">可执行映像格式</font></strong></td>
+<td>WebAssembly</td>
+<td>ELF</td>
+</tr>
+</tbody>
+</table>
+<!--kg-card-end: markdown--><p><strong>1. 代码/数据分离</strong></p><p>包括 RISC-V 在内的大多数现代架构对代码和数据使用同一个地址空间，但是 WebAssembly 没有这样做。实际上，运行中的代码甚至没有办法读/写它自己。这个设计的原因可能是：</p><ul><li>简化 JIT 编译器的实现。如果代码可以自我修改，那么 JIT 编译器则需要有检测修改和重新生成目标代码的能力，而这需要相当复杂的实现机制。</li><li>WebAssembly 假设了一个功能完善的运行环境。运行环境会处理链接、重定位等准备工作，程序不需要关心怎样把它自己运行起来。</li><li>安全。能够动态生成和修改的代码是个很危险的攻击点。</li></ul><p><strong>2. 静态类型与控制流约束</strong></p><p>WebAssembly 具有很强的“结构性”。其标准要求所有函数调用、循环、跳转和值类型遵循特定的结构约束，例如向一个接受三个参数的函数传入两个参数、跳转到其他函数里的某个位置、在两个整数上执行浮点加操作等都会导致编译/验证失败。RISC-V 则不具有此类约束，指令的有效与否只取决于其自身的编码是否正确。</p><p><strong>3. 机器模型</strong></p><p>WebAssembly 是一种<a href="https://en.wikipedia.org/wiki/Stack_machine">栈机</a>指令集，而 RISC-V 是一种<a href="https://en.wikipedia.org/wiki/Register_machine">寄存器机</a>指令集。</p><p>在 WebAssembly 中，每条指令<em>语义上</em>会从值栈上弹出它的操作数，然后将结果推入值栈。然而与 Java 等其他基于栈机的字节码格式不同的是，程序中任意指令处值栈的结构都可以被静态确定。这一设计有利于更好的编译优化。</p><p>在 RISC-V 中，每条指令的编码包含 0 - 3 个寄存器编号 <code>rd, rs1, rs2</code> 。其中 <code>rs1</code>与 <code>rs2</code> 是输入寄存器， <code>rd</code> 是输出寄存器。除内存访问、特权指令等特殊类型指令外，每条指令只从输入寄存器中读取数据，在输出寄存器中存放结果。</p><p><strong>4. 内存管理</strong></p><p>虽然 WebAssembly 与 RISC-V 都定义了一个无类型的、字节可寻址的内存，它们之间还是有一些细节上的区别。WebAssembly 的内存等同于一个大数组：有效地址从 0 开始，连续扩展到某个由程序定义初值、可增长的上限。而 RISC-V 则使用了<a href="https://en.wikipedia.org/wiki/Virtual_memory">虚拟内存</a>，用页表将地址映射到物理内存。</p><figure class="kg-card kg-image-card kg-card-hascaption"><img src="https://invariant.me/content/images/2020/03/wasm-riscv-comp.png" class="kg-image" alt="WebAssembly 与 RISC-V 指令集架构的对比"><figcaption>内存布局</figcaption></figure><p>WebAssembly 的内存设计虽然简洁且易于实现，但存在一些问题：</p><ul><li>地址 0 是有效的，这会导致一些程序在解引用空指针时的行为与预期不同。</li><li>无法建立不映射到任何物理地址的“无效”地址区间，因此无法实现多线程环境下的栈保护页 (guard page) 。</li></ul><p><strong>5. 同步机制</strong></p><p>图灵完备的计算机器需要至少一条条件分支指令。同样，支持多线程同步的指令集架构需要至少一条“原子条件分支”指令。这类指令在 WebAssembly 下是 <code>i{32,64}.atomic.rmw.cmpxchg</code>，在 RISC-V 下是 <code>LR/SC</code>，分别对应 <a href="https://en.wikipedia.org/wiki/Compare-and-swap">CAS</a> 模型和 <a href="https://en.wikipedia.org/wiki/Load-link/store-conditional">LL/SC</a> 模型。</p><p>LL/SC 的语义比 CAS 更强。CAS 存在难以解决的 <a href="https://en.wikipedia.org/wiki/ABA_problem">ABA 问题</a>，但 LL/SC 不受影响。这也意味着在 CAS 架构上模拟 LL/SC 比反过来要困难很多。</p><hr><blockquote>Note: 我写过一个 RISC-V 解释器 <a href="https://github.com/losfair/FlatRv">FlatRv</a> ，且正在参与一个 WebAssembly JIT 运行环境 <a href="https://github.com/wasmerio/wasmer">Wasmer</a> 的开发。如果你感兴趣可以点个 Star :)</blockquote>]]></content>
+        <author>
+            <name><![CDATA[The Invariant 中文]]></name>
         </author>
     </entry>
     
@@ -342,6 +722,17 @@ fastcgi_buffer_size       256k;
 fastcgi_busy_buffers_size 512k;</code></pre><p>对于使用 <code>proxy_pass</code> 代理的情况，有等价的 <code>proxy_buffer_size</code> 等指令，用法完全一样。</p><p>于是……我的网站就这样支持了正体中文。</p>]]></content>
         <author>
             <name><![CDATA[R·ex / Zeng]]></name>
+        </author>
+    </entry>
+    
+    <entry>
+        <id>https://blog.invariant.cn/try-jslinux/</id>
+        <title><![CDATA[用 JSLinux 在浏览器中运行 Linux]]></title>
+        <updated>2020-02-24T16:24:41+08:00</updated>
+        <link href="https://blog.invariant.cn/try-jslinux/"/>
+        <content type="text/html" src="https://blog.invariant.cn/try-jslinux/"><![CDATA[<figure class="kg-card kg-bookmark-card"><a class="kg-bookmark-container" href="https://invariant.me/try-jslinux/"><div class="kg-bookmark-content"><div class="kg-bookmark-title">Running Linux in your Browser with JSLinux</div><div class="kg-bookmark-description">Yesterday I ported the Wasm-based hardware emulator, JSLinux, to use xterm.js for frontend and my wstunnel for networking.</div><div class="kg-bookmark-metadata"><img class="kg-bookmark-icon" src="https://invariant.me/favicon.ico" alt="用 JSLinux 在浏览器中运行 Linux"><span class="kg-bookmark-author">Heyang Zhou</span><span class="kg-bookmark-publisher">The Invariant</span></div></div><div class="kg-bookmark-thumbnail"><img src="https://invariant.me/content/images/2020/02/Alpine_logo.png" alt="用 JSLinux 在浏览器中运行 Linux"></div></a></figure><img src="https://blog.invariant.cn/content/images/2020/03/Alpine_logo.png" alt="用 JSLinux 在浏览器中运行 Linux"><p><a href="https://bellard.org/jslinux/">JSLinux</a> 是 <a href="https://bellard.org/">Fabrice Bellard</a> 写的一个支持 32 位 x86 和 32/64 位 RISC-V 系统模拟的硬件模拟器，可编译为 WebAssembly 以在浏览器中运行。</p><p>昨天我<a href="https://github.com/losfair/jslinux-wstunnel">开了一个分支</a>，把字符终端实现换成了 <a href="https://xtermjs.org/">xterm.js</a> ，把网络实现换成了我的 <a href="https://github.com/losfair/wstunnel">wstunnel</a> 。这里是一个在修改后的 JSLinux 上运行 Alpine Linux 的 x86 虚拟机，可以在线试用。请不要滥用网络 :)</p><!--kg-card-begin: html--><iframe style="width: 100%; height: 500px" src="https://jslinux.invariant.me/widget.html">&lt;iframe disabled?&gt;</iframe><!--kg-card-end: html-->]]></content>
+        <author>
+            <name><![CDATA[The Invariant 中文]]></name>
         </author>
     </entry>
     
@@ -1978,6 +2369,349 @@ apply plugin: 'org.springframework.boot'
     </entry>
     
     <entry>
+        <id>https://blog.creedowl.com/posts/vue-demo-instruction/</id>
+        <title><![CDATA[Vue.js 从入坑到入土]]></title>
+        <updated>2019-04-23T13:25:25+08:00</updated>
+        <link href="https://blog.creedowl.com/posts/vue-demo-instruction/"/>
+        <content type="text/html" src="https://blog.creedowl.com/posts/vue-demo-instruction/"><![CDATA[<h1 id="vuejs-从入坑到入土">Vue.js 从入坑到入土</h1>
+<p>近年来前端领域发展飞速，从最早的直接写html, js, css 到使用jQuery快速开发，再到近年来使用Vuejs，Reactjs 实现工程化开发，也就短短十几年。虽然前端项目结构越来越复杂，但也越来越规范，清晰，更加工程化。当前较为流行的前端框架有Vuejs、Reactjs、Angularjs 等，而Vuejs由于其灵(zhong)活(wen)轻(wen)便(dang)，较为流行。虽然Vuejs有完善的中文文档，但文档主要在介绍其用法，缺少如何实现一个完整项目的指导，本文就介绍如何用Vuejs创建一个完整的前端项目，并与后端进行交互。</p>
+<p><strong>本文基于<a href="mailto:Vuejs@2.x">Vuejs@2.x</a>及<a href="mailto:VueCLI@3.x">VueCLI@3.x</a></strong></p>
+<ol>
+<li>所需技术栈：html, javascript, css基础知识，其中js建议了解<strong>ES2015</strong>标准，特别要掌握<strong>promise</strong>的使用</li>
+<li>使用的工具：<del>宇宙第一编辑器</del> VSCode —— 现在对vue项目的支持已经很好了，可以自动安装vue项目需要的插件</li>
+</ol>
+<h1 id="0x0-安装">0x0 安装</h1>
+<blockquote>
+<p>推荐使用<a href="https://yarnpkg.com/lang/zh-hans">yarn</a>代替npm作为包管理器</p>
+</blockquote>
+<h2 id="安装vuecli">安装VueCLI</h2>
+<blockquote>
+<p>VueCLI是Vuejs官方推出的项目脚手架工具，可以方便的创建、管理Vue项目，还提供优雅的web管理界面</p>
+</blockquote>
+<p>全局安装<a href="https://cli.vuejs.org/zh/">VueCLI</a></p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">yarn global add @vue/cli
+</code></pre></div><h2 id="安装vue-devtools">安装Vue-devtools</h2>
+<blockquote>
+<p><a href="https://github.com/vuejs/vue-devtools">Vue-devtools</a> 是vue官方的浏览器开发插件，可以方便的在浏览器中调试vue应用</p>
+</blockquote>
+<p>Vue-devtools 提供多平台的浏览器插件可以直接安装使用</p>
+<p><a href="https://github.com/vuejs/vue-devtools#installation">installation</a></p>
+<h1 id="0x1-新建项目">0x1 新建项目</h1>
+<p>使用 <code>vue create vue_demo</code> 创建新项目，接下来会出现一个交互式命令行帮你配置项目。</p>
+<p><strong>注意此处不要使用默认的配置！具体配置参考下图</strong></p>
+<blockquote>
+<p>坑x1 默认的配置十分简单，新手经常不知道怎么写多页面，弄不明白项目怎么组织的，所以需要自定义配置，添加vue-router插件实现多页面跳转</p>
+</blockquote>
+<p><a href="https://asciinema.org/a/240155"><img src="https://asciinema.org/a/240155.svg" alt="asciicast"></a></p>
+<h1 id="0x2-项目框架">0x2 项目框架</h1>
+<p>此时项目已经创建成功，如果你按照提示启动项目就能看到经典的vue启动页</p>
+<p><img src="http://ww1.sinaimg.cn/large/0071ouepgy1g1yg2r5ysxj30up0mx3zv.jpg" alt="image"></p>
+<p>当前的项目结构如下</p>
+<div class="highlight"><pre class="chroma"><code class="language-text" data-lang="text">.                     项目根目录
+├── README.md 
+├── babel.config.js
+├── package.json      项目主配置文件
+├── public            公共资源文件夹
+│   ├── favicon.ico
+│   └── index.html    入口html
+├── src               源码根目录
+│   ├── App.vue       入口文件
+│   ├── assets        资源文件夹
+│   │   └── logo.png
+│   ├── components    组件文件夹
+│   │   └── HelloWorld.vue 
+│   ├── main.js       入口配置文件
+│   ├── router.js     路由文件
+│   ├── store.js      状态管理
+│   └── views         页面文件夹
+│       ├── About.vue
+│       └── Home.vue
+└── yarn.lock         依赖文件
+</code></pre></div><p>在下面的章节具体介绍各个文件、文件夹的用处和如何组织项目。</p>
+<h1 id="0x3-项目结构">0x3 项目结构</h1>
+<p>用vue开发的项目一般是<a href="https://zh.wikipedia.org/wiki/%E5%8D%95%E9%A1%B5%E5%BA%94%E7%94%A8">SPA(单页应用)</a>，通过动态重写当前页面来与用户交互，而不会重新加载整个新页面。所以要组织多页面就要通过vue-router来组织页面，而vuex用来保存状态。</p>
+<p>作为单页应用，当然需要一个入口html文件，也就是 <code>public/index.html</code> :</p>
+<div class="highlight"><pre class="chroma"><code class="language-html" data-lang="html">public/index.html
+
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;en&#34;</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">&#34;utf-8&#34;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">http-equiv</span><span class="o">=</span><span class="s">&#34;X-UA-Compatible&#34;</span> <span class="na">content</span><span class="o">=</span><span class="s">&#34;IE=edge&#34;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;viewport&#34;</span> <span class="na">content</span><span class="o">=</span><span class="s">&#34;width=device-width,initial-scale=1.0&#34;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&#34;icon&#34;</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;&lt;%= BASE_URL %&gt;favicon.ico&#34;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>vue_demo<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">noscript</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">strong</span><span class="p">&gt;</span>We&#39;re sorry but vue_demo doesn&#39;t work properly without JavaScript enabled. Please enable it to continue.<span class="p">&lt;/</span><span class="nt">strong</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">noscript</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;app&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+    <span class="c">&lt;!-- built files will be auto injected --&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</code></pre></div><p>这是默认生成的 <code>index.html</code> ，而编译好的文件（网页内容）会被自动注入到 `` 中，也就意味着要使用vue开发的应用，浏览器必须支持js。</p>
+<p>而#app所绑定的vue实例，则位于 <code>src/main.js</code></p>
+<hr>
+<div class="highlight"><pre class="chroma"><code class="language-js" data-lang="js"><span class="nx">src</span><span class="o">/</span><span class="nx">main</span><span class="p">.</span><span class="nx">js</span>
+
+<span class="kr">import</span> <span class="nx">Vue</span> <span class="nx">from</span> <span class="s1">&#39;vue&#39;</span>
+<span class="kr">import</span> <span class="nx">App</span> <span class="nx">from</span> <span class="s1">&#39;./App.vue&#39;</span>
+<span class="kr">import</span> <span class="nx">router</span> <span class="nx">from</span> <span class="s1">&#39;./router&#39;</span>
+<span class="kr">import</span> <span class="nx">store</span> <span class="nx">from</span> <span class="s1">&#39;./store&#39;</span>
+<span class="nx">Vue</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">productionTip</span> <span class="o">=</span> <span class="kc">false</span>
+<span class="k">new</span> <span class="nx">Vue</span><span class="p">({</span>
+  <span class="nx">router</span><span class="p">,</span> <span class="c1">// 使用vue-router插件
+</span><span class="c1"></span>  <span class="nx">store</span><span class="p">,</span> <span class="c1">// 使用vuex插件
+</span><span class="c1"></span>  <span class="nx">render</span><span class="o">:</span> <span class="nx">h</span> <span class="p">=&gt;</span> <span class="nx">h</span><span class="p">(</span><span class="nx">App</span><span class="p">)</span> <span class="c1">// 渲染页面
+</span><span class="c1"></span><span class="p">}).</span><span class="nx">$mount</span><span class="p">(</span><span class="s1">&#39;#app&#39;</span><span class="p">)</span> <span class="c1">// 绑定到 index.html -&gt; div#app
+</span></code></pre></div><p>其中渲染的页面位于 <code>src/App.vue</code></p>
+<hr>
+<blockquote>
+<p>xxx.vue 是vue中的<a href="https://cn.vuejs.org/v2/guide/single-file-components.html">单文件组件</a>，将 <code>html css javascript</code> 集合在同一个文件，便于组织管理</p>
+</blockquote>
+<div class="highlight"><pre class="chroma"><code class="language-html" data-lang="html">src/App.vue
+
+<span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;app&#34;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;nav&#34;</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">router-link</span> <span class="na">to</span><span class="o">=</span><span class="s">&#34;/&#34;</span><span class="p">&gt;</span>Home<span class="p">&lt;/</span><span class="nt">router-link</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">router-link</span> <span class="na">to</span><span class="o">=</span><span class="s">&#34;/about&#34;</span><span class="p">&gt;</span>About<span class="p">&lt;/</span><span class="nt">router-link</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">router-view</span><span class="p">/&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span>
+<span class="p">#</span><span class="nn">app</span> <span class="p">{</span>
+  <span class="k">font-family</span><span class="p">:</span> <span class="s1">&#39;Avenir&#39;</span><span class="p">,</span> <span class="n">Helvetica</span><span class="p">,</span> <span class="n">Arial</span><span class="p">,</span> <span class="kc">sans-serif</span><span class="p">;</span>
+  <span class="kp">-webkit-</span><span class="n">font-smoothing</span><span class="p">:</span> <span class="n">antialiased</span><span class="p">;</span>
+  <span class="kp">-moz-</span><span class="n">osx-font-smoothing</span><span class="p">:</span> <span class="n">grayscale</span><span class="p">;</span>
+  <span class="k">text-align</span><span class="p">:</span> <span class="kc">center</span><span class="p">;</span>
+  <span class="k">color</span><span class="p">:</span> <span class="mh">#2c3e50</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="p">#</span><span class="nn">nav</span> <span class="p">{</span>
+  <span class="k">padding</span><span class="p">:</span> <span class="mi">30</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="p">#</span><span class="nn">nav</span> <span class="nt">a</span> <span class="p">{</span>
+  <span class="k">font-weight</span><span class="p">:</span> <span class="kc">bold</span><span class="p">;</span>
+  <span class="k">color</span><span class="p">:</span> <span class="mh">#2c3e50</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="p">#</span><span class="nn">nav</span> <span class="nt">a</span><span class="p">.</span><span class="nc">router-link-exact-active</span> <span class="p">{</span>
+  <span class="k">color</span><span class="p">:</span> <span class="mh">#42b983</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+</code></pre></div><p>其中 <code>是页面的 `html` 元素，`style` 是样式元素，还可以添加一个 `javascript` 为js元素。其中</code> 是路由组件，会被自动渲染成当前路由对应的页面</p>
+<hr>
+<div class="highlight"><pre class="chroma"><code class="language-js" data-lang="js"><span class="nx">src</span><span class="o">/</span><span class="nx">router</span><span class="p">.</span><span class="nx">js</span>
+
+<span class="kr">import</span> <span class="nx">Vue</span> <span class="nx">from</span> <span class="s1">&#39;vue&#39;</span>
+<span class="kr">import</span> <span class="nx">Router</span> <span class="nx">from</span> <span class="s1">&#39;vue-router&#39;</span>
+<span class="kr">import</span> <span class="nx">Home</span> <span class="nx">from</span> <span class="s1">&#39;./views/Home.vue&#39;</span>
+<span class="nx">Vue</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">Router</span><span class="p">)</span>
+<span class="kr">export</span> <span class="k">default</span> <span class="k">new</span> <span class="nx">Router</span><span class="p">({</span>
+  <span class="nx">mode</span><span class="o">:</span> <span class="s1">&#39;history&#39;</span><span class="p">,</span>
+  <span class="nx">base</span><span class="o">:</span> <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">BASE_URL</span><span class="p">,</span>
+  <span class="nx">routes</span><span class="o">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="nx">path</span><span class="o">:</span> <span class="s1">&#39;/&#39;</span><span class="p">,</span>
+      <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;home&#39;</span><span class="p">,</span>
+      <span class="nx">component</span><span class="o">:</span> <span class="nx">Home</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="nx">path</span><span class="o">:</span> <span class="s1">&#39;/about&#39;</span><span class="p">,</span>
+      <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;about&#39;</span><span class="p">,</span>
+      <span class="c1">// route level code-splitting
+</span><span class="c1"></span>      <span class="c1">// this generates a separate chunk (about.[hash].js) for this route
+</span><span class="c1"></span>      <span class="c1">// which is lazy-loaded when the route is visited.
+</span><span class="c1"></span>      <span class="nx">component</span><span class="o">:</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="kr">import</span><span class="p">(</span><span class="cm">/* webpackChunkName: &#34;about&#34; */</span> <span class="s1">&#39;./views/About.vue&#39;</span><span class="p">)</span>
+    <span class="p">}</span>
+  <span class="p">]</span>
+<span class="p">})</span>
+</code></pre></div><p>如 <code>http://localhost:8080/</code> 下 <code>被渲染成 `home` 页面，`http://localhost:8080/about` 下</code> 被渲染成 <code>about</code> 页面。</p>
+<blockquote>
+<p>技巧 这里加载组件使用函数加载，就可以实现懒加载以优化性能。</p>
+</blockquote>
+<hr>
+<p><code>src/views/</code> 则是保存页面文件，例如</p>
+<div class="highlight"><pre class="chroma"><code class="language-html" data-lang="html">src/views/Home.vue
+
+<span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;home&#34;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">img</span> <span class="na">alt</span><span class="o">=</span><span class="s">&#34;Vue logo&#34;</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;../assets/logo.png&#34;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">HelloWorld</span> <span class="na">msg</span><span class="o">=</span><span class="s">&#34;Welcome to Your Vue.js App&#34;</span><span class="p">/&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="c1">// @ is an alias to /src
+</span><span class="c1"></span><span class="kr">import</span> <span class="nx">HelloWorld</span> <span class="nx">from</span> <span class="s1">&#39;@/components/HelloWorld.vue&#39;</span>
+<span class="kr">export</span> <span class="k">default</span> <span class="p">{</span>
+  <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;home&#39;</span><span class="p">,</span>
+  <span class="nx">components</span><span class="o">:</span> <span class="p">{</span>
+    <span class="nx">HelloWorld</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</code></pre></div><p>这就是路由 <code>home</code> 对应的页面，其中用到了 <code>HelloWorld</code> 组件，需要在js中引入。</p>
+<hr>
+<p><code>src/components/</code> 里面保存可复用的组件，例如上面的 `` 就是一个独立的组件（component）</p>
+<div class="highlight"><pre class="chroma"><code class="language-html" data-lang="html">src/components/HelloWorld.vue
+
+<span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;hello&#34;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>{{ msg }}<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>
+      For a guide and recipes on how to configure / customize this project,<span class="p">&lt;</span><span class="nt">br</span><span class="p">&gt;</span>
+      check out the
+      <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;https://cli.vuejs.org&#34;</span> <span class="na">target</span><span class="o">=</span><span class="s">&#34;_blank&#34;</span> <span class="na">rel</span><span class="o">=</span><span class="s">&#34;noopener&#34;</span><span class="p">&gt;</span>vue-cli documentation<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>.
+    <span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="kr">export</span> <span class="k">default</span> <span class="p">{</span>
+  <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;HelloWorld&#39;</span><span class="p">,</span>
+  <span class="nx">props</span><span class="o">:</span> <span class="p">{</span>
+    <span class="nx">msg</span><span class="o">:</span> <span class="nb">String</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="c">&lt;!-- Add &#34;scoped&#34; attribute to limit CSS to this component only --&gt;</span>
+<span class="p">&lt;</span><span class="nt">style</span> <span class="na">scoped</span><span class="p">&gt;</span>
+<span class="nt">h1</span> <span class="p">{</span>
+  <span class="k">margin</span><span class="p">:</span> <span class="mi">40</span><span class="kt">px</span> <span class="mi">0</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+</code></pre></div><p>这就是一个典型的组件，结构就是一个正常的单文本组件，说明组件就是把一部分页面逻辑抽出来组成一个文件。这样的好处是分离与页面无关的组件，使页面逻辑更加清晰，同时也便于复用组件。如果有以下情况，我建议把部分代码分离成独立的组件：</p>
+<ol>
+<li>需要多次复用的组件，如基础按钮、表单等</li>
+<li>较为复杂但与页面逻辑无关的，如页面的Header、Footer等</li>
+</ol>
+<blockquote>
+<p>技巧 在 <code>style</code> 表情上添加 <code>scoped</code> 属性可以限制CSS生效范围为该组件，不会影响其他元素，在编译时vue解释器会给这些css属性加上随机的hash保证唯一</p>
+</blockquote>
+<hr>
+<p>vue还提供了一个状态管理模式 <a href="https://vuex.vuejs.org/zh/">vuex</a>，可以很方便的管理所有组件的状态。对应文件 <code>src/store.js</code></p>
+<div class="highlight"><pre class="chroma"><code class="language-js" data-lang="js"><span class="nx">src</span><span class="o">/</span><span class="nx">store</span><span class="p">.</span><span class="nx">js</span>
+
+<span class="kr">import</span> <span class="nx">Vue</span> <span class="nx">from</span> <span class="s1">&#39;vue&#39;</span>
+<span class="kr">import</span> <span class="nx">Vuex</span> <span class="nx">from</span> <span class="s1">&#39;vuex&#39;</span>
+<span class="nx">Vue</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">Vuex</span><span class="p">)</span>
+<span class="kr">export</span> <span class="k">default</span> <span class="k">new</span> <span class="nx">Vuex</span><span class="p">.</span><span class="nx">Store</span><span class="p">({</span>
+  <span class="nx">state</span><span class="o">:</span> <span class="p">{</span>
+  <span class="p">},</span>
+  <span class="nx">mutations</span><span class="o">:</span> <span class="p">{</span>
+  <span class="p">},</span>
+  <span class="nx">actions</span><span class="o">:</span> <span class="p">{</span>
+  <span class="p">}</span>
+<span class="p">})</span>
+</code></pre></div><p><del>由于我还没用过 <code>vuex</code> 所以自己看文档吧</del></p>
+<p>对于简单的应用也可以不用 <code>vuex</code> ，一个简单的 <a href="https://cn.vuejs.org/v2/guide/state-management.html#%E7%AE%80%E5%8D%95%E7%8A%B6%E6%80%81%E7%AE%A1%E7%90%86%E8%B5%B7%E6%AD%A5%E4%BD%BF%E7%94%A8"><code>store</code> 模式</a> 就足够了</p>
+<h1 id="0x4-开发指引">0x4 开发指引</h1>
+<p>有了上面的基础，我们就可以开始写代码了，这里以添加一个 <code>Foo</code> 页面展示从远端获得的数据为例</p>
+<h2 id="1-给页面添加一个-tab">1. 给页面添加一个 <code>Tab</code></h2>
+<p><code>Tab</code> 属于与页面逻辑无关，但又处处要使用的元素，所以我们将其独立成为一个组件</p>
+<div class="highlight"><pre class="chroma"><code class="language-html" data-lang="html">src/components/Tab.vue
+
+<span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;tab&#34;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;item&#34;</span> <span class="err">@</span><span class="na">click</span><span class="o">=</span><span class="s">&#34;router(&#39;/&#39;)&#34;</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">span</span><span class="p">&gt;</span>home<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;item&#34;</span> <span class="err">@</span><span class="na">click</span><span class="o">=</span><span class="s">&#34;router(&#39;/about&#39;)&#34;</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">span</span><span class="p">&gt;</span>about<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;item&#34;</span> <span class="err">@</span><span class="na">click</span><span class="o">=</span><span class="s">&#34;router(&#39;/foo&#39;)&#34;</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">span</span><span class="p">&gt;</span>foo<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="kr">export</span> <span class="k">default</span> <span class="p">{</span>
+  <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;Tab&#39;</span><span class="p">,</span>
+  <span class="nx">methods</span><span class="o">:</span> <span class="p">{</span>
+    <span class="nx">router</span> <span class="p">(</span><span class="nx">url</span><span class="p">){</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">$router</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">url</span><span class="p">)</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">style</span> <span class="na">scoped</span><span class="p">&gt;</span>
+<span class="p">#</span><span class="nn">tab</span> <span class="p">{</span>
+  <span class="k">display</span><span class="p">:</span> <span class="kc">flex</span><span class="p">;</span>
+  <span class="k">justify-content</span><span class="p">:</span> <span class="kc">space</span><span class="o">-</span><span class="n">around</span><span class="p">;</span>
+  <span class="k">align-items</span><span class="p">:</span> <span class="kc">center</span><span class="p">;</span>
+  <span class="k">bottom</span><span class="p">:</span> <span class="mi">0</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">position</span><span class="p">:</span> <span class="kc">fixed</span><span class="p">;</span>
+  <span class="k">height</span><span class="p">:</span> <span class="mi">65</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">left</span><span class="p">:</span> <span class="mi">0</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">width</span><span class="p">:</span> <span class="mi">100</span><span class="kt">%</span><span class="p">;</span>
+  <span class="k">background-color</span><span class="p">:</span> <span class="kc">aquamarine</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="p">.</span><span class="nc">item</span> <span class="p">{</span>
+  <span class="k">padding-top</span><span class="p">:</span> <span class="mi">5</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">display</span><span class="p">:</span> <span class="kc">flex</span><span class="p">;</span>
+  <span class="k">flex-direction</span><span class="p">:</span> <span class="kc">column</span><span class="p">;</span>
+  <span class="k">justify-content</span><span class="p">:</span> <span class="kc">center</span><span class="p">;</span>
+  <span class="k">align-items</span><span class="p">:</span> <span class="kc">center</span><span class="p">;</span>
+  <span class="k">height</span><span class="p">:</span> <span class="mi">50</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+</code></pre></div><p>在这里我们创建了一个底部导航栏，有三个 <code>Tab</code> ，并且对应跳转到不同的页面</p>
+<h2 id="2-创建-foovue-相关逻辑并与后端交互">2. 创建 <code>Foo.vue</code> 相关逻辑并与后端交互</h2>
+<p>因为我们需要从远端API获取数据并进行展示，就涉及网络请求。在vue中，官方推荐使用 <a href="https://github.com/axios/axios">axios</a> 发起请求。<code>axios</code> 是一个基于 <code>promise</code> 的异步网络请求库，相关用法可参考文档或网上教程</p>
+<p>安装 <code>axios</code></p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">yarn add axios
+</code></pre></div><p>接着在 <code>src/main.js</code> 中加入以下语句启用 <code>axios</code></p>
+<div class="highlight"><pre class="chroma"><code class="language-js" data-lang="js"><span class="kr">import</span> <span class="nx">Axios</span> <span class="nx">from</span> <span class="s1">&#39;axios&#39;</span>
+<span class="c1">// 把axios添加到原型链
+</span><span class="c1"></span><span class="nx">Vue</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">$axios</span> <span class="o">=</span> <span class="nx">Axios</span>
+</code></pre></div><p>现在就可以在vue实例中用 <code>this.$router</code> 来访问路由了</p>
+<hr>
+<p>接着来创建 <code>Foo.vue</code></p>
+<div class="highlight"><pre class="chroma"><code class="language-vue" data-lang="vue"><span class="nx">src</span><span class="o">/</span><span class="nx">views</span><span class="o">/</span><span class="nx">Foo</span><span class="p">.</span><span class="nx">vue</span>
+
+<span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;foo&#34;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;{{</span> <span class="nx">result</span> <span class="p">}}&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">button</span> <span class="nt">@click</span><span class="s">=&#34;bar()&#34;</span><span class="p">&gt;</span><span class="na">bar</span><span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="kr">export</span> <span class="k">default</span> <span class="p">{</span>
+  <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;Foo&#39;</span><span class="p">,</span>
+  <span class="nx">data</span><span class="p">(){</span>
+    <span class="k">return</span> <span class="p">{</span>
+      <span class="nx">result</span> <span class="o">:</span> <span class="s1">&#39;naive&#39;</span>
+    <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="nx">methods</span><span class="o">:</span> <span class="p">{</span>
+    <span class="nx">bar</span><span class="p">(){</span>
+      <span class="cm">/* eslint-disable */</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">result</span> <span class="o">=</span> <span class="s1">&#39;loading...&#39;</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">$axios</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">&#39;http://httpbin.org/post&#39;</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="p">=&gt;</span> <span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">result</span> <span class="o">=</span> <span class="nx">res</span><span class="p">})</span>
+        <span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="nx">res</span> <span class="p">=&gt;</span> <span class="p">{</span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="nx">res</span><span class="p">)})</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+</code></pre></div><p><del>具体实现代码里面很清楚了</del> 这个文件的作用就是请求 <code>http://httpbin.org/get</code> 并把结果显示在界面上</p>
+<p><strong>注意前后端分离的项目会有<a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Access_control_CORS">跨域(CORS)问题</a>，这个问题比较复杂，巨坑，网上也有较多解决的文章<del>咕咕咕</del></strong></p>
+<h1 id="0x5-技巧及坑们">0x5 技巧及坑们</h1>
+<p>这里介绍一些我写vue项目遇到的坑和使用的技巧</p>
+<h2 id="data-methods-computed-props-的区别">data methods computed props 的区别</h2>
+<p><del>TODO</del></p>
+<p>vue中存储数据有几种方式——data、</p>
+<h1 id="0x6-结语">0x6 结语</h1>
+<p>到此，一个简单的vue项目就完成了，对于如何组织项目，前后端如何交互应该已经有了初步了解。本文也会持续更新，欢迎关注我的<a href="https://blog.creedowl.com/">blog</a></p>
+<p>本文的实例请访问<a href="https://github.com/creedowl/vue_demo/">github</a></p>]]></content>
+        <author>
+            <name><![CDATA[Creedowl’s Blog]]></name>
+        </author>
+    </entry>
+    
+    <entry>
         <id>https://blog.stdioa.com/2019/04/data-migration-between-microservices/</id>
         <title><![CDATA[微服务架构下的数据迁移指南]]></title>
         <updated>2019-04-09T07:50:37+08:00</updated>
@@ -1989,6 +2723,71 @@ apply plugin: 'org.springframework.boot'
     </entry>
     
     <entry>
+        <id>https://blog.creedowl.com/posts/ipv6_and_nat6_in_nuaa/</id>
+        <title><![CDATA[南航校园网OpenWRT配置IPv6 NAT6]]></title>
+        <updated>2019-04-04T15:29:39+08:00</updated>
+        <link href="https://blog.creedowl.com/posts/ipv6_and_nat6_in_nuaa/"/>
+        <content type="text/html" src="https://blog.creedowl.com/posts/ipv6_and_nat6_in_nuaa/"><![CDATA[<blockquote>
+<p>当前IPv6越来越流行，不但解决了IPv4地址不够用的问题，还能给接入的设备提供公网访问的支持。但由于校园网的特殊性，虽然很早就有了IPv6支持，大部分学校在IPv6地址分配上却有剧毒，无法向下游设备分配独立的IPv6地址（正常家庭网络环境中路由器及下游设备都能自动分配独立的公网IPv6地址），以南航为例，OpenWRT上虽然获取到了2001开头，/64结尾的公网IPv6地址，但下游设备却无IPv6访问权限。本文介绍南航校园网环境下如何在OpenWRT下获取IPv6并配置NAT6使下游设备拥有IPv6访问权限。</p>
+</blockquote>
+<h2 id="0软硬件需求">0：软硬件需求</h2>
+<p><strong>硬件</strong>：支持OpenWRT固件的路由器或软路由（推荐使用软路由，性能更好，支持启用更多服务，且不需要考虑太多兼容性问题，x86版本OpenWRT一把梭）</p>
+<p><strong>软件</strong>：较新版本的OpenWRT或其衍生版本（lede，pandorabox等，但原版OpenWRT最佳）</p>
+<p><strong>OpenWRT内核需高于3.7</strong>， linux kernel在3.7版本开始支持NAT6</p>
+<p><del>内核版本不够高且无法升级可以尝试早年由北邮大佬开发的NAT66项目，但不推荐</del></p>
+<p>所需软件包：</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">ip6tables kmod-ipt-nat6 kmod-ip6tables kmod-ip6tables-extra luci-proto-ipv6 iputils-traceroute6
+</code></pre></div><p>较新版本已经自带IPv6支持，老版本需要自己安装相关软件包，但兼容性较差，或者内核版本不足，建议找较新版本或者自行编译。</p>
+<h2 id="1openwrt配置获取ipv6">1：OpenWRT配置获取IPv6</h2>
+<p><img src="http://ww1.sinaimg.cn/large/0071ouepgy1g1pisgc9yhj319v0p2tco.jpg" alt="IPv6_setting_1"></p>
+<h3 id="1-修改ipv6-ula前缀为fd开头默认为dd开头">1. 修改IPv6 ULA前缀为fd开头（默认为dd开头）</h3>
+<h3 id="2-修改wan6口配置如下图所示">2. 修改wan6口配置（如下图所示）</h3>
+<p><img src="http://ww1.sinaimg.cn/large/0071ouepgy1g1pivtmkrbj30p00eumyi.jpg" alt="IPv6_setting_2"></p>
+<h3 id="3-修改lan口dhcp服务器配置如下图所示">3. 修改lan口DHCP服务器配置（如下图所示）</h3>
+<p><img src="http://ww1.sinaimg.cn/large/0071ouepgy1g1piynr74fj30ta0adwfe.jpg" alt="IPv6_setting_3"></p>
+<p><img src="http://ww1.sinaimg.cn/large/0071ouepgy1g1pizho2fmj30nu0bymy5.jpg" alt="IPv6_setting_4"></p>
+<p>此时稍等片刻，在概况中应该就能看到获取到的IPv6地址及下游设备DHCPv6分配内网IPv6地址</p>
+<p><img src="http://ww1.sinaimg.cn/large/0071ouepgy1g1pj4uxq0hj30rd08xaar.jpg" alt="IPv6_setting_5"></p>
+<p><img src="http://ww1.sinaimg.cn/large/0071ouepgy1g1pj5feonfj311806ldgn.jpg" alt="IPv6_setting_6"></p>
+<p>现在你的路由器已经可以使用IPv6了，但下游设备并不行，就需要配置NAT6。</p>
+<h2 id="2配置nat6">2：配置NAT6</h2>
+<p>虽然NAT6并不符合IPv6的设计哲学，但却能解决一些问题，如安全隔离，或者像我们这样通过单一地址转发给多个设备使用。</p>
+<h3 id="1-修改防火墙">1. 修改防火墙</h3>
+<p><img src="http://ww1.sinaimg.cn/large/0071ouepgy1g1pjfj32f5j30su0gvn00.jpg" alt="IPv6_setting_7"></p>
+<p>加入以下自定义规则</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="nv">WAN6</span><span class="o">=</span>pppoe-wan
+<span class="nv">LAN</span><span class="o">=</span>br-lan
+ip6tables -t nat -A POSTROUTING -o <span class="nv">$WAN6</span> -j MASQUERADE
+ip6tables -A FORWARD -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+ip6tables -A FORWARD -i <span class="nv">$LAN</span> -j ACCEPT
+</code></pre></div><p><strong>注意这里WAN6和LAN要改为外网IPv6和内网网卡名字，在终端使用ifconfig查看</strong></p>
+<p><img src="http://ww1.sinaimg.cn/large/0071ouepgy1g1pjk4cddbj30ll0jwq71.jpg" alt="IPv6_setting_8"></p>
+<h3 id="2-配置网关">2. 配置网关</h3>
+<p>在终端执行 <code>ip -6 r</code> 查看默认网关（default开头），如果是类似</p>
+<p><code>default from 2001:xxxx:xxxx:xxxx::/64 via fe80::ded2:fcff:fe98:64f7 dev pppoe-wan proto static metric 512 pref medium</code></p>
+<p>这样蛋疼的网关，需要去掉<code>from 2001:xxxx:xxxx:xxxx::/64</code> 这段再添加默认网关，例如</p>
+<p><code>ip -6 route add default via fe80::ded2:fcff:fe98:64f7 dev pppoe-wan proto static metric 512</code></p>
+<p>可以建立一个<code>/etc/hotplug.d/iface/99-ipv6</code>实现自动配置</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="cp">#!/bin/sh
+</span><span class="cp"></span><span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$ACTION</span><span class="s2">&#34;</span> <span class="o">=</span> ifup <span class="o">]</span> <span class="o">||</span> <span class="nb">exit</span> <span class="m">0</span>
+<span class="nv">iface</span><span class="o">=</span>wan6
+<span class="o">[</span> -z <span class="s2">&#34;</span><span class="nv">$iface</span><span class="s2">&#34;</span> -o <span class="s2">&#34;</span><span class="nv">$INTERFACE</span><span class="s2">&#34;</span> <span class="o">=</span> <span class="s2">&#34;</span><span class="nv">$iface</span><span class="s2">&#34;</span> <span class="o">]</span> <span class="o">||</span> <span class="nb">exit</span> <span class="m">0</span>
+ip -6 route add <span class="sb">`</span>ip -6 route show default<span class="p">|</span>sed -e <span class="s1">&#39;s/from [^ ]* //&#39;</span><span class="sb">`</span>
+logger -t IPv6 <span class="s2">&#34;Add IPv6 default route.&#34;</span>
+</code></pre></div><p>最后别忘了修改权限</p>
+<p><code>chmod +x /etc/hotplug.d/iface/99-ipv6</code></p>
+<p>重启路由器就可以愉快的玩耍了。</p>
+<p><del>本来还想折腾IPv6端口转发，但一直无法配置成功。后来突然发现南航校园网下没有对IPv4做严格隔离（除了80端口基本上都能直接访问），就直接做IPv4端口转发配合DDNS，连接校园WIFI（nuaa.portal，<strong>付费版本</strong>）就可以直接使用，速度还挺快。。。就真香了。。不过配置IPv6端口转发还是有意义，比如可以从非校园网访问，校园网访问IPv6无需认证（不要充钱了），相关教程有空再补上（咕咕咕）有需求可以参考<a href="https://shura.eu.org/2018/12/06/ipv6-NAT%E5%90%8E%E9%85%8D%E7%BD%AE%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91/">ipv6 NAT后配置端口转发</a></del></p>
+<h2 id="参考资料">参考资料</h2>
+<blockquote>
+<p><a href="https://github.com/tuna/ipv6.tsinghua.edu.cn/blob/master/openwrt.md">清华OpenWRT 路由器作为 IPv6 网关的配置</a></p>
+</blockquote>]]></content>
+        <author>
+            <name><![CDATA[Creedowl’s Blog]]></name>
+        </author>
+    </entry>
+    
+    <entry>
         <id>https://blog.stdioa.com/2019/03/geektime-microservice-notes/</id>
         <title><![CDATA[《从 0 开始学微服务》阅读笔记]]></title>
         <updated>2019-03-30T11:58:25+08:00</updated>
@@ -1996,6 +2795,86 @@ apply plugin: 'org.springframework.boot'
         <content type="text/html" src="https://blog.stdioa.com/2019/03/geektime-microservice-notes/"><![CDATA[<!-- build time:Wed Jun 19 2019 17:59:18 GMT+0800 (中国标准时间) --><p>前一阵子购买了胡忠想老师的《从 0 开始学微服务》极客时间专栏，二月份看完以后做了一些笔记。</p>]]></content>
         <author>
             <name><![CDATA[Stdio’s Blog]]></name>
+        </author>
+    </entry>
+    
+    <entry>
+        <id>https://blog.creedowl.com/posts/postgres-handbook/</id>
+        <title><![CDATA[PostgreSQL 简介与常用命令]]></title>
+        <updated>2019-02-03T10:32:39+08:00</updated>
+        <link href="https://blog.creedowl.com/posts/postgres-handbook/"/>
+        <content type="text/html" src="https://blog.creedowl.com/posts/postgres-handbook/"><![CDATA[<h1 id="postgresql-简介与常用命令">PostgreSQL 简介与常用命令</h1>
+<p>PostgreSQL，简称postgres，是继mysql被收购之后极为热门的开源关系型数据库，这篇文章简单记录一些使用过程中的基本用法。</p>
+<h2 id="安装">安装</h2>
+<p>为了保证宿主机环境的纯净，这里使用docker来安装postgres</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">docker run --name postgres -p 5432:5432 -e <span class="nv">POSTGRES_PASSWORD</span><span class="o">=</span>password -d postgres
+</code></pre></div><p>常用环境变量</p>
+<blockquote>
+<p>POSTGRES_USER: 数据库用户，缺省postgres</p>
+<p>POSTGRES_PASSWORD: 数据库密码 ps. 若从localhost连接则默认trust，不需要填写</p>
+<p>POSTGRES_DB: 数据库名，缺省postgres</p>
+</blockquote>
+<p>更多docker相关内容参考<a href="https://hub.docker.com/_/postgres">postgres官方docker镜像页面</a></p>
+<h2 id="常用命令">常用命令</h2>
+<p><strong>连接数据库</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">psql -U user -d database -h host -p port
+</code></pre></div><p><strong>导入数据</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">psql database &lt; db.sql
+</code></pre></div><p><strong>控制台命令</strong></p>
+<blockquote>
+<p>\h：查看SQL命令的解释，比如\h select。</p>
+<p>?：查看psql命令列表。</p>
+<p>\l：列出所有数据库。</p>
+<p>\c [database_name]：连接其他数据库。</p>
+<p>\d：列出当前数据库的所有表格。</p>
+<p>\d [table_name]：列出某一张表格的结构。</p>
+<p>\du：列出所有用户。</p>
+<p>\e：打开文本编辑器。</p>
+<p>\conninfo：列出当前数据库和连接的信息。</p>
+</blockquote>
+<p><strong>数据库操作</strong></p>
+<p><em>采用基本sql语法</em></p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="o">#</span> <span class="err">建表</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="k">IF</span> <span class="k">NOT</span> <span class="k">EXISTS</span> <span class="k">user</span> <span class="p">(</span>
+	<span class="n">id</span> <span class="nb">SERIAL</span> <span class="k">PRIMARY</span> <span class="k">KEY</span><span class="p">,</span>
+    <span class="n">name</span> <span class="nb">TEXT</span> <span class="k">NOT</span> <span class="k">NULL</span>
+<span class="p">);</span>
+
+<span class="o">#</span> <span class="err">插入</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="k">user</span> <span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">);</span>
+
+<span class="o">#</span> <span class="err">选择</span>
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="k">user</span><span class="p">;</span>
+
+<span class="o">#</span> <span class="err">更新</span>
+<span class="k">UPDATE</span> <span class="k">user</span> <span class="k">SET</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;qwer&#39;</span> <span class="k">WHERE</span> <span class="n">id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+<span class="o">#</span> <span class="err">删除</span>
+<span class="k">DELETE</span> <span class="k">FROM</span> <span class="k">user</span> <span class="k">WHERE</span> <span class="n">id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+<span class="o">#</span> <span class="err">添加栏位</span>
+<span class="k">ALTER</span> <span class="k">TABLE</span> <span class="k">user</span> <span class="k">ADD</span> <span class="n">gender</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+
+<span class="o">#</span> <span class="err">更新表结构</span>
+<span class="k">ALTER</span> <span class="k">TABLE</span> <span class="k">user</span> <span class="k">ALTER</span> <span class="k">COLUMN</span> <span class="n">gender</span> <span class="k">SET</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">;</span>
+
+<span class="o">#</span> <span class="err">字段更名</span>
+<span class="k">ALTER</span> <span class="k">TABLE</span> <span class="k">user</span> <span class="k">RENAME</span> <span class="k">COLUMN</span> <span class="n">name</span> <span class="k">TO</span> <span class="n">username</span><span class="p">;</span>
+
+<span class="o">#</span> <span class="err">删除字段</span>
+<span class="k">ALTER</span> <span class="k">TABLE</span> <span class="k">user</span> <span class="k">DROP</span> <span class="k">COLUMN</span> <span class="n">gender</span><span class="p">;</span>
+
+<span class="o">#</span> <span class="err">表名更改</span>
+<span class="k">ALTER</span> <span class="k">TABLE</span> <span class="k">user</span> <span class="k">RENAME</span> <span class="k">TO</span> <span class="n">users</span><span class="p">;</span>
+
+<span class="o">#</span> <span class="err">删除表格</span>
+<span class="k">DROP</span> <span class="k">TABLE</span> <span class="n">users</span><span class="p">;</span>
+</code></pre></div><h2 id="相关链接">相关链接</h2>
+<blockquote>
+<p><a href="http://www.ruanyifeng.com/blog/2013/12/getting_started_with_postgresql.html">PostgreSQL新手入门</a></p>
+</blockquote>]]></content>
+        <author>
+            <name><![CDATA[Creedowl’s Blog]]></name>
         </author>
     </entry>
     
