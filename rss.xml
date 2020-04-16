@@ -3,7 +3,7 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2020-04-15T18:04:54+08:00</updated>
+    <updated>2020-04-16T00:06:38+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
@@ -388,6 +388,108 @@ pinentry-mode loopback
     </entry>
     
     <entry>
+        <id>https://blog.invariant.cn/a-comparison-between-webassembly-and-risc-v/</id>
+        <title><![CDATA[WebAssembly 与 RISC-V 指令集架构的对比]]></title>
+        <updated>2020-03-15T09:51:51+08:00</updated>
+        <link href="https://blog.invariant.cn/a-comparison-between-webassembly-and-risc-v/"/>
+        <content type="text/html" src="https://blog.invariant.cn/a-comparison-between-webassembly-and-risc-v/"><![CDATA[<figure class="kg-card kg-bookmark-card"><a class="kg-bookmark-container" href="https://invariant.me/a-comparison-between-webassembly-and-risc-v/"><div class="kg-bookmark-content"><div class="kg-bookmark-title">A Comparison between WebAssembly and RISC-V</div><div class="kg-bookmark-description">WebAssembly and RISC-V are both new Instruction Set Architectures (ISAs) that evolved in the recent 10 years. Let’s do a comparison.</div><div class="kg-bookmark-metadata"><img class="kg-bookmark-icon" src="https://invariant.me/favicon.ico" alt="WebAssembly 与 RISC-V 指令集架构的对比"><span class="kg-bookmark-author">Heyang Zhou</span><span class="kg-bookmark-publisher">The Invariant</span></div></div><div class="kg-bookmark-thumbnail"><img src="https://invariant.me/content/images/2020/03/wasm-riscv.png" alt="WebAssembly 与 RISC-V 指令集架构的对比"></div></a></figure><img src="https://blog.invariant.cn/content/images/2020/03/wasm-riscv.png" alt="WebAssembly 与 RISC-V 指令集架构的对比"><p>WebAssembly 与 RISC-V 都是近十年内新出现的指令集架构。摘录一段 <a href="https://webassembly.org/">WebAssembly 官方网站</a>的介绍：</p><blockquote>WebAssembly (abbreviated <em><em>Wasm</em></em>) is a binary instruction format for a stack-based virtual machine. Wasm is designed as a portable target for compilation of high-level languages like C/C++/Rust, enabling deployment on the web for client and server applications.</blockquote><blockquote>WebAssembly （简写为 Wasm）是一种栈虚拟机的二进制指令格式。Wasm 被设计为 C/C++/Rust 等高级语言的可移植编译目标，从而允许客户端和服务器应用程序部署在 Web 上。</blockquote><p>和 <a href="https://riscv.org/">RISC-V 的官方介绍</a>：</p><blockquote>RISC-V is a free and open ISA enabling a new era of processor innovation through open standard collaboration. Born in academia and research, RISC-V ISA delivers a new level of free, extensible software and hardware freedom on architecture, paving the way for the next 50 years of computing design and innovation.</blockquote><blockquote>RISC-V 是一种自由、开放的指令集架构，通过开放标准协作使新的处理器创新成为可能。RISC-V 来自学术研究，提供了更加自由、可扩展的软硬件架构，为未来 50 年的计算技术设计与创新铺平道路。</blockquote><p>这两种指令集架构看起来很不一样。WebAssembly 的目标平台主要是 JIT 编译器（以及浏览器）；而 RISC-V 则专为硬件设计，其目标之一即是在 FPGA 和电路上的高效实现。WebAssembly 与 RISC-V 的关系似乎类似于早期的 Java 与 x86：一种字节码格式，和一个硬件指令集。它们有什么关系呢？</p><p>其实字节码格式与硬件指令集的分界线并不是非常清晰。例如在 x86 指令集的早期实现中，指令经过一层解码直接被分发到执行电路去执行。但近年的 Intel/AMD CPU 采用了不同的执行策略：每条 x86 指令首先被翻译为某种内部 RISC 指令，执行组件收到的指令其实已经是翻译后的 RISC 编码格式。这实际上相当于从 x86 到内部 RISC 指令集的某种“硬件实时编译”过程。同时，<a href="https://en.wikipedia.org/wiki/Java_processor">Java</a> 与 <a href="https://github.com/piranna/wasmachine">WebAssembly</a> 也有实验性的硬件实现，虽然它们还不能赶上 JIT 编译器在现代 CPU 上所能达到的效率。</p><blockquote>我们已经可以看到 RISC-V 指令集<a href="https://github.com/nervosnetwork/ckb-vm">被用于区块链的智能合约</a>，而 WebAssembly 此前几乎是原生语言智能合约的唯一选择。</blockquote><p>在这里我们对 WebAssembly 与 RISC-V 做一个比较。</p><!--kg-card-begin: markdown--><table>
+<thead>
+<tr>
+<th></th>
+<th>WebAssembly</th>
+<th>RISC-V</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong><font color="#512da8">开源</font></strong></td>
+<td>是</td>
+<td>是</td>
+</tr>
+<tr>
+<td><strong><font color="#512da8">内存架构</font></strong></td>
+<td>Load/Store</td>
+<td>Load/Store</td>
+</tr>
+<tr>
+<td><strong><font color="#512da8">浮点支持</font></strong></td>
+<td>是</td>
+<td>是 (定义于扩展)</td>
+</tr>
+<tr>
+<td><strong><font color="#512da8">SIMD</font></strong></td>
+<td>是</td>
+<td>是 (定义于扩展)</td>
+</tr>
+<tr>
+<td><strong><font color="#bb4d00">代码/数据分离</font></strong></td>
+<td>是</td>
+<td>否</td>
+</tr>
+<tr>
+<td><strong><font color="#bb4d00">指针宽度</font></strong></td>
+<td>32</td>
+<td>32/64</td>
+</tr>
+<tr>
+<td><strong><font color="#bb4d00">最大数据宽度</font></strong></td>
+<td>64</td>
+<td>32/64</td>
+</tr>
+<tr>
+<td><strong><font color="#bb4d00">静态类型</font></strong></td>
+<td>弱</td>
+<td>无</td>
+</tr>
+<tr>
+<td><strong><font color="#bb4d00">控制流约束</font></strong></td>
+<td>是</td>
+<td>否</td>
+</tr>
+<tr>
+<td><strong><font color="#bb4d00">机器模型</font></strong></td>
+<td>栈机</td>
+<td>寄存器机</td>
+</tr>
+<tr>
+<td><strong><font color="#bb4d00">内存布局</font></strong></td>
+<td>线性</td>
+<td>分页</td>
+</tr>
+<tr>
+<td><strong><font color="#bb4d00">内存保护</font></strong></td>
+<td>无</td>
+<td>RWX</td>
+</tr>
+<tr>
+<td><strong><font color="#bb4d00">多线程同步</font></strong></td>
+<td>CAS</td>
+<td>LL/SC</td>
+</tr>
+<tr>
+<td><strong><font color="#bb4d00">指令编码</font></strong></td>
+<td>变长</td>
+<td>定长 (2 或 4 字节)</td>
+</tr>
+<tr>
+<td><strong><font color="#bb4d00">与环境交互</font></strong></td>
+<td>导入函数</td>
+<td>系统调用</td>
+</tr>
+<tr>
+<td><strong><font color="#bb4d00">可执行映像格式</font></strong></td>
+<td>WebAssembly</td>
+<td>ELF</td>
+</tr>
+</tbody>
+</table>
+<!--kg-card-end: markdown--><p><strong>1. 代码/数据分离</strong></p><p>包括 RISC-V 在内的大多数现代架构对代码和数据使用同一个地址空间，但是 WebAssembly 没有这样做。实际上，运行中的代码甚至没有办法读/写它自己。这个设计的原因可能是：</p><ul><li>简化 JIT 编译器的实现。如果代码可以自我修改，那么 JIT 编译器则需要有检测修改和重新生成目标代码的能力，而这需要相当复杂的实现机制。</li><li>WebAssembly 假设了一个功能完善的运行环境。运行环境会处理链接、重定位等准备工作，程序不需要关心怎样把它自己运行起来。</li><li>安全。能够动态生成和修改的代码是个很危险的攻击点。</li></ul><p><strong>2. 静态类型与控制流约束</strong></p><p>WebAssembly 具有很强的“结构性”。其标准要求所有函数调用、循环、跳转和值类型遵循特定的结构约束，例如向一个接受三个参数的函数传入两个参数、跳转到其他函数里的某个位置、在两个整数上执行浮点加操作等都会导致编译/验证失败。RISC-V 则不具有此类约束，指令的有效与否只取决于其自身的编码是否正确。</p><p><strong>3. 机器模型</strong></p><p>WebAssembly 是一种<a href="https://en.wikipedia.org/wiki/Stack_machine">栈机</a>指令集，而 RISC-V 是一种<a href="https://en.wikipedia.org/wiki/Register_machine">寄存器机</a>指令集。</p><p>在 WebAssembly 中，每条指令<em>语义上</em>会从值栈上弹出它的操作数，然后将结果推入值栈。然而与 Java 等其他基于栈机的字节码格式不同的是，程序中任意指令处值栈的结构都可以被静态确定。这一设计有利于更好的编译优化。</p><p>在 RISC-V 中，每条指令的编码包含 0 - 3 个寄存器编号 <code>rd, rs1, rs2</code> 。其中 <code>rs1</code>与 <code>rs2</code> 是输入寄存器， <code>rd</code> 是输出寄存器。除内存访问、特权指令等特殊类型指令外，每条指令只从输入寄存器中读取数据，在输出寄存器中存放结果。</p><p><strong>4. 内存管理</strong></p><p>虽然 WebAssembly 与 RISC-V 都定义了一个无类型的、字节可寻址的内存，它们之间还是有一些细节上的区别。WebAssembly 的内存等同于一个大数组：有效地址从 0 开始，连续扩展到某个由程序定义初值、可增长的上限。而 RISC-V 则使用了<a href="https://en.wikipedia.org/wiki/Virtual_memory">虚拟内存</a>，用页表将地址映射到物理内存。</p><figure class="kg-card kg-image-card kg-card-hascaption"><img src="https://invariant.me/content/images/2020/03/wasm-riscv-comp.png" class="kg-image" alt="WebAssembly 与 RISC-V 指令集架构的对比"><figcaption>内存布局</figcaption></figure><p>WebAssembly 的内存设计虽然简洁且易于实现，但存在一些问题：</p><ul><li>地址 0 是有效的，这会导致一些程序在解引用空指针时的行为与预期不同。</li><li>无法建立不映射到任何物理地址的“无效”地址区间，因此无法实现多线程环境下的栈保护页 (guard page) 。</li></ul><p><strong>5. 同步机制</strong></p><p>图灵完备的计算机器需要至少一条条件分支指令。同样，支持多线程同步的指令集架构需要至少一条“原子条件分支”指令。这类指令在 WebAssembly 下是 <code>i{32,64}.atomic.rmw.cmpxchg</code>，在 RISC-V 下是 <code>LR/SC</code>，分别对应 <a href="https://en.wikipedia.org/wiki/Compare-and-swap">CAS</a> 模型和 <a href="https://en.wikipedia.org/wiki/Load-link/store-conditional">LL/SC</a> 模型。</p><p>LL/SC 的语义比 CAS 更强。CAS 存在难以解决的 <a href="https://en.wikipedia.org/wiki/ABA_problem">ABA 问题</a>，但 LL/SC 不受影响。这也意味着在 CAS 架构上模拟 LL/SC 比反过来要困难很多。</p><hr><blockquote>Note: 我写过一个 RISC-V 解释器 <a href="https://github.com/losfair/FlatRv">FlatRv</a> ，且正在参与一个 WebAssembly JIT 运行环境 <a href="https://github.com/wasmerio/wasmer">Wasmer</a> 的开发。如果你感兴趣可以点个 Star :)</blockquote>]]></content>
+        <author>
+            <name><![CDATA[The Invariant 中文]]></name>
+        </author>
+    </entry>
+    
+    <entry>
         <id>https://miaotony.xyz/2020/03/12/CTF_2020JetBrainsQuest/</id>
         <title><![CDATA[CTF | JetBrains Quest 1&2 WriteUp/攻略]]></title>
         <updated>2020-03-13T16:43:42+08:00</updated>
@@ -395,6 +497,108 @@ pinentry-mode loopback
         <content type="text/html" src="https://miaotony.xyz/2020/03/12/CTF_2020JetBrainsQuest/"><![CDATA[体验了一下JetBrainsQuest1&2，白嫖了3+3个月的JB家全产品授权，这里记录一下通关过程，也算是攻略/WriteUp吧。]]></content>
         <author>
             <name><![CDATA[MiaoTony]]></name>
+        </author>
+    </entry>
+    
+    <entry>
+        <id>https://invariant.me/a-comparison-between-webassembly-and-risc-v/</id>
+        <title><![CDATA[A Comparison between WebAssembly and RISC-V]]></title>
+        <updated>2020-03-13T16:38:53+08:00</updated>
+        <link href="https://invariant.me/a-comparison-between-webassembly-and-risc-v/"/>
+        <content type="text/html" src="https://invariant.me/a-comparison-between-webassembly-and-risc-v/"><![CDATA[<img src="https://invariant.me/content/images/2020/03/wasm-riscv.png" alt="A Comparison between WebAssembly and RISC-V"><p><a href="https://webassembly.org/">WebAssembly</a> and <a href="https://riscv.org/">RISC-V</a> are both new Instruction Set Architectures (ISAs) that evolved in the recent 10 years. Quoting the introduction to WebAssembly on <a href="https://webassembly.org">webassembly.org</a>:</p><blockquote>WebAssembly (abbreviated <em>Wasm</em>) is a binary instruction format for a stack-based virtual machine. Wasm is designed as a portable target for compilation of high-level languages like C/C++/Rust, enabling deployment on the web for client and server applications.</blockquote><p>and the introduction to RISC-V on <a href="https://riscv.org">riscv.org</a>:</p><blockquote>RISC-V is a free and open ISA enabling a new era of processor innovation through open standard collaboration. Born in academia and research, RISC-V ISA delivers a new level of free, extensible software and hardware freedom on architecture, paving the way for the next 50 years of computing design and innovation.</blockquote><p>It seems that these two ISAs are quite different. WebAssembly is primarily targeted at JIT compilation and in particular, browsers, while RISC-V is designed for hardware and one of its goals is efficient implementation on FPGAs and circuits. They're like Java and x86 respectively in the old days: A bytecode format, and a hardware instruction set. How can they be related?</p><p>Well, the boundary between bytecodes and real hardware instruction sets is actually a bit blurred. The x86 instruction set, for example, was once executed directly by the circuits that performs control and arithmetic operations. But now on newer Intel and AMD CPUs, x86 instructions are decoded into a internal RISC format on-the-fly and sent into a RISC core for execution - isn't it some kind of hardware "JIT compilation" similar to what JRE does for Java? Meanwhile, there are also experimental hardware implementations for <a href="https://en.wikipedia.org/wiki/Java_processor">Java</a> and <a href="https://github.com/piranna/wasmachine">WebAssembly</a>, though not being as efficient as what a JIT compiler can achieve on a modern, mature CPU.</p><p>Actually, people are already using RISC-V in a position where WebAssembly has usually been used for: smart contract on blockchains. It is the <a href="https://github.com/nervosnetwork/ckb-vm">CKB VM</a>. Across the blurred line between the WebAssembly bytecode format and the RISC-V hardware instruction set, what are the similarities, and what are the differences?</p><p>Let's do a comparison.</p><h3 id="feature-table">Feature table</h3><!--kg-card-begin: markdown--><table>
+<thead>
+<tr>
+<th></th>
+<th>WebAssembly</th>
+<th>RISC-V</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong><font color="#512da8">Open source</font></strong></td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td><strong><font color="#512da8">Memory architecture</font></strong></td>
+<td>Load/Store</td>
+<td>Load/Store</td>
+</tr>
+<tr>
+<td><strong><font color="#512da8">Floating point</font></strong></td>
+<td>Yes</td>
+<td>Yes (in extension)</td>
+</tr>
+<tr>
+<td><strong><font color="#512da8">SIMD</font></strong></td>
+<td>Yes</td>
+<td>Yes (in extension)</td>
+</tr>
+<tr>
+<td><strong><font color="#bb4d00">Separated code and data</font></strong></td>
+<td>Yes</td>
+<td>No</td>
+</tr>
+<tr>
+<td><strong><font color="#bb4d00">Pointer width</font></strong></td>
+<td>32</td>
+<td>32 and 64</td>
+</tr>
+<tr>
+<td><strong><font color="#bb4d00">Maximum data width</font></strong></td>
+<td>64</td>
+<td>32 and 64</td>
+</tr>
+<tr>
+<td><strong><font color="#bb4d00">Typing</font></strong></td>
+<td>Weak</td>
+<td>None</td>
+</tr>
+<tr>
+<td><strong><font color="#bb4d00">Control flow</font></strong></td>
+<td>Restricted</td>
+<td>Arbitrary</td>
+</tr>
+<tr>
+<td><strong><font color="#bb4d00">Machine model</font></strong></td>
+<td>Stack</td>
+<td>Register</td>
+</tr>
+<tr>
+<td><strong><font color="#bb4d00">Memory layout</font></strong></td>
+<td>Linear</td>
+<td>Paged</td>
+</tr>
+<tr>
+<td><strong><font color="#bb4d00">Memory protection</font></strong></td>
+<td>None</td>
+<td>RWX</td>
+</tr>
+<tr>
+<td><strong><font color="#bb4d00">Synchronization primitive</font></strong></td>
+<td>CAS</td>
+<td>LL/SC</td>
+</tr>
+<tr>
+<td><strong><font color="#bb4d00">Instruction encoding</font></strong></td>
+<td>Variable length</td>
+<td>Fixed length (2 or 4 bytes)</td>
+</tr>
+<tr>
+<td><strong><font color="#bb4d00">Interaction with environment</font></strong></td>
+<td>Imported functions</td>
+<td>System call</td>
+</tr>
+<tr>
+<td><strong><font color="#bb4d00">Executable image format</font></strong></td>
+<td>WebAssembly</td>
+<td>ELF</td>
+</tr>
+</tbody>
+</table>
+<!--kg-card-end: markdown--><p>The similarities are quite common, so I will focus on the differences here.</p><p><strong>1. Separated code and data</strong></p><p>Most modern architectures use a unique addressing space for code and data, including RISC-V. But WebAssembly doesn't, and actually the running code is not even provided with a way to access itself. Possible reasons:</p><ul><li>Simplicity for JIT compilation. If code can modify itself, then the JIT compiler needs to detect the modification and update the corresponding machine code - which is very complex.</li><li>WebAssembly's assumption about a powerful host environment. Linking, etc. will be done entirely by the host, and the program doesn't need to care about bringing itself up.</li><li>Security. Generating code at runtime is dangerous.</li></ul><p><strong>2. Typing and control flow</strong></p><p>WebAssembly is very "structured": The JIT compiler requires all function calls, loops, jumps and value types to conform to structural constraints. For example, you can't pass two values to a function that accepts three arguments, you can't jump to a location in another function, and you can't execute the floating point add instruction on two integers.</p><p>RISC-V however has none of these constraints. Everything is just values in registers and it's up to the programmer to decide how to use them.</p><p><strong>3. Machine model</strong></p><p>WebAssembly is built upon the <a href="https://en.wikipedia.org/wiki/Stack_machine">stack machine</a> model, while RISC-V (along with most other hardware architectures) is a <a href="https://en.wikipedia.org/wiki/Register_machine">register machine</a>.</p><p>In WebAssembly, <em>semantically</em> any instruction pops its operands (if any) from the value stack, performs the defined operation, and pushes its results (if any) back on to the value stack. However, the structure of the value stack at any point in the program can be statically determined - which is different from the Java bytecode, for example, in that keeping the stack structure statically determinable is not an optimization but a compile-time mandatory requirement.</p><p><strong>4. Memory</strong></p><p>While both ISAs define an untyped, byte-addressable memory, some details are different. Memory in WebAssembly is literally a large byte array: addresses start from zero and continuously span to an upper limit (which can be dynamically increased by executing an instruction). In comparison, RISC-V uses <em><a href="https://en.wikipedia.org/wiki/Virtual_memory">virtual memory</a></em> where page tables are used to map addresses to the underlying physical memory.</p><figure class="kg-card kg-image-card kg-card-hascaption"><img src="https://invariant.me/content/images/2020/03/wasm-riscv-comp.png" class="kg-image" alt="A Comparison between WebAssembly and RISC-V"><figcaption>Memory layouts</figcaption></figure><p>WebAssembly's memory model, although being simple to implement and efficient when JIT compiled, has several issues compared to RISC-V:</p><ul><li>Address zero is valid, causing programs that assume a crash for dereferencing the null pointer to misbehave.</li><li>No "gaps" are possible. Therefore the guard page trick to prevent stack overflow in a multi-threaded environment won't work.</li></ul><p>Virtual memory usually comes with memory protection where each memory page has a combination of <em>read</em>, <em>write</em> and <em>execute</em> permissions. This is an important security mechanism because it prevents execution and writes on memory regions where such operations aren't expected. RISC-V implements memory protection but WebAssembly does not - maybe it's less important in an architecture where executable code isn't addressable?</p><p><strong>5. Synchronization</strong></p><p>A computing machine needs at least one conditional branch instruction to be turing complete. Similarly, a multiprocessor architecture needs at least one "atomic conditional branch" instruction for proper synchronization. This instruction is <code>i{32,64}.atomic.rmw.<a href="https://en.wikipedia.org/wiki/Compare-and-swap">cmpxchg</a></code> in WebAssembly, and <code><a href="https://en.wikipedia.org/wiki/Load-link/store-conditional">LR/SC</a></code> in RISC-V.</p><p><code>LR/SC</code> has stronger semantics than <code>cmpxchg</code>. With <code>cmpxchg</code> we have the famous <a href="https://en.wikipedia.org/wiki/ABA_problem">ABA problem</a>, but <code>LR/SC</code> is not affected. It also means that emulating <code>LR/SC</code> with a <code>cmpxchg</code>-only architecture is much more difficult than the other way; something like a global lock or transactional memory has to be used, greatly increasing the complexity. RISC-V is designed for hardware anyway, but if you ever want to write a software implementation you will have to work around this issue.</p><hr><blockquote>Side note: I worked on/am working on both a RISC-V interpreter, <a href="https://github.com/losfair/FlatRv">FlatRv</a>, and a full WebAssembly JIT runtime, <a href="https://github.com/wasmerio/wasmer">Wasmer</a>. Take a look at them and star if you like my work :)</blockquote>]]></content>
+        <author>
+            <name><![CDATA[The Invariant]]></name>
         </author>
     </entry>
     
@@ -522,6 +726,28 @@ fastcgi_busy_buffers_size 512k;</code></pre><p>对于使用 <code>proxy_pass</co
     </entry>
     
     <entry>
+        <id>https://blog.invariant.cn/try-jslinux/</id>
+        <title><![CDATA[用 JSLinux 在浏览器中运行 Linux]]></title>
+        <updated>2020-02-24T16:24:41+08:00</updated>
+        <link href="https://blog.invariant.cn/try-jslinux/"/>
+        <content type="text/html" src="https://blog.invariant.cn/try-jslinux/"><![CDATA[<figure class="kg-card kg-bookmark-card"><a class="kg-bookmark-container" href="https://invariant.me/try-jslinux/"><div class="kg-bookmark-content"><div class="kg-bookmark-title">Running Linux in your Browser with JSLinux</div><div class="kg-bookmark-description">Yesterday I ported the Wasm-based hardware emulator, JSLinux, to use xterm.js for frontend and my wstunnel for networking.</div><div class="kg-bookmark-metadata"><img class="kg-bookmark-icon" src="https://invariant.me/favicon.ico" alt="用 JSLinux 在浏览器中运行 Linux"><span class="kg-bookmark-author">Heyang Zhou</span><span class="kg-bookmark-publisher">The Invariant</span></div></div><div class="kg-bookmark-thumbnail"><img src="https://invariant.me/content/images/2020/02/Alpine_logo.png" alt="用 JSLinux 在浏览器中运行 Linux"></div></a></figure><img src="https://blog.invariant.cn/content/images/2020/03/Alpine_logo.png" alt="用 JSLinux 在浏览器中运行 Linux"><p><a href="https://bellard.org/jslinux/">JSLinux</a> 是 <a href="https://bellard.org/">Fabrice Bellard</a> 写的一个支持 32 位 x86 和 32/64 位 RISC-V 系统模拟的硬件模拟器，可编译为 WebAssembly 以在浏览器中运行。</p><p>昨天我<a href="https://github.com/losfair/jslinux-wstunnel">开了一个分支</a>，把字符终端实现换成了 <a href="https://xtermjs.org/">xterm.js</a> ，把网络实现换成了我的 <a href="https://github.com/losfair/wstunnel">wstunnel</a> 。这里是一个在修改后的 JSLinux 上运行 Alpine Linux 的 x86 虚拟机，可以在线试用。请不要滥用网络 :)</p><!--kg-card-begin: html--><iframe style="width: 100%; height: 500px" src="https://jslinux.invariant.me/widget.html">&lt;iframe disabled?&gt;</iframe><!--kg-card-end: html-->]]></content>
+        <author>
+            <name><![CDATA[The Invariant 中文]]></name>
+        </author>
+    </entry>
+    
+    <entry>
+        <id>https://invariant.me/try-jslinux/</id>
+        <title><![CDATA[Running Linux in your Browser with JSLinux]]></title>
+        <updated>2020-02-24T16:16:18+08:00</updated>
+        <link href="https://invariant.me/try-jslinux/"/>
+        <content type="text/html" src="https://invariant.me/try-jslinux/"><![CDATA[<img src="https://invariant.me/content/images/2020/02/Alpine_logo.png" alt="Running Linux in your Browser with JSLinux"><p><a href="https://bellard.org/jslinux/">JSLinux</a> is an awesome emulator by <a href="https://bellard.org/">Fabrice Bellard</a> that implements full 32-bit x86 and RV32/RV64 RISC-V systems in the browser using WebAssembly.</p><p>Yesterday I <a href="https://github.com/losfair/jslinux-wstunnel">ported</a> JSLinux to use <a href="https://xtermjs.org/">xterm.js</a> for frontend and my <a href="https://github.com/losfair/wstunnel">wstunnel</a> for networking. Below is a live x86 virtual machine running Alpine Linux. Feel free to try it here (but please do not abuse the network interface) !</p><!--kg-card-begin: html--><iframe style="width: 100%; height: 500px" src="https://jslinux.invariant.me/widget.html">&lt;iframe disabled?&gt;</iframe><!--kg-card-end: html--><p></p>]]></content>
+        <author>
+            <name><![CDATA[The Invariant]]></name>
+        </author>
+    </entry>
+    
+    <entry>
         <id>https://blog.rexskz.info/go-module-memo.html</id>
         <title><![CDATA[Go module 踩坑备忘]]></title>
         <updated>2020-02-16T09:25:24+08:00</updated>
@@ -543,6 +769,17 @@ require (
 )</code></pre><p>最后测了一下，VSCode 插件的各种功能（自动导入、格式化、跳转、调试）都没有什么问题，这就算是大功告成了。至于用起来具体怎么样，还有没有其它的坑，可能得等过一段时间才能知道了。</p><h1>参考资料</h1><ul><li><a href="https://github.com/golang/go/issues/32762#issuecomment-518828774">x/tools/gopls: failure to import package · Issue #32762 · golang/go</a></li><li><a href="https://stackoverflow.com/a/52124448">vgo - How do I resolve &quot;cannot find module for path X&quot; importing a local Go module? - Stack Overflow</a></li></ul>]]></content>
         <author>
             <name><![CDATA[R·ex / Zeng]]></name>
+        </author>
+    </entry>
+    
+    <entry>
+        <id>https://invariant.me/designing-a-superscalar-ooo-mips-cpu-from-scratch/</id>
+        <title><![CDATA[[PLACEHOLDER] Designing a superscalar MIPS CPU from scratch: #0]]></title>
+        <updated>2020-02-16T07:31:33+08:00</updated>
+        <link href="https://invariant.me/designing-a-superscalar-ooo-mips-cpu-from-scratch/"/>
+        <content type="text/html" src="https://invariant.me/designing-a-superscalar-ooo-mips-cpu-from-scratch/"><![CDATA[<img src="https://images.unsplash.com/photo-1555589228-135c25ae8cf5?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=2000&fit=max&ixid=eyJhcHBfaWQiOjExNzczfQ" alt="[PLACEHOLDER] Designing a superscalar MIPS CPU from scratch: #0"><p>The CS undergraduate programme at <a href="https://nuaa.edu.cn/">NUAA</a> includes a (compulsory) Computer Organization course for this (4th) semester that requires implementing a MIPS CPU on the <a href="http://www.loongson.cn/index.html">Loongson</a> <a href="http://www.loongson.cn/news/company/628.html">development kit</a>, which is essentially a FPGA board + various useful modules.</p><p>As shown below, the suggested design is a classical 5-stage pipelined architecture:</p><figure class="kg-card kg-image-card kg-card-hascaption"><img src="https://invariant.me/content/images/2020/02/--2020-02-16--2.39.51.png" class="kg-image" alt="[PLACEHOLDER] Designing a superscalar MIPS CPU from scratch: #0"><figcaption>Suggested basic 5-stage pipeline</figcaption></figure><p>But it's boring to write "yet another" CPU that implements only the simplest structures. So I decided to extend the design a bit, and build a <a href="https://en.wikipedia.org/wiki/Superscalar_processor">superscalar</a> <a href="https://en.wikipedia.org/wiki/Out-of-order_execution">OoO</a> architecture from the ground up.</p><p>During the next few months I will post my experience as a series of posts both here and on WeChat. <a href="https://invariant.me/subscribe/">Subscribe</a> to stay updated!</p>]]></content>
+        <author>
+            <name><![CDATA[The Invariant]]></name>
         </author>
     </entry>
     
@@ -575,6 +812,17 @@ Age: 0
 ....</code></pre><p>作者给出的防御措施是：</p><ul><li>禁用 shadowsocks-py、shadowsocks-go、go-shadowsocks2、shadowsocks-nodejs</li><li>只用 shadowsocks-libev，并且只使用 AEAD 加密</li></ul><p>原因如下：shadowsocks-libev 的实现很久之前就已经禁止了 <code>IV</code> 重用，可以在一定程度上防止这种攻击；只要加密算法带有 AEAD 特性，那么数据就无法被篡改，本文的攻击方式也是无效的。</p><h1>对大众的影响</h1><p>虽然文章中只列举了 HTTP 协议和 CFB 模式的例子，但理论上来说，所有头部 7 个字节已知的协议和所有类似流密码的组合，都可以被这种方法攻击。你不能保证你科学上的网总是 HTTPS，即使是 HTTPS，如果是国内网站，当某些不可抗力获取了其证书之后，你的 TLS 流量总是会被解密的。</p><p>不过有一些值得欣慰的地方：</p><p>由于墙的逐渐升高，大家已经逐渐意识到“只有加密是不行的”了，因此纷纷改用带有混淆功能的科学上网工具。由于攻击者无法得知混淆的参数（甚至不知道哪个流量是梯子的流量），因此这个方法不再起作用了。</p><p>目前大部分科学上网工具已经禁用了旧的加密算法，甚至强制只让使用带有 GCM 或者 Poly1305 的加密算法，这些算法有严格的 AEAD 特性，可以极大保证数据安全。TLS 1.3 强制使用 AEAD 也在某些程度上为它的安全性做了担保。</p><p>如果你还在用 Shadowsocks 或其衍生工具，并且依旧使用普通的流密码来加密，那么请立即听从作者给出的防御措施，为了你的服务器，也为了你自己。</p><h1>参考资料</h1><ul><li><a href="https://github.com/edwardz246003/shadowsocks">edwardz246003/shadowsocks: Redirect attack on Shadowsocks stream ciphers</a></li><li><a href="https://shadowsocks.org/en/spec/Protocol.html">Shadowsocks - Protocol</a></li><li><a href="https://shadowsocks.org/en/spec/Stream-Ciphers.html">Shadowsocks - Stream Ciphers</a></li><li><a href="https://toutiao.io/posts/5fo90o/preview">Shadowsocks 原理详解</a></li><li><a href="https://printempw.github.io/why-do-shadowsocks-deprecate-ota/">为何 shadowsocks 要弃用一次性验证 (OTA) - PRIN BLOG</a></li><li><a href="https://and-rev.blogspot.com/2016/09/shadowsocks.html">Shadowsocks 的定制和“不安全性”的分析 ~ and-rev</a></li><li><a href="https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation">Block cipher mode of operation - Wikipedia</a></li><li><a href="https://baike.baidu.com/item/%E5%AE%8C%E6%95%B4%E6%80%A7/949221">完整性（信息安全的三个基本要点之一）_百度百科</a></li></ul><h1>Update 2020-02-15</h1><p>添加了对 <code>IV</code> 重用相关的补充。</p>]]></content>
         <author>
             <name><![CDATA[R·ex / Zeng]]></name>
+        </author>
+    </entry>
+    
+    <entry>
+        <id>https://invariant.me/version-2/</id>
+        <title><![CDATA[Version 2]]></title>
+        <updated>2020-02-14T14:56:07+08:00</updated>
+        <link href="https://invariant.me/version-2/"/>
+        <content type="text/html" src="https://invariant.me/version-2/"><![CDATA[<img src="https://images.unsplash.com/photo-1530714457710-6bf1899c1d32?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=2000&fit=max&ixid=eyJhcHBfaWQiOjExNzczfQ" alt="Version 2"><p>I'm migrating and restarting my blog, which is previously at <a href="https://mnotes.me">https://mnotes.me</a> .</p><p>Take a look at the <a href="https://invariant.me/about/">About</a> page or <a href="https://invariant.me/subscribe/">subscribe</a> now!</p>]]></content>
+        <author>
+            <name><![CDATA[The Invariant]]></name>
         </author>
     </entry>
     
@@ -2523,6 +2771,126 @@ logger -t IPv6 <span class="s2">&#34;Add IPv6 default route.&#34;</span>
     </entry>
     
     <entry>
+        <id>https://invariant.me/coroutines-part-1-lightweight-threads-for-concurrency/</id>
+        <title><![CDATA[Coroutines: Lightweight Threads for Concurrency]]></title>
+        <updated>2019-01-12T16:00:00+08:00</updated>
+        <link href="https://invariant.me/coroutines-part-1-lightweight-threads-for-concurrency/"/>
+        <content type="text/html" src="https://invariant.me/coroutines-part-1-lightweight-threads-for-concurrency/"><![CDATA[<img src="https://images.unsplash.com/photo-1501820434261-5bb046afcf6b?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=2000&fit=max&ixid=eyJhcHBfaWQiOjExNzczfQ" alt="Coroutines: Lightweight Threads for Concurrency"><p><strong>Outdated:</strong> This post was written in January, 2019 and is not currently maintained.</p><!--kg-card-begin: html--><hr><!--kg-card-end: html--><p>In concurrent applications, we need a way to allow different tasks to make progress at the “same” time, which is known as concurrency. The most widely-used technology for concurrency is threads, the minimal execution unit provided by the operating system. However, there is a non-negligible overhead associated with multi-threading, especially when the threads are only performing small, lightweight tasks.</p><p>Multithreading overhead comes from how threads are implemented in operating systems. In Linux, a thread is just a "lightweight" process that shares resources, like virtual memory, with its parent process. When a thread yields control and begins to wait on an event to wake up, the operating system will take over control, find the next suitable process to run, and switch to that process, just like what it would do with normal processes. This introduces a significant overhead for many kinds of multithread applications, especially those requiring frequent message passing between threads. Additionally, when a thread is created or destroyed, the operating system has to initialize or destroy the thread control block (TCB, <code>task_struct</code> in Linux), which is a non-trivial operation.</p><p>Coroutine is a mechanism for reducing multithreading overheads. As a userspace equivalent of threads, coroutines are managed entirely in userspace and is opaque to the underlying OS.</p><h2 id="stackless-coroutines">Stackless Coroutines</h2><p>There are two types of coroutine systems, stackless and stackful. A stackless coroutine system is usually implemented with some kind of language-level transformations, like the CPS (Continuation Passing Style) transformation. A program in CPS form, as its name suggests, instead of passing the results of computations by return values, passes them by “continuations”, which looks like:</p><pre><code>// Original form
+let a = f1()
+let b = f2(a)
+print(b)
+
+// CPS form
+f1(
+    a =&gt; f2(
+        a,
+        b =&gt; print(b)
+    )
+)
+</code></pre><p>The code above looks like the ancient JavaScript callback pattern, doesn't it? JavaScript is by design single threaded and asynchronous, and blocking operations have to be implemented with callbacks. In fact, this kind of callbacks is an explicit form of CPS, regardless of whether <code>Promise</code> is used to avoid problems like <a href="https://en.wiktionary.org/wiki/callback_hell">callback hell</a>. To simplify programming, <code>async/await</code> syntax is introduced later, which enables users to write code that looks synchronous but is in fact asynchronous, and is usually implemented with automatic CPS transformation.</p><p>Another approach to stackless coroutine is to make use of a big <code>switch</code> loop:</p><pre><code>// Original form
+int f1(int a) {
+    int i, v = 0;
+    for(i = 0; i &lt; a; i++) v += i;
+    return v;
+}
+
+// Stackless coroutine
+struct Local {
+    int i;
+    int v;
+};
+int f1(int a, int state, struct Local *local, int *out) {
+    switch(state) {
+        case 0:
+            local-&gt;i = 0;
+            local-&gt;v = 0;
+            return 1;
+        case 1:
+            if(local-&gt;i &lt; a) {
+                local-&gt;v += local-&gt;i;
+                local-&gt;i++;
+                return 1;
+            } else {
+                *out = local-&gt;v;
+                return -1;
+            }
+    }
+}
+</code></pre><p>In the code above, we maintain the execution state of <code>f1</code> outside of itself, therefore allowing recovery of its execution at any point of time as long as we preserve <code>state</code> and <code>local</code>.</p><h2 id="stackful-coroutines">Stackful Coroutines</h2><p>Stackless coroutines are “stackless” because they do not explicitly preserve the call stack, while stackful coroutine systems allocate a new call stack for each coroutine. Compared to stackless coroutines, stackful coroutines usually do not need language-level transformations, making it easier to be integrated into different programming languages.</p><p>When the OS switches tasks, it needs to save the machine state of the old task and load the new task’s one. A machine state contains all used registers, along with in-memory data that should be preserved, e.g. the call stack. As we are going to do coroutine switching in userspace, we have to manually implement the logic for switching machine states.</p><p>For convenience, in this section, we assume that our platform is Linux on a x86_64 machine and we are implementing cooperative scheduling. Therefore, we need to follow the x86_64 System V ABI when dealing with calling conventions. The ABI specifies that the registers <code>rbx</code>, <code>rbp</code>, <code>r12</code>, <code>r13</code>, <code>r14</code> and <code>r15</code> are callee saved, so they must be saved before switching to another coroutine.</p><p>Let’s start from the coroutine switching function:</p><pre><code>asm(
+    "_co_switch:\n"
+    "push %rbx\n"
+    "push %rbp\n"
+    "push %r12\n"
+    "push %r13\n"
+    "push %r14\n"
+    "push %r15\n"
+    "mov (%rdi), %rax\n"
+    "mov %rsp, (%rdi)\n"
+    "mov %rax, %rsp\n"
+    "pop %r15\n"
+    "pop %r14\n"
+    "pop %r13\n"
+    "pop %r12\n"
+    "pop %rbp\n"
+    "pop %rbx\n"
+    "ret\n"
+);
+</code></pre><p>The <code>co_switch</code> function pushes all current callee-saved registers onto the current stack, swaps <code>(%rdi)</code> (the memory pointed to by the first argument, target stack address here) with the stack pointer <code>%rsp</code>, loads the callee-saved registers of the target coroutine, and then executes <code>ret</code> to return in the target coroutine.</p><p>Suppose we have a coroutine <code>A</code> that has just executed the instruction <code>mov %rax, %rsp</code>. At this point, we are sure that the old stack, which is swapped out into memory location <code>(%rdi)</code>, has the following layout (from lower address to higher address):</p><pre><code>[r15] [r14] [r13] [r12] [rbp] [rbx] [return_address]
+</code></pre><p>A coroutine can only be switched out with <code>co_switch</code>, so its stack must have the same layout. Therefore, since we are already on the target stack after executing <code>mov %rax, %rsp</code>, we can pop the saved registers in the reverse order, from <code>r15</code> to <code>rbx</code>. Then, the <code>ret</code> instruction is executed, which pops the return address and jumps to it, and the caller code on the target coroutine observes a normal return from <code>co_switch</code>.</p><p>However, we just assumed that we already have a coroutine switched out previously, and some other logic is required for starting a new coroutine.</p><p>We have to construct the stack layout:</p><pre><code>[r15] [r14] [r13] [r12] [rbp] [rbx] [return_address]
+</code></pre><p>The values of the saved registers can be arbitrary, since there’s no old registers to save. To construct a valid “return” address, a trampoline is needed:</p><pre><code>asm(
+    "_pre_call_entry:\n"
+    "pop %rax\n" // entry
+    "pop %rdi\n" // userdata
+    "call *%rax\n"
+    "ud2\n"
+);
+</code></pre><p><code>pre_call_entry</code> pops a function pointer <code>entry</code> and the associated <code>userdata</code> from the stack, calls <code>entry</code> with <code>userdata</code> as its only argument, then executes <code>ud2</code> to indicate <code>entry</code> should never return. Therefore, we need to include <code>entry</code> and <code>userdata</code> in our stack construction:</p><pre><code>[r15] [r14] [r13] [r12] [rbp] [rbx] [return_address] [entry] [userdata]
+</code></pre><p>With the two assembly functions and the expected stack layout, now we can write the code to start a coroutine:</p><pre><code>void co_switch(void **stack);
+void pre_call_entry();
+
+struct Coroutine;
+
+typedef void (*CoEntry)(struct Coroutine *co);
+
+struct Coroutine {
+    void *stack;
+    CoEntry entry;
+    int terminated;
+};
+
+void call_entry(struct Coroutine *co) {
+    co_switch(&amp;co-&gt;stack);
+    co-&gt;entry(co);
+    co-&gt;terminated = 1;
+    co_switch(&amp;co-&gt;stack);
+}
+
+void start_coroutine(struct Coroutine *co) {
+    void **stack = (void **) co-&gt;stack;
+
+    *(--stack) = co;
+    *(--stack) = call_entry; // 16-byte aligned
+
+    *(--stack) = pre_call_entry;
+
+    *(--stack) = 0;
+    *(--stack) = 0;
+    *(--stack) = 0;
+    *(--stack) = 0;
+    *(--stack) = 0;
+    *(--stack) = 0;
+
+    co-&gt;stack = (void *) stack;
+
+    co_switch(&amp;co-&gt;stack);
+}
+</code></pre><p>The full example code is available on my <a href="https://gist.github.com/losfair/60af3f0c565470e305b6c021ce57e3dc">GitHub Gist</a>.</p><h1 id="optimizations-and-tricks">Optimizations and Tricks</h1><ul><li><code>ret</code> in <code>co_switch</code> can be replaced by an explicit <code>pop</code> and <code>jmp</code> to avoid <a href="https://stackoverflow.com/questions/22442766/return-address-prediction-stack-buffer-vs-stack-stored-return-address">return address prediction failures</a>.</li><li>If your coroutines are extremely lightweight and usually use a very small space on the stack, we can use a fixed memory region as the execution stack (“shared stack”) and copy in/out the used range (<code>stack_end - sp</code>) of the coroutine stack when switching in/out of a coroutine. Although memory copying is needed, this approach can save a lot of memory while still allowing to use guard pages to ensure safety.</li><li>To implement cross-platform stackful coroutines without writing assembly, the <code>pthread_*</code> functions can be used along with <code>setjmp</code> and <code>longjmp</code> to initialize the machine state on a new stack and switch between stacks, without actually using OS threads.</li></ul>]]></content>
+        <author>
+            <name><![CDATA[The Invariant]]></name>
+        </author>
+    </entry>
+    
+    <entry>
         <id>https://www.noisyfox.io/foxwinshave2.html</id>
         <title><![CDATA[FoxWinShave 2 中文使用手册]]></title>
         <updated>2019-01-12T08:45:27+08:00</updated>
@@ -3971,7 +4339,7 @@ class Test
 <a href="https://www.noisyfox.cn/wp-content/uploads/2016/06/QQ截图20160619145913.png"><img class="aligncenter size-full wp-image-403" src="https://www.noisyfox.cn/wp-content/uploads/2016/06/QQ截图20160619145913.png" alt="Unmanaged Exports 编译正常" width="662" height="65" /></a><br />
 <div class="sdm_download_item "><div class="sdm_download_item_top"><div class="sdm_download_thumbnail"></div><div class="sdm_download_title">DllExport-Fixed-1.2.7.7z</div></div><div style="clear:both;"></div><div class="sdm_download_description"><p>修正了非英文系统编译错误的Unmanaged Exports 1.2.7</p>
 <h1></h1>
-</div><div class="sdm_download_link"><span class="sdm_download_button"><a href="https://www.noisyfox.io/?smd_process_download=1&download_id=404" class="sdm_download green" title="DllExport-Fixed-1.2.7.7z" target="_blank">Download Now!</a></span><span class="sdm_download_item_count"><span class="sdm_item_count_number">859</span><span class="sdm_item_count_string"> Downloads</span></span></div></div><div class="sdm_clear_float"></div></p>
+</div><div class="sdm_download_link"><span class="sdm_download_button"><a href="https://www.noisyfox.io/?smd_process_download=1&download_id=404" class="sdm_download green" title="DllExport-Fixed-1.2.7.7z" target="_blank">Download Now!</a></span><span class="sdm_download_item_count"><span class="sdm_item_count_number">860</span><span class="sdm_item_count_string"> Downloads</span></span></div></div><div class="sdm_clear_float"></div></p>
 <p><a rel="nofollow" href="https://www.noisyfox.io/unmanaged-exports.html">Unmanaged Exports 修正版 .NET导出非托管函数</a>，首发于<a rel="nofollow" href="https://www.noisyfox.io">狐狸的小小窝</a>。</p>]]></content>
         <author>
             <name><![CDATA[狐狸的小小窝]]></name>
