@@ -3,12 +3,67 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2020-04-18T12:04:21+08:00</updated>
+    <updated>2020-04-18T18:04:05+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
     </author>
     
+    
+    <entry>
+        <id>http://blog.qrzbing.cn/2020/04/18/data-infector/</id>
+        <title><![CDATA[data 段代码注入]]></title>
+        <updated>2020-04-18T13:31:53+08:00</updated>
+        <link href="http://blog.qrzbing.cn/2020/04/18/data-infector/"/>
+        <content type="text/html" src="http://blog.qrzbing.cn/2020/04/18/data-infector/"><![CDATA[<p>我们可以通过向 data 段劫持代码并将程序的运行流劫持到这里实现我们希望的功能（包括执行恶意代码、软件保护等）。这一过程中可能是最复杂也是最重要的部分就是怎样将新增的代码注入到 data 段中了。</p>]]></content>
+        <author>
+            <name><![CDATA[QRZ’s Blog]]></name>
+        </author>
+    </entry>
+    
+    <entry>
+        <id>http://blog.qrzbing.cn/2019/12/31/my-2019/</id>
+        <title><![CDATA[我的 2019 总结]]></title>
+        <updated>2020-04-18T13:31:53+08:00</updated>
+        <link href="http://blog.qrzbing.cn/2019/12/31/my-2019/"/>
+        <content type="text/html" src="http://blog.qrzbing.cn/2019/12/31/my-2019/"><![CDATA[<p>学习一下赵神做一下年终总结，虽然自己很菜就是啦。</p>]]></content>
+        <author>
+            <name><![CDATA[QRZ’s Blog]]></name>
+        </author>
+    </entry>
+    
+    <entry>
+        <id>http://blog.qrzbing.cn/2019/10/04/angr-newhand-3/</id>
+        <title><![CDATA[angr 入门（三）]]></title>
+        <updated>2020-04-18T13:31:53+08:00</updated>
+        <link href="http://blog.qrzbing.cn/2019/10/04/angr-newhand-3/"/>
+        <content type="text/html" src="http://blog.qrzbing.cn/2019/10/04/angr-newhand-3/"><![CDATA[<p>本篇主要记录了新手使用 angr 对内存和寄存器操作的记录。题目分析顺序参考了这篇文章：<a href="https://xz.aliyun.com/t/4052" target="_blank" rel="noopener">深入浅出angr（三）</a></p>]]></content>
+        <author>
+            <name><![CDATA[QRZ’s Blog]]></name>
+        </author>
+    </entry>
+    
+    <entry>
+        <id>http://blog.qrzbing.cn/2019/10/01/from-0-to-Travis/</id>
+        <title><![CDATA[使用 Travis CI 自动部署 Hexo 博客]]></title>
+        <updated>2020-04-18T13:31:53+08:00</updated>
+        <link href="http://blog.qrzbing.cn/2019/10/01/from-0-to-Travis/"/>
+        <content type="text/html" src="http://blog.qrzbing.cn/2019/10/01/from-0-to-Travis/"><![CDATA[<p>最近一直在 Manjaro 和 Windows 之间切换，现在学习都已经在 Manjaro 上进行了，但是博客还在 Windows 上。虽然迁移过来并不难，但还是太麻烦了。另外写博客还要开电脑，的确有点麻烦。作为一个懒人当然是动动手自动推送最好，我就想到了用 <a href="https://travis-ci.org/" target="_blank" rel="noopener">Travis CI</a> 来自动部署博客。</p>]]></content>
+        <author>
+            <name><![CDATA[QRZ’s Blog]]></name>
+        </author>
+    </entry>
+    
+    <entry>
+        <id>http://blog.qrzbing.cn/2019/09/30/angr-newhand-2/</id>
+        <title><![CDATA[angr 入门（二）]]></title>
+        <updated>2020-04-18T13:31:53+08:00</updated>
+        <link href="http://blog.qrzbing.cn/2019/09/30/angr-newhand-2/"/>
+        <content type="text/html" src="http://blog.qrzbing.cn/2019/09/30/angr-newhand-2/"><![CDATA[<p>这里更进一步地学习了 angr 的一些知识点。</p>]]></content>
+        <author>
+            <name><![CDATA[QRZ’s Blog]]></name>
+        </author>
+    </entry>
     
     <entry>
         <id>https://www.logicjake.xyz/2020/04/16/2020%E8%85%BE%E8%AE%AF%E6%B8%B8%E6%88%8F%E5%AE%89%E5%85%A8%E6%8A%80%E6%9C%AF%E7%AB%9E%E8%B5%9B%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%BB%84-%E8%B5%9B%E5%90%8E%E6%80%BB%E7%BB%93/</id>
@@ -1195,61 +1250,6 @@ const testC = referer(c, 'hi') // type mismatch</code></pre><p>先不管它以�
 <p>经历抗拒、恐慌、精神心态受到严重影响、回归新常态。重要的不是突发事件的发生而是如何对待事件和如何对待自己的内心。</p>]]></content>
         <author>
             <name><![CDATA[苏瑞辅的个人网站]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>http://blog.qrzbing.cn/2019/12/31/my-2019/</id>
-        <title><![CDATA[我的 2019 总结]]></title>
-        <updated>2019-12-31T04:00:56+08:00</updated>
-        <link href="http://blog.qrzbing.cn/2019/12/31/my-2019/"/>
-        <content type="text/html" src="http://blog.qrzbing.cn/2019/12/31/my-2019/"><![CDATA[<p>学习一下赵神做一下年终总结，虽然自己很菜就是啦。</p>]]></content>
-        <author>
-            <name><![CDATA[QRZ’s Blog]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>http://blog.qrzbing.cn/2019/10/04/angr-newhand-3/</id>
-        <title><![CDATA[angr 入门（三）]]></title>
-        <updated>2019-12-31T04:00:56+08:00</updated>
-        <link href="http://blog.qrzbing.cn/2019/10/04/angr-newhand-3/"/>
-        <content type="text/html" src="http://blog.qrzbing.cn/2019/10/04/angr-newhand-3/"><![CDATA[<p>本篇主要记录了新手使用 angr 对内存和寄存器操作的记录。题目分析顺序参考了这篇文章：<a href="https://xz.aliyun.com/t/4052" target="_blank" rel="noopener">深入浅出angr（三）</a></p>]]></content>
-        <author>
-            <name><![CDATA[QRZ’s Blog]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>http://blog.qrzbing.cn/2019/10/01/from-0-to-Travis/</id>
-        <title><![CDATA[使用 Travis CI 自动部署 Hexo 博客]]></title>
-        <updated>2019-12-31T04:00:56+08:00</updated>
-        <link href="http://blog.qrzbing.cn/2019/10/01/from-0-to-Travis/"/>
-        <content type="text/html" src="http://blog.qrzbing.cn/2019/10/01/from-0-to-Travis/"><![CDATA[<p>最近一直在 Manjaro 和 Windows 之间切换，现在学习都已经在 Manjaro 上进行了，但是博客还在 Windows 上。虽然迁移过来并不难，但还是太麻烦了。另外写博客还要开电脑，的确有点麻烦。作为一个懒人当然是动动手自动推送最好，我就想到了用 <a href="https://travis-ci.org/" target="_blank" rel="noopener">Travis CI</a> 来自动部署博客。</p>]]></content>
-        <author>
-            <name><![CDATA[QRZ’s Blog]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>http://blog.qrzbing.cn/2019/09/30/angr-newhand-2/</id>
-        <title><![CDATA[angr 入门（二）]]></title>
-        <updated>2019-12-31T04:00:56+08:00</updated>
-        <link href="http://blog.qrzbing.cn/2019/09/30/angr-newhand-2/"/>
-        <content type="text/html" src="http://blog.qrzbing.cn/2019/09/30/angr-newhand-2/"><![CDATA[<p>这里更进一步地学习了 angr 的一些知识点。</p>]]></content>
-        <author>
-            <name><![CDATA[QRZ’s Blog]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>http://blog.qrzbing.cn/2019/09/15/angr-newhand-1/</id>
-        <title><![CDATA[angr 入门（一）]]></title>
-        <updated>2019-12-31T04:00:56+08:00</updated>
-        <link href="http://blog.qrzbing.cn/2019/09/15/angr-newhand-1/"/>
-        <content type="text/html" src="http://blog.qrzbing.cn/2019/09/15/angr-newhand-1/"><![CDATA[<p>让我们从官方文档走起。</p>]]></content>
-        <author>
-            <name><![CDATA[QRZ’s Blog]]></name>
         </author>
     </entry>
     
