@@ -3,7 +3,7 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2020-04-29T18:04:20+08:00</updated>
+    <updated>2020-04-30T00:07:31+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
@@ -13,7 +13,7 @@
     <entry>
         <id>https://miaotony.xyz/2020/04/29/Server_TensorFlow-vGPU/</id>
         <title><![CDATA[Ubuntu16.04配置TensorFlow-vGPU环境]]></title>
-        <updated>2020-04-29T17:59:27+08:00</updated>
+        <updated>2020-04-29T18:07:07+08:00</updated>
         <link href="https://miaotony.xyz/2020/04/29/Server_TensorFlow-vGPU/"/>
         <content type="text/html" src="https://miaotony.xyz/2020/04/29/Server_TensorFlow-vGPU/"><![CDATA[折腾了一个下午，终于在Ubuntu 16.04系统上配置好了TensorFlow的vGPU环境，主要涉及显卡驱动、CUDA、Anaconda、Tensorflow-gpu安装等，这里来做一下笔记喵。]]></content>
         <author>
