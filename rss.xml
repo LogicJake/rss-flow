@@ -3,7 +3,7 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2020-05-01T00:08:10+08:00</updated>
+    <updated>2020-05-01T06:04:30+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
@@ -2631,21 +2631,21 @@ apply plugin: 'org.springframework.boot'
 <div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">ip6tables kmod-ipt-nat6 kmod-ip6tables kmod-ip6tables-extra luci-proto-ipv6 iputils-traceroute6
 </code></pre></div><p>较新版本已经自带IPv6支持，老版本需要自己安装相关软件包，但兼容性较差，或者内核版本不足，建议找较新版本或者自行编译。</p>
 <h2 id="1openwrt配置获取ipv6">1：OpenWRT配置获取IPv6</h2>
-<p><img src="http://ww1.sinaimg.cn/large/0071ouepgy1g1pisgc9yhj319v0p2tco.jpg" alt="IPv6_setting_1"></p>
+<p><img src="https://blog-1251984664.cos.ap-shanghai.myqcloud.com/UTOOLS1588304901671.png/compress" alt="IPv6_setting_1"></p>
 <h3 id="1-修改ipv6-ula前缀为fd开头默认为dd开头">1. 修改IPv6 ULA前缀为fd开头（默认为dd开头）</h3>
 <h3 id="2-修改wan6口配置如下图所示">2. 修改wan6口配置（如下图所示）</h3>
-<p><img src="http://ww1.sinaimg.cn/large/0071ouepgy1g1pivtmkrbj30p00eumyi.jpg" alt="IPv6_setting_2"></p>
+<p><img src="https://blog-1251984664.cos.ap-shanghai.myqcloud.com/UTOOLS1588304939503.png/compress" alt="IPv6_setting_2"></p>
 <h3 id="3-修改lan口dhcp服务器配置如下图所示">3. 修改lan口DHCP服务器配置（如下图所示）</h3>
-<p><img src="http://ww1.sinaimg.cn/large/0071ouepgy1g1piynr74fj30ta0adwfe.jpg" alt="IPv6_setting_3"></p>
-<p><img src="http://ww1.sinaimg.cn/large/0071ouepgy1g1pizho2fmj30nu0bymy5.jpg" alt="IPv6_setting_4"></p>
+<p><img src="https://blog-1251984664.cos.ap-shanghai.myqcloud.com/UTOOLS1588304973656.png/compress" alt="IPv6_setting_3"></p>
+<p><img src="https://blog-1251984664.cos.ap-shanghai.myqcloud.com/UTOOLS1588304997028.png/compress" alt="IPv6_setting_4"></p>
 <p>此时稍等片刻，在概况中应该就能看到获取到的IPv6地址及下游设备DHCPv6分配内网IPv6地址</p>
-<p><img src="http://ww1.sinaimg.cn/large/0071ouepgy1g1pj4uxq0hj30rd08xaar.jpg" alt="IPv6_setting_5"></p>
-<p><img src="http://ww1.sinaimg.cn/large/0071ouepgy1g1pj5feonfj311806ldgn.jpg" alt="IPv6_setting_6"></p>
+<p><img src="https://blog-1251984664.cos.ap-shanghai.myqcloud.com/UTOOLS1588305013341.png/compress" alt="IPv6_setting_5"></p>
+<p><img src="https://blog-1251984664.cos.ap-shanghai.myqcloud.com/UTOOLS1588305030637.png/compress" alt="IPv6_setting_6"></p>
 <p>现在你的路由器已经可以使用IPv6了，但下游设备并不行，就需要配置NAT6。</p>
 <h2 id="2配置nat6">2：配置NAT6</h2>
 <p>虽然NAT6并不符合IPv6的设计哲学，但却能解决一些问题，如安全隔离，或者像我们这样通过单一地址转发给多个设备使用。</p>
 <h3 id="1-修改防火墙">1. 修改防火墙</h3>
-<p><img src="http://ww1.sinaimg.cn/large/0071ouepgy1g1pjfj32f5j30su0gvn00.jpg" alt="IPv6_setting_7"></p>
+<p><img src="https://blog-1251984664.cos.ap-shanghai.myqcloud.com/UTOOLS1588305046715.png/compress" alt="IPv6_setting_7"></p>
 <p>加入以下自定义规则</p>
 <div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="nv">WAN6</span><span class="o">=</span>pppoe-wan
 <span class="nv">LAN</span><span class="o">=</span>br-lan
@@ -2653,7 +2653,7 @@ ip6tables -t nat -A POSTROUTING -o <span class="nv">$WAN6</span> -j MASQUERADE
 ip6tables -A FORWARD -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
 ip6tables -A FORWARD -i <span class="nv">$LAN</span> -j ACCEPT
 </code></pre></div><p><strong>注意这里WAN6和LAN要改为外网IPv6和内网网卡名字，在终端使用ifconfig查看</strong></p>
-<p><img src="http://ww1.sinaimg.cn/large/0071ouepgy1g1pjk4cddbj30ll0jwq71.jpg" alt="IPv6_setting_8"></p>
+<p><img src="https://blog-1251984664.cos.ap-shanghai.myqcloud.com/UTOOLS1588305068355.png/compress" alt="IPv6_setting_8"></p>
 <h3 id="2-配置网关">2. 配置网关</h3>
 <p>在终端执行 <code>ip -6 r</code> 查看默认网关（default开头），如果是类似</p>
 <p><code>default from 2001:xxxx:xxxx:xxxx::/64 via fe80::ded2:fcff:fe98:64f7 dev pppoe-wan proto static metric 512 pref medium</code></p>
