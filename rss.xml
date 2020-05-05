@@ -3,7 +3,7 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2020-05-05T06:04:53+08:00</updated>
+    <updated>2020-05-05T12:05:05+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
@@ -1339,6 +1339,271 @@ const testC = referer(c, 'hi') // type mismatch</code></pre><p>先不管它以�
     </entry>
     
     <entry>
+        <id>https://www.noisyfox.io/moe-native-types.html</id>
+        <title><![CDATA[Working with native types: Advanced]]></title>
+        <updated>2019-09-22T05:23:17+08:00</updated>
+        <link href="https://www.noisyfox.io/moe-native-types.html"/>
+        <content type="text/html" src="https://www.noisyfox.io/moe-native-types.html"><![CDATA[<p>After using MOE for several years we discovered some common problems when dealing with native types (Core Foundation Types &amp; Cocoa Types). Here are some of our findings.</p>
+
+
+
+<h1>Container Types (NSArray, NSDictionary, CFArrayRef, etc.)</h1>
+
+
+
+<ol><li>The content in those containers must be corresponding native types, e.g., values of a <code>NSArray</code> must all be <code>NSObject</code>s, while values of a <code>CFArrayRef</code> must all be <code>OpaquePtr</code>s.<ol><li>NatJ does not automatically convert Java-only types (include primitive types) to compatible native types and vice versa when dealing with containers. When adding values to those containers you need to manually convert it to a corresponding native type. And when reading the value you also need to explicitly convert it to a Java type.</li><li>If you try to store a <strong>Core Foundation</strong> type in a <strong>Cocoa</strong> container, you need to cast it using the <strong>Toll-Free Bridging</strong> which I will talk about later.</li></ol></li><li>Arrays and dictionaries can not have <code>null</code> as either key or value.</li></ol>
+
+
+
+<p>If you ever used the iOS <strong>KeyChain</strong> APIs you may did something similar as follows in Objective-C(simplified):</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="kotlin" data-enlighter-theme="" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">CFErrorRef error = NULL;
+
+SecAccessControlRef access =
+SecAccessControlCreateWithFlags(kCFAllocatorDefault,
+                                kSecAttrAccessibleWhenUnlockedThisDeviceOnly,
+                                kSecAccessControlPrivateKeyUsage|kSecAccessControlUserPresence,
+                                &amp;error);
+
+NSData* tag = [@"some tag" dataUsingEncoding:NSUTF8StringEncoding];
+
+NSDictionary* attributes =
+@{ (id)kSecClass:                   (id)kSecClassKey,
+   (id)kSecAttrKeyType:             (id)kSecAttrKeyTypeECSECPrimeRandom,
+   (id)kSecAttrKeySizeInBits:       @256,
+   (id)kSecAttrTokenID:             (id)kSecAttrTokenIDSecureEnclave,
+   (id)kSecPrivateKeyAttrs:
+       @{ (id)kSecAttrIsPermanent:    @YES,
+          (id)kSecAttrApplicationTag:  tag,
+          (id)kSecAttrAccessControl:  (__bridge id)access
+        },
+   };
+
+SecKeyRef privateKey = SecKeyCreateRandomKey((__bridge CFDictionaryRef)attributes,
+                                             &amp;error);</pre>
+
+
+
+<p>The corresponding Kotlin code will be:</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="kotlin" data-enlighter-theme="" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">val pError = PtrFactory.newOpaquePtrReference(CFErrorRef::class.java)
+
+val access = Security.SecAccessControlCreateWithFlags(
+    CoreFoundation.CFAllocatorGetDefault(),
+    Security.kSecAttrAccessibleWhenUnlockedThisDeviceOnly(),
+    SecAccessControlCreateFlags.PrivateKeyUsage or SecAccessControlCreateFlags.UserPresence,
+    pError
+)
+val tag = NSString.stringWithString("some tag").dataUsingEncoding(NSUTF8StringEncoding)
+
+// Helper function to convert a CF type to Cocoa type
+fun OpaquePtr.toNSObject() = ObjCRuntime.cast(this, NSObject::class.java)
+
+val privateKeyAttrs = NSMutableDictionary.dictionary&lt;Any, Any>() as NSMutableDictionary&lt;Any, Any>
+privateKeyAttrs[Security.kSecAttrIsPermanent().toNSObject()] = NSNumber.numberWithBool(true) // Convert Java `boolean` to Cocoa type
+privateKeyAttrs[Security.kSecAttrApplicationTag().toNSObject()] = tag
+privateKeyAttrs[Security.kSecAttrAccessControl().toNSObject()] = access.toNSObject()
+
+val attributes = NSMutableDictionary.dictionary&lt;Any, Any>() as NSMutableDictionary&lt;Any, Any>
+attributes[Security.kSecClass().toNSObject()] = Security.kSecClassKey().toNSObject()
+attributes[Security.kSecAttrKeyType().toNSObject()] = Security.kSecAttrKeyTypeECSECPrimeRandom().toNSObject()
+attributes[Security.kSecAttrKeySizeInBits().toNSObject()] = NSNumber.numberWithInt(256) // Convert Java `int` to Cocoa type
+attributes[Security.kSecAttrTokenID().toNSObject()] = Security.kSecAttrTokenIDSecureEnclave().toNSObject()
+attributes[Security.kSecPrivateKeyAttrs().toNSObject()] = privateKeyAttrs
+
+// Cast NSDictionary to CFDictionaryRef
+val cfAttributes = ObjCRuntime.cast(attributes, CFDictionaryRef::class.java)
+
+val privateKey = Security.SecKeyCreateRandomKey(cfAttributes, pError)</pre>
+
+
+
+<p>With the help of <a href="https://github.com/Noisyfox/NatJ-Kotlin">this library</a> I created, the code can be simplified as:</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="kotlin" data-enlighter-theme="" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">val pError = PtrFactory.newOpaquePtrReference(CFErrorRef::class.java)
+
+val access = Security.SecAccessControlCreateWithFlags(
+    CoreFoundation.CFAllocatorGetDefault(),
+    Security.kSecAttrAccessibleWhenUnlockedThisDeviceOnly(),
+    SecAccessControlCreateFlags.PrivateKeyUsage or SecAccessControlCreateFlags.UserPresence,
+    pError
+)
+
+val attributes = mapOf&lt;Any,Any>(
+    Security.kSecClass() to Security.kSecClassKey(),
+    Security.kSecAttrKeyType() to Security.kSecAttrKeyTypeECSECPrimeRandom(),
+    Security.kSecAttrKeySizeInBits() to 256,
+    Security.kSecAttrTokenID() to Security.kSecAttrTokenIDSecureEnclave(),
+    Security.kSecPrivateKeyAttrs() to mapOf&lt;Any,Any>(
+        Security.kSecAttrIsPermanent() to true,
+        Security.kSecAttrApplicationTag() to "some tag".toNSData(),
+        Security.kSecAttrAccessControl() to access
+    )
+).toNSDictionary()
+
+val privateKey = Security.SecKeyCreateRandomKey(attributes.bridge(), pError)</pre>
+
+
+
+<p>This library also has a help function for creating <code>NSArray</code> from a Java <code>Collection</code>:</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="kotlin" data-enlighter-theme="" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">val nsArray = listOf(1, 2, 3, "some string", someCFRef, someNSType).toNSArray()</pre>
+
+
+
+<h1>Toll-Free Bridging &amp; Memory Management</h1>
+
+
+
+<p>iOS developers are most likely to be familiar with&nbsp;<strong>Cocoa Touch</strong>&nbsp;frameworks/APIs (does&nbsp;<strong>Foundation</strong>&nbsp;framework sound familiar to you?), which use the programming languages&nbsp;<strong>Objective-C</strong>&nbsp;or&nbsp;<strong>Swift</strong>. </p>
+
+
+
+<p>However, you may also heard about another framework called&nbsp;<strong>Core Foundation</strong>.&nbsp;It is a pure&nbsp;<strong>C</strong>&nbsp;framework and provides access to lower level APIs and types.</p>
+
+
+
+<p>For iOS development, most frameworks you will use are all designed based on the&nbsp;<strong>Foundation</strong>&nbsp;framework which means the types they use are all&nbsp;<code>NSObject</code>s so&nbsp;<strong>ARC</strong>&nbsp;manages the memory for you and the memory will be automatically released when the object is no longer used.&nbsp;<strong>MOE</strong> does some tricks so&nbsp;<strong>Java</strong>&#8216;s&nbsp;<strong>GC</strong>&nbsp;also helps when you use those types on&nbsp;<strong>Java</strong>&nbsp;side.</p>
+
+
+
+<p>However some low level functions (such as&nbsp;<strong>Security</strong>&nbsp;framework if you try to use&nbsp;<strong>TouchId</strong>) are available in only&nbsp;<strong>C</strong>&nbsp;functions. Hens they use&nbsp;<strong>Core Foundation</strong>&nbsp;types which does not have&nbsp;<strong>ARC</strong>&nbsp;and requires manual memory management. Sadly&nbsp;<strong>Java</strong>&#8216;s&nbsp;<strong>GC</strong>&nbsp;does no help here (and may even create new issues which I will talk about later).</p>
+
+
+
+<h2 id="ownership-cfretain-and-cfrelease">Ownership, CFRetain() and CFRelease()</h2>
+
+
+
+<p>Anyone has any&nbsp;<strong>C</strong>&nbsp;experience might still remember those good old days struggling with&nbsp;<code>malloc()</code>&nbsp;and&nbsp;<code>free()</code>&nbsp;while&nbsp;<strong>Core Foundation</strong>&nbsp;brings you&nbsp;<code>CFRetain()</code>&nbsp;and&nbsp;<code>CFRelease()</code>.</p>
+
+
+
+<p>Apple has a fantastic document that tells you how&nbsp;<em>Ownership</em>&nbsp;works in manual memory management and when you should use&nbsp;<code>CFRetain()</code>and&nbsp;<code>CFRelease()</code>&nbsp;respectively. I highly recommend you to read it first:</p>
+
+
+
+<p>Link:&nbsp;<a href="https://developer.apple.com/library/archive/documentation/CoreFoundation/Conceptual/CFMemoryMgmt/Concepts/Ownership.html">Memory Management Programming Guide for Core Foundation &#8211; Ownership Policy</a></p>
+
+
+
+<p>Basically if an Core Foundation object is owned by you, you need to call&nbsp;<code>CFRelease()</code>&nbsp;once you are done with it; if it&#8217;s NOT owned by you, in most cases, you need to&nbsp;<code>CFRetain()</code>&nbsp;it, use it, then&nbsp;<code>CFRelease()</code>&nbsp;it afterwards:</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="c" data-enlighter-theme="" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">// Create a CFString, which is owned by you
+CFStringRef urlStr = CFStringCreateWithCString(kCFAllocatorDefault,
+    "https://www.noisyfox.io", kCFStringEncodingUTF8);
+
+/* Do something with urlStr here. */
+
+// Release it afterwards
+CFRelease(urlStr);
+</pre>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="c" data-enlighter-theme="" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">// Get something from a dict, which is not owned, so a CFRetain() is required
+CFStringRef title = (CFStringRef)CFRetain(CFDictionaryGetValue(dict, CFSTR("title")));
+
+/* Do something with title here. */
+
+// Release it afterwards
+CFRelease(urlStr);
+</pre>
+
+
+
+<p>You can easily convert above code to&nbsp;<strong>Java</strong>&nbsp;since MOE bindings provide all necessary functions. And with a little help from my library, you could write something like these in&nbsp;<strong>Kotlin</strong>:</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="kotlin" data-enlighter-theme="" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">CFStringCreateWithCString(kCFAllocatorDefault(), "title", CFStringBuiltInEncodings.UTF8).use { key ->
+
+    CFDictionaryGetValue(dict, key).cast&lt;CFStringRef>().retain().use { title ->
+        /* Do something with title here. */
+    }
+}
+// CFRelease is automatically called when block returns
+</pre>
+
+
+
+<p>The&nbsp;<code>action</code>&nbsp;block of&nbsp;<code>.use()</code>&nbsp;is wrapped in a&nbsp;<code>try</code>&nbsp;block so the resource is guaranteed to be released even if&nbsp;<strong>Exception</strong>&nbsp;is raised in the block.</p>
+
+
+
+<h2 id="autoreleasepool-for-core-foundation-types"><code>autoreleasepool</code>&nbsp;for&nbsp;<strong>Core Foundation</strong>&nbsp;types</h2>
+
+
+
+<p><code>.use()</code>&nbsp;mentioned above will create a lot of nested scopes if you have a lot of those&nbsp;<strong>Core Foundation</strong>&nbsp;objects. That makes the code unreadable. With the help of&nbsp;<code>autoreleasepool</code>&nbsp;you could rewrite the above code to something like this:</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="kotlin" data-enlighter-theme="" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">autoreleasepool {
+    val key = CFStringCreateWithCString(kCFAllocatorDefault(), "title", CFStringBuiltInEncodings.UTF8).autorelease()
+    val title = CFDictionaryGetValue(dict, key).cast&lt;CFStringRef>().retain().autorelease()
+
+    /* Do something with title here. */
+}
+// CFRelease is automatically called for each object that called .autorelease() when autoreleasepool block ends
+</pre>
+
+
+
+<p><strong>NB</strong>: Make sure the&nbsp;<code>autoreleasepool</code>&nbsp;you called is imported from package&nbsp;<code>io.noisyfox.moe.natj</code>&nbsp;since&nbsp;<strong>NatJ</strong>&nbsp;has it&#8217;s own impl&nbsp;<code>org.moe.natj.objc.ObjCRuntime#autoreleasepool(java.lang.Runnable)</code>&nbsp;which is not a&nbsp;<strong>Kotlin</strong>&nbsp;<code>inline</code>&nbsp;function which doesn&#8217;t support certain features (such as&nbsp;<a href="https://kotlinlang.org/docs/reference/inline-functions.html#non-local-returns">non-local returns</a>&nbsp;and&nbsp;<a href="https://kotlinlang.org/docs/reference/inline-functions.html#reified-type-parameters">reified type parameters</a>).</p>
+
+
+
+<h2 id="type-bridging">Type Bridging</h2>
+
+
+
+<p>WIP</p>
+
+
+
+<h1>Misc</h1>
+
+
+
+<p>The library also contains some other help functions for converting between Java types and native types such as <code>ByteArray</code> &lt;=&gt; <code>NSData</code>. I won&#8217;t list all functions here since you could easily find them in source code.</p>
+
+
+
+<h1>The library &#8211; <strong><a href="https://github.com/Noisyfox/NatJ-Kotlin">NatJ-Kotlin</a></strong></h1>
+
+
+
+<p>This is a library I created that contains some helper functions I used in my work. It&#8217;s currently available in only source code form. I will create a jar release and publish it to jcenter ASAP.</p>
+
+
+
+<p>The library is written in Kotlin but most of the functions can also be used in Java.</p>
+
+
+
+<h1>Discussion</h1>
+
+
+
+<p>Any idea of  library improving are welcomed. If you found any mistake in my post, or have any other problem that is not covered, please not hesitate to share with us by leaving comments.</p>
+<p><a rel="nofollow" href="https://www.noisyfox.io/moe-native-types.html">Working with native types: Advanced</a>，首发于<a rel="nofollow" href="https://www.noisyfox.io">狐狸的小小窝</a>。</p>]]></content>
+        <author>
+            <name><![CDATA[狐狸的小小窝]]></name>
+        </author>
+    </entry>
+    
+    <entry>
         <id>https://blog.triplez.cn/git-initialization/</id>
         <title><![CDATA[Git initialization]]></title>
         <updated>2019-09-01T10:37:13+08:00</updated>
@@ -2663,6 +2928,286 @@ void start_coroutine(struct Coroutine *co) {
     </entry>
     
     <entry>
+        <id>https://www.noisyfox.io/foxwinshave2.html</id>
+        <title><![CDATA[FoxWinShave 2 中文使用手册]]></title>
+        <updated>2019-01-12T08:45:27+08:00</updated>
+        <link href="https://www.noisyfox.io/foxwinshave2.html"/>
+        <content type="text/html" src="https://www.noisyfox.io/foxwinshave2.html"><![CDATA[<p>FoxWinShave 2 现已上架 GameMaker: Marketplace，支持 GM8, GMS 1.4 和 GMS 2。<a href="https://marketplace.yoyogames.com/assets/7696/foxwinshave" target="_blank" rel="noreferrer noopener" aria-label="（在新窗口打开）">点此从Marketplace下载最新版本</a>。</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2>0. 前置条件</h2>
+
+
+
+<ul><li>仅支持 Windows 平台。</li><li>支持 Windows XP, Windows Vista, Windows 7, Windows 8, Windows 8.1, Windows 10。</li><li>支持 GameMaker 7, GameMaker 8, GameMaker 8.1, GameMaker Studio 1.4.x, GameMaker Studio 2 Desktop。</li></ul>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2>1. 安装插件</h2>
+
+
+
+<h3>1.0 GM 7, 8, 8.1</h3>
+
+
+
+<p>菜单栏 File-&gt; Import Resources&#8230; 选择 FoxWinShave-GM8.gmres 导入插件及 Demo。</p>
+
+
+
+<ul><li>在弹出的 Importing Resources 对话框中，请务必勾选 Scripts 和 Include Files 以导入插件运行所必须的文件和脚本。</li><li>如需同时导入 Demo 代码及素材，请将 Sprites，Objects 和 Rooms 一并勾选上。</li></ul>
+
+
+
+<h3>1.1 GMS 1.4.x 及 GMS 2 Desktop</h3>
+
+
+
+<div class="wp-block-image"><figure class="aligncenter"><a href="https://www.noisyfox.io/wp-content/uploads/2019/01/image.png" target="_blank" rel="noreferrer noopener"><img src="https://www.noisyfox.io/wp-content/uploads/2019/01/image-300x189.png" alt="" class="wp-image-569" srcset="https://www.noisyfox.io/wp-content/uploads/2019/01/image-300x189.png 300w, https://www.noisyfox.io/wp-content/uploads/2019/01/image-768x483.png 768w, https://www.noisyfox.io/wp-content/uploads/2019/01/image-1024x644.png 1024w, https://www.noisyfox.io/wp-content/uploads/2019/01/image.png 1588w" sizes="(max-width: 300px) 100vw, 300px" /></a><figcaption>Import resources: FoxWinShave 对话框</figcaption></figure></div>
+
+
+
+<ol><li>在 GameMaker: Marketplace 上购买本插件。<a rel="noreferrer noopener" aria-label="（在新窗口打开）" href="https://marketplace.yoyogames.com/assets/7696/foxwinshave" target="_blank">（点此购买）</a></li><li>在 GMS 中菜单栏选择 Marketplace -&gt; MyLibrary，找到 FoxWinShave，点击 Download。</li><li>下载完成后，点击 Import。</li><li>在弹出的 Import resources: FoxWinShave 对话框中，选中 Scripts 和 Included Files，然后点击中间的 Add 按钮以导入插件运行所必须的文件和脚本。</li><li>如需同时导入 Demo 代码及素材，那就直接点击中间的 Add All 按钮。</li><li>点击左下角 Import 按钮完成插件的导入。</li></ol>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2>2. 插件入门 101</h2>
+
+
+
+<h3>2.0 基础准备</h3>
+
+
+
+<p>请务必在游戏设置中将窗口设置为无边框（borderless window）:</p>
+
+
+
+<div class="wp-block-image"><figure class="aligncenter"><a href="https://www.noisyfox.io/wp-content/uploads/2019/01/image-2.png" target="_blank" rel="noreferrer noopener"><img src="https://www.noisyfox.io/wp-content/uploads/2019/01/image-2-300x240.png" alt="" class="wp-image-592" srcset="https://www.noisyfox.io/wp-content/uploads/2019/01/image-2-300x240.png 300w, https://www.noisyfox.io/wp-content/uploads/2019/01/image-2.png 512w" sizes="(max-width: 300px) 100vw, 300px" /></a><figcaption>GM 8 设置无边框</figcaption></figure></div>
+
+
+
+<div class="wp-block-image"><figure class="aligncenter"><a href="https://www.noisyfox.io/wp-content/uploads/2019/01/image-1.png" target="_blank" rel="noreferrer noopener"><img src="https://www.noisyfox.io/wp-content/uploads/2019/01/image-1-300x237.png" alt="" class="wp-image-591" srcset="https://www.noisyfox.io/wp-content/uploads/2019/01/image-1-300x237.png 300w, https://www.noisyfox.io/wp-content/uploads/2019/01/image-1.png 695w" sizes="(max-width: 300px) 100vw, 300px" /></a><figcaption>GMS 2 设置无边框</figcaption></figure></div>
+
+
+
+<p>稍后将会解释需要设置为无边框的原因。</p>
+
+
+
+<h3>2.1 插件初始化</h3>
+
+
+
+<p>使用本插件的任何脚本前需要先进行插件的初始化。建议在首个 Room 的 Creation Code 内或者某个控制用的 Object 的 Game Start 事件里执行：</p>
+
+
+<pre class="brush: cpp; title: ; notranslate">
+NF_WS_Init();
+</pre>
+
+
+<p>插件初始化后请勿再次调用该函数。</p>
+
+
+
+<h3>2.2 插件释放</h3>
+
+
+
+<p>当不再需要更改窗口形状后，可以执行以下函数将插件卸载以释放资源：</p>
+
+
+<pre class="brush: cpp; highlight: [2]; title: ; notranslate">
+NF_WS_ResetWindow(); // 重置窗口形状为默认，非必要
+NF_WS_Free(); // 释放插件
+</pre>
+
+
+<p>在释放插件后如果需要再次使用本插件，需要重新进行插件的初始化。</p>
+
+
+
+<h3>2.3 基础原理解释</h3>
+
+
+
+<h4>2.3.0 窗口坐标系</h4>
+
+
+
+<p>将游戏窗口想象成一个画布，按照窗口的边框开始算左上角坐标为 (0, 0)，右下角边框最外处坐标为 (viewport_width + 左边框宽 + 右边框宽, viewport_height + 上边框高 + 下边框高)，如下图所示：</p>
+
+
+
+<div class="wp-block-image"><figure class="aligncenter"><a href="https://www.noisyfox.io/wp-content/uploads/2019/01/win-coord-1.png" target="_blank" rel="noreferrer noopener"><img src="https://www.noisyfox.io/wp-content/uploads/2019/01/win-coord-1.png" alt="" class="wp-image-635" srcset="https://www.noisyfox.io/wp-content/uploads/2019/01/win-coord-1.png 574w, https://www.noisyfox.io/wp-content/uploads/2019/01/win-coord-1-300x234.png 300w" sizes="(max-width: 574px) 100vw, 574px" /></a><figcaption> <br>窗口坐标系统 </figcaption></figure></div>
+
+
+
+<p>然而问题在于窗口的边框宽度是由 Windows 系统定义的，不同 Windows 版本或者不同的主题都有可能带有不同尺寸的边框，给在定义窗口的形状时计算坐标带来了麻烦。因此如上文所述，请<strong>务必</strong>在游戏全局设置中关闭窗口边框的显示，这样窗口的坐标系统就和游戏 View Port 的坐标系统的原点能够统一，便于将窗口形状与游戏绘制内容对齐。</p>
+
+
+
+<p>下文在描述坐标时将默认使用无边框窗口。</p>
+
+
+
+<h4>2.3.1 游戏绘制与 View Port</h4>
+
+
+
+<p>GM 支持在一个窗口中同时显示多个 View Port。View Port 的作用是将 Room 的一部分内容按一定比例、缩放和位移映射在窗口中显示出来。用户实际看到的内容是经过 View Port 变换后的结果，并不（一定）是游戏中调用绘制代码时使用的坐标。</p>
+
+
+
+<p>由于我们只关心用户实际看到了什么，因此下文中提到的<strong>“游戏绘制内容”</strong>的尺寸、坐标，皆为经过 View Port 变换后映射到窗口坐标系中的尺寸和坐标。</p>
+
+
+
+<p>更多关于 View Port 的内容，请参考 GM 官方文档，下文将不再赘述。</p>
+
+
+
+<h4>2.3.2 窗口形状遮罩</h4>
+
+
+
+<p>本插件采用遮罩形式设置窗口形状，支持根据 Sprite 和 Surface（仅限 GMS）设置窗口遮罩。以下核心函数</p>
+
+
+<pre class="brush: cpp; title: ; notranslate">
+NF_WS_ShaveWindow(sprite, subimage, x, y);
+NF_WS_ShaveWindowAlpha(sprite, subimage, x, y, alpha);
+NF_WS_ShaveWindowExt(sprite, subimage, x, y, xscale, yscale, alpha);
+NF_WS_ShaveWindowSurfaceExt(surface, x, y, xscale, yscale, alpha); // 仅限 GMS
+</pre>
+
+
+<p>与 draw_sprite_* 系列绘制函数有着十分类似的形式，除了不支持 rot 和  <br>colour参数，同时 alpha 参数有不同的意义。可以理解为将给定的 Sprite / Surface 用提供的参数放置于窗口坐标系内作为遮罩（不经过 View Port 等任何变换），同时将窗口没有被遮罩覆盖的区域给“消去”变为透明：</p>
+
+
+
+<div class="wp-block-image"><figure class="aligncenter"><a href="https://www.noisyfox.io/wp-content/uploads/2019/01/mask.png" target="_blank" rel="noreferrer noopener"><img src="https://www.noisyfox.io/wp-content/uploads/2019/01/mask.png" alt="" class="wp-image-654" srcset="https://www.noisyfox.io/wp-content/uploads/2019/01/mask.png 640w, https://www.noisyfox.io/wp-content/uploads/2019/01/mask-300x225.png 300w" sizes="(max-width: 640px) 100vw, 640px" /></a><figcaption>“遮罩层”内容</figcaption></figure></div>
+
+
+
+<p>如图所示，红色部分的窗口会被保留下来，其余部分将会被消去。需要注意的是上图所谓的“遮罩层”是一个与窗口同样大小的位于窗口之上的想象出的一层，并不是实际存在的可见图层，其内容仅为了作为遮罩所用，并不会显示出来。</p>
+
+
+
+<p>遮罩层使用的图像为彩色图像带 Alpha 通道。在实际运行时色彩通道会被完全忽略，最终窗口形状仅受遮罩层的 Alpha 通道影响。默认情况下每个 Alpha 通道值为 0 的像素（即纯透明像素）被认为是窗口需要被消去的部分。这个值可以通过上文所述的几个函数中的 alpha 参数（范围 [0, 1.0]）来改变。任何 Alpha 通道值 &lt;= 该参数的像素将被认为是需要消去的。注意，这意味着如果你传入的 alpha 参数为 1，则<strong>任何</strong>像素都会被认定为透明像素。</p>
+
+
+
+<p>另外，如果使用 Surface 来传入遮罩内容，请注意 Surface 的背景需要用透明色填充：</p>
+
+
+<pre class="brush: cpp; highlight: [2]; title: ; notranslate">
+surface_set_target(mask_surface);
+draw_clear_alpha(c_white, 0); // Alpha = 0, 使用的颜色无所谓.
+</pre>
+
+
+<h4>2.3.3 遮罩对齐</h4>
+
+
+
+<p>使用本插件的目的通常是想将游戏窗口的形状，裁剪成游戏绘制的有意义的内容的形状：</p>
+
+
+
+<div class="wp-block-image"><figure class="aligncenter"><a href="https://www.noisyfox.io/wp-content/uploads/2019/01/purpose.png" target="_blank" rel="noreferrer noopener"><img src="https://www.noisyfox.io/wp-content/uploads/2019/01/purpose-1.png" alt="" class="wp-image-661" srcset="https://www.noisyfox.io/wp-content/uploads/2019/01/purpose-1.png 640w, https://www.noisyfox.io/wp-content/uploads/2019/01/purpose-1-300x225.png 300w" sizes="(max-width: 640px) 100vw, 640px" /></a><figcaption>游戏实际绘制内容</figcaption></figure></div>
+
+
+
+<p>上图中，女牛仔的部分是有意义的、需要保留的部分，而黑色背景需要被裁剪掉，也就意味着我们在遮罩层“绘制”的遮罩需要与女牛仔的位置、形状相同。</p>
+
+
+
+<p>这乍一听似乎很容易，只要使用相同的 x，y 参数将同样的女牛仔 Sprite 绘制到 Application Surface 和遮罩层即可。但是正如上文所说，用户实际看到的内容是经过 View Port 变换过的，因此其实际显示的坐标和尺寸可能与绘制时传入的参数不同；然而遮罩层是不受 View Port 影响的，因此开发者需要自行计算遮罩层图像的位置和尺寸，用以对齐经过 View Port 变换后的游戏内容。建议不要用过于复杂的 View Port 设置。</p>
+
+
+
+<h4>2.3.4 窗口形状更新时间与绘制事件顺序</h4>
+
+
+
+<p>由于 GM 运行原理所致，游戏绘制的内容并不会在绘制语句执行的瞬间显示出来，而是要等到当前 Step 所有绘制完成后才会刷新绘制缓存以显示绘制的内容。这意味着窗口外形的更新需要与绘制内容的刷新同步发生，否则就会发生窗口形状与所显示内容有所偏差的问题（比如游戏仍然显示的是上一帧的内容，但是窗口形状已经被裁剪成了下一帧所需的形状）：</p>
+
+
+
+<div class="wp-block-image"><figure class="aligncenter"><a href="https://www.noisyfox.io/wp-content/uploads/2019/01/image-4.png" target="_blank" rel="noreferrer noopener"><img src="https://www.noisyfox.io/wp-content/uploads/2019/01/image-4.png" alt="" class="wp-image-669"/></a><figcaption> <br>绘制内容与窗口形状没有同步更新 </figcaption></figure></div>
+
+
+
+<p>由于 Windows 窗口外形更新时机所限，本插件需要在 GM 的每个 Step 中，于每个 Step 开始 （Begin Step）至 Draw 系列事件开始之前对窗口形状进行更新，以保证窗口形状的更新与绘制内容的更新能够同步完成。如果在 Draw 系列事件中进行窗口形状的修改，则会发生窗口形状与绘制内容不同步的问题，请务必注意。建议在 End Step 事件之中更新窗口形状。</p>
+
+
+
+<p>再次提示，请<strong>不要</strong>在 Draw <strong>系列</strong>事件中更新窗口形状！除非你十分清楚可能发生的后果！</p>
+
+
+
+<h3>2.4 复杂遮罩</h3>
+
+
+
+<p>多次执行以下任意核心函数来改变窗口形状，则后一次的遮罩将会覆盖前一次的遮罩，<strong>并不会</strong>互相叠加：</p>
+
+
+<pre class="brush: cpp; title: ; notranslate">
+NF_WS_ShaveWindow(sprite, subimage, x, y);
+NF_WS_ShaveWindowAlpha(sprite, subimage, x, y, alpha);
+NF_WS_ShaveWindowExt(sprite, subimage, x, y, xscale, yscale, alpha);
+NF_WS_ShaveWindowSurfaceExt(surface, x, y, xscale, yscale, alpha); // 仅限 GMS
+</pre>
+
+
+<p>这意味着如果所需的遮罩是由多个元素组合而成的复杂形状，则需要开发者自行准备好已经事先组合好所有元素的<strong>单张</strong> Sprite / Surface 用作实际的遮罩。</p>
+
+
+
+<p>举例来说，如果你需要在屏幕上显示两位女牛仔，那么你需要准备如下的<strong>一张</strong> Sprite / Surface 作为遮罩：</p>
+
+
+
+<div class="wp-block-image"><figure class="aligncenter"><a href="https://www.noisyfox.io/wp-content/uploads/2019/01/complex.png" target="_blank" rel="noreferrer noopener"><img src="https://www.noisyfox.io/wp-content/uploads/2019/01/complex.png" alt="" class="wp-image-678" srcset="https://www.noisyfox.io/wp-content/uploads/2019/01/complex.png 640w, https://www.noisyfox.io/wp-content/uploads/2019/01/complex-300x225.png 300w" sizes="(max-width: 640px) 100vw, 640px" /></a><figcaption>复杂遮罩</figcaption></figure></div>
+
+
+
+<p>连续调用两次 NF_WS_ShaveWindow_* 函数并不能实现如上所述的需求。假设第一次传入了左侧牛仔的遮罩，第二次传入了右侧的遮罩，则只有右侧会正常显示出来，而第一次设置的遮罩会被覆盖而失效。</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2>3. 常见问题</h2>
+
+
+
+<ol><li>使用 Sprite 做遮罩时要注意所用 Sprite 的 xoffset 和 yoffset。</li></ol>
+<p><a rel="nofollow" href="https://www.noisyfox.io/foxwinshave2.html">FoxWinShave 2 中文使用手册</a>，首发于<a rel="nofollow" href="https://www.noisyfox.io">狐狸的小小窝</a>。</p>]]></content>
+        <author>
+            <name><![CDATA[狐狸的小小窝]]></name>
+        </author>
+    </entry>
+    
+    <entry>
         <id>https://doublemice.github.io/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6%E6%94%BB%E5%87%BB%E9%9D%A2%E5%8F%8Actf%E5%87%BA%E9%A2%98%E6%8C%87%E5%8D%97/</id>
         <title><![CDATA[智能合约攻击面及ctf出题指南]]></title>
         <updated>2019-01-03T00:00:00+08:00</updated>
@@ -3312,6 +3857,275 @@ resolve_file=php%3A%2F%2Ffilter%2Fread%3Dconvert.base64-encode%2Fresource%3D../.
     </entry>
     
     <entry>
+        <id>https://www.noisyfox.io/logrotate.html</id>
+        <title><![CDATA[Logrotate 日志滚动 解决日志占用空间过大]]></title>
+        <updated>2017-05-03T16:23:04+08:00</updated>
+        <link href="https://www.noisyfox.io/logrotate.html"/>
+        <content type="text/html" src="https://www.noisyfox.io/logrotate.html"><![CDATA[<h1>起因</h1>
+<p>前几天发现自己的博客没有办法登录了，每次输完密码登录完都会重新跳回登录界面。一开始是怀疑登录的session出了什么问题，因为浏览器开隐身模式后就能登录进去。然而开隐身模式进后台的时候又会出现403错误，于是打算连进数据库把session删除再试试。</p>
+<p>然而当我试图连接数据库时却一直提示失败，于是试图重启数据库服务，但是系统提示启动失败。电脑坏了怎么办？重启大法！然而数据库服务依旧无法启动，当时我也是摸不着头脑。明明以前一直好好的服务器怎么说炸就炸呢？</p>
+<h1>真相</h1>
+<p>后来我机智的看了下磁盘的占用情况：</p>
+<pre class="brush: bash; title: ; notranslate">df -hl</pre>
+<p><a href="https://www.noisyfox.cn/wp-content/uploads/2017/05/df-hl.png"><img class="aligncenter size-full wp-image-483" src="https://www.noisyfox.cn/wp-content/uploads/2017/05/df-hl.png" alt="df -hl" width="543" height="152" srcset="https://www.noisyfox.io/wp-content/uploads/2017/05/df-hl.png 543w, https://www.noisyfox.io/wp-content/uploads/2017/05/df-hl-300x84.png 300w" sizes="(max-width: 543px) 100vw, 543px" /></a></p>
+<p>然后我就震惊了！！<span style="color: #000000;"><del>震惊！过气博主硬盘为何被榨干！这背后究竟是人性的&#8230;（啪</del></span></p>
+<p>经过一番折腾，终于找到了问题的所在：</p>
+<pre class="brush: bash; title: ; notranslate">du -sh .</pre>
+<p><a href="https://www.noisyfox.cn/wp-content/uploads/2017/05/du-sh.png"><img class="aligncenter size-full wp-image-484" src="https://www.noisyfox.cn/wp-content/uploads/2017/05/du-sh.png" alt="df -hl" width="481" height="96" srcset="https://www.noisyfox.io/wp-content/uploads/2017/05/du-sh.png 481w, https://www.noisyfox.io/wp-content/uploads/2017/05/du-sh-300x60.png 300w" sizes="(max-width: 481px) 100vw, 481px" /></a></p>
+<p>Nginx 的日志文件居然占用了14G的空间！Why？</p>
+<h1>论日志</h1>
+<p>日志文件通常情况下是未压缩的明文文本文件，在一个运行时间较长的系统中日志文件的体积会越来越大，甚至远超你的预期。</p>
+<p>默认情况下一个服务的同一个日志流（如 Nginx 默认就有 error.log access.log 两个日志流）是输出到同一个日志文件中的，也就是说随着时间的推移，这一日志文件中包含的日志的天数也会越来越多，这就给查看某一特定时间段的日志带来了麻烦（试想一下在一个容量10G，包含了一整年数据的日志文件中查找5月份的日志信息，而且还没有日志辅助工具的帮助，是一件多么痛苦的事情）。并且如果日志文件占用了过大的存储空间，那么人们通常会优先删除最老的日志，保留最近一段时间的日志。如果所有日志信息都储存在同一个文件中，那么想要只删除部分数据也不是一件轻松的活。</p>
+<p>再者，日志数据通常都是纯文本数据，并且内容重复度非常之高，如果能够将其压缩存储，那么会大大减小体积。然而日志系统是没有办法将数据追加到一个压缩过的日志文件中去的。如果要压缩日志，那么势必需要将日志数据划分成新、旧两部分，其中旧日志压缩后单独存放，新日志即是当前系统活动的日志文件，仍然是纯文本形式。</p>
+<p>综上所述，一个好的日志系统至少需要满足以下几个需求：</p>
+<ul>
+<li>能够将日志按一定规律拆分成多个文件</li>
+<li>能够将非活动的日志压缩</li>
+<li>能够控制日志文件体积和数量，当条件满足时自动删除旧日志以释放空间</li>
+<li>日志文件名满足一定规律便于排序和筛选</li>
+</ul>
+<p>以上的需求，通常称为<strong>日志滚动</strong><del>（必考）</del>。</p>
+<h1>日志滚动</h1>
+<p>道理我都懂，但是Linux的日志系统没有提供这些功能，总不能每天手动重命名、压缩、清空、删除日志吧？</p>
+<p><del>天空一声巨响，英雄闪亮登场！</del>这时候一个叫做 <strong>logrotate</strong> 的程序就派上了用处。</p>
+<p>根据使用的系统不同，logrotate的安装方式也不尽相同，有些系统更是自带了 logrotate 并且带有很多默认的配置（比如我所使用的 Ubuntu Server）。</p>
+<p>你可以在自己的系统上查看一下 /var/log/ 目录下的日志文件，如果见到了类似“服务名.log.0”、“服务名.log.1”等一大堆具有相同服务名称但是带有后缀序号的日志文件，那么可以99%肯定这个系统已经安装了 logrotate 并且能够工作。</p>
+<p><a href="https://www.noisyfox.cn/wp-content/uploads/2017/05/logs.png"><img class="aligncenter size-full wp-image-492" src="https://www.noisyfox.cn/wp-content/uploads/2017/05/logs.png" alt="logrotate" width="663" height="579" srcset="https://www.noisyfox.io/wp-content/uploads/2017/05/logs.png 663w, https://www.noisyfox.io/wp-content/uploads/2017/05/logs-300x262.png 300w" sizes="(max-width: 663px) 100vw, 663px" /></a></p>
+<p>如果你的系统没有带logrotate，别担心，百度一下就能装上啦！而且配置巨简单！</p>
+<p>在 /etc/logrotate.d/ 目录下（不同系统可能有所区别）通常会有很多配置文件，这些文件的名字通常对应了该文件所管辖的服务（文件名仅仅是便于管理，和实际内容没有必然关联）。</p>
+<p><a href="https://www.noisyfox.cn/wp-content/uploads/2017/05/logrotate_cfg.png"><img class="aligncenter size-full wp-image-494" src="https://www.noisyfox.cn/wp-content/uploads/2017/05/logrotate_cfg.png" alt="logrotate config" width="663" height="435" srcset="https://www.noisyfox.io/wp-content/uploads/2017/05/logrotate_cfg.png 663w, https://www.noisyfox.io/wp-content/uploads/2017/05/logrotate_cfg-300x197.png 300w" sizes="(max-width: 663px) 100vw, 663px" /></a></p>
+<p>而这些配置文件的格式非常的简要，如图所示。通常第一行以目标日志文件路径起头，可以使用通配符，而后面的花括号内部则是需要应用于该日志文件的滚动规则。</p>
+<p>其中几个常用的规则在这里稍微解释一下，通常就够用了。更详细的规则可以自行查找，不再赘述。</p>
+<pre class="brush: bash; title: ; notranslate">
+
+/var/log/nginx/*.log {
+    daily  # 滚动频率，每天滚动一次。其它可选项为 hourly weekly monthly yearly
+    missingok
+    rotate 14  # 最多保留14次滚动，超过则删除最老的日志
+    maxsize 100M  # 重要！活动日志的最大尺寸，超过该尺寸则强制滚动一次
+    compress  # 重要！压缩不活动的日志，默认使用gzip
+    delaycompress
+    notifempty  # 如果日志为空则不滚动
+    create 0640 www-data adm
+    sharedscripts
+    prerotate  # 在每次滚动前执行的脚本，通常是通知该服务“我要滚动日志啦！先别生成新日志咯！”
+        if [ -d /etc/logrotate.d/httpd-prerotate ]; then \
+        run-parts /etc/logrotate.d/httpd-prerotate; \
+        fi \
+    endscript
+    postrotate  # 在滚动完成后执行的脚本，通常是通知该服务“日志滚动完成啦！请把后续日志写到新的活动日志文件中去！”
+        invoke-rc.d nginx rotate &gt;/dev/null 2&gt;&amp;1
+    endscript
+}
+
+</pre>
+<p>如果发现日志滚动后 nginx 依旧在向 access.log.1 中写入日志，而新创建的 access.log 大小始终是0，那么请将上文中的 postrotate 代码改为：</p>
+<pre class="brush: bash; title: ; notranslate">
+
+service nginx rotate &gt;/dev/null 2&gt;&amp;1
+
+</pre>
+<h1>划重点</h1>
+<p>同学A：慢着！刚刚不是说你服务器跑的 Ubuntu Server 默认启用了 logrotate 么？那么为什么你的硬盘还是被这些日志文件吃了个精光呢？按说一共就保留14份日志，也就只有14天的份，还都是压缩过的，怎么会占用这么多呢？</p>
+<p>我：<del>谢尔曼M1，坐！</del></p>
+<p>问题来了，这个 logrotate 的默认配置文件，少了 <em>maxsize 100M</em> 这一行，也就是说如果说在第二天的滚动开始前，日志就已经占用了过大的空间，以至于剩余空间不足以储存对应日志的压缩文件（因为得先压缩完才能删除原始文件，于是整个过程所需的最大空间是 <em>原始文件体积+压缩后的体积</em>，毕竟不可能一边压缩一边删除原始文件嘛）的话，整个日志滚动就会失败。而我的实际情况就是 access.log.0 文件占用了13G的空间（剩下的13个压缩后的日志一共才1G不到，完美的体现了压缩的好处），剩余的空间不足以对其进行压缩，于是整个日志滚动彻底失效了。</p>
+<p>当然了，理想的情况下，如果能够将其设置成全部日志加起来的体积超过一个临界点（比如日志一共5G）那么就自动删除最老的一份日志，那是坠吼嘀！然而 logrotate 并没有提供这样的整体体积限制的功能，于是只好用一些小技巧。注意这两行：</p>
+<pre class="brush: bash; title: ; notranslate">
+rotate 14 # 最多保留14次滚动，超过则删除最老的日志
+maxsize 100M # 重要！活动日志的最大尺寸，超过该尺寸则强制滚动一次
+</pre>
+<p>通过限制活动日志的体积（也就是尾号是0或者没有后缀的那个日志文件）和保留日志滚动数量，我们能够限制整体的日志大小，也即不超过 14 * 100M = 1.4G。当然这样的缺点就是如果某一天的日志特别多，那么那一天的日志会被拆分成多个（课外题：自行百度，将日志文件后缀设置为当前的日期时间）。</p>
+<h1>总结</h1>
+<p>不限制日志体积真是坑啊！</p>
+<p><a rel="nofollow" href="https://www.noisyfox.io/logrotate.html">Logrotate 日志滚动 解决日志占用空间过大</a>，首发于<a rel="nofollow" href="https://www.noisyfox.io">狐狸的小小窝</a>。</p>]]></content>
+        <author>
+            <name><![CDATA[狐狸的小小窝]]></name>
+        </author>
+    </entry>
+    
+    <entry>
+        <id>https://www.noisyfox.io/cecpq1-nginx-boringssl.html</id>
+        <title><![CDATA[Use CECPQ1 On Your Website with Nginx & BoringSSL]]></title>
+        <updated>2016-09-13T06:38:13+08:00</updated>
+        <link href="https://www.noisyfox.io/cecpq1-nginx-boringssl.html"/>
+        <content type="text/html" src="https://www.noisyfox.io/cecpq1-nginx-boringssl.html"><![CDATA[<h2>Deprecated / 已弃用</h2>
+<p>In 2016, the experimental use in Chrome ended and it was planned to disable CECPQ1 in a later Chrome update.</p>
+<p>CECPQ1的实验已经结束，目前的chrome stable已经移除了对其的支持。</p>
+<hr />
+<h2>What is CECPQ1</h2>
+<p>CECPQ1 是谷歌提出的一种“<a href="https://en.wikipedia.org/wiki/Post-quantum_cryptography" target="_blank" rel="noopener noreferrer">后量子时代</a>”的密钥交换算法。</p>
+<p>所谓的后量子时代算法，大意是说该算法难以被将来可能出现的量子计算机轻易破解。<br />
+而目前常用的非对称加密/密钥交换算法的安全性大多依赖于大数分解以及逆推椭圆曲线的难度。而这些问题可能对于量子计算机来说可以轻松解决。故而需要一种新的加密原理来对抗量子计算机的威胁。</p>
+<p>当然将来能不能制造出大型的量子计算机并破解现有的加密算法依旧是个未知数。<a href="https://community.letsencrypt.org/t/google-is-experimenting-with-post-quantum-crypto-for-tls/17720" target="_blank" rel="noopener noreferrer">不过谷歌在前段时间开始已经在自己的 chrome 以及服务器上启用了该密钥交换算法</a>，使用 Chrome 54+ 访问谷歌的服务，可以看到类似下图的结果：<br />
+<a href="https://www.noisyfox.cn/wp-content/uploads/2016/09/QQ截图20160913150853.png"><img class="aligncenter size-full wp-image-416" src="https://www.noisyfox.cn/wp-content/uploads/2016/09/QQ截图20160913150853.png" alt="CECPQ1 on Google" width="642" height="401" /></a></p>
+<p>其中的“CECPQ1_ECDSA”即表明了其采用了 CECPQ1 密钥交换 + ECDSA 签名算法。</p>
+<p>当然纯粹是好玩，我也装修了一下我的小窝，让它也支持了这种厉害的算法~<br />
+<a href="https://www.noisyfox.cn/wp-content/uploads/2016/09/QQ截图20160913151547.png"><img class="aligncenter size-full wp-image-418" src="https://www.noisyfox.cn/wp-content/uploads/2016/09/QQ截图20160913151547.png" alt="CECPQ1 on Noisyfox" width="642" height="401" /></a></p>
+<p>不过由于我的证书是 RSA 签名的，故图中采用的是“CECPQ1_RSA”而不是 ECDSA。</p>
+<p>如果你也想让自己的网站支持这种算法，那么就跟着狐狸我一步一步来配置你的网站吧~</p>
+<hr />
+<h2>教程环境</h2>
+<ul>
+<li>Ubuntu 14.04.4 LTS</li>
+<li>nginx-1.10.1</li>
+<li>BoringSSL</li>
+</ul>
+<p>由于目前仅有 BoringSSL 支持 CECPQ1 算法，故我们需要自行采用 BoringSSL 来编译 nginx。</p>
+<p>对于 Debian 用户，以及 Ubuntu 14.04 之前的用户，可以采用<a href="https://github.com/ajhaydock/BoringNginx" target="_blank" rel="noopener noreferrer">BoringNginx</a>项目来一键编译、安装。</p>
+<p>对于 Ubuntu 14.04 及以后的用户，由于 Ubuntu 采用了 Systemd 替换了 upstart，故 BoringNginx 脚本会出问题。同时 BoringNginx 要求脚本必须在非 root 用户下执行，这对于大部分习惯用 root 用户来配置服务器的用户来说十分不便，故需采用手动编译、安装。</p>
+<hr />
+<h2>编译 BoringSSL &amp; Nginx</h2>
+<p><em>注：该部分教程参考了 Jerry Qu 《<a href="https://imququ.com/post/optimize-ssl-ciphers-with-boringssl.html" target="_blank" rel="noopener noreferrer">使用 BoringSSL 优化 HTTPS 加密算法选择</a>》一文，在此表示感谢。</em></p>
+<p>首先建立一个文件夹，并下载 Nginx 和 BoringSSL 源码。</p>
+<p>Nginx 从 1.7.4 开始支持 BoringSSL，这里我使用的是最新的稳定版 Nginx：</p>
+<pre class="brush: bash; title: ; notranslate">
+mkdir nginx &amp;&amp; cd nginx
+wget http://nginx.org/download/nginx-1.10.1.tar.gz
+tar xzf nginx-1.10.1.tar.gz
+
+git clone https://boringssl.googlesource.com/boringssl
+</pre>
+<p>现在你的 nginx 文件夹里应该会有这两个子目录：</p>
+<pre class="brush: bash; title: ; notranslate">
+boringssl/
+nginx-1.10.1/
+</pre>
+<p>接下来还需要做一些准备工作：</p>
+<pre class="brush: bash; title: ; notranslate">
+# 安装编译 BoringSSL 所需的 Golang 和 cmake
+sudo apt-get install golang cmake
+
+# 安装编译 Nginx 所需的工具和依赖库
+sudo apt-get install build-essential libpcre3 libpcre3-dev zlib1g-dev
+
+# 忽略编译过程中的 Warning（不加这个，编到一半会因为 Warning 太多无法继续）
+export CFLAGS=&quot;-Wno-error&quot;
+</pre>
+<p>随后编译 BoringSSL：</p>
+<pre class="brush: bash; title: ; notranslate">
+# 进入 BoringSSL 源码根目录
+cd boringssl
+
+# 创建 build 目录并编译，完成后回到 BoringSSL 源码根目录
+mkdir build &amp;&amp; cd build &amp;&amp; cmake ../ &amp;&amp; make &amp;&amp; cd ../
+
+# 创建 .openssl 目录，并将库文件和编译后的文件放进去
+mkdir -p .openssl/lib &amp;&amp; cd .openssl &amp;&amp; ln -s ../include . &amp;&amp; cd ../
+cp build/crypto/libcrypto.a build/ssl/libssl.a .openssl/lib
+
+cd ../
+</pre>
+<p>然后就可以用 BoringSSL 来编译 Nginx 了：</p>
+<pre class="brush: bash; title: ; notranslate">
+# 进入 Nginx 源码根目录
+cd nginx-1.10.1
+
+# 指定使用 BoringSSL 作为 SSL 库
+# 这里的参数比原文要多了许多，是为了兼容采用 apt 安装的 Nginx 的配置
+./configure --with-openssl=../boringssl \
+--prefix=/usr/share/nginx \
+--sbin-path=/usr/sbin/nginx \
+--conf-path=/etc/nginx/nginx.conf \
+--error-log-path=/var/log/nginx/error.log \
+--http-log-path=/var/log/nginx/access.log \
+--pid-path=/run/nginx.pid \
+--lock-path=/run/lock/subsys/nginx \
+--user=www-data \
+--group=www-data \
+--with-threads \
+--with-file-aio \
+--with-ipv6 \
+--with-http_ssl_module \
+--with-http_v2_module \
+--with-http_realip_module \
+--with-http_gunzip_module \
+--with-http_gzip_static_module \
+--with-http_slice_module \
+--with-http_stub_status_module \
+--without-select_module \
+--without-poll_module \
+--without-mail_pop3_module \
+--without-mail_imap_module \
+--without-mail_smtp_module
+
+# 修改时间，避免 Nginx 再次编译 BoringSSL
+touch ../boringssl/.openssl/include/openssl/ssl.h
+</pre>
+<p>然后就可以开始编译 Nginx 了， 直接执行：</p>
+<pre class="brush: bash; title: ; notranslate">
+make
+</pre>
+<p>一切正常的话，即可在 objs 目录里找到编译好的 Nginx。<br />
+执行：</p>
+<pre class="brush: bash; title: ; notranslate">
+cd objs
+./nginx -V
+</pre>
+<p>应该可以看到类似这样的输出：</p>
+<pre class="brush: bash; title: ; notranslate">
+nginx version: nginx/1.10.1
+built with OpenSSL 1.0.2 (compatible; BoringSSL) (running with BoringSSL)
+TLS SNI support enabled
+configure arguments: --with-openssl=../boringssl --prefix=/usr/share/nginx --sbin-path=/usr/sbin/nginx --conf-path=/etc/nginx/nginx.conf --error-log-path=/var/log/nginx/error.log --http-log-path=/var/log/nginx/access.log --pid-path=/run/nginx.pid --lock-path=/run/lock/subsys/nginx --user=www-data --group=www-data --with-threads --with-file-aio --with-ipv6 --with-http_ssl_module --with-http_v2_module --with-http_realip_module --with-http_gunzip_module --with-http_gzip_static_module --with-http_slice_module --with-http_stub_status_module --without-select_module --without-poll_module --without-mail_pop3_module --without-mail_imap_module --without-mail_smtp_module
+</pre>
+<p>表明编译成功了。下面我们要将该 Nginx 安装至系统中。</p>
+<hr />
+<h2>安装 Nginx with BoringSSL</h2>
+<p>由于配置服务需要一些额外的知识，因此为了简单起见，我采用了 <em>使用 apt 安装原版 Nginx 然后替换可执行文件</em> 的方式来简化安装和服务的配置。这也是为什么在上文中我建议使用和 apt 安装的 Nginx 相仿的配置来编译自己的 Nginx。</p>
+<p>首先用 apt 来安装原版 Nginx：</p>
+<pre class="brush: bash; title: ; notranslate">
+# 从 Ubuntu 16.04 开始系统自带源的 nginx 就是1.10 版本的
+apt-get install nginx
+</pre>
+<p>或者</p>
+<pre class="brush: bash; title: ; notranslate">
+# 先添加 Nginx 官方软件源
+add-apt-repository ppa:nginx/stable
+apt-get update
+apt-get install nginx
+</pre>
+<p>然后替换原版 Nginx 为我们自己编译的版本：</p>
+<pre class="brush: bash; title: ; notranslate">
+# 先停止 Nginx 服务
+service nginx stop
+
+# 备份原版可执行文件
+cp /usr/sbin/nginx  ./nginx.bak
+
+# 替换 Nginx 可执行文件
+cp nginx /usr/sbin/nginx
+
+# 删除 Nginx 默认的 modules， 否则可能启动时报二进制不兼容的错误
+rm /etc/nginx/modules-enabled/*
+</pre>
+<p>这样一来，就成功的将系统中的 Nginx 替换为我们自己编译的版本，同时又保留了原版的服务控制方式，非常方便。</p>
+<hr />
+<h2>配置 Cipher Suite</h2>
+<p>在这里假定你已经知道如何配置 Nginx + SSL 了，如果不会，请百度或者谷歌一下。</p>
+<p>为了启用 CECPQ1 算法，需要配置正确的 Cipher Suit：</p>
+<pre class="brush: plain; title: ; notranslate">
+ssl_ciphers &quot;[CECPQ1-ECDSA-AES256-GCM-SHA384|CECPQ1-ECDSA-CHACHA20-POLY1305-SHA256]:[CECPQ1-RSA-AES256-GCM-SHA384|CECPQ1-RSA-CHACHA20-POLY1305-SHA256]:[ECDHE-ECDSA-AES128-GCM-SHA256|ECDHE-ECDSA-CHACHA20-POLY1305-SHA256]:[ECDHE-RSA-AES128-GCM-SHA256|ECDHE-RSA-CHACHA20-POLY1305-SHA256]:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES128-SHA:ECDHE-ECDSA-AES256-SHA:ECDHE-RSA-AES256-SHA:RSA-AES128-GCM-SHA256:RSA-AES256-GCM-SHA384:RSA-AES128-SHA:RSA-AES256-SHA:RSA-3DES-EDE-SHA&quot;;
+ssl_prefer_server_ciphers on;
+</pre>
+<p>其中最先出现的几个以“CECPQ1”开头的算法就是本文提到的算法。<br />
+关于该 Cipher Suite 的格式和意思，也请参考《<a href="https://imququ.com/post/optimize-ssl-ciphers-with-boringssl.html" target="_blank" rel="noopener noreferrer">使用 BoringSSL 优化 HTTPS 加密算法选择</a>》一文。</p>
+<p>同时我们编译出的 Nginx 是支持 HTTP/2 以及 ALPN 的，在你的配置里写上：</p>
+<pre class="brush: plain; title: ; notranslate">
+listen 443 ssl http2;
+</pre>
+<p>即可启用最新最炫酷的 h2 啦！<br />
+（当然谷歌又弄了个 QUIC 协议，目前不太容易在 Nginx 上实现，残念。）</p>
+<hr />
+<h2> 结束</h2>
+<p>这篇教程到这里就结束啦~如果各位读者老爷发现有什么错误或不当之处，还请回复指正~</p>
+<p>也欢迎各位共同探讨相关技术~</p>
+<p><a rel="nofollow" href="https://www.noisyfox.io/cecpq1-nginx-boringssl.html">Use CECPQ1 On Your Website with Nginx &#038; BoringSSL</a>，首发于<a rel="nofollow" href="https://www.noisyfox.io">狐狸的小小窝</a>。</p>]]></content>
+        <author>
+            <name><![CDATA[狐狸的小小窝]]></name>
+        </author>
+    </entry>
+    
+    <entry>
         <id>https://www.summershrimp.com/2016/08/appium-android-ui-test/</id>
         <title><![CDATA[Appium在Android UI测试中的应用]]></title>
         <updated>2016-08-18T15:29:08+08:00</updated>
@@ -3497,6 +4311,64 @@ dr.close()</pre>
 <p>&nbsp;</p>]]></content>
         <author>
             <name><![CDATA[0xe799bde88f9c]]></name>
+        </author>
+    </entry>
+    
+    <entry>
+        <id>https://www.noisyfox.io/unmanaged-exports.html</id>
+        <title><![CDATA[Unmanaged Exports 修正版 .NET导出非托管函数]]></title>
+        <updated>2016-06-19T07:05:21+08:00</updated>
+        <link href="https://www.noisyfox.io/unmanaged-exports.html"/>
+        <content type="text/html" src="https://www.noisyfox.io/unmanaged-exports.html"><![CDATA[<p>Unmanaged Exports 是一个将.NET编写的静态托管函数导出成可供C/C++等直接调用的非托管函数的工具。</p>
+<hr />
+<h2>它是如何工作的？</h2>
+<p>创建一个新的或者修改已经存在的类库。<br />
+然后加入 UnmanagedExports <a href="https://nuget.org/packages/UnmanagedExports" target="_blank">Nuget 包</a>。<br />
+这基本就是所有要做的事情了。<br />
+然后你就可以随便写一些静态方法，用[DllExport]装饰它，然后在原生代码中使用了。<br />
+它很像 DllImport，你可以用MarshalAsAttribute来定义该函数的参数和结果的格式。<br />
+在编译时，这个工具会自动修改IL代码增加导出声明。</p>
+<h2>限制</h2>
+<ul>
+<li>你不能导出在同一个class中的重载函数，即便你指定了不同的导出名称。</li>
+<li>另一个限制是你不能递归调用导出函数。</li>
+</ul>
+<p>这看起来是运行时的限制，并且我并不想为了规避这些限制而再把你的函数做一次包装。</p>
+<hr />
+<p>首先用C#（其它.NET语言也可）创建一个windows经典桌面dll，然后在Nuget中搜索并安装Unmanaged Exports这个包。</p>
+<p>随后编写你要导出的静态函数，并添加[DllExport]注解，范例如下：</p>
+<p><pre data-enlighter-language="csharp" class="EnlighterJSRAW">
+class Test
+{
+  [DllExport(&quot;add&quot;, CallingConvention = CallingConvention.Cdecl)]
+  public static int TestExport(int left, int right)
+  {
+     return left + right;
+  } 
+}
+</pre></p>
+<p>然后生成平台选择一个具体的平台（不能是AnyCPU否则该工具不生效），生成解决方案即可。<br />
+该工具最新版只支持vs2008以后的vs，因为vs2008及以前的版本不支持nuget。</p>
+<hr />
+<p>工具官方网站及详细说明：<br />
+<a href="https://sites.google.com/site/robertgiesecke/Home/uploads/unmanagedexports" target="_blank">https://sites.google.com/site/robertgiesecke/Home/uploads/unmanagedexports</a></p>
+<hr />
+<p>关于编译错误<br />
+该工具在非英文操作系统上可能会出现编译错误的问题，具体表现如下：<br />
+<a href="http://stackoverflow.com/questions/20288469/cant-create-unmanaged-dll-using-c-sharp-and-robert-gieseckes-unmanaged-exports" target="_blank">http://stackoverflow.com/questions/20288469/cant-create-unmanaged-dll-using-c-sharp-and-robert-gieseckes-unmanaged-exports</a><br />
+<a href="https://www.noisyfox.cn/wp-content/uploads/2016/06/QQ截图20160619143947.png"><img class="aligncenter size-full wp-image-402" src="https://www.noisyfox.cn/wp-content/uploads/2016/06/QQ截图20160619143947.png" alt="Unmanaged Exports 编译错误" width="1452" height="90" /></a><br />
+主要原因是因为非英文操作系统中IL代码中含有非英文注释导致插件工作异常。<br />
+虽然将系统语言切换成英文可以解决这个问题，但是这个方法过于麻烦，故本人修改了这个工具，修正了其在非英文操作系统上不能正常使用的问题。</p>
+<p>文末附上修改后的文件，解压后将其中的两个dll替换进项目NuGet包中packages\UnmanagedExports.1.2.7\tools文件夹下的两个同名dll即可。<br />
+改修正版仅针对Unmanaged Exports 1.2.7版本制作，其它版本未测，可能不能正常使用。<br />
+替换完成后即可正常编译：<br />
+<a href="https://www.noisyfox.cn/wp-content/uploads/2016/06/QQ截图20160619145913.png"><img class="aligncenter size-full wp-image-403" src="https://www.noisyfox.cn/wp-content/uploads/2016/06/QQ截图20160619145913.png" alt="Unmanaged Exports 编译正常" width="662" height="65" /></a><br />
+<div class="sdm_download_item "><div class="sdm_download_item_top"><div class="sdm_download_thumbnail"></div><div class="sdm_download_title">DllExport-Fixed-1.2.7.7z</div></div><div style="clear:both;"></div><div class="sdm_download_description"><p>修正了非英文系统编译错误的Unmanaged Exports 1.2.7</p>
+<h1></h1>
+</div><div class="sdm_download_link"><span class="sdm_download_button"><a href="https://www.noisyfox.io/?smd_process_download=1&download_id=404" class="sdm_download green" title="DllExport-Fixed-1.2.7.7z" target="_blank">Download Now!</a></span><span class="sdm_download_item_count"><span class="sdm_item_count_number">879</span><span class="sdm_item_count_string"> Downloads</span></span></div></div><div class="sdm_clear_float"></div></p>
+<p><a rel="nofollow" href="https://www.noisyfox.io/unmanaged-exports.html">Unmanaged Exports 修正版 .NET导出非托管函数</a>，首发于<a rel="nofollow" href="https://www.noisyfox.io">狐狸的小小窝</a>。</p>]]></content>
+        <author>
+            <name><![CDATA[狐狸的小小窝]]></name>
         </author>
     </entry>
     
