@@ -3,12 +3,119 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2020-05-11T12:05:06+08:00</updated>
+    <updated>2020-05-11T18:05:47+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
     </author>
     
+    
+    <entry>
+        <id>https://blog.triplez.cn/using-curl-analyzing-time-cost-at-request-diff-phases/</id>
+        <title><![CDATA[使用 curl 来分析请求各个阶段的耗时]]></title>
+        <updated>2020-05-11T15:35:41+08:00</updated>
+        <link href="https://blog.triplez.cn/using-curl-analyzing-time-cost-at-request-diff-phases/"/>
+        <content type="text/html" src="https://blog.triplez.cn/using-curl-analyzing-time-cost-at-request-diff-phases/"><![CDATA[<h2>How</h2>
+<p>这个功能用到的是 <code>curl</code> 的 <code>-w</code> 选项，让我们来先看看 <code>curl</code> 的 man page：</p>
+<pre class="line-numbers prism-highlight" data-start="1"><code class="language-null">-w, --write-out &lt;format&gt;
+       Make curl display information on stdout after a completed transfer. The format is  a  string  that  may  contain lain  text  mixed  with  any number of variables. The format can be specified as a literal "string", or you can have curl read the format from a file with "@filename" and to tell curl to read the format from stdin you  write "@-".
+
+       The variables present in the output format will be substituted by the value or text that curl thinks fit, as de‐ scribed below. All variables are specified as %{variable_name} and to output a normal % you just write  them  as %%. You can output a newline by using \n, a carriage return with \r and a tab space with \t.
+
+       The output will be written to standard output, but this can be switched to standard error by using %{stderr}.使用 curl 命令分析请求的耗时情况
+</code></pre>
+<p>下面的内容就是各种内置变量了，我们可以通过这些变量的值来一窥请求的真实信息。</p>
+<p>以下有一个“广为流传”的格式：</p>
+<pre class="line-numbers prism-highlight" data-start="1"><code class="language-null">    time_namelookup:  %{time_namelookup}\n
+       time_connect:  %{time_connect}\n
+    time_appconnect:  %{time_appconnect}\n
+      time_redirect:  %{time_redirect}\n
+   time_pretransfer:  %{time_pretransfer}\n
+ time_starttransfer:  %{time_starttransfer}\n
+                    ----------\n
+         time_total:  %{time_total}\n
+</code></pre>
+<p>将如上内容写至 <code>curl-format</code> 文件中，然后在当前目录运行：</p>
+<pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash">$ curl -w @curl-format -o /dev/null -s -L http://triplez.cn
+</code></pre>
+<blockquote>
+<ul>
+<li><code>-w @curl-format</code> ：使用 <code>curl-format</code> 文件模板进行输出。</p>
+</li>
+<li>
+<p><code>-o /dev/null</code> ：忽略输出内容。</p>
+</li>
+<li>
+<p><code>-s</code> ：不输出多余信息。</p>
+</li>
+<li><code>-L</code> ：支持跳转（如 HTTP 跳转至 HTTPS）。</li>
+</ul>
+</blockquote>
+<p>就会看到像这样的输出：</p>
+<pre class="line-numbers prism-highlight" data-start="1"><code class="language-null">    time_namelookup:  0.001931
+       time_connect:  0.032337
+    time_appconnect:  0.120072
+      time_redirect:  0.000000
+   time_pretransfer:  0.120124
+ time_starttransfer:  0.151386
+                    ----------
+         time_total:  0.152068
+</code></pre>
+<p>这些变量的意义是：</p>
+<ul>
+<li><code>time_namelookup</code>：DNS 域名解析的耗时。</li>
+<li><code>time_connect</code>：TCP 连接建立耗时。</li>
+<li><code>time_appconnect</code>：SSL/SSH 等上层协议建立连接的耗时，比如 connect/handshake 耗时（从此处也可看出，最后还是请求了 <code>https://triplez.cn</code> ，否则 HTTP 不会产生 <code>time_appconnect</code> 的耗时。</li>
+<li><code>time_redirect</code>：从开始到最后一个请求事务的耗时。</li>
+<li><code>time_pretransfer</code>：从请求开始到响应开始传输的耗时。</li>
+<li><code>time_starttransfer</code>：从请求开始到第一个字节将要传输的耗时。</li>
+<li><code>time_total</code>：这次请求的总耗时。</li>
+</ul>
+<h2>One more thing...</h2>
+<p><a href="https://github.com/reorx">reorx</a> 写了个 Python 的小工具 <a href="https://github.com/reorx/httpstat">httpstat</a>，让命令行分析请求耗时更加直观。通过以下命令即可安装：</p>
+<pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash">$ pip install httpstat
+</code></pre>
+<p>让我们来试一下：</p>
+<pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash">$ httpstat -L http://triplez.cn
+Connected to 123.206.208.167:443 from 192.168.0.10:34372
+
+HTTP/1.1 302 Found
+Date: Mon, 11 May 2020 15:24:00 GMT
+Server: Apache
+Location: https://triplez.cn/
+Content-Length: 203
+Content-Type: text/html; charset=iso-8859-1
+
+HTTP/1.1 200 OK
+Date: Mon, 11 May 2020 15:24:00 GMT
+Server: Apache
+Last-Modified: Sun, 08 Mar 2020 07:48:35 GMT
+ETag: "7258f-f13-5a0531d213ac0"
+Accept-Ranges: bytes
+Content-Length: 3859
+Content-Type: text/html; charset=UTF-8
+
+Body stored in: /tmp/tmpkeq3ospo
+
+  DNS Lookup   TCP Connection   Server Processing   Content Transfer
+[    32ms    |      66ms      |       73ms        |        1ms       ]
+             |                |                   |                  |
+    namelookup:32ms           |                   |                  |
+                        connect:98ms              |                  |
+                                      starttransfer:266ms            |
+                                                                 total:267ms  
+</code></pre>
+<p>从输出上我们就可以很直观地看出来，从 <code>http://triplez.cn</code> 到 <code>https://triplez.cn</code> 中完成了一次 302 跳转，在输出末尾的示意图上我们也可以清楚地看到各阶段的耗时。</p>
+<p>Happy hacking 😛</p>
+<h2>References</h2>
+<ul>
+<li><a href="https://cizixs.com/2017/04/11/use-curl-to-analyze-request/">使用 curl 命令分析请求的耗时情况</a></li>
+</ul>
+<p>The post <a rel="nofollow" href="https://blog.triplez.cn/using-curl-analyzing-time-cost-at-request-diff-phases/">使用 curl 来分析请求各个阶段的耗时</a> appeared first on <a rel="nofollow" href="https://blog.triplez.cn">Blog</a>.</p>]]></content>
+        <author>
+            <name><![CDATA[TripleZ’s Blog]]></name>
+        </author>
+    </entry>
     
     <entry>
         <id>https://blog.zeddyu.info/2020/04/24/Plaid-CTF-2020-Web-2/</id>
@@ -2188,66 +2295,6 @@ apply plugin: 'org.springframework.boot'
 <p>在运行 Spring Boot 的时候遇到了这个问题，在命令行上 <code>gradle build</code> 出 <code>jar</code> 包是能够正常运行的，然而在 IDEA 里就不能通过 <code>Run Application</code> 正常运行。解决方案其实特别特别简单：右键项目中的 <code>src</code> 文件夹，找到 <code>Mark Directory as</code> ，选择 <code>Sources Root</code> ，重新构建运行项目即可。</p>
 <p>折腾个环境花了一天，还是得好好学习啊……</p>
 <p>The post <a rel="nofollow" href="https://blog.triplez.cn/err-and-solution-of-config-gradle-idea-env/">配置 Gradle (IDEA) 环境的坑</a> appeared first on <a rel="nofollow" href="https://blog.triplez.cn">Blog</a>.</p>]]></content>
-        <author>
-            <name><![CDATA[TripleZ’s Blog]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://blog.triplez.cn/insight-talk-with-pingcap-cto/</id>
-        <title><![CDATA[Insight – 对话 CTO〡和 PingCAP CTO 黄东旭聊开源数据库新蓝海]]></title>
-        <updated>2019-07-16T15:31:42+08:00</updated>
-        <link href="https://blog.triplez.cn/insight-talk-with-pingcap-cto/"/>
-        <content type="text/html" src="https://blog.triplez.cn/insight-talk-with-pingcap-cto/"><![CDATA[<h2>写在前面</h2>
-<p>此文是阅读极客公园对 PingCAP CTO 黄东旭的采访后笔者产生的一些想法，笔者认为在黄总的言语之中包含着海量的 insight，故写此文记录分享之。</p>
-<p><a href="https://www.geekpark.net/news/238087">原文链接</a></p>
-<h2>Insights</h2>
-<blockquote><p>
-  “最近这些硬件的革新，使得原来很多的假设都不成立了。比如过去大家可能觉得数据库的瓶颈是磁盘，想怎么设计一个更好的  B-Tree 能够让磁盘磁头转得少一点。但现在全是  SSD，甚至未来可能持久化内存的东西都出现了。过去分布式系统的网络这么慢，带宽这么小，所以尽可能都是在单机或者本地上去做。但现在基本上单机访问远程数据库和访问本地数据库在吞吐量上表现差不多了。”
-</p></blockquote>
-<p>技术革新导致原本的理论假设不成立，要去寻找新的瓶颈，要以新方式来看待问题。</p>
-<blockquote><p>
-  “所以我们喜欢「开源」。「开源」相当于用一些 to C 的方法论，在工程师的社区里通过病毒式传播让产品  adoption，别人用得不爽一定会 feedback 提  issue。用的人越多，它的质量就越好，质量越好，会变成一传十，十传百的这种效应，让产品正向循环下去。</p>
-<p>  对于基础软件，我的观点是像数据库、操作系统、云技术，或者云内部的基础软件，未来只有开源一条路，如果不开源，或者说内核不开源的话，产品的生命力是很差的。不像其他的商业软件，基础软件就像在水管、水电煤这样的基础设施的层面上，你不开源的话别人也不敢用。”
-</p></blockquote>
-<p>基础软件最适合开源，只有开源之后才有可能获得众多用户的反馈，才能够持续改进迭代版本，才能在工程师社区中进行“病毒式”的传播，产生正向循环。而且对于不开源的基础设施，是没人敢用的，没有用户就没有反馈，失去了变得更好的可能性。事实上，现在反过来看这些成功的应用，如 MySQL、Redis、Spring 的等确实都是开源社区运营，赢得用户之后直接拿下市场。</p>
-<blockquote><p>
-  "从数据库的角度上来看，大家会发现，最早的关系数据库<br />
-  SQL、TSQL，在互联网或者移动互联网开始爆发的时候，数量开始膨胀，单机系统怎么样都搞不定的时候，互联网公司没有办法，只能去做了一套 NoSQL，但 NoSQL 又有点过了，就把原来的传统管理模型全都扔掉，但至少能把数据存下来。所以我觉得历史是螺旋式发展。"
-</p></blockquote>
-<p>历史的螺旋式发展，好的产品必须应用在特定的背景下，太过超前的理念即使在当下实现出来也难以得到推行。技术开发不能脱离大众，还是不能单纯地做艺术品。</p>
-<blockquote><p>
-  “对，我觉得未来数据一定是更大的状态，单机肯定是有问题的。硬件成本持续在下降，一定会到达一个临界点，就是数据本身的价值都比硬件成本要高，这样一来，我肯定是保护数据，怎么样把我的数据能无限存下来，并且能快速通过好用的接口来访问它。我觉得这个市场会很大，所以我从来都不跟别人说这个事情的天花板在哪里，因为我自己也不知道。”
-</p></blockquote>
-<p>在未来，数据本身的价值要比硬件成本更高，即 <script type="text/javascript">document.write(katex.renderToString("data\\ value >> hardware\\ cost"));</script>  ，我们会花费更多的成本在保护数据、存储数据上。最好的媒介就是数据库了。</p>
-<blockquote><p>
-  “我们早期策略上分两块，一块就是互联网公司，workload 数量很大，然后有很强的研发团队，开源社区的主力就是这帮人，随便用，而且我会很鼓励你们投人投精力去用它。</p>
-<p>  还有一部分是一些高净值客户，比如银行，业务已经倒逼他们要去用一些互联网的技术去解决问题。比如说即使 Oracle 用得不好，迁到 TiDB 上其实也是很平滑的过程，同时可以保证多数据中心高可用、强一致等这些特性，用起来很省心。</p>
-<p>  我觉得我们就是拿互联网最先进的技术给到传统公司，给他们赋能，而且让对方的迁移成本降得很低。”
-</p></blockquote>
-<p>这个观点真的很好，通过开源社区吃螃蟹、完善产品后再给传统公司使用，还节省了公司的人力成本哈哈哈。</p>
-<blockquote><p>
-  "Hire for attitude, train for skill."
-</p></blockquote>
-<p>态度是一切的前提，技能是可以传授的。</p>
-<blockquote><p>
-  “对于小公司来说，没办法把每个人每天的工作，每个任务都亲自去帮你规划好。所以我们的管理风格还算是比较粗放吧。”
-</p></blockquote>
-<p>而大公司就是画好格子让你填，你也很难有机会去做划分好的小格子之外的事情。各有利弊吧。</p>
-<blockquote><p>
-  "我们在国内的招聘方式也是挺特殊的，我们不太关心你到底在哪个城市工作。我们重度依赖像 Google  Docs、Slack、GitHub、Jira、Confluence  这种生产力工具，基本上能够摆脱面对面的会议，这个是很重要的。我们不鼓励开长会，如果要开会，就开半个小时、15 分钟的短会。</p>
-<p>  远程有个好处就是它会迫使工程师把所有想做的东西进行文档化，任何东西都可以被检索。我觉得这样更符合现代化的管理模式，有充足的时间，更加灵活地安排自己的生活，是一个更好的工作方式。"
-</p></blockquote>
-<p>生产力工具一人使用提高的效率有限，而在公司（团体）层面上一起使用，那就是力压对手提升效率的一把利器。</p>
-<p>文档化其实非常重要，只有知识积累的过程完善，这家公司才能够长久地传承下去，能够持久地发展下去而不用担心会去开倒车。员工的经验和想法是公司最宝贵的一笔财富。PingCAP 所有项目的文档都非常的全面、通俗易懂，可以说是我在大陆开源项目中见到最优秀的项目文档了。</p>
-<blockquote><p>
-  "为什么要来（社区）。</p>
-<p>  两种情况，一种就是我实际就在用这个东西，发现这个东西不好，某些地方有 bug 或者说某些地方的功能不是我想要的，我想要去改进它。大多数机构都是出于这种思路来贡献的。</p>
-<p>  第二种人就是纯粹为了做出成就感。觉得这事情很不错，我能参与到这个项目来了，「I want to help」，我想去帮助别人，同时我能够得到证明，我是这个项目的 heavy  contributor、committer，得到尊敬或者认同感。</p>
-<p>  对每一个 contributor，哪怕提交一行代码或者修改一个文档，我们都会给他一个大礼包，包括贴纸、杯子等等周边产品。如果贡献比较多的话，我会亲手给你写一封明信片表达感谢，包括我们每年办的这些大会，只要是 contributor 都是免费的。"
-</p></blockquote>
-<p>PingCAP 运营开源社区还是有他的独门秘笈的。贡献能够感受到奖赏，是自主驱动的开发者们最大的欣慰了。这也同时证明了 PingCAP 社区做的好的合理性，感谢 PingCAP，才能够有一个更好的大陆开源生态。</p>
-<p>The post <a rel="nofollow" href="https://blog.triplez.cn/insight-talk-with-pingcap-cto/">Insight &#8211; 对话 CTO〡和 PingCAP CTO 黄东旭聊开源数据库新蓝海</a> appeared first on <a rel="nofollow" href="https://blog.triplez.cn">Blog</a>.</p>]]></content>
         <author>
             <name><![CDATA[TripleZ’s Blog]]></name>
         </author>
