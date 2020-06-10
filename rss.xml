@@ -3,12 +3,23 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2020-06-10T12:07:27+08:00</updated>
+    <updated>2020-06-10T18:06:09+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
     </author>
     
+    
+    <entry>
+        <id>https://blog.rexskz.info/barcode-scan-bug-caused-by-hardware-issue.html</id>
+        <title><![CDATA[由于硬件问题引发的条形码扫描 Bug]]></title>
+        <updated>2020-06-10T17:25:00+08:00</updated>
+        <link href="https://blog.rexskz.info/barcode-scan-bug-caused-by-hardware-issue.html"/>
+        <content type="text/html" src="https://blog.rexskz.info/barcode-scan-bug-caused-by-hardware-issue.html"><![CDATA[<blockquote><p>听一个希捷的朋友说的。有用户反映每次用笔记本播放李娜的青藏高原时，电脑就会死机。经测试发现，唱到最后的“那就是青藏高……”时，硬盘产生了共振，振幅过大，读写头读不出数据了。为了抓住这个bug，朋友听了一个月的青藏高原……</p></blockquote><p>一开始看到这个段子（出处：<a href="https://www.zhihu.com/question/21747929/answer/310031007">有哪些让你目瞪口呆的 Bug ？ - wuz的回答 - 知乎</a>）的时候，只是笑一笑。然而万万没想到，我一个前端居然也会遇到硬件问题。</p><h1>问题现象</h1><p>隔壁组有一个业务需求：在专用的纸上批量打印一大堆条形码（商品 ID 之类的数据），然后可以方便的撕下来贴在包裹上，以方便后续的操作。由于我负责的面单平台有一定的扩展性，因此他们决定让我们支持一下条形码的功能（这样他们就不用写代码画了，业务改起来也方便）。</p><p>我花了两三天的时间支持了一下，本地测试通过之后，本以为高枕无忧，然而他们报了个 Bug 过来：大部分的条形码打出来都没法扫，有一些条形码只有 PDA 设备可以扫，但普通的立式扫码枪扫不了。</p><p>需求是不能延期的，现在的瓶颈在我这里。我之前没有遇到过这样的问题，所以一时不知道该如何下手，只好跑到他们那边看一看。</p><h1>排查问题</h1><p>首先我要到了他们之前打印出来的一些条形码，发现锯齿状特别严重（下图是条码的一小部分），很多条码因为锯齿加上间距太窄，几乎黑成了一片，但有些条形码就打印的很完美，完全没有锯齿状。隔壁组的同事说，之前前端自己用 JSBarcode 画的时候一点问题都没有，自从切到了面单平台就这样了。然而面单平台生成的 PDF 是绝对不会有这种问题的，不然这两年早就各种线上事故了。</p><p><img src="https://static.rexskz.info/blog/article/barcode-scan-bug-caused-by-hardware-issue/1.jpg" alt="带有锯齿状的条码" title="带有锯齿状的条码"></p><p>一般来说，锯齿的原因是传给打印机的图片分辨率太低（打印需要 300 DPI，而一般的电脑则是 72 DPI）。但是我们所有的单位统一用了厘米，并且后端由 Chrome 来渲染生成 PDF，出来的效果应当跟 Word 差不多，而众所周知 Word 的打印是不会有这种问题的。</p><h1>失败的试探</h1><p>为了确定面单究竟是在哪一步开始变锯齿的，我找到了他们的前端、后端和打印插件的负责人，分析了所有的链路，并一点点排查问题：</p><ul><li>从面单平台生成的 PDF：正常</li><li>隔壁组后端接收到的 PDF 数据：正常</li><li>他们往打印插件发送的数据：看起来正常</li><li>打印机出来的效果：有锯齿</li></ul><p>于是我们把重点放到了打印插件中。他们用了一个开源的打印插件（底层大多是 C 代码）并加以封装，考虑到看这些代码可能会折寿，我决定放弃，想想是否有其它思路。</p><h1>一个有效的解决方案</h1><p>在不断消耗脑细胞的过程中，我突然注意到了文字也有锯齿的现象。于是我问他们的 QA 要到了以前测试的时候打过的各种各样的面单，发现都有这样的问题（这个条形码就很完美，但是文字是有锯齿的）：</p><p><img src="https://static.rexskz.info/blog/article/barcode-scan-bug-caused-by-hardware-issue/2.jpg" alt="文字有锯齿状" title="文字有锯齿状"></p><p>看到这儿，可能有些小伙伴已经能猜到原因了：打印机不支持灰度打印，只能打印纯黑和纯白，对于灰色的区域，打印机会用黑点和白点的密度来显示一个视觉效果。对于 PDF 来说，文字是有反锯齿（次像素渲染）的，因此当次像素渲染由于打印机的原因“消失”之后，就成了这个样子。条形码的图片也是如此，如果条形码图片（PNG）由于缩放而导致每一条的边缘出现了灰色像素，那么也会出现类似的问题。</p><p>我瞬间想到了为什么 JSBarcode 画的条形码没问题了。之前我在他们组的时候用过那个库，它会生成一个 SVG 元素，而 Chrome 在渲染的时候，如果一个元素的定位信息的单位是像素，那么所有的数字都会被取整。例如你设置一个 <code>left: 5.8px; width: 10.2px</code>，那么最终你只会得到 <code>left: 6px; width: 10px</code>。只要每个矩形的定位信息都是整数，那么最后一填充，必然不会出现次像素渲染的问题。</p><p>我跟我们后端商量了一下，把条形码相关的生成代码换成了 SVG 的版本，隔壁组又打印了几次，条形码已经不会再有锯齿了。</p><h1>问题结束了吗？</h1><p>我由于迅速的解决了问题，心情愉悦，决定晚上跟同事去吃萨莉亚。然而就在我们即将下班的时候，他们又报过来一个问题：虽然条形码打出来看着没问题，但只有 PDA 设备可以扫，立式扫码枪还是扫不了。我的内心：________________。</p><p>此时恰好隔壁组的老板路过，问我条形码是如何生成的，是否会因为算法的原因让某个长条偏移了一两像素？然而我快速使用公司的高质量打印机打了一下，并且粗略的将打出来的条形码（见下图）与谷歌到的在线生成工具生成的样子对比了一下，凭我的视力好像是看不出什么太大的区别。以及条形码的容错性应当非常好啊，即使偏移了一两像素应当也能识别，否则收银员扫码将是一件极其辛苦的事情。</p><p><img src="https://static.rexskz.info/blog/article/barcode-scan-bug-caused-by-hardware-issue/3.jpg" alt="一个非常简单的条形码" title="一个非常简单的条形码"></p><h1>真相原来是这样</h1><blockquote><p>When you have eliminated the impossibles, whatever remains, however improbable, must be the truth. - Sherlock Holmes</p></blockquote><p>正如这句话所说的，我在极短的时间内排除了所有可能的问题之后，最后只剩下了一个可能：QA 手中的立式扫码枪有问题。</p><p><img src="https://static.rexskz.info/blog/article/barcode-scan-bug-caused-by-hardware-issue/4.jpg" alt="就是这个扫码枪" title="就是这个扫码枪"></p><p>由于不想鸽了同事，也不想让同事等太久，我便拍下了扫码枪的背面标签，在萨莉亚等餐的时候慢慢查。这个扫码枪的型号是 Orbit MS7120，搜了一下它的参数，感觉没有什么特别的，于是跟同事开玩笑的说道：“难不成这个破扫码枪只能扫最短三个字符？”顺便随手谷歌了一下 <code>orbit ms7120 3 chars</code>，结果第一条就是这么个链接：<a href="https://support.honeywellaidc.com/s/article/MS7120-Orbit-How-to-configure-code-128-to-decode-a-minimum-of-three-characters">MS7120 Orbit - How to configure code 128 to decode a minimum of three characters</a>，我的内心：________________。</p><p>文中是这样说的：</p><blockquote><p>默认情况下 MS7120 Orbit 针对 code128 条形码只能扫最短四个字符，如果要改为最短三个字符，点击 <a href="https://honeywellsps.my.salesforce.com/sfc/p/00000000SK3U/a/A0000000HmqL/85KJ7ImV2fzDh.30zUaYfW1zB3UNG7h14_1uARcAIYc">这里</a> 下载一个 PDF，然后按顺序扫描里面的每一个条形码。注意，这会让你的设备初始化。</p></blockquote><p>我是谁？我为什么要设置为最短三个字符？我感觉自己就跟那个 <a href="https://www.sohu.com/a/211451010_250298">计算机二级准考证传错照片的哥们</a> 一样。</p><p><img src="https://static.rexskz.info/blog/article/barcode-scan-bug-caused-by-hardware-issue/5.jpg" alt="我还能说些什么？" title="我还能说些什么？"></p><p>玩梗归玩梗。为了验证我的猜想是否正确，吃完萨莉亚，我回到了公司，按照 PDF 中的方法试了一下，还真特喵的能扫三个字符的条形码了……然而我查了半天 MS7120 的手册，也没查到如何让它支持任意字符数量的条形码。</p><p>因为这个需求可能有延期风险，所以他们发了邮件并且 @ 了我，为了不被“人在家中坐，锅从天上来”，我赶紧回了邮件，并附上了自己完整的验证步骤，我给的解决方案是“4 位以下的数据就不要用条形码了，如果必须有这个需求，就加一些空白字符使得长度至少为 4”。</p><h1>后记</h1><ol><li>第二天，他们的 QA 找了过来：“你是不是把扫码枪刷坏了？”我：“嗯，昨晚我调试来着，现在帮你恢复一下出厂设置……”</li><li>之后他们让业务方用自己的扫码枪试一下，是可以扫出来的，因此大家都不需要改代码了，这个问题也算是解决了。</li></ol>]]></content>
+        <author>
+            <name><![CDATA[R·ex / Zeng]]></name>
+        </author>
+    </entry>
     
     <entry>
         <id>https://www.suruifu.com/posts/442</id>
@@ -1226,261 +1237,6 @@ Age: 0
 Now she&#8217;s gone, love burns inside me.</p>]]></content>
         <author>
             <name><![CDATA[苏瑞辅的个人网站]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://blog.rexskz.info/typescript-type-system-and-functional-programming.html</id>
-        <title><![CDATA[TypeScript 类型系统与函数式编程]]></title>
-        <updated>2020-02-04T12:37:00+08:00</updated>
-        <link href="https://blog.rexskz.info/typescript-type-system-and-functional-programming.html"/>
-        <content type="text/html" src="https://blog.rexskz.info/typescript-type-system-and-functional-programming.html"><![CDATA[<h1>背景</h1><p>接触 TypeScript 已经有一段时间了，这期间写过一些复杂的类型（例如 <a href="https://blog.rexskz.info/issues-in-typescript-vue-component-lib.html#toc-link-6">这篇文章</a>），我开始意识到：TypeScript 的类型系统写起来就像函数式编程一样。去年某天，一个同事给我发了个链接，里面讲的是“TypeScript 类型系统的图灵完备”，里面的一些内容我还在努力理解到可以分享的程度，但一些代码差不多可以说明 TypeScript 类型系统跟函数式编程的思想非常接近了。</p><h1>前期知识</h1><ul><li>掌握 TypeScript 的 <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html">基本类型</a>，相信大家都了解；</li><li>掌握 TypeScript 的 <a href="https://www.typescriptlang.org/docs/handbook/advanced-types.html">高级类型</a> 和 <a href="https://www.typescriptlang.org/docs/handbook/generics.html">泛型</a>；</li><li>非常熟悉 <code>extends</code> 和 <code>infer</code> 的使用；</li><li>“函数式编程”的概念，相信大家都或多或少从公众号里面听到过。</li></ul><blockquote><p>文中接下来所有跟 TypeScript 相关的部分，除非特殊说明，否则“函数”、“参数”均为新的概念，而非 TypeScript 中的“函数类型”、“参数列表”。</p></blockquote><h1>免责声明</h1><ol><li>本文只是讲述一个“理论上”可行的东西，并非推荐大家日常这样写。事实上，类型标注应当在适当精确的情况下尽可能简洁（参考 <code>@types/ramda</code> 中对于 <code>pipe</code> 等函数的类型标注），因为需要提高效率；</li><li>本文的代码实现均只停留在实验室阶段，不考虑可能的性能问题。</li></ol><h1>从函数式编程说起</h1><p>函数式编程有以下几个特点：</p><ul><li>描述映射：函数式编程并非描述解决问题的步骤，而是描述输入与输出的某种映射关系；</li><li>不可变量：函数式编程中没有所谓的“变量赋值”，只有“参数绑定”，一旦某个参数绑定了一个值，则不能被重新绑定；</li><li>无副作用：函数的输出只依赖于输入的参数，入参相同则返回值一定相同，函数运行过程中也不会对外界产生任何影响。</li><li>惰性求值：只有真正用到的值才需要被计算；</li><li>函数是一等公民：函数可以（甚至经常）作为另一个函数的参数和返回值，if 等语句也是函数；</li></ul><p>例如下面的代码：</p><pre><code class="lang-javascript">/**
- * 简单的斐波那契数列
- */
-function fibonacci(n) {
-    return n &lt;= 1 ? 1 : fibonacci(n - 1) + fibonacci(n - 2);
-}
-/**
- * 简单的欧几里得算法
- */
-function gcd(x, y) {
-    return y === 0 ? x : gcd(y, x % y);
-}
-/**
- * 超运算函数
- * https://en.wikipedia.org/wiki/Hyperoperation
- * n = 0: b+1（后继）
- * n = 1: a+b（加法，即 b 次 a 的后继）
- * n = 2: a*b（乘法，即 b 个 a 相加）
- * n = 3: a^b（乘方，即 b 个 a 相乘）
- * n = 4: a^a^a^...^a（超幂，即 b 个 a 不断乘方）
- *        \_________/
- *          b 个 a
- * n = …………
- */
-function hyperoperation(n, a, b) {
-    return n === 0
-        ? b + 1
-        : n === 1 &amp;&amp; b === 0
-            ? a
-            : n === 2 &amp;&amp; b === 0
-                ? b
-                : n &gt; 2 &amp;&amp; b === 0
-                    ? 1
-                    : hyperoperation(n - 1, a, hyperoperation(n, a, b - 1));
-}</code></pre><p>由于函数式编程经常出现递归，专门的语言（Haskell 等）会将尾递归转换为循环，以提升运行效率；此外由于函数式编程有“无副作用”的特性，也可以使用记忆化等方式避免重复计算。</p><h1>TypeScript 泛型的例子</h1><p>在 TypeScript 中，我们偶尔会用到泛型，比如下面的冷饭（你猜对了，这些都出自本文的第一个链接）：</p><pre><code class="lang-typescript">type InstanceType&lt;T&gt; =
-    T extends ConstructorType&lt;infer R&gt;
-        ? R
-        : T;
-type RemovePropOptions&lt;T&gt; =
-    NonNullable&lt;
-        T extends PropOptions&lt;infer R&gt;
-            ? R
-            : null
-    &gt;;
-type OneOfTypePropOptions&lt;T&gt; =
-    T extends ArrayType
-        ? RemovePropOptions&lt;ValueOf&lt;T&gt;&gt;
-        : T;
-type ShapePropOptions&lt;T&gt; =
-    T extends ShapeType
-        ? { [K in keyof T]: RemovePropOptions&lt;T[K]&gt; }
-        : T;</code></pre><p>乍看上去，TypeScript 的泛型长得很像函数：定义泛型相当于定义一个函数，其中的 <code>T</code>、<code>R</code> 等类型变量可以被看作参数。但通过不断尝试外加查资料，我们最终都会意识到：在 TypeScript 的泛型定义中是无法自由的定义变量并赋值的，这意味着它跟我们日常写的函数还有一些区别。</p><p>然鹅大家是否觉得这种写法跟函数式编程有点眼熟？有没有可能用 TypeScript 类型系统来重写上面的函数式编程代码呢？</p><p>不管有没有意义，我们先试着用易于理解、但是错误的语法写一下（为了避免高亮出现混乱，这段代码就不加高亮了）：</p><pre><code class="lang-text">type Fibonacci&lt;N&gt; =
-    N &lt;= 1 ? 1 : Fibonacci&lt;N - 1&gt; + Fibonacci&lt;N - 2&gt;;
-type Gcd&lt;X, Y&gt; =
-    Y = 0 ? X : Gcd&lt;Y, X % Y&gt;;
-type Hyperoperation&lt;N, A, B&gt; =
-    N = 0
-        ? B + 1
-        : N = 1 &amp; B = 0
-          ? A
-          : N = 2 &amp; B = 0
-            ? B
-            : N &gt; 2 &amp; B = 0
-                ? 1
-                : Hyperoperation&lt;N - 1, A, Hyperoperation&lt;N, A, B - 1&gt;&gt;;</code></pre><h1>从零开始的造轮子生活</h1><p>Emmm……虽然看起来挺容易理解的，但这毕竟完全不是 TypeScript……为了用真正的 TypeScript 来编写这段代码，我们来看看究竟需要哪些轮子（工具类型）。</p><h2>定义“类型”</h2><p>首先，为了能让 TypeScript 允许我们对泛型参数做一些操作（例如取长度），我们需要先定义一些类型。在这里我们抛开 JavaScript 的一切知识，因为在 TypeScript 类型系统的世界中，我们目前一无所有——这意味着我们要从最基础的开始定义：</p><pre><code class="lang-typescript">// 用字符串来代替逻辑值
-type Bool = 'true' | 'false';
-// 用数组的长度作为数字的大小
-type Int = any[];
-// 第一个数字
-type _0 = [];</code></pre><h2>简单的代数系统</h2><p>除了“类型”以外，映入眼帘的就是 <code>&lt;=</code>、<code>+</code>、<code>-</code> 等符号。我们需要先实现一个简单的代数系统。为了简单起见，我们假设所有的数字都是非负整数。</p><p>首先从“后继”运算开始，期望的效果如下：</p><pre><code class="lang-typescript">type Next&lt;I extends Int&gt; = Prepend&lt;any, I&gt;;
-
-type _1 = Next&lt;_0&gt;; // [any]
-type _2 = Next&lt;_1&gt;; // [any, any]
-type _3 = Next&lt;_2&gt;; // [any, any, any]</code></pre><p>这里的 <code>Prepend</code> 该如何实现呢？有一个很 Tricky 的方法，我们构造一个函数，它的参数类型是 <code>any</code> + <code>any[]</code>，然后通过 <code>extends</code> 和 <code>infer</code> 将真正的参数类型提取出来：</p><pre><code class="lang-typescript">type Prepend&lt;E, T extends Int&gt; =
-    ((e: E, ...list: T) =&gt; any) extends ((...list: infer R) =&gt; any)
-      ? R : T;</code></pre><p>同理，我们需要一个 <code>Prev</code> 函数，它是 <code>Next</code> 函数的逆运算，我们可以用函数式编程中常用的 <code>Tail</code> 来实现：</p><pre><code class="lang-typescript">type Tail&lt;T extends Int&gt; =
-    ((...t: T) =&gt; any) extends ((_: any, ...tail: infer R) =&gt; any)
-    ? R : [];
-
-type Prev&lt;I extends Int&gt; = Tail&lt;I&gt;;
-type __2 = Prev&lt;_3&gt;; // [any, any]</code></pre><p>加法就是不断地调用 <code>Next</code>：</p><pre><code class="lang-typescript">type Add&lt;A extends Int, B extends Int&gt; =
-    B extends _0 ? A : Add&lt;Next&lt;A&gt;, Prev&lt;B&gt;&gt;;
-//                     ^^^^^^^^^^^^^^^^^^^^^</code></pre><p>然而如果这样写，TypeScript 在推导时会无法确定 <code>Add</code> 究竟是个什么类型（报错 <code>ts(2456)</code>，因为它在每一层都无法得到一个确定的结果），所以需要一点变通。下面一种写法可以让 TypeScript 在递归的每一层都有一个确定的结果：</p><pre><code class="lang-typescript">type Add&lt;A extends Int, B extends Int&gt; = {
-    'true': A
-    'false': Add&lt;Next&lt;A&gt;, Prev&lt;B&gt;&gt;
-}[B extends _0 ? 'true' : 'false'];
-
-type _4 = Add&lt;_1, _3&gt;; // [any, any, any, any]
-type _5 = Add&lt;_2, _3&gt;; // [any, any, any, any, any]</code></pre><blockquote><p>注意：TypeScript 在递归超过 50 层之后，会强行推导为 <code>any</code>，所以实际上来讲，我们目前的代码无法处理 50 以上的加法。</p></blockquote><p>当然，其中的 <code>B extends _0 ? 'true' : 'false'</code> 可以抽成一个工具函数：</p><pre><code class="lang-typescript">type Eq&lt;A extends Int, B extends Int&gt; = A extends B ? 'true' : 'false';
-
-type Add&lt;A extends Int, B extends Int&gt; = {
-    'true': A
-    'false': Add&lt;Next&lt;A&gt;, Prev&lt;B&gt;&gt;
-}[Eq&lt;B, _0&gt;];</code></pre><p>减法也可以通过类似的方式写出来：</p><pre><code class="lang-typescript">type Sub&lt;A extends Int, B extends Int&gt; = {
-    'true': A
-    'false': Sub&lt;Prev&lt;A&gt;, Prev&lt;B&gt;&gt;
-}[Eq&lt;B, _0&gt;];
-
-type __3 = Sub&lt;_5, _2&gt;; // [any, any, any]</code></pre><p>乘法我们需要写一个辅助函数，因为我们要保存一个累加器：</p><pre><code class="lang-typescript">type _Mul&lt;Counter extends Int, A extends Int, B extends Int&gt; = {
-    'true': Counter
-    'false': _Mul&lt;Add&lt;Counter, A&gt;, A, Prev&lt;B&gt;&gt;
-//           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-}[Eq&lt;B, _0&gt;];
-
-type Mul&lt;A extends Int, B extends Int&gt; = _Mul&lt;_0, A, B&gt;;</code></pre><p>看似很简单的东西，但是 TypeScript 会报 <code>ts(2589)</code>，因为它认为这样可能会递归非常深，所以直接拒绝推导。这里可以用 <code>infer</code> 将未来需要的运算提前一些：</p><pre><code class="lang-typescript">type _Mul&lt;Counter extends Int, A extends Int, B extends Int&gt; = {
-    'true': Counter
-    'false': Add&lt;Counter, A&gt; extends infer R ? _Mul&lt;R, A, Prev&lt;B&gt;&gt; : never
-//                                                  ^
-}[Eq&lt;B, _0&gt;];</code></pre><p>报错变成了 <code>ts(2344)</code>，说 <code>R</code> 不是一个 <code>Int</code>。因为 TypeScript 的 <code>infer</code> 是无法预先知道结果的，但我们知道它一定是个 <code>Int</code>，因此再写一个转换函数 <code>Cast</code>，相当于强制类型转换（事实上根本没转）：</p><pre><code class="lang-typescript">type Cast&lt;X, Y&gt; = X extends Y ? X : Y;
-
-type _Mul&lt;Counter extends Int, A extends Int, B extends Int&gt; = {
-    'true': Counter
-    'false': Add&lt;Counter, A&gt; extends infer R ? _Mul&lt;Cast&lt;R, Int&gt;, A, Prev&lt;B&gt;&gt; : never
-}[Eq&lt;B, _0&gt;];
-
-type _6 = Mul&lt;_2, _3&gt;; // [any, any, any, any, any, any]</code></pre><p>整除和取模通过目前已有的工具函数已经可以写出来了，原理是循环相减，有兴趣的同学可以自行实践一下，开头就用 <code>Div&lt;A extends Int, B extends Int&gt;</code> 和 <code>Mod&lt;A extends Int, B extends Int&gt;</code> 吧。</p><p>然后是一些针对布尔值的逻辑运算 <code>And</code>、<code>Or</code>、<code>Not</code>：</p><pre><code class="lang-typescript">type And&lt;A extends Bool, B extends Bool&gt; =
-    A extends 'false' ? 'false' : B extends 'false' ? 'false' : 'true';
-
-type _and_true_true = And&lt;'true', 'true'&gt;;     // 'true'
-type _and_true_false = And&lt;'true', 'false'&gt;;   // 'false'
-type _and_false_true = And&lt;'false', 'true'&gt;;   // 'false'
-type _and_false_false = And&lt;'false', 'false'&gt;; // 'false'
-
-type Or&lt;A extends Bool, B extends Bool&gt; =
-    A extends 'true' ? 'true' : B extends 'true' ? 'true' : 'false';
-
-type _or_true_true = Or&lt;'true', 'true'&gt;;     // 'true'
-type _or_true_false = Or&lt;'true', 'false'&gt;;   // 'true'
-type _or_false_true = Or&lt;'false', 'true'&gt;;   // 'true'
-type _or_false_false = Or&lt;'false', 'false'&gt;; // 'false'
-
-type Not&lt;A extends Bool&gt; = A extends 'true' ? 'false' : 'true';
-
-type _not_true = Not&lt;'true'&gt;;   // 'false'
-type _not_false = Not&lt;'false'&gt;; // 'true'</code></pre><p>最后是比较运算符，我们先从小于号开始，首先判断 <code>A</code> 是否是 <code>0</code>，然后 <code>B</code> 是否是 <code>0</code>，最后是一个递归。这是一个三叉路口，但对于 TypeScript 来说不在话下：</p><pre><code class="lang-typescript">type Lt&lt;A extends Int, B extends Int&gt; = {
-    'A = 0': Not&lt;Eq&lt;B, _0&gt;&gt;
-    'B = 0': 'false'
-    'other': Lt&lt;Prev&lt;A&gt;, Prev&lt;B&gt;&gt;
-}[
-    A extends _0
-        ? 'A = 0'
-        : B extends _0
-            ? 'B = 0'
-            : 'other'
-];
-
-type _lt_1_2 = Lt&lt;_1, _2&gt;; // 'true'
-type _lt_5_3 = Lt&lt;_5, _3&gt;; // 'false'
-type _lt_4_4 = Lt&lt;_4, _4&gt;; // 'false'</code></pre><p>其它的符号，其实可以通过 <code>Lt</code>、<code>Eq</code> 配合 <code>And</code>、<code>Or</code>、<code>Not</code> 来实现：</p><pre><code class="lang-typescript">type Lte&lt;A extends Int, B extends Int&gt; =
-    // 使用 `extends` 和 `infer` 来提前计算 a&lt;b
-    Lt&lt;A, B&gt; extends infer R
-        ? Or&lt;Cast&lt;R, Bool&gt;, Eq&lt;A, B&gt;&gt;
-        : never;
-type Gt&lt;A extends Int, B extends Int&gt; = Not&lt;Lte&lt;A, B&gt;&gt;;
-type Gte&lt;A extends Int, B extends Int&gt; = Or&lt;Gt&lt;A, B&gt;, Eq&lt;A, B&gt;&gt;;</code></pre><h1>一个比较完美的实现</h1><p>有了之前的积累，上面的几个函数就比较好写了：</p><pre><code class="lang-typescript">type Fibonacci&lt;N extends Int&gt; = {
-    'true': _1
-    // 使用 `extends` 和 `infer` 来提前计算 f[n-1] 和 f[n-2]
-    'false': Fibonacci&lt;Sub&lt;N, _1&gt;&gt; extends infer F_N_1
-        ? Fibonacci&lt;Sub&lt;N, _2&gt;&gt; extends infer F_N_2
-            ? Add&lt;Cast&lt;F_N_1, Int&gt;, Cast&lt;F_N_2, Int&gt;&gt;
-            : never
-        : never
-}[Lte&lt;N, _2&gt;];
-
-type _fibonacci_1 = Fibonacci&lt;_1&gt;; // [any]
-type _fibonacci_2 = Fibonacci&lt;_2&gt;; // [any]
-type _fibonacci_3 = Fibonacci&lt;_3&gt;; // [any, any]
-type _fibonacci_4 = Fibonacci&lt;_4&gt;; // [any, any, any]
-type _fibonacci_5 = Fibonacci&lt;_5&gt;; // [any, any, any, any, any]
-type _fibonacci_6 = Fibonacci&lt;_6&gt;; // [any, any, any, any, any, any, any, any]
-
-type Gcd&lt;X extends Int, Y extends Int&gt; = {
-    'true': X
-    'false': Gcd&lt;Y, Mod&lt;X, Y&gt;&gt;
-}[Eq&lt;Y, _0&gt;]
-
-type H&lt;N extends Int, A extends Int, B extends Int&gt; = {
-    'N = 0': Next&lt;B&gt;
-    'N = 1 &amp; B = 0': A
-    'N = 2 &amp; B = 0': _0
-    'N &gt; 2 &amp; B = 0': _1
-    // 使用 `extends` 和 `infer` 来提前计算 h(n, a, b-1)
-    'other': H&lt;N, A, Prev&lt;B&gt;&gt; extends infer R ? H&lt;Prev&lt;N&gt;, A, Cast&lt;R, Int&gt;&gt; : never
-}[
-    Eq&lt;N, _0&gt; extends 'true'
-        ? 'N = 0'
-        : And&lt;Eq&lt;N, _1&gt;, Eq&lt;B, _0&gt;&gt; extends 'true'
-            ? 'N = 1 &amp; B = 0'
-            : And&lt;Eq&lt;N, _2&gt;, Eq&lt;B, _0&gt;&gt; extends 'true'
-                ? 'N = 2 &amp; B = 0'
-                : And&lt;Gt&lt;N, _2&gt;, Eq&lt;B, _0&gt;&gt; extends 'true'
-                    ? 'N &gt; 2 &amp; B = 0'
-                    : 'other'
-]
-
-type _h_0_0_3 = H&lt;_0, _0, _3&gt;; // 3+1=4,  [any, any, any, any]
-type _h_1_5_6 = H&lt;_1, _5, _6&gt;; // 5+6=11, [any, any, any, any, any, any, any, any, any, any, any]
-type _h_2_4_2 = H&lt;_2, _4, _2&gt;; // 4*2=8,  [any, any, any, any, any, any, any, any]
-type _h_3_3_3 = H&lt;_3, _3, _3&gt;; // 3^3=27, [any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any]</code></pre><h1>无法实现的问题，以及未来的解决方案</h1><p>上面的例子看起来很完美、很符合逻辑，但毕竟 TypeScript 类型系统并不是为了函数式编程而服务的，因此也有一些思想是它暂时无法实现的。</p><blockquote><p>注意：只是思想无法实现。TypeScript 类型系统在理想状态下是图灵完备的。</p></blockquote><h2>惰性计算</h2><p>这其实是 TypeScript 目前的定位和设计所导致的。本文的“函数”只是 TypeScript 中普通的“工具类型”，并没有真正的“函数”的功能，所谓的“返回值”也只是跟这个定义的内容等价的“TypeScript 类型”而已。虽然每个工具类型本身写起来是函数式编程，但不同的工具类型却是按照命令式逐一定义并推导的。</p><h2>函数是一等公民</h2><p>考虑到这样一个函数，它的输入和输出都是函数：</p><pre><code class="lang-javascript">function compose(...f) {
-    return f.length === 0
-        ? undefined
-        : f.length === 1
-          ? f[0]
-          : (...args) =&gt; f[0](compose(...f.slice(1))(args));
-}</code></pre><p>如果用 TypeScript 类型系统来写，会是什么样的呢？</p><blockquote><p>注意：从这里开始，所有的 TypeScript 代码在本文发布的时期都是错误的，不要模仿。</p></blockquote><pre><code class="lang-typescript">type Compose&lt;F&gt; =
-    F['length'] extends 0
-        ? undefined
-        : F['length'] extends 1
-            ? F[0]
-            : ########</code></pre><p>井号的部分写起来并没有那么直观。事实上，TypeScript 目前不支持高阶工具类型（Higher order types），因此我们没有办法把“函数”作为输入和输出。</p><h2>未来的解决方案</h2><p>目前 TypeScript 有这样一个 Proposal：<a href="https://github.com/microsoft/TypeScript/issues/1213#issuecomment-523245130">Higher Order, Lamda, Reference types</a>，目前的状态是 Backlog（待办）。它的语法有点类似于 C 里面的函数指针：</p><pre><code class="lang-typescript">type A&lt;T extends string&gt; = { 0: T }
-type B&lt;T extends string&gt; = [T]
-type C&lt;T extends number&gt; = 42
-
-// Here's our lamda
-type Referer&lt;*Ref&lt;X extends string&gt;, T extends string&gt; = Ref&lt;T&gt;
-
-type testA = Referer&lt;A, 'hi'&gt; // { 0: 'hi' }
-type testB = Referer&lt;B, 'hi'&gt; // ['hi']
-type testC = Referer&lt;C, 'hi'&gt; // ERROR</code></pre><p>唯一需要做的就是在“参数”前面加一个星号，表示这个“参数”是一个泛型，这样我们就能将“函数”作为“参数”传进去了。如果用普通的代码来写，大概是这样：</p><pre><code class="lang-typescript">const a = (t: string) =&gt; ({ 0: t });
-const b = (t: string) =&gt; [t];
-const c = (t: number) =&gt; 42;
-
-// Here's our lamda
-const referer = (ref: (x: string) =&gt; any, t: string) =&gt; ref(t)
-
-const testA = referer(a, 'hi') // { 0: 'hi' }
-const testB = referer(b, 'hi') // ['hi']
-const testC = referer(c, 'hi') // type mismatch</code></pre><p>先不管它以后会不会被实现，至少可以确定的是：如果有了这个功能，上面两个问题就都能解决了：第二个问题无需多讲；对于第一个问题，由于需要支持传入一个泛型，那么支持传入泛型的那个泛型（上文的 <code>Referer</code>）在传入之前是无法被推导的。作者也说了：In this context, we can say that <code>*</code> "protects" against immediate evalutation.</p><h2>做个脑力游戏吧</h2><p>假如真的有了这个功能，我们该怎么实现 <code>Compose</code> 呢？</p><pre><code class="lang-typescript">type Compose&lt;
-    F extends Array&lt;*Ref&lt;T extends any&gt;&gt;
-&gt; =
-    F['length'] extends 0
-        ? undefined
-        : F['length'] extends 1
-            ? F[0]
-            : ########</code></pre><p>这个特性依旧无法让我们在井号的地方直接用 <code>type xxx = yyy</code> 这种方式来定义“函数”。</p><p>方法总比困难多，不是不能在定义中定义吗，我在之前先定义好不就可以了？我把井号部分抽成一个辅助函数 <code>P</code>：</p><pre><code class="lang-typescript">type P&lt;F extends Array&lt;*Ref&lt;T extends any&gt;&gt;&gt; = *(F[0])&lt;Compose&lt;Tail&lt;F&gt;&gt;&gt;;</code></pre><p>那么井号的部分就可以直接写 <code>*(P&lt;F&gt;)</code> 了！</p><p>然而这有个问题：<code>P</code> 要在 <code>Compose</code> 之前定义，但 <code>P</code> 里面又用到了 <code>Compose</code>。在函数式编程中有一个方法可以解决：我们可以将 <code>Compose</code> 作为参数传入 <code>P</code>，就像这样：</p><pre><code class="lang-typescript">type P&lt;
-  *H&lt;*F extends Array&lt;*Ref&lt;T extends any&gt;&gt;&gt;,
-  F extends Array&lt;*Ref&lt;T extends any&gt;&gt;
-&gt; = *(F[0])&lt;H&lt;Tail&lt;F&gt;&gt;&gt;;</code></pre><pre><code class="lang-typescript">type Compose&lt;
-    F extends Array&lt;*Ref&lt;T extends any&gt;&gt;
-&gt; =
-    F['length'] extends 0
-        ? undefined
-        : F['length'] extends 1
-            ? F[0]             // is a generic
-            : *(P&lt;Compose, F&gt;) // is also a generic</code></pre><p>更进一步，我们可能可以推出函数式编程中的 Y-组合子，从而从另一个方向上证明了它是图灵等价的。</p><h1>参考资料</h1><ul><li><a href="https://www.byvoid.com/zhs/blog/apio-fp">APIO讲稿——函数式编程 - BYVoid</a></li></ul>]]></content>
-        <author>
-            <name><![CDATA[R·ex / Zeng]]></name>
         </author>
     </entry>
     
