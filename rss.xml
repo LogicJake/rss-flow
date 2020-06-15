@@ -3,12 +3,122 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2020-06-15T12:07:41+08:00</updated>
+    <updated>2020-06-15T18:05:51+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
     </author>
     
+    
+    <entry>
+        <id>https://blog.rexskz.info/state-driving-business-code-2.html</id>
+        <title><![CDATA[编写状态驱动的业务代码（2）]]></title>
+        <updated>2020-06-15T16:54:00+08:00</updated>
+        <link href="https://blog.rexskz.info/state-driving-business-code-2.html"/>
+        <content type="text/html" src="https://blog.rexskz.info/state-driving-business-code-2.html"><![CDATA[<p>记得两年前的差不多这个时候，我曾经写了一篇文章 <a href="https://blog.rexskz.info/state-driving-business-code.html">编写状态驱动的业务代码</a>，讲了一下我使用状态来描述业务需求的一个经历。自那之后，我很少再接触步骤如此多的业务需求，直到前一段时间……</p><h1>一个复杂的页面</h1><p>运营平台有一个页面，是专门用来配置运费规则的，里面有最多 12 个步骤（12 个对话框），一个可能的步骤如下：</p><ol><li>基础信息配置，其中可以选择是否需要配置一些“可选费用”（例如燃油费等）</li><li>地区配置</li><li>如果地区配置为 XXX，则需要配置 YYY 费</li><li>如果第一步中选择了燃油费，则配置燃油费</li><li>如果第一步中选择了 XXX 费，则配置 XXX 费</li><li>……</li></ol><p>这个页面最开始不是我写的，之前的同事正是使用了一个状态转移函数来负责步骤间的切换。不过对于如此多的状态，这段代码还是对接手的人太不友好了：</p><p><img src="https://static.rexskz.info/blog/article/state-driving-business-code-2/1.png" alt="这对接手的人太不友好了！" title="这对接手的人太不友好了！"></p><p>在我还不了解之前的需求的时候，突然的一大堆 switch-case，看的我眼花缭乱。更麻烦的是，产品写的 PRD 上面，多了好几个形如“如果 XXX 则跳过 YYY 步骤”的特判。我觉得这段代码已经无法满足后续的维护需求了，于是便让之前的同事帮忙整理了一下业务逻辑，画了一张状态转移图出来，大概是这样的：</p><p><img src="https://static.rexskz.info/blog/article/state-driving-business-code-2/2.png" alt="上面那段代码对应的状态转移图" title="上面那段代码对应的状态转移图"></p><p>看了之后感觉还是挺震撼的，另外一个同事不禁发出了如下感慨：</p><p><img src="https://static.rexskz.info/blog/article/state-driving-business-code-2/3.jpg" alt="这是个好问题" title="这是个好问题"></p><p>玩笑归玩笑，代码还是要写的。整理了一下，产品的新需求其实就是在图中加了几条边而已，于是我稍微更新了一下这张图。</p><p>理清了思路，接下来就是如何利用当前状态、这个转移图、当前上下文这三个条件，来计算下一个状态了。其实这并难不倒我，既然这是个图结构，那么我就用计算机中的“图”来存储它！</p><h1>图结构的用法</h1><p>本文不是一篇数据结构文章，因此不会详细的讲解图结构的代码（网上的资料已经足够多了）。图结构在计算机中有三种最常用的存储方式：邻接矩阵、邻接表、边数组，我决定使用邻接表来做。为了简便，代码里面会有一些 JS 的特性（例如 C 就无法很方便的像 Object 一样快速查找）。</p><p>在上面的图片中，状态转移图的每个点可以认为是一个字符串，每条边有两个属性，那么整个图结构的 TypeScript 定义如下：</p><pre><code class="lang-typescript">interface GraphType {
+    [key: string]: Array&lt;{
+        next: string;
+        cond?: (state: Record&lt;string, any&gt;) =&gt; boolean;
+    }&gt;;
+}</code></pre><p>根据上面的状态转移图，整张图的样子大概是这样的（由于原代码涉及到了公司业务，因此用简单的字符串来代替一下）：</p><pre><code class="lang-typescript">const buildGraph = (baseState: Record&lt;string, any&gt;) =&gt; {
+    // 静态的边
+    const g: GraphType = {
+        'aFee': [
+            // 必须保证所有的边都是互斥的，
+            // 否则如果有两条边的条件此时都满足，
+            // 会跳到哪个点，就要依赖定义的顺序了
+            { next: 'bFee', cond: state =&gt; state.aaa === AAA },
+            { next: 'cFee', cond: state =&gt; state.aaa !== AAA },
+        ],
+        'bFee': [
+            { next: 'cFee', cond: state =&gt; state.ccc === CCC },
+            { next: 'dFee', cond: state =&gt; state.ccc !== CCC },
+        ],
+        'cFee': [
+            // 一条边可以不设置条件，即“无条件跳到下一个点”
+            { next: 'dFee' },
+        ],
+        // ....
+    };
+    // 可以针对一些条件动态加边
+    if (baseState.XXX === XXX) {
+        g.xFee.push({ next: 'yFee' });
+    }
+    return g;
+};</code></pre><p>至于点击“下一步”之后该跳到哪个步骤，判断的思路就是：先找到当前的点，然后依次枚举从这个点出发的每条边，看是否满足边的 <code>cond</code>，如果满足则直接返回这条边的终点。代码如下：</p><pre><code class="lang-typescript">const fun = (g: GraphType, curPage: string, type: string) =&gt; {
+    // 先实现“下一步”
+    if (type === 'next') {
+        // 不知道什么原因没有找到当前页面对应的点，
+        // 或者当前点没有边，那就停留在当前页面吧！
+        if (!g[curPage] || !g[curPage].length) {
+            return curPage;
+        }
+        // 枚举从当前点出发的每条边
+        for (const edge of g[curPage]) {
+            // 如果这条边没有设置条件，或当前状态可以满足条件
+            if (!edge.cond || edge.cond(state)) {
+                // 直接返回这条边的终点
+                return edge.next;
+            }
+        }
+    } else {
+        // “上一步”过会儿实现
+    }
+    // 正常来说只要图建对了，代码是不会走到这儿的，
+    // 但一些特殊情况有可能，例如图中每条边的条件都不满足。
+    // 作为 fallback 我返回了当前点，也可以直接报错。
+    return curPage;
+};</code></pre><p>那么“上一步”呢？我一开始考虑的是生成一张反图（点不变，边的方向相反），这样就可以先根据 <code>type</code> 确定用正图还是反图，然后剩下的逻辑就一样了。不过事实证明我想的太简单了，例如有两个点 A 和 B，经过了相同的条件，走到了同一个点 C，这是在业务中允许的。然而如果是这样，那么在反图中，从 C 出发就会有两条 <code>cond</code> 相同的边，但分别指向的 A 和 B，这样是会出问题的！</p><h1>使用栈来记录路径</h1><p>我又稍微想了一下，用户从第一个步骤开始，经过一通操作，到达了某个步骤，这个过程在图中就是一条路径。我们只需要简单的用一个栈来记录当前用户走过的路径，这样用户点击“上一步”的时候，就可以直接弹栈了。</p><pre><code class="lang-typescript">// 存储路径用的栈
+const stack = [];
+const fun = (g: GraphType, curPage: string, type: string) =&gt; {
+    if (type === 'next') {
+        if (!g[curPage] || !g[curPage].length) {
+            return curPage;
+        }
+        // 这是第一个元素，先入栈再说
+        if (!stack.length) {
+            stack.push(curPage);
+        }
+        for (const edge of g[curPage]) {
+            if (!edge.cond || edge.cond(state)) {
+                // 用户往前走了一步，需要入栈
+                stack.push(edge.next);
+                return edge.next;
+            }
+        }
+    } else {
+        // 点击“上一步”时，直接弹栈
+        stack.pop();
+        return stack[stack.length - 1] || curPage;
+    }
+    return curPage;
+};</code></pre><h1>图的更新</h1><p>因为在一些界面可能会编辑一些配置信息，这会影响到图，因此点击下一步之后，需要跳到另外一个界面。最终我决定将 <code>fun</code> 函数、图的更新函数，以及那个栈一起，放到一个大的闭包中：</p><pre><code class="lang-typescript">export const createPageSwitcher = (baseState: Record&lt;string, any&gt;): PageSwitchFunc =&gt; {
+    let state = baseState;
+    let g = buildGraph(state);
+    let stack: string[] = [];
+    const fun = (type: string) =&gt; {
+        // ...刚才的 fun 函数，curPage 其实就是 stack 的顶端元素
+    };
+    fun.updateGraph = (nextState: Record&lt;string, any&gt;, clearStack = false) =&gt; {
+        state = nextState;
+        g = generateGraph(state);
+        if (clearStack) {
+            stack = [];
+        }
+    };
+    return fun;
+};</code></pre><p>这样调用方式如下：</p><pre><code class="lang-typescript">// 初始化
+const switcher = createPageSwitcher(this.state);
+// 下一页
+console.log(switcher('next'));
+// 上一页
+console.log(switcher('prev'));
+// 修改了 state 之后调用的，用来更新图，但保留当前已走过的路径
+switcher.updateGraph(nextState, false);</code></pre><p>大功告成！之后产品如果想再修改这些步骤，对于开发人员来说就简单多了，只需要修改 <code>buildGraph</code> 部分的代码就可以了。</p><p>为了保险起见，我针对不同的图、当前点、操作类型，为这些函数仔细编写了单元测试。</p>]]></content>
+        <author>
+            <name><![CDATA[R·ex / Zeng]]></name>
+        </author>
+    </entry>
     
     <entry>
         <id>https://blog.rexskz.info/barcode-scan-bug-caused-by-hardware-issue.html</id>
@@ -1159,38 +1269,6 @@ require (
         <content type="text/html" src="https://invariant.me/designing-a-superscalar-ooo-mips-cpu-from-scratch/"><![CDATA[<img src="https://images.unsplash.com/photo-1555589228-135c25ae8cf5?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=2000&fit=max&ixid=eyJhcHBfaWQiOjExNzczfQ" alt="[PLACEHOLDER] Designing a superscalar MIPS CPU from scratch: #0"><p>The CS undergraduate programme at <a href="https://nuaa.edu.cn/">NUAA</a> includes a (compulsory) Computer Organization course for this (4th) semester that requires implementing a MIPS CPU on the <a href="http://www.loongson.cn/index.html">Loongson</a> <a href="http://www.loongson.cn/news/company/628.html">development kit</a>, which is essentially a FPGA board + various useful modules.</p><p>As shown below, the suggested design is a classical 5-stage pipelined architecture:</p><figure class="kg-card kg-image-card kg-card-hascaption"><img src="https://invariant.me/content/images/2020/02/--2020-02-16--2.39.51.png" class="kg-image" alt="[PLACEHOLDER] Designing a superscalar MIPS CPU from scratch: #0"><figcaption>Suggested basic 5-stage pipeline</figcaption></figure><p>But it's boring to write "yet another" CPU that implements only the simplest structures. So I decided to extend the design a bit, and build a <a href="https://en.wikipedia.org/wiki/Superscalar_processor">superscalar</a> <a href="https://en.wikipedia.org/wiki/Out-of-order_execution">OoO</a> architecture from the ground up.</p><p>During the next few months I will post my experience as a series of posts both here and on WeChat. <a href="https://invariant.me/subscribe/">Subscribe</a> to stay updated!</p>]]></content>
         <author>
             <name><![CDATA[The Invariant]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://blog.rexskz.info/redirect-attack-weakness-of-ss-stream-cipher.html</id>
-        <title><![CDATA[Redirect attack - Shadowsocks 流密码的不安全因素]]></title>
-        <updated>2020-02-14T18:18:00+08:00</updated>
-        <link href="https://blog.rexskz.info/redirect-attack-weakness-of-ss-stream-cipher.html"/>
-        <content type="text/html" src="https://blog.rexskz.info/redirect-attack-weakness-of-ss-stream-cipher.html"><![CDATA[<p>Shadowsocks 是一款陪伴无数玩家多年的科学上网工具，但是近年来随着墙的日益增高，一些 Shadowsocks 流量已经可以被很好的识别出来，然后就是——“同志，你梯子塌了”。</p><p>虽然“协议可以被识别”已经众所周知，但我们依旧认为，Shadowsocks 的加密做的不错，中间人应当破解不出明文信息。</p><p>然而，晚上看到的一篇 <a href="https://github.com/edwardz246003/shadowsocks/blob/master/Redirect%20attack%20on%20Shadowsocks%20stream%20ciphers.pdf">文章</a>，稍稍动摇了一下我对 Shadowsocks 数据安全的信心，更让我重新审视了一下流密码的安全性。之前我在做安全方面的科普的时候，我总会提到“ECB 是不安全的”，但现在发现，其它的一些流密码也不一定安全，因为它们没有保证数据的完整性，因此存在数据被篡改的可能性。</p><blockquote><p>Shadowsocks 如果配置得当，还是比较安全的，或者至少可以让目前的破解方法没有用武之地。如果看完本文后依旧不放心，可以使用其它的科学上网工具。</p><p>本文的一些图片引用自维基百科，可能需要科学地观看。</p></blockquote><h1>一些基本概念</h1><p>考虑到可能有些同学没有密码学的基础，也对 Shadowsocks 的协议不是很了解，这里就简单的介绍一下。如果您已经有足够的知识，可以 <a href="#toc-link-5">跳到下一节</a>。</p><h2>流密码</h2><p>相信不少人都听说过 AES 之类的对称加密算法，但并没有了解的那么细致。例如什么是 IV？什么是基于数据块的加密？</p><p>事实上，AES 算法本体并不是为了处理无限长度的字符串而设计的，它一次只能处理 16 个字节（不管是 <code>AES-128</code> 还是 <code>AES-256</code>），我们管这 16 个字节叫做一个“数据块”，AES 就是一个基于数据块的加密算法。对于这一缺陷，可以用这样一种思路：先将明文切割成若干个数据块，对于每个块用 AES 做加密，再把每个加密后的块拼起来。</p><p>是不是很简单？其实这就是 ECB 模式。使用这个思路的 <code>AES-256</code> 算法被称为 <code>AES-256-ECB</code>。由于 16 字节对于一些数据来说实在是太小，很容易出现大量重复的块。例如有这样一张图片：</p><p><img src="https://upload.wikimedia.org/wikipedia/commons/5/56/Tux.jpg" alt="Original image" title="Original image"></p><p>大家都知道这是一只小企鹅，我们用 ECB 加密一下再看看：</p><p><img src="https://upload.wikimedia.org/wikipedia/commons/f/f0/Tux_ecb.jpg" alt="Encrypted using ECB mode" title="Encrypted using ECB mode"></p><p>应该依旧能看出来图中是刚才那只小企鹅。ECB 模式无法隐藏原文的特征，请大家尽量不要使用。</p><p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/ECB_encryption.svg/601px-ECB_encryption.svg.png" alt="Electronic Codebook (ECB) mode encryption" title="Electronic Codebook (ECB) mode encryption"></p><p>有一些改良的方法，例如除了密码以外，再提供一个初始向量 <code>IV</code> 作为第 0 个数据块，在加密第 i 个块之前，先将明文跟上一个块的加密结果异或一下，即：</p><pre><code class="lang-text">Cipher[0] = IV
-Cipher[i] = Encrypt(Plain[i] ^ Cipher[i - 1])</code></pre><p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/CBC_encryption.svg/601px-CBC_encryption.svg.png" alt="Cipher Block Chaining (CBC) mode encryption" title="Cipher Block Chaining (CBC) mode encryption"></p><p>这种方式会比刚才的 ECB 安全得多。</p><p>还有其它的一些方式，所有的这些方式（包括 ECB）统称为“流密码”。一开始的那张小企鹅，用 ECB 以外的方式加密之后是这样的，已经完全看不出是什么了：</p><p><img src="https://upload.wikimedia.org/wikipedia/commons/a/a0/Tux_secure.jpg" alt="Modes other than ECB result in pseudo-randomness" title="Modes other than ECB result in pseudo-randomness"></p><h2>中间人攻击</h2><p>中间人攻击是个比较好玩的东西，假设攻击者利用一些方法（比如用一个钓鱼热点）让受害者发出的数据包走到了自己这里，那么攻击者就可以查看或者修改数据包的内容。就好像小明在课上给小红传纸条，本来写的是“我喜欢你”，但在经过小亮的时候，小亮用自己的纸条替换了他们的，上面写着“滚犊子吧”，可见中间人攻击对我们的影响有多大。</p><blockquote><p>注：在课上传纸条是不好的行为，小朋友们不要模仿。</p></blockquote><p>大家在日常生活中最常经历的中间人攻击，可能是在访问某些 HTTP 网站的时候，突然弹出一个“宽带到期需要续费”的通知。这种中间人攻击是一些无良运营商干的，不过我们更习惯把它叫做“流量劫持”。</p><h2>数据完整性</h2><p>这一段就偷个懒，直接摘抄百度百科了（有删改）：</p><blockquote><p>完整性是信息安全的三个基本要点之一，指用户、进程或者硬件组件具有能力，能够验证所发送或传送的东西的准确性，并且进程或硬件组件不会被以任何方式改变。</p></blockquote><p>翻译成白话就是：能保证数据在传输过程中不被篡改，小红收到的纸条内容跟小明传出去的一模一样。</p><ul><li>大家听说过的 ECC 内存纠错算法就能保证数据完整性，它可以发现内存数据被篡改（例如遭受了高能粒子冲击或硬件的部分损坏），并通过一些算法尽量恢复被损坏的部分；</li><li>HTTPS 中的数字签名也是一种保证数据完整性的方法，它可以发现传输的数据被篡改（例如中间人攻击），并且立即停止数据传输，以防止用户或服务器因为接收到虚假数据而遭受损失。</li></ul><h2>Shadowsocks 协议基础</h2><p>虽然 Shadowsocks 使用的底层协议是 SOCKS5，但对于本文而言，底层的 SOCKS5 并不是重点，我们只需要关注 Shadowsocks 的客户端与服务器之间是如何传输数据的。</p><p>根据官方文档所说，客户端向服务器发送的数据，一开始是流密码的 <code>IV</code>（也就是说，<code>IV</code> 由客户端生成，并直接扔进数据包中），之后就是一段加密数据，它的明文格式是这样的：</p><pre><code class="lang-text">[目标地址][数据]</code></pre><p>其中数据可以是任意长度；至于目标地址，Shadowsocks 用的是 SOCKS5 的表示法：</p><pre><code class="lang-text">[1 字节类型][主机名][2 字节端口]</code></pre><p>其中，类型是 1 字节的枚举值：</p><ul><li>0x01：主机名是 IPv4 地址；</li><li>0x03：主机名是变长字符串，首字节表示长度（最大 255），后面是数据；</li><li>0x04：主机名是 IPv6 地址。</li></ul><p>一次代理的过程如下：</p><ol><li>客户端将这些数据加密后发到服务器；</li><li>服务器收到后将其解密，会得到 <code>[1 字节类型][主机名][2 字节端口][数据]</code>；</li><li>服务器会将数据部分直接发送给 <code>主机名:端口</code>；</li><li>服务器将主机返回的数据直接使用同样的算法加密（如果加密算法用了流密码，则会生成并使用一个新的 <code>IV</code>，并将其放在包的最前面），发送给客户端；</li><li>客户端解密后即可得到主机返回的数据。</li></ol><h1>Shadowsocks + 流密码的不安全因素</h1><p>回到一开始说的那篇文章上，作者的发现是：如果攻击者抓到了一个 Shadowsocks 服务器返回的包，并且已知数据部分的开头七个字节，那么有可能在不知道密码的情况下，利用那个 Shadowsocks 服务器来解出包的绝大部分内容（最多损失 16 字节）。</p><p>作者的思路是这样的：</p><p>假设有一台 Shadowsocks 服务器，攻击者通过嗅探或其它方式抓到了这个 Shadowsocks 服务器返回的一个包。</p><p>为了知道明文内容，攻击者要么暴力破解密码（随着大家安全意识的提升，这已经几乎不可行了），要么想办法利用这台 Shadowsocks 服务器帮忙解密。</p><p>作者选择了后者，即想办法把这个包变成客户端发的包，让服务器解密后代理到自己指定的服务器，这被称为 <code>Redirect attack</code>。</p><p>上一节说到，Shadowsocks 客户端发的包格式（明文状态下）是 <code>[1 字节类型][主机名][2 字节端口][数据]</code>。如果攻击者可以利用加密算法的缺陷来篡改明文数据，就可以把主机名改成攻击者的服务器地址，Shadowsocks 服务器就会以为客户端想访问攻击者的服务器，于是就把解密后的包中的数据部分发了过去。</p><p>先考虑如何篡改数据。假设这台 Shadowsocks 服务器的加密算法使用的是 <code>AES-256-CFB</code>，那么解密的方式如维基百科所述是这样的：</p><p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/CFB_decryption.svg/601px-CFB_decryption.svg.png" alt="Cipher Feedback (CFB) mode decryption" title="Cipher Feedback (CFB) mode decryption"></p><p>其中 <code>IV</code>、每一块 Ciphertext 和 Plaintext 长度都是 16 字节。</p><p>作者发现，<code>key</code> 是不变的，<code>IV</code> 也可以重用服务器返回包中的那个，那么如果只修改第一块 Ciphertext，那么<strong>只有前两块 Plaintext 会改变</strong>，更重要的是，由于第一块 Plaintext 就是第一块 Ciphertext 跟某个串 A 的异或值，那么攻击者完全可以<strong>通过修改第一块 Ciphertext 的值来控制第一块 Plaintext</strong>！具体方法如下：</p><p>假设当前的第一块 Ciphertext 是 <code>c1</code>，第一块 Plaintext 是 <code>p1</code>，<code>IV</code> 做了一系列 whatever 的运算得到的结果是 <code>a</code>，那么：</p><pre><code class="lang-text">已知 a ^ c1 == p1
-那么 a ^ c1 ^ X == p1 ^ X
-根据异或的结合律
-可得 a ^ (c1 ^ X) == (p1 ^ X)
-也就是说，攻击者对 c1 做的异或操作，会完完全全反映在 p1 上
-
-假设最终让 p1 变成了 q1，我们可以认为
-已有 p1 ^ X == q1，将两边同时异或 p1
-可得 p1 ^ X ^ p1 == q1 ^ p1
-由于异或的性质，左边的两个 p1 抵消
-可得 X == q1 ^ p1</code></pre><p>攻击者需要做的就是将 <code>c1 ^= (q1 ^ p1)</code>。但这里有一个问题，我们并不能知道具体的 <code>p1</code> 是什么！不过还好，它是明文数据的一部分，在上网的过程中，总有些协议的头几个字节是固定的，例如 HTTP 协议。</p><p>在 21 世纪的第三个十年，大家应该早就切换成 HTTP 1.1 了，因此返回的数据包一开始一定是 8 个字节 <code>HTTP/1.1</code>。攻击者能否将 TA 的主机地址压缩到这么小呢？毕竟除掉 1 字节类型和 2 字节端口以外，可用空间只有 5 字节了。</p><p>对于绝大部分攻击者来说，不可能拿到不超过 5 字节的域名，因此只能考虑 IPv4 了，而且如果用 IPv4 的话，甚至只需要总共 7 个字节！举个例子：</p><pre><code class="lang-text">01 c0 a8 01 03 12 12
--- ----------- -----</code></pre><p>划线的三部分分别代表了：使用 IPv4 协议、地址是 192.168.1.3，端口是 4626。</p><p>那么我们完全可以令：</p><pre><code class="lang-python">p1 = 'HTTP/1.'
-q1 = '\x01\xc0\xa8\x01\x03\x12\x12'
-new_c_part = c1[0:7] ^ p1 ^ q1</code></pre><p>用这个 7 字节的 <code>new_c_part</code> 替换掉之前 <code>c1</code> 的前 7 个字节，然后直接将替换后的整个包发送到刚才的 Shadowsocks 服务器。</p><p>Shadowsocks 服务器尝试解密，解密后发现明文是这样的：</p><pre><code class="lang-text">01 c0 a8 01 03 12 12 XX XX XX XX XX XX XX XX XX</code></pre><p>服务器会认为这是一个合法的客户端请求，因此将后面的一串 <code>XX</code>（明文数据）按照前 7 个字节的要求，转发到了 <code>192.168.1.3:4626</code>。</p><p>攻击者早就在这儿坐等了，方法非常简单，只需要用 <code>nc</code> 启动一个端口监听即可：</p><pre><code class="lang-text">$ nc -l -p 4626</code></pre><p>由于攻击者修改了 <code>c1</code>，而 <code>c1</code> 在 CFB 模式中又用来解密 <code>p2</code>，因此收到的 <code>p2</code> 这 16 个字节应该是乱码。攻击者最终可以还原出 <code>p2</code> 以外的所有数据。论文中的命令行截图也说明了这点，获取到的数据的第一个字节是之前包的明文的第 8 个字节（前 7 个是 <code>HTTP/1.</code>），然后有 9 个字节是正确的，之后 16 个字节是乱码，再之后是完全正确的：</p><pre><code class="lang-text">1 304 Not???????????????? Sat, 26 Jan 2019 07:15:21 GMT
-Connection: close
-Via: 1.1 varnish
-Cache-Control: max-age=600
-ETag: W/&quot;5c45d22a-127&quot;
-Expires: Sat, 26 Jan 2019 06:59:41 GMT
-Age: 0
-....</code></pre><p>作者给出的防御措施是：</p><ul><li>禁用 shadowsocks-py、shadowsocks-go、go-shadowsocks2、shadowsocks-nodejs</li><li>只用 shadowsocks-libev，并且只使用 AEAD 加密</li></ul><p>原因如下：shadowsocks-libev 的实现很久之前就已经禁止了 <code>IV</code> 重用，可以在一定程度上防止这种攻击；只要加密算法带有 AEAD 特性，那么数据就无法被篡改，本文的攻击方式也是无效的。</p><h1>对大众的影响</h1><p>虽然文章中只列举了 HTTP 协议和 CFB 模式的例子，但理论上来说，所有头部 7 个字节已知的协议和所有类似流密码的组合，都可以被这种方法攻击。你不能保证你科学上的网总是 HTTPS，即使是 HTTPS，如果是国内网站，当某些不可抗力获取了其证书之后，你的 TLS 流量总是会被解密的。</p><p>不过有一些值得欣慰的地方：</p><p>由于墙的逐渐升高，大家已经逐渐意识到“只有加密是不行的”了，因此纷纷改用带有混淆功能的科学上网工具。由于攻击者无法得知混淆的参数（甚至不知道哪个流量是梯子的流量），因此这个方法不再起作用了。</p><p>目前大部分科学上网工具已经禁用了旧的加密算法，甚至强制只让使用带有 GCM 或者 Poly1305 的加密算法，这些算法有严格的 AEAD 特性，可以极大保证数据安全。TLS 1.3 强制使用 AEAD 也在某些程度上为它的安全性做了担保。</p><p>如果你还在用 Shadowsocks 或其衍生工具，并且依旧使用普通的流密码来加密，那么请立即听从作者给出的防御措施，为了你的服务器，也为了你自己。</p><h1>参考资料</h1><ul><li><a href="https://github.com/edwardz246003/shadowsocks">edwardz246003/shadowsocks: Redirect attack on Shadowsocks stream ciphers</a></li><li><a href="https://shadowsocks.org/en/spec/Protocol.html">Shadowsocks - Protocol</a></li><li><a href="https://shadowsocks.org/en/spec/Stream-Ciphers.html">Shadowsocks - Stream Ciphers</a></li><li><a href="https://toutiao.io/posts/5fo90o/preview">Shadowsocks 原理详解</a></li><li><a href="https://printempw.github.io/why-do-shadowsocks-deprecate-ota/">为何 shadowsocks 要弃用一次性验证 (OTA) - PRIN BLOG</a></li><li><a href="https://and-rev.blogspot.com/2016/09/shadowsocks.html">Shadowsocks 的定制和“不安全性”的分析 ~ and-rev</a></li><li><a href="https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation">Block cipher mode of operation - Wikipedia</a></li><li><a href="https://baike.baidu.com/item/%E5%AE%8C%E6%95%B4%E6%80%A7/949221">完整性（信息安全的三个基本要点之一）_百度百科</a></li></ul><h1>Update 2020-02-15</h1><p>添加了对 <code>IV</code> 重用相关的补充。</p>]]></content>
-        <author>
-            <name><![CDATA[R·ex / Zeng]]></name>
         </author>
     </entry>
     
