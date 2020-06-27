@@ -3,12 +3,80 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2020-06-27T12:07:23+08:00</updated>
+    <updated>2020-06-27T18:06:24+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
     </author>
     
+    
+    <entry>
+        <id>https://blog.triplez.cn/using-systemd-manage-frpc-service/</id>
+        <title><![CDATA[使用 systemd 管理 frpc 服务]]></title>
+        <updated>2020-06-27T14:26:07+08:00</updated>
+        <link href="https://blog.triplez.cn/using-systemd-manage-frpc-service/"/>
+        <content type="text/html" src="https://blog.triplez.cn/using-systemd-manage-frpc-service/"><![CDATA[<h2><span class="ez-toc-section" id="i">前言</span></h2>
+<p>frp[1] 是著名的内网穿透软件，支持 TCP、UDP 协议，且只需简单配置服务端，通过编辑客户端配置即可完成内网穿透的功能。但是其只提供了二进制可执行文件，并没有将其打包，也就无法使用 systemd。而对于一个需要开机启动、失败拉起的基础功能来说，我们有对其通过 systemd 进行管理的需求，也就有了本文。</p>
+<h2><span class="ez-toc-section" id="_frpc">注册 frpc 服务</span></h2>
+<p>其实使用 systemd 来管理程序相当简单。只需要在 <code>/etc/systemd/system/</code> 下写一个 <code>*.service</code> 的文件注册即可。</p>
+<p>在 <code>/etc/systemd/system/</code> 目录下新建 <code>frpc.service</code> ：</p>
+<pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash">$ sudo touch /etc/systemd/system/frpc.service
+</code></pre>
+<p>将以下内容填入至 <code>frpc.service</code> ：</p>
+<pre class="line-numbers prism-highlight" data-start="1"><code class="language-ini">[Unit]
+Description=FRP Client Daemon
+After=network.target
+Wants=network.target
+
+[Service]
+Type=simple
+ExecStart=/path/to/your/frpc -c /path/to/your/frpc.ini
+Restart=always
+RestartSec=20s
+LimitNOFILE=infinity
+
+[Install]
+WantedBy=multi-user.target
+</code></pre>
+<blockquote><p>
+  <code>frpc.service</code> 的内容遵循 systemd 的配置格式[2]&#091;3]。
+</p></blockquote>
+<p>保存后重载 systemd 配置：</p>
+<pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash">$ sudo systemctl daemon-reload
+</code></pre>
+<h2><span class="ez-toc-section" id="_systemd_frpc">通过 systemd 控制 frpc</span></h2>
+<p>启动 frpc：</p>
+<pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash">$ sudo systemctl start frpc
+</code></pre>
+<p>停止 frpc：</p>
+<pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash">$ sudo systemctl stop frpc
+</code></pre>
+<p>查看 frpc 状态：</p>
+<pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash">$ systemctl status frpc
+</code></pre>
+<p>将 frpc 设为开机启动：</p>
+<pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash">$ sudo systemctl enable frpc
+</code></pre>
+<p>取消 frpc 开机启动：</p>
+<pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash">$ sudo systemctl disable frpc
+</code></pre>
+<p>使用方法与 systemd units [4]相同。</p>
+<h2><span class="ez-toc-section" id="References">References</span></h2>
+<ol start="1.">
+<li>fatedier/frp in GitHub<br />
+<a href="https://github.com/fatedier/frp">https://github.com/fatedier/frp</a></li>
+<li>systemd.unit<br />
+<a href="https://www.freedesktop.org/software/systemd/man/systemd.unit.html">https://www.freedesktop.org/software/systemd/man/systemd.unit.html</a></li>
+<li>systemd.service<br />
+<a href="https://www.freedesktop.org/software/systemd/man/systemd.service.html">https://www.freedesktop.org/software/systemd/man/systemd.service.html</a></li>
+<li>systemd (Using units) - ArchWiki<br />
+<a href="https://wiki.archlinux.org/index.php/Systemd#Using_units">https://wiki.archlinux.org/index.php/Systemd#Using_units</a></li>
+</ol start="1.">
+<p>The post <a rel="nofollow" href="https://blog.triplez.cn/using-systemd-manage-frpc-service/">使用 systemd 管理 frpc 服务</a> appeared first on <a rel="nofollow" href="https://blog.triplez.cn">Blog</a>.</p>]]></content>
+        <author>
+            <name><![CDATA[TripleZ’s Blog]]></name>
+        </author>
+    </entry>
     
     <entry>
         <id>https://www.logicjake.xyz/2020/06/16/KDD-debias-TOP13/</id>
@@ -2076,100 +2144,6 @@ $ sudo pacman -S libdbusmenu-glib  # For electron apps menu
 <li><a href="https://ruiming.me/manjaro-linux/">Manjaro Linux 迁移记</a></li>
 </ul>
 <p>The post <a rel="nofollow" href="https://blog.triplez.cn/manjaro-quick-start/">将干净的 Manjaro 快速配置为工作环境</a> appeared first on <a rel="nofollow" href="https://blog.triplez.cn">Blog</a>.</p>]]></content>
-        <author>
-            <name><![CDATA[TripleZ’s Blog]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://blog.triplez.cn/java-logback-intro/</id>
-        <title><![CDATA[Java 日志包 LOGBack 简介]]></title>
-        <updated>2019-07-29T15:18:36+08:00</updated>
-        <link href="https://blog.triplez.cn/java-logback-intro/"/>
-        <content type="text/html" src="https://blog.triplez.cn/java-logback-intro/"><![CDATA[<h2><span class="ez-toc-section" id="i">包粒度级别继承</span></h2>
-<p>下级的包若无特定设定日志级别，则会继承上层包的日志级别。</p>
-<p>如下表所示：</p>
-<table>
-<thead>
-<tr>
-<th>日志器（包名）</th>
-<th>分配日志级别</th>
-<th>生效日志级别</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>root</td>
-<td>WARN</td>
-<td>WARN</td>
-</tr>
-<tr>
-<td>cn.triplez</td>
-<td>none</td>
-<td>WARN</td>
-</tr>
-<tr>
-<td>cn.triplez.demo</td>
-<td>DEBUG</td>
-<td>DEBUG</td>
-</tr>
-</tbody>
-</table>
-<h2><span class="ez-toc-section" id="i-2">日志级别优先级</span></h2>
-<p><code>TRACE</code> &lt; <code>DEBUG</code> &lt; <code>INFO</code> &lt; <code>WARN</code> &lt; <code>ERROR</code></p>
-<h2><span class="ez-toc-section" id="i-3">获取日志器</span></h2>
-<p>多次获取相同名称的日志器则会返回相同对象的引用。</p>
-<h2><span class="ez-toc-section" id="Appenders_and_Layouts">Appenders and Layouts</span></h2>
-<h2><span class="ez-toc-section" id="i-4">在日志中插入变量值</span></h2>
-<p>假如你想写一条调试日志，如下：</p>
-<pre class="line-numbers prism-highlight" data-start="1"><code class="language-java">logger.debug("Entry number: " + i + " is " + String.valueOf(entry[i]));
-</code></pre>
-<p>这样的代码运行效率是很低的，因为该语句会先拼接日志字符串，再进行是否符合 <code>DEBUG</code> 层级的判断。因此，你可以写成如下形式以提高运行速度：</p>
-<pre class="line-numbers prism-highlight" data-start="1"><code class="language-java">if (logger.isDebugEnabled()) {
-  logger.debug("Entry number: " + i + " is " + String.valueOf(entry[i]));
-}
-</code></pre>
-<h3><span class="ez-toc-section" id="i-5">更好地方法</span></h3>
-<p>事实上，在 LOGBack 中提供了更好的拼接方法，其能够基于模板填充变量。需要填充的变量只需在模板中用 <code>{}</code> 代替即可，而且该方法有很好的性能<sup id="fnref-863-1"><a href="#fn-863-1" class="jetpack-footnote">1</a></sup>，它能够先判断日志层级再进行字符串的处理。举个栗子：</p>
-<pre class="line-numbers prism-highlight" data-start="1"><code class="language-java">logger.debug("Hello, {}!", name);
-</code></pre>
-<p>也可以写多个变量：</p>
-<pre class="line-numbers prism-highlight" data-start="1"><code class="language-java">logger.debug("Hello, {}! I'm {}.", name, yourName);
-</code></pre>
-<p>如果有很多个变量，也可以使用 <code>Object[]</code> 来整合：</p>
-<pre class="line-numbers prism-highlight" data-start="1"><code class="language-java">Object[] paramArray = {val1, val2, val3};
-logger.debug("Value 1: {}, Value 2: {}, Value 3: {}", paramArray);
-</code></pre>
-<h2><span class="ez-toc-section" id="i-6">一瞥内部原理</span></h2>
-<p>时序图：</p>
-<p><img src="https://logback.qos.ch/manual/images/chapters/architecture/underTheHoodSequence2.gif" alt="sequence diagram" /></p>
-<h2><span class="ez-toc-section" id="i-7">性能</span></h2>
-<h3><span class="ez-toc-section" id="i-8">完全关闭日志记录功能</span></h3>
-<p>当日志功能在设置文件中被设置为 <code>Level.OFF</code>， 日志功能会被关闭。但是，写在程序中的 <code>log</code> 语句仍会产生一定的开销，主要是方法调用和整数比较。不过这个开销非常之小，我们完全不用担心。</p>
-<p>不过，在某些写法之下，方法调用会产生隐藏的变量构建的开销，这一点在前面已经提过，举个栗子：</p>
-<pre class="line-numbers prism-highlight" data-start="1"><code class="language-java">x.debug("Entryu number: " + i + "is " + entry[i]);
-</code></pre>
-<p>如上的写法会产生额外的字符串拼接成本，其需要将 <code>i</code> 和 <code>entry[i]</code> 都转换成为字符串，并将四个字符串对象拼接起来。而这个过程是与有效层级无关的，也就是说，无论是否满足输出该条日志的条件，都会进行字符串的拼接操作。</p>
-<p>为了避免产生这种额外的运行开销，提高程序运行效率，我们可以使用 SLF4J 的变量化日志记录接口：</p>
-<pre class="line-numbers prism-highlight" data-start="1"><code class="language-java">x.debug("Entry number: {} is {}", i, entry[i]);
-</code></pre>
-<p>这种变体写法不会产生额外的变量构建成本，日志信息只有该日志请求被发送到追加器（即满足记录要求及输出层级）之后才会被格式化，并且该方法经过了优化处理，能够很大程度提高运行效率。</p>
-<blockquote><p>
-  不建议在循环中使用日志记录，即使不记录日志也会产生额外的开销，记录了日志也会输出大量的重复无用信息。
-</p></blockquote>
-<h3><span class="ez-toc-section" id="i-9">日志器在检查日志层级的性能</span></h3>
-<p>在 LOGBack 中，日志器不需要根据继承关系去寻找自己真正所对应的记录层级，在日志器被创建之后，继承关系就会确定并且确定了该日志器自身的记录层级。并且更改了某个父记录器的记录层级之后，相对应的子记录器都会被发送请求以更改记录层级。因此，在比较日志层级时，日志器能够做到准即时的决策，而不需要在此处去请求父记录器才能做出决策。</p>
-<h3><span class="ez-toc-section" id="i-10">日志输出</span></h3>
-<p>日志真正被输出到文件或流中是开销最大越是最为费时的操作。从日志开始记录到写入文件系统中的典型开销是 9 到 12 毫秒，若为写到远端数据库或服务器会再增加几毫秒的延时。尽管 LOGBack 的功能非常丰富，但是 LOGBack 的核心依然是保证运行效率，开发者们已多次为了得到更好地性能重构 LOGBack 组件。</p>
-<div class="footnotes">
-<hr />
-<ol>
-<li id="fn-863-1">
-官方指出对比直接拼接字符串的方法能够至少提高 30% 的性能。&#160;<a href="#fnref-863-1">&#8617;</a>
-</li>
-</ol>
-</div>
-<p>The post <a rel="nofollow" href="https://blog.triplez.cn/java-logback-intro/">Java 日志包 LOGBack 简介</a> appeared first on <a rel="nofollow" href="https://blog.triplez.cn">Blog</a>.</p>]]></content>
         <author>
             <name><![CDATA[TripleZ’s Blog]]></name>
         </author>
