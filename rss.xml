@@ -3,7 +3,7 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2020-07-03T18:07:18+08:00</updated>
+    <updated>2020-07-04T00:18:25+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
@@ -62,6 +62,184 @@
         <content type="text/html" src="https://cosmosning.github.io/2020/05/18/c-zhong-de-qian-kao-bei-he-shen-kao-bei/"><![CDATA[<blockquote><p>（导读）短文一篇。主要介绍浅拷贝和深拷贝的含义以及在 C++ 中的实现</p></blockquote><p><img src="https://gitee.com/CosmosNing/MyPicGo/raw/master/images/2020/05/cristian-lozan-lb5yppoIEWk-unsplash.jpg" alt="封面图片"></p><p>Photo by <a href="https://unsplash.com/@chrisslozan?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText" target="_blank" rel="noopener">Cristian Lozan</a> on <a href="https://unsplash.com/t/nature?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText" target="_blank" rel="noopener">Unsplash</a></p><h1 id="问题引入"><a href="#问题引入" class="headerlink" title="问题引入"></a>问题引入</h1><p>先来看一个例子</p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ShallowCopyObject</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line"><span class="keyword">int</span> basicType;</span><br><span class="line"><span class="keyword">int</span> *refType;</span><br><span class="line">ShallowCopyObject()</span><br><span class="line">&#123;</span><br><span class="line">basicType = <span class="number">10</span>;</span><br><span class="line">refType = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">10</span>];</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++)</span><br><span class="line">&#123;</span><br><span class="line">refType[i] = i;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure><p>我定义了一个 <code>ShallowCopyObject</code> 类，它包括两个成员变量</p><ol><li><code>basicType</code> ：类型为语言内置基本类型的 <code>int</code></li><li><code>refType</code> ：类型为指针，指向 <code>int</code> 类型数据</li></ol><p>与此同时，我还定义了一个无参构造函数，用于初始化 <code>basicType</code> 和 <code>refType</code> 的值。其中 <code>basicType</code> 初始化为 10；<code>refType</code> 初始化为一个大小为 10 的数组，依次存储 0~9 的整数。</p><h2 id="问题一"><a href="#问题一" class="headerlink" title="问题一"></a>问题一</h2><p>假设主函数 <code>main</code> 中有如下语句，那么终端会输出什么呢？</p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">ShallowCopyObject a;</span><br><span class="line">ShallowCopyObject b = a;</span><br><span class="line"></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"Before changing value of b.basicType"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"b.basicType "</span> &lt;&lt; b.basicType &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">b.basicType = <span class="number">233</span>;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"After changing value of b.basicType"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"a.basicType "</span> &lt;&lt; a.basicType &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"b.basicType "</span> &lt;&lt; b.basicType &lt;&lt; <span class="built_in">endl</span>;</span><br></pre></td></tr></table></figure><p>先自己分析一下，再上机敲一敲，看看自己的思路对不对。</p><h2 id="问题二"><a href="#问题二" class="headerlink" title="问题二"></a>问题二</h2><p>类似的，下面的语句会输出什么呢？</p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">ShallowCopyObject a;</span><br><span class="line">ShallowCopyObject b = a;</span><br><span class="line"></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"Before changing value of b.refType[6]"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"b.refType[6] "</span> &lt;&lt; b.refType[<span class="number">6</span>] &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">b.refType[<span class="number">6</span>] = <span class="number">666</span>;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"After b.refType[6]"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"a.refType[6] "</span> &lt;&lt; a.refType[<span class="number">6</span>] &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"b.refType[6] "</span> &lt;&lt; b.refType[<span class="number">6</span>] &lt;&lt; <span class="built_in">endl</span>;</span><br></pre></td></tr></table></figure><p>再试着自己分析一下，上机敲一敲，看看自己的思路对不对。</p><h1 id="输出结果"><a href="#输出结果" class="headerlink" title="输出结果"></a>输出结果</h1><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">ShallowCopyObject a;</span><br><span class="line">ShallowCopyObject b = a;</span><br><span class="line"></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"Before changing value of b.basicType"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"b.basicType "</span> &lt;&lt; b.basicType &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">b.basicType = <span class="number">233</span>;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"After changing value of b.basicType"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"a.basicType "</span> &lt;&lt; a.basicType &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"b.basicType "</span> &lt;&lt; b.basicType &lt;&lt; <span class="built_in">endl</span>;</span><br></pre></td></tr></table></figure><p>第一个问题，也就是上面的代码，会输出如下结果</p><div class="note default">            <p>Before changing value of b.basicType<br>b.basicType 10<br>After changing value of b.basicType<br>a.basicType 10<br>b.basicType 233</p>          </div><p>由此可见，<strong>两个对象基本数据类型的成员变量是相互独立的，不会相互影响</strong></p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">ShallowCopyObject a;</span><br><span class="line">ShallowCopyObject b = a;</span><br><span class="line"></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"Before changing value of b.refType[6]"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"b.refType[6] "</span> &lt;&lt; b.refType[<span class="number">6</span>] &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">b.refType[<span class="number">6</span>] = <span class="number">666</span>;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"After b.refType[6]"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"a.refType[6] "</span> &lt;&lt; a.refType[<span class="number">6</span>] &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"b.refType[6] "</span> &lt;&lt; b.refType[<span class="number">6</span>] &lt;&lt; <span class="built_in">endl</span>;</span><br></pre></td></tr></table></figure><p>而第二个问题，它的结果可能出乎意料：</p><div class="note default">            <p>Before changing value of b.refType[6]<br>b.refType[6] 6<br>After b.refType[6]<br>a.refType[6] 666<br>b.refType[6] 666</p>          </div><p>我们惊奇的发现，对 <code>b</code> 对象的成员变量修改，竟然影响到了 <code>a</code> 对象中的值！</p><p>这一切的原因，都是由于在C++ 中，默认对象之间的拷贝（包括默认复制构造函数和默认赋值语句）是浅拷贝。</p><h1 id="什么是浅拷贝？"><a href="#什么是浅拷贝？" class="headerlink" title="什么是浅拷贝？"></a>什么是浅拷贝？</h1><p>那么，什么是浅拷贝呢？</p><p>这里给出维基百科的定义：</p><blockquote><p>One method of copying an object is the shallow copy. In that case a new object B is created, and the fields values of A are copied over to B. This is also known as a field-by-field copy, field-for-field copy, or field copy. If the field value is a reference to an object (e.g., a memory address) it copies the reference, hence referring to the same object as A does, and if the field value is a primitive type it copies the value of the primitive type. In languages without primitive types (where everything is an object), all fields of the copy B are references to the same objects as the fields of original A. The referenced objects are thus shared, so if one of these objects is modified (from A or B), the change is visible in the other. Shallow copies are simple and typically cheap, as they can be usually implemented by simply copying the bits exactly.</p><p>(<a href="https://en.wikipedia.org/wiki/Object_copying#Shallow_copy" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Object_copying#Shallow_copy</a>)</p></blockquote><p>简单的来说，浅拷贝就是逐个字节的拷贝。也就是说，拷贝后每一个成员变量的值都相同。如果该值是基本数据类型，那么该值被拷贝；如果该值是引用数据类型（如对象、指针等），那么该值（注意：这里的值是指<strong>地址</strong>）也会被拷贝。</p><p>由此可知，针对第一个问题，由于改变的是基本类型的数据，它是独立的一份拷贝，因而另一个对象值的修改并不会影响被拷贝的对象；然而，在第二个问题中，由于浅拷贝，<code>b</code> 中 <code>refType</code> 指向了和 <code>a</code> 对象 <code>refType</code> 相同的位置（因为拷贝了地址），因而在 <code>b</code> 中修改 <code>refType</code> 数组中的值，会影响到对象 <code>a</code> 。</p><div class="note info">            <h2 id="一句话描述"><a href="#一句话描述" class="headerlink" title="一句话描述"></a>一句话描述</h2><p><strong>浅拷贝会共享引用数据类型成员变量（指针指向同一个地址），而不共享原始数据类型的成员变量</strong></p>          </div><h1 id="什么是深拷贝？"><a href="#什么是深拷贝？" class="headerlink" title="什么是深拷贝？"></a>什么是深拷贝？</h1><p>有时候，我们并不希望拷贝对象时，其引用成员变量指向同一个引用数据类型的数据对象，而希望它们指向不同的位置，但是这些位置存储的值是相同的。这就需要用到深拷贝。</p><p>在维基百科中，深拷贝是这样定义的：</p><blockquote><p>An alternative is a deep copy, meaning that fields are dereferenced: rather than references to objects being copied, new copy objects are created for any referenced objects, and references to these placed in B. The result is different from the result a shallow copy gives in that the objects referenced by the copy B are distinct from those referenced by A, and independent. Deep copies are more expensive, due to needing to create additional objects, and can be substantially more complicated, due to references possibly forming a complicated graph.</p><p>(<a href="https://en.wikipedia.org/wiki/Object_copying#Deep_copy" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Object_copying#Deep_copy</a>)</p></blockquote><div class="note info">            <h2 id="一句话描述"><a href="#一句话描述" class="headerlink" title="一句话描述"></a>一句话描述</h2><p><strong>深拷贝不会共享引用数据类型成员变量（它们的指针指向不同地址，但是拷贝后指针指向地址所存储的值是相等的），也不共享原始数据类型的成员变量</strong></p>          </div><h2 id="实现深拷贝"><a href="#实现深拷贝" class="headerlink" title="实现深拷贝"></a>实现深拷贝</h2><p>在 C++ 中可以自定义复制构造函数、重载赋值运算符，实现深拷贝。对于本文开头提出的问题，可以做如下改进。</p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 自定义复制构造函数</span></span><br><span class="line">DeepCopyObject(<span class="keyword">const</span> DeepCopyObject &amp;obj)</span><br><span class="line">&#123;</span><br><span class="line">    basicType = obj.basicType;</span><br><span class="line">    refType = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">10</span>];        <span class="comment">// 引用类型成员变量重新申请空间</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++)  <span class="comment">// 将值逐个拷贝到新申请的空间中</span></span><br><span class="line">    &#123;</span><br><span class="line">        refType[i] = obj.refType[i];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 重载赋值运算符</span></span><br><span class="line">DeepCopyObject &amp;<span class="keyword">operator</span>=(<span class="keyword">const</span> DeepCopyObject &amp;obj)</span><br><span class="line">&#123;</span><br><span class="line">    basicType = obj.basicType;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span> == &amp;obj) <span class="comment">// obj = obj; 情况</span></span><br><span class="line">        <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">    <span class="keyword">delete</span>[] refType;</span><br><span class="line">    refType = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">10</span>];</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        refType[i] = obj.refType[i];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><ul><li>浅拷贝会<strong>共享</strong>引用数据类型成员变量（指针指向<strong>同一个地址</strong>），而<strong>不共享</strong>原始数据类型的成员变量</li><li>深拷贝<strong>不会共享</strong>引用数据类型成员变量（它们的指针指向<strong>不同</strong>地址，但是拷贝后指针指向地址所存储的<strong>值是相等的</strong>），也<strong>不共享</strong>原始数据类型的成员变量</li><li>在 C++ 中可以<strong>自定义复制构造函数</strong>、<strong>重载赋值运算符</strong>，<strong>实现深拷贝</strong></li></ul><h1 id="附：实现深拷贝完整代码"><a href="#附：实现深拷贝完整代码" class="headerlink" title="附：实现深拷贝完整代码"></a>附：实现深拷贝完整代码</h1><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DeepCopyObject</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line"><span class="keyword">int</span> basicType;</span><br><span class="line"><span class="keyword">int</span> *refType;</span><br><span class="line"></span><br><span class="line">DeepCopyObject()</span><br><span class="line">&#123;</span><br><span class="line">basicType = <span class="number">10</span>;</span><br><span class="line">refType = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">10</span>];</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++)</span><br><span class="line">&#123;</span><br><span class="line">refType[i] = i;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">DeepCopyObject(<span class="keyword">const</span> DeepCopyObject &amp;obj)</span><br><span class="line">&#123;</span><br><span class="line">basicType = obj.basicType;</span><br><span class="line">refType = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">10</span>];</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++)</span><br><span class="line">&#123;</span><br><span class="line">refType[i] = obj.refType[i];</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">~DeepCopyObject()</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">if</span> (refType)</span><br><span class="line"><span class="keyword">delete</span>[] refType;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">DeepCopyObject &amp;<span class="keyword">operator</span>=(<span class="keyword">const</span> DeepCopyObject &amp;obj)</span><br><span class="line">&#123;</span><br><span class="line">basicType = obj.basicType;</span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">this</span> == &amp;obj) <span class="comment">// obj = obj; 情况</span></span><br><span class="line"><span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line"><span class="keyword">delete</span>[] refType;</span><br><span class="line">refType = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">10</span>];</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++)</span><br><span class="line">&#123;</span><br><span class="line">refType[i] = obj.refType[i];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"></span><br><span class="line">DeepCopyObject a;</span><br><span class="line">DeepCopyObject b = a; <span class="comment">// 调用 DeepCopyObject(const DeepCopyObject &amp; obj)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// b = a; // 调用 DeepCopyObject &amp; operator=(const DeepCopyObject &amp; obj)</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"Before changing value of b.basicType"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"b.basicType "</span> &lt;&lt; b.basicType &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">b.basicType = <span class="number">233</span>;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"After changing value of b.basicType"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"a.basicType "</span> &lt;&lt; a.basicType &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"b.basicType "</span> &lt;&lt; b.basicType &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"Before changing value of b.refType[6]"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"b.refType[6] "</span> &lt;&lt; b.refType[<span class="number">6</span>] &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">b.refType[<span class="number">6</span>] = <span class="number">666</span>;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"After b.refType[6]"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"a.refType[6] "</span> &lt;&lt; a.refType[<span class="number">6</span>] &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"b.refType[6] "</span> &lt;&lt; b.refType[<span class="number">6</span>] &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
         <author>
             <name><![CDATA[CosmosNing的个人博客]]></name>
+        </author>
+    </entry>
+    
+    <entry>
+        <id>https://blog.rexskz.info/manually-table-layout-with-cell-merging.html</id>
+        <title><![CDATA[当表格排版遇到了合并单元格]]></title>
+        <updated>2020-06-30T16:44:00+08:00</updated>
+        <link href="https://blog.rexskz.info/manually-table-layout-with-cell-merging.html"/>
+        <content type="text/html" src="https://blog.rexskz.info/manually-table-layout-with-cell-merging.html"><![CDATA[<p>我负责的面单平台的需求复杂度已经越来越高了。自从寒假接了一个复杂表格排版的需求后，各类业务对于表格排版的使用场景也开始变多。毕竟，一个可以自动换页排版，并保持每一页都带有首部区域和尾部区域的表格，哪个业务不喜欢呢？（被打）</p><h1>表格的排版</h1><p>先回顾一下之前的需求：</p><ol><li>有一类专门的面单类型叫“拣货单”，用于给卖家拣货</li><li>拣货单有三个部分：头部区域（展示 Logo、买家地址等）、表格（展示商品信息）、尾部区域（展示备注和页码）</li><li>表格可能非常长，需要分页打印（纸张类型分为 A4、A5、A6 三种）</li><li>第一页的表格之前一定会有一个头部区域</li><li>每一页的表格之后都要接一个尾部区域，可以配置非第一页的表格之前是否也接一个头部区域</li><li>表格的数据内容未知，列宽、字体、字号均可以自定义，行高不确定</li></ol><p>大概的效果嘛，类似于下图（A6，横向，非第一页的表格之前也接一个头部区域）：</p><p><img src="https://static.rexskz.info/blog/article/manually-table-layout-with-cell-merging/1.png" alt="可以用来画拣货单的表格" title="可以用来画拣货单的表格"></p><p>由于这种排版方式已经超出了 Chrome 的能力，因此与后端商量了一下，决定将一些排版代码注入到生成的 HTML 面单中，然后在服务器上用 Chrome Headless 运行，将最终的结果打印为 PDF。</p><p>这种排版代码写起来还是比较开心（划掉）的，因为我跟业务之间达成了一些约定：页面的布局固定，头部区域和尾部区域可以自由发挥（加起来别超过页面高度就行），表格只能用配置的方式生成而非拖拽组件。这样我就可以一行一行来计算高度了，甚至对于后续巨大数据量的排版，我也做了一定的优化（参见 <a href="https://blog.rexskz.info/awb-tool-ultimate-optimization-for-chrome-headless.html">这篇文章</a>）。</p><h1>合并单元格</h1><p>接下来就是这个新需求了。使用代码合并单元格一直是个非常复杂的问题，不管是原生 HTML 还是各类组件库。我觉得对于我目前的能力来说，一个人短时间内写出一个支持任意合并单元格的表格（而且是在数据未知、需要手写分页的排版代码的情况下）不太现实，因此我仔细研究了一下需求，发现可以做一些合理的简化。</p><p>首先，HTML 中合并单元格的做法通常是使用 <code>&lt;table&gt;</code> 元素，如果想将一个单元格 A 与它上方的单元格 B 合并，就为 B 设置 <code>rowspan</code>，然后删掉 A，就像下面这样：</p><pre><code class="lang-html">&lt;table&gt;
+    &lt;thead&gt;
+        &lt;tr&gt;
+            &lt;th&gt;1&lt;/th&gt;
+            &lt;th&gt;2&lt;/th&gt;
+            &lt;th&gt;3&lt;/th&gt;
+            &lt;th&gt;4&lt;/th&gt;
+        &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+        &lt;tr&gt;
+            &lt;td rowspan=&quot;3&quot;&gt;合并-1&lt;/td&gt;
+            &lt;td&gt;拆分-2&lt;/td&gt;
+            &lt;td&gt;拆分-3&lt;/td&gt;
+            &lt;td rowspan=&quot;3&quot;&gt;合并-4&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+            &lt;td&gt;拆分-2&lt;/td&gt;
+            &lt;td rowspan=&quot;2&quot;&gt;小合并-3&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+            &lt;td&gt;拆分-2&lt;/td&gt;
+        &lt;/tr&gt;
+    &lt;/tbody&gt;
+&lt;/table&gt;</code></pre><p>效果是这样的：</p><table>
+    <thead>
+        <tr>
+            <th>1</th>
+            <th>2</th>
+            <th>3</th>
+            <th>4</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td rowspan="3">合并-1</td>
+            <td>拆分-2</td>
+            <td>拆分-3</td>
+            <td rowspan="3">合并-4</td>
+        </tr>
+        <tr>
+            <td>拆分-2</td>
+            <td rowspan="2">小合并-3</td>
+        </tr>
+        <tr>
+            <td>拆分-2</td>
+        </tr>
+    </tbody>
+</table><p>可以认为，<code>&lt;tbody&gt;</code> 中有三行，第一行是一个完整行，因为它有着跟表头一样完整的四列；第二行是一个非整行，它只有中间的两列，首尾两列为了跟上方的单元格合并，而被删掉了；第三行只有一列（<code>2</code>），其它三列都被合并掉了。同理，如果要跟左方的单元格合并，则需要为左方的单元格设置 <code>colspan</code> 并删掉当前的单元格。</p><p>其次，需求中描述的“合并单元格”其实长得是这样：</p><table>
+    <thead>
+        <tr>
+            <th>分组名</th>
+            <th>分组图片</th>
+            <th>元素名</th>
+            <th>元素属性</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td rowspan="3">组 1</td>
+            <td rowspan="3">[图片 1]</td>
+            <td>元素 1-1</td>
+            <td>高</td>
+        </tr>
+        <tr>
+            <td>元素 1-2</td>
+            <td>中</td>
+        </tr>
+        <tr>
+            <td>元素 1-3</td>
+            <td>低</td>
+        </tr>
+        <tr>
+            <td rowspan="3">组 2</td>
+            <td rowspan="3">[图片 2]</td>
+            <td>元素 2-1</td>
+            <td>高</td>
+        </tr>
+        <tr>
+            <td>元素 2-2</td>
+            <td>中</td>
+        </tr>
+    </tbody>
+</table><p>前两列是“大格”，后两列是“小格”，看起来也很工整，是不是一看就很好处理！于是经过与需求方的沟通，我们最终做了如下的约定：</p><ol><li>表格的第一条数据一定是一个完整行（毕竟第一行的单元格没有“上方元素”）</li><li>所有的非整行，缺失列的 Key 一定是完全相同的（“小格”列中的单元格不会被合并）</li><li>单元格高度不超过一页减掉头尾部区域的高度（无需考虑拆分单元格内部的内容）</li><li>不会有横向的合并操作（可以简化 <code>rowspan</code> 的计算，也无需计算 <code>colspan</code>）</li></ol><p>在这种约定下，“合并单元格”的需求被极大的简化了，变得不再那么难实现了。</p><h1>用于计算 rowspan 的简单算法</h1><p>我们与需求方约定：我们可以为表格组件设置一个“Allow empty cells merging up”的选项（默认关闭，需手动开启），如果开启，那么他们传数据过来时，所有的空字符串（<code>&quot;&quot;</code>）或缺失的字段对应的单元格将会被向上合并。对于上面那个工整的表格来说，需求方应当这样传数据：</p><pre><code class="lang-json">{
+    &quot;table_data&quot;: [
+        // 第一个整行
+        {
+            &quot;group_name&quot;: &quot;组 1&quot;,
+            &quot;group_image&quot;: &quot;[图片 1]&quot;,
+            &quot;item_name&quot;: &quot;元素 1-1&quot;,
+            &quot;item_attr&quot;: &quot;高&quot;
+        },
+        {
+            &quot;item_name&quot;: &quot;元素 1-2&quot;,
+            &quot;item_attr&quot;: &quot;中&quot;
+        },
+        {
+            &quot;item_name&quot;: &quot;元素 1-3&quot;,
+            &quot;item_attr&quot;: &quot;低&quot;
+        },
+        // 第二个整行
+        {
+            &quot;group_name&quot;: &quot;组 2&quot;,
+            &quot;group_image&quot;: &quot;[图片 2]&quot;,
+            &quot;item_name&quot;: &quot;元素 2-1&quot;,
+            &quot;item_attr&quot;: &quot;高&quot;
+        },
+        {
+            &quot;item_name&quot;: &quot;元素 2-2&quot;,
+            &quot;item_attr&quot;: &quot;中&quot;
+        },
+    ]
+}</code></pre><p>虽然通过后端的渲染之后我们无法拿到原始的 JSON 数据，但可以通过对表格做一个简单的遍历来实现相同的功能：</p><pre><code class="lang-javascript">// 假设我们已经获取到了 `table`、`tbody` 等元素，并存到了同名的变量中
+
+// 表格只有一行，无需合并
+if (tbody.childElementCount &lt;= 1) {
+    return;
+}
+
+// 第一行（一定是整行）没有元素，无需合并
+const firstLine = tbody.firstElementChild;
+if (firstLine.childElementCount &lt;= 0) {
+    return;
+}
+
+// `lastTds` 用于方便的查找每一列当前的最后一个元素，便于设置 `rowspan`
+const lastTds = [...firstLine.children];
+// `lastRowSpans` 则是这些元素的 `rowspan` 值
+const lastRowSpans = Array(firstLine.childElementCount).fill(1);
+
+// 对于表格的每一行
+for (
+    let tr = firstLine.nextElementSibling;
+    tr.nextElementSibling;
+    tr = tr.nextElementSibling
+) {
+    // 枚举每一列，看是否有单元格需要被向上合并
+    for (
+        let td = tr.firstElementChild, i = 0, next = (td || {}).nextElementSibling;
+        td;
+        td = next, i++, next = (td || {}).nextElementSibling
+    ) {
+        if (
+            // 这个单元格完全是空的，显然要被合并
+            !td.firstElementChild.innerHTML
+            || (
+                // 目前每个单元格里面要么是纯文字，要么是一个 &lt;img&gt;，取决于该列的数据格式
+                // 如果是 &lt;img&gt;，那么需求方应当传一个 URL 或者 Base64 字符串过来
+                // 如果该列的数据格式配置为“图片”，且数据为空，那么后端会渲染一个 src 为空的图片
+                // 所以只要出现 if 的这种情况，也可以认为这个单元格是空的，可以向上合并
+                td.firstElementChild.firstElementChild
+                &amp;&amp; td.firstElementChild.firstElementChild.tagName === 'IMG'
+                &amp;&amp; td.firstElementChild.firstElementChild.getAttribute('src') === ''
+            )
+        ) {
+            // 将当前列的最后一个元素（不一定是跟当前单元格紧挨着的那个单元格）的 rowspan += 1
+            lastRowSpans[i]++;
+            lastTds[i].setAttribute('rowspan', lastRowSpans[i]);
+            // 将当前的单元格删除
+            tr.removeChild(td);
+        } else {
+            // 如果不需要合并，那么当前列的最后一个元素就是当前单元格，并且 rowspan = 1
+            lastRowSpans[i] = 1;
+            td.setAttribute('data-index', i);
+            lastTds[i] = td;
+        }
+    }
+}</code></pre><h1>修改之前的分页排版算法</h1><p>如果没有分页功能的话，那么这个需求已经完成了，但是事情就是没有那么简单……</p><p>很快我就发现：如果还跟之前一样，为了不拆单元格中的内容，强制当空间不够时将下一行直接扔到下一页，势必会造成极大的空间浪费，因为有可能“大格”里面的内容并不多，但每个“大格”对应的“小格”特别多，这样一个“大格”的高度很有可能超过一页，并且这在业务上是绝对无法避免的：</p><p><img src="https://static.rexskz.info/blog/article/manually-table-layout-with-cell-merging/2.png" alt="一种无法避免的需要拆分单元格的场景" title="一种无法避免的需要拆分单元格的场景"></p><p>不过有一个值得注意的地方——业务要求的“大格”里面的内容确实不算多，一般就是一个商品名称或者图片，内容本身不会超过一页。如果我可以将这个单元格拆成有内容和没内容两部分，也能在一定程度上缓解空间浪费的问题。</p><p>之前对的排版思路是这样的：</p><ol><li>令当前高度 <code>current = headAreaHeight + thHeight</code></li><li><p>从头开始枚举每一行</p><ol><li>获取当前行的高度 <code>height = tr.offsetHeight</code></li><li><p>如果 <code>current + height + tailAreaHeight</code> 大于一页高度：</p><ol><li>在当前页的最后插入一个尾部区域</li><li>将表头和当前行放到新页，更新 <code>current</code></li></ol></li><li>否则，将当前行插入到当前页的最后，并更新 <code>current</code></li></ol></li></ol><p>需要改动的地方有两个。</p><h2>重新定义“当前行”</h2><p>如果依旧按照以前那样直接获取 <code>tr.offsetHeight</code>，可能会在这种组合场景下出现问题：</p><ul><li>当前行中有一个“大格”，高度介于一行和两行“小格”高度之间</li><li>当前页可以放下当前行，但无法放下两行“小格”的高度</li></ul><p>如果出现了这种场景，那么我是在当前页放一行“小格”还是强行放两行呢？如果是放一行，那么这个“小格”会被纵向拉伸以适应“大格”高度，不是很美观；强行放两行又可能会把尾部区域挤到下一页。</p><p>最终我决定用这样的方法：如果当前行包含“大格”，说明一定是整行，那么我先找到所有“大格”中内容高度最高的那个，假设高度为 <code>x</code>，接下来从当前行往下找非整行，根据之前的约定，在遍历到下一个整行之前，我一定能找到某个非整行，从当前行到它的所有行，加起来的高度恰好大于等于 <code>x</code>。如果是大于，说明“大格”的内容确实不多；如果是等于，说明“大格”的内容比较多，甚至会把“小格”撑开。</p><p><img src="https://static.rexskz.info/blog/article/manually-table-layout-with-cell-merging/3.png" alt="当前行高度的计算方法" title="当前行高度的计算方法"></p><p>在上图中，左边表格中的“大格”内容很少，于是我们先取红框的高度，再从上往下扫，看有多少“小格”加起来高度恰好比它高，答案是蓝框的部分，于是我们就用蓝框的高度作为当前行的高度；右边表格中的“大格”内容很多，按照这种方法蓝框会取到所有的三个“小格”，也符合预期。</p><p>如果按照这个方法计算出的“当前行高度”加上尾部区域高度已经无法放到当前页，我们就按照之前的思路，先在当前页插入一个尾部区域，然后将当前行以及蓝框中的“小格”所在的行一起放到下一页，并令 <code>current</code> 等于蓝框高度；否则，将当前行以及蓝框中的“小格”所在的行一起插入到当前页，并为 <code>current</code> 加上蓝框的高度。</p><h2>对跨页后“大格”的处理</h2><p>由于表头要在每一页的表格中展示，因此“大格”被拆分后，属于下一页的单元格必须要被显式的绘制出来。下图中的绿框就是这样一个单元格：</p><p><img src="https://static.rexskz.info/blog/article/manually-table-layout-with-cell-merging/4.png" alt="一个必须被显式绘制出来的单元格" title="一个必须被显式绘制出来的单元格"></p><p>但是还好，我们在排版时，可以记录一下“自从上一个整行过后，已经用了多少个非整行。”在上图的例子中，“内容很少”和“元素 1”是最近一个整行，然后一直到“元素 5”都是非整行（一共 4 个）。由于在计算合并单元格时，我们知道“内容很少”这一格的 <code>rowspan = 8</code>，那么可以确定绿框的 <code>rowspan = 8 - 4 - 1 = 3</code>。只要发现“元素 6”所在的行是个非整行，我们就在每个缺失的地方各插入一个 <code>rowspan = 3</code>、内容为空的“大格”，将其补充为整行。</p><p>于是，这个需求终于做完了。</p><h1>Don't Break The Web</h1><p>上文提到，我为排版代码做过一次性能优化，那么这次新增的功能是否会影响到之前的优化效果呢？答案是不会的。先来回顾一下之前我做的优化：</p><blockquote><p>只需要在一开始先将最外层元素设置为 <code>display: none</code>，这样可以避免每加载一块就渲染；然后在全部加载完之后一下子全部渲染出来。</p><p>只要能保证给每个表格设置好 <code>&lt;col&gt;</code> 的宽度，那么这一行不管被排到哪个表格块中，高度都是不变的。也就是说，所有元素的高度，在渲染之后排版之前，就已经完全确定下来了！那么我完全可以在排版的一开始，将所有必要元素的 <code>offsetHeight</code> 保存在一个 <code>Map</code> 中，之后直接调用就可以了。</p></blockquote><p>对于第一个优化，控制是否显示只会影响面单自身，与每个面单内部的元素无关。只需要保证我的合并单元格代码和排版代码可以在“一下子全部渲染出来”之后执行即可；对于第二个优化，因为将一个单元格拆到两页并不会影响总体高度，每个“大格”的内容高度也不会变，因此可以将行高与内容高度提前缓存在之前的 <code>Map</code> 中，供排版时调用。</p>]]></content>
+        <author>
+            <name><![CDATA[R·ex / Zeng]]></name>
         </author>
     </entry>
     
@@ -1356,31 +1534,6 @@ fastcgi_busy_buffers_size 512k;</code></pre><p>对于使用 <code>proxy_pass</co
         <content type="text/html" src="https://invariant.me/try-jslinux/"><![CDATA[<img src="https://invariant.me/content/images/2020/02/Alpine_logo.png" alt="Running Linux in your Browser with JSLinux"><p><a href="https://bellard.org/jslinux/">JSLinux</a> is an awesome emulator by <a href="https://bellard.org/">Fabrice Bellard</a> that implements full 32-bit x86 and RV32/RV64 RISC-V systems in the browser using WebAssembly.</p><p>Yesterday I <a href="https://github.com/losfair/jslinux-wstunnel">ported</a> JSLinux to use <a href="https://xtermjs.org/">xterm.js</a> for frontend and my <a href="https://github.com/losfair/wstunnel">wstunnel</a> for networking. Below is a live x86 virtual machine running Alpine Linux. Feel free to try it here (but please do not abuse the network interface) !</p><!--kg-card-begin: html--><iframe style="width: 100%; height: 500px" src="https://jslinux.invariant.me/widget.html">&lt;iframe disabled?&gt;</iframe><!--kg-card-end: html--><p></p>]]></content>
         <author>
             <name><![CDATA[The Invariant]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://blog.rexskz.info/go-module-memo.html</id>
-        <title><![CDATA[Go module 踩坑备忘]]></title>
-        <updated>2020-02-16T09:25:24+08:00</updated>
-        <link href="https://blog.rexskz.info/go-module-memo.html"/>
-        <content type="text/html" src="https://blog.rexskz.info/go-module-memo.html"><![CDATA[<p>最近由于业务需求，需要新开一个 Go 的项目。听朋友说 Go 从 1.11 开始有了个叫 Modules 的新特性，于是打算看看能否用在我的新项目中。</p><p>为什么我对 Modules 这么感兴趣呢？因为写项目总是逃不开各种包管理，而之前 Go 不管是官方还是非官方的包管理器，都是基于 <code>GOPATH</code> 或者 <code>vendor</code> 目录，也无法很好的解决不同版本的冲突。Modules 据说可以解决这些问题。</p><p>我们之前的项目用的是 Go 官方的包管理器 <code>dep</code>，真是被我们吐槽了好久：</p><ul><li>它默认不显示进度，除非手动添加 <code>-v</code> 参数；</li><li>命令十分诡异，以安装为例，我见过的有：<code>npm install</code>、<code>gem install</code>、<code>pip install</code>，还有……<code>dep ensure</code>；</li><li>我无法把 Go 的项目跟其它项目放在同一个 Workspace 下面，而必须放到 <code>GOPATH</code> 下面。</li></ul><p>试用了一下 Modules，发现有这几个好处：</p><ul><li>它默认在安装时会显示进度，在国内众所周知的网络环境下可以轻松确定网络是否有问题；</li><li>它是 Go 的原生命令，使用起来跟 Go 的其它命令比较像，没有违和感；</li><li>它允许我们把 Go 项目放到任意的地方；</li><li>它有一些很棒的功能，例如生成依赖关系图、生成 vendor 文件夹、验证包的内容、解释为何需要依赖某个包。</li></ul><p>对于大部分人来说，照着网上的教程来做就可以了，我在做的时候，遇到了一些问题，于是就在这里记录一下。</p><h1>VSCode 插件</h1><p>VSCode 的插件 <code>ms-vscode.go</code> 已经可以完美支持 Go Modules 了，更新到最新版即可。由于我还有项目需要使用 <code>dep</code>，因此我在 <code>settings.json</code> 里面新增了这些：</p><pre><code class="lang-json">{
-    &quot;go.toolsEnvVars&quot;: {
-        &quot;GO111MODULE&quot;: &quot;auto&quot;
-    },
-}</code></pre><p>环境变量 <code>GO111MODULE</code> 的取值有三个：<code>off</code> 表示强行使用 <code>GOPATH</code> 的方法（适用于 <code>dep</code>），<code>on</code> 表示强行使用 Modules，<code>auto</code> 表示如果发现你的项目在 <code>GOPATH</code> 那么就用传统方法（即使有了 <code>go.mod</code> 文件），否则就用 Modules。</p><h1>报错 no package for import "fmt"</h1><p>这种错误就比较奇葩了，我相信很多人都遇到过找不到其它包的情况，但我这儿连 <code>fmt</code> 都找不到……</p><p>搜了一下，这是 <code>gopls</code> 的报错，于是用 <code>gopls -rpc.trace -v check file.go</code> 看了一下，发现由于我项目文件的问题，报错 <code>initial workspace load failed</code>，这个 Workspace 里面应当包含 <code>./...</code> 和 <code>builtin</code>，<code>fmt</code> 属于后者，因此也跟着找不到了。</p><p>那么该如何在项目中引用项目本身的包呢？例如我的项目叫 <code>myproj</code>，我要在 <code>cmd/main.go</code> 里面依赖 <code>cmd/server</code> 包。</p><p>通过搜索，我得知可以在 <code>go.mod</code> 里面配置一行 <code>replace myproj =&gt; ./</code>，整个文件如下：</p><pre><code>module myproj
-
-replace myproj =&gt; ./
-
-go 1.13
-
-require (
-    ....
-)</code></pre><p>之后的引用就可以这样写了：</p><pre><code class="lang-go">import (
-    &quot;myproj/cmd/server&quot;
-)</code></pre><p>最后测了一下，VSCode 插件的各种功能（自动导入、格式化、跳转、调试）都没有什么问题，这就算是大功告成了。至于用起来具体怎么样，还有没有其它的坑，可能得等过一段时间才能知道了。</p><h1>参考资料</h1><ul><li><a href="https://github.com/golang/go/issues/32762#issuecomment-518828774">x/tools/gopls: failure to import package · Issue #32762 · golang/go</a></li><li><a href="https://stackoverflow.com/a/52124448">vgo - How do I resolve &quot;cannot find module for path X&quot; importing a local Go module? - Stack Overflow</a></li></ul>]]></content>
-        <author>
-            <name><![CDATA[R·ex / Zeng]]></name>
         </author>
     </entry>
     
@@ -4316,7 +4469,7 @@ class Test
 <a href="https://www.noisyfox.cn/wp-content/uploads/2016/06/QQ截图20160619145913.png"><img class="aligncenter size-full wp-image-403" src="https://www.noisyfox.cn/wp-content/uploads/2016/06/QQ截图20160619145913.png" alt="Unmanaged Exports 编译正常" width="662" height="65" /></a><br />
 <div class="sdm_download_item "><div class="sdm_download_item_top"><div class="sdm_download_thumbnail"></div><div class="sdm_download_title">DllExport-Fixed-1.2.7.7z</div></div><div style="clear:both;"></div><div class="sdm_download_description"><p>修正了非英文系统编译错误的Unmanaged Exports 1.2.7</p>
 <h1></h1>
-</div><div class="sdm_download_link"><span class="sdm_download_button"><a href="https://www.noisyfox.io/?smd_process_download=1&download_id=404" class="sdm_download green" title="DllExport-Fixed-1.2.7.7z" target="_blank">Download Now!</a></span><span class="sdm_download_item_count"><span class="sdm_item_count_number">906</span><span class="sdm_item_count_string"> Downloads</span></span></div></div><div class="sdm_clear_float"></div></p>
+</div><div class="sdm_download_link"><span class="sdm_download_button"><a href="https://www.noisyfox.io/?smd_process_download=1&download_id=404" class="sdm_download green" title="DllExport-Fixed-1.2.7.7z" target="_blank">Download Now!</a></span><span class="sdm_download_item_count"><span class="sdm_item_count_number">907</span><span class="sdm_item_count_string"> Downloads</span></span></div></div><div class="sdm_clear_float"></div></p>
 <p><a rel="nofollow" href="https://www.noisyfox.io/unmanaged-exports.html">Unmanaged Exports 修正版 .NET导出非托管函数</a>，首发于<a rel="nofollow" href="https://www.noisyfox.io">狐狸的小小窝</a>。</p>]]></content>
         <author>
             <name><![CDATA[狐狸的小小窝]]></name>
