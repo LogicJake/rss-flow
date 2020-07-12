@@ -3,7 +3,7 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2020-07-12T06:08:14+08:00</updated>
+    <updated>2020-07-12T12:09:05+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
@@ -13,9 +13,9 @@
     <entry>
         <id>https://miaotony.xyz/2020/07/11/Tips_CCS_RWDataFromPort/</id>
         <title><![CDATA[DSP | CCS v3.3 利用I/O端口从外部文件传送数据的相关配置]]></title>
-        <updated>2020-07-11T18:11:26+08:00</updated>
+        <updated>2020-07-12T12:07:34+08:00</updated>
         <link href="https://miaotony.xyz/2020/07/11/Tips_CCS_RWDataFromPort/"/>
-        <content type="text/html" src="https://miaotony.xyz/2020/07/11/Tips_CCS_RWDataFromPort/"><![CDATA[最近做DSP大作业需要用到古老的CCS v3.3软件，而对于利用Simulator的端口I/O端口从外部文件传送数据的方法，查了各种资料几乎没有相关介绍，正好就来记录一下吧。]]></content>
+        <content type="text/html" src="https://miaotony.xyz/2020/07/11/Tips_CCS_RWDataFromPort/"><![CDATA[最近做DSP大作业需要用到古老的CCS v3.3软件，而对于利用Simulator的I/O端口从外部文件传送数据的方法，查了各种资料几乎没有相关介绍，正好就来记录一下吧。]]></content>
         <author>
             <name><![CDATA[MiaoTony]]></name>
         </author>
