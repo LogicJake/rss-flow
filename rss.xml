@@ -3,12 +3,23 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2020-07-11T18:07:53+08:00</updated>
+    <updated>2020-07-12T00:20:00+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
     </author>
     
+    
+    <entry>
+        <id>https://miaotony.xyz/2020/07/11/Tips_CCS_RWDataFromPort/</id>
+        <title><![CDATA[DSP | CCS v3.3 利用I/O端口从外部文件传送数据的相关配置]]></title>
+        <updated>2020-07-11T18:11:26+08:00</updated>
+        <link href="https://miaotony.xyz/2020/07/11/Tips_CCS_RWDataFromPort/"/>
+        <content type="text/html" src="https://miaotony.xyz/2020/07/11/Tips_CCS_RWDataFromPort/"><![CDATA[最近做DSP大作业需要用到古老的CCS v3.3软件，而对于利用Simulator的端口I/O端口从外部文件传送数据的方法，查了各种资料几乎没有相关介绍，正好就来记录一下吧。]]></content>
+        <author>
+            <name><![CDATA[MiaoTony]]></name>
+        </author>
+    </entry>
     
     <entry>
         <id>https://cosmosning.github.io/2020/07/02/kao-yan-bei-kao-zhi-wo-jian/</id>
@@ -896,17 +907,6 @@ Array.from(document.querySelectorAll('tbody')).forEach(el =&gt; {
         <content type="text/html" src="https://blog.vvzero.com/2019/01/13/Use-the-Internet-via-nuaa-portal-for-free/"><![CDATA[<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>学校赐予我的 nuaa.portal 账号在一个月之前就到期了，这一个月内，虽然对我的生活没有太大的影响，但是还是感受到了某些不便（总觉得某些东西有了更好，没有却不能拉倒）。前些天跟创新区内的同学讨论了本校的ipv6部署情况，突然就有兴致来折腾一下。</p><p>没错，免费上网还是有可能的。</p><h2 id="前提概要"><a href="#前提概要" class="headerlink" title="前提概要"></a>前提概要</h2><ul><li>学校的 nuaa.portal 公共无线网，Windows 电脑只要连接上，就能获取一个 ipv4 内网地址和一个 ipv6 地址。如果没有在指定 Web 页面上认证，则无法使用 ipv4 连接互联网。但是可以通过 ipv6 联网。</li><li>学校默认不分配 ipv6 的 DNS 服务器。</li><li>学校教学办公区有线宽带，经直接拨号，同样可以获得一个 ipv4 内网地址和一个 ipv6 地址，均可以访问互联网。</li></ul><h2 id="一步步的尝试"><a href="#一步步的尝试" class="headerlink" title="一步步的尝试"></a>一步步的尝试</h2><h3 id="直接用-ipv6-上提供-ipv6-服务的网站"><a href="#直接用-ipv6-上提供-ipv6-服务的网站" class="headerlink" title="直接用 ipv6 上提供 ipv6 服务的网站"></a>直接用 ipv6 上提供 ipv6 服务的网站</h3><p>既然可以从 nuaa.portal 获取可以访问互联网的 ipv6 地址，那么最简单的思路，就是直接使用这条通道。但是，由于学校没有 ipv6 的 DNS（认证后，如果访问 ipv6 站点，其实仍然是使用 ipv4 的 DNS 服务器），故必须配置 ipv6 的 DNS。这一点很简单，直接修改 DNS 服务器即可：</p><p><img src="https://img.vvzero.com/Use-the-Internet-via-nuaa-portal-for-free_2.png" alt></p><p>这里推荐两个 ipv6 的 DNS 服务器，一个是 Google 家的，一个是清华大学 TUNA 协会的：</p><ul><li><code>2001:4860:4860::8888</code></li><li><code>2001:da8::666</code></li></ul><p>然后，实测就可以访问提供 ipv6 服务的网站啦！</p><p>比如：</p><ul><li>google.com.hk</li><li><a href="http://www.youtube.com" target="_blank" rel="noopener">www.youtube.com</a></li><li>ipv6.baidu.com</li><li>ipv6.mirrors.ustc.edu.cn</li></ul><h3 id="使用-ipv6-代理服务器进行无限制的互联网访问"><a href="#使用-ipv6-代理服务器进行无限制的互联网访问" class="headerlink" title="使用 ipv6 代理服务器进行无限制的互联网访问"></a>使用 ipv6 代理服务器进行无限制的互联网访问</h3><p>上一条方法虽然简单，但是只能访问提供 ipv6 的网站，然而现在国内乃至国际上大多数网站并没有提供 ipv6 服务，至少，你目前还不能登微信。</p><p>但是，如果有一个同时具有有 ipv6 和 ipv4 的代理服务器，不就一切都解决了吗？把本地的所有流量都通过 ipv6 转发至代理服务器，然后就可以访问任意站点了！</p><p>这里，我借用了 Shadowsocks，配置了一台有 ipv6 和 ipv4 的服务器，然后本地开启全局代理，实际就可以访问任意站点了。</p><p>使用这个方法，本地 DNS 甚至都不需要配置。</p><h3 id="终极（硬核）蹭网方案"><a href="#终极（硬核）蹭网方案" class="headerlink" title="终极（硬核）蹭网方案"></a>终极（硬核）蹭网方案</h3><p>还记得一开始我说过，教学办公区也能获得 ipv6 地址吗？</p><p>对，我就是想用远程桌面！</p><p><img src="https://img.vvzero.com/Use-the-Internet-via-nuaa-portal-for-free_1.jpg" alt></p><p>我在学校创新区日常开着一台机器，拨号联网，（性能还不错）。</p><p>emmm，其实这个方法真的很硬核很有效，而且，由于 nuaa.portal 和教学办公区实际属于同一个大的内网环境，学校的路由器还不错，实测 ping 延迟只有 2ms，完全满足了日常电脑使用（除了不能使用显卡玩游戏什么的）。微软家的远程桌面还是很强大的！</p><h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>我其实还是想再来一年的免费 nuaa.portal 账号的。</p>]]></content>
         <author>
             <name><![CDATA[VVBLOG]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://miaotony.xyz/2020/04/25/CTF_2020DASCTF_April/</id>
-        <title><![CDATA[CTF | 2020 DASCTF 四月春季战 Re&Misc WriteUp]]></title>
-        <updated>2020-04-26T12:18:11+08:00</updated>
-        <link href="https://miaotony.xyz/2020/04/25/CTF_2020DASCTF_April/"/>
-        <content type="text/html" src="https://miaotony.xyz/2020/04/25/CTF_2020DASCTF_April/"><![CDATA[今天下午有个 DASCTF 安恒月赛，难度据说“雨露均沾”，就来看了看题，做了几个Re和Misc的题，划个水。]]></content>
-        <author>
-            <name><![CDATA[MiaoTony]]></name>
         </author>
     </entry>
     
