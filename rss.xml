@@ -3,12 +3,23 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2020-08-29T18:09:45+08:00</updated>
+    <updated>2020-08-30T00:17:45+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
     </author>
     
+    
+    <entry>
+        <id>https://miaotony.xyz/2020/08/27/CTF_2020CISCN_preliminary/</id>
+        <title><![CDATA[CTF | 2020 CISCN初赛 Z3&LFSR WriteUp]]></title>
+        <updated>2020-08-29T19:56:22+08:00</updated>
+        <link href="https://miaotony.xyz/2020/08/27/CTF_2020CISCN_preliminary/"/>
+        <content type="text/html" src="https://miaotony.xyz/2020/08/27/CTF_2020CISCN_preliminary/"><![CDATA[水了一波CISCN线上初赛，这里来写一写Z3和LFSR这两题的WP，顺便记录一下用到的z3、SageMath求解工具。]]></content>
+        <author>
+            <name><![CDATA[MiaoTony]]></name>
+        </author>
+    </entry>
     
     <entry>
         <id>https://www.suruifu.com/posts/465</id>
@@ -20,6 +31,17 @@
 <p><img src="https://s.suruifu.com/www/2020/08/一起加油吧.jpeg" alt="" /></p>]]></content>
         <author>
             <name><![CDATA[苏瑞辅的个人网站]]></name>
+        </author>
+    </entry>
+    
+    <entry>
+        <id>https://miaotony.xyz/2020/05/30/CTF_2020NUAACTF/</id>
+        <title><![CDATA[CTF | 2020 NUAACTF 吸喵喵队 Writeup]]></title>
+        <updated>2020-08-27T08:44:17+08:00</updated>
+        <link href="https://miaotony.xyz/2020/05/30/CTF_2020NUAACTF/"/>
+        <content type="text/html" src="https://miaotony.xyz/2020/05/30/CTF_2020NUAACTF/"><![CDATA[期待已久的NUAACTF终于来了呀！玩(头)耍(秃)了一个下午，整体而言难度还好，最后终于冲到了校内第二，感觉好棒啊！]]></content>
+        <author>
+            <name><![CDATA[MiaoTony]]></name>
         </author>
     </entry>
     
@@ -663,17 +685,6 @@ switcher.updateGraph(nextState, false);</code></pre><p>大功告成！之后产�
     </entry>
     
     <entry>
-        <id>https://miaotony.xyz/2020/05/30/CTF_2020NUAACTF/</id>
-        <title><![CDATA[CTF | 2020 NUAACTF 吸喵喵队 Writeup]]></title>
-        <updated>2020-05-31T17:59:57+08:00</updated>
-        <link href="https://miaotony.xyz/2020/05/30/CTF_2020NUAACTF/"/>
-        <content type="text/html" src="https://miaotony.xyz/2020/05/30/CTF_2020NUAACTF/"><![CDATA[期待已久的NUAACTF终于来了呀！玩(头)耍(秃)了一个下午，整体而言难度还好，最后终于冲到了校内第二，感觉好棒啊！]]></content>
-        <author>
-            <name><![CDATA[MiaoTony]]></name>
-        </author>
-    </entry>
-    
-    <entry>
         <id>https://blog.triplez.cn/u-disk-4mb-recovery/</id>
         <title><![CDATA[U盘写入系统后变为4MB的还原方法]]></title>
         <updated>2020-05-16T09:52:48+08:00</updated>
@@ -854,17 +865,6 @@ Array.from(document.querySelectorAll('tbody')).forEach(el =&gt; {
 });</code></pre><p>看一下 Performance，是这样的：</p><p><img src="https://static.rexskz.info/blog/article/awb-tool-ultimate-optimization-for-chrome-headless/4.png" alt="优化了 Layout 后的性能" title="优化了 Layout 后的性能"></p><p>这效果也太好了吧！分析一下这个图的含义：</p><ul><li>0 ms ~ 400 ms 是在加载页面，这个理论上是没法再优化的；</li><li>400 ms ~ 2300 ms 是一开始将所有元素显示出来，于是 Chrome 做了一遍 Layout；</li><li>2300 ms ~ 2500 ms 是我的排版代码，此时由于没有任何获取样式的操作，浏览器会将所有的样式计算集中到下一个事件循环中统一处理；</li><li>2500 ms ~ 4900 ms 是统一处理的样式计算，这需要一次 Layout。</li></ul><p>理论上讲，Layout 的次数已经不可能再少了，两次 Layout 的时间取决于面单的复杂程度，可能可以通过优化 CSS 的方式来提速，但不确定效果如何（毕竟现在平均每个元素只有不到 0.5 ms 的绘制时间）。因此我觉得，这可以算是非常极致的优化了。</p><h1>参考资料（部分图源）</h1><ul><li><a href="https://chromium.googlesource.com/chromium/src/+/master/third_party/blink/renderer/core/dom/README.md">DOM - Chromium Source Code README</a></li><li><a href="https://what-if.xkcd.com/13/">Laser Pointer - What If - xkcd</a></li></ul>]]></content>
         <author>
             <name><![CDATA[R·ex / Zeng]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://miaotony.xyz/2020/04/29/Server_TensorFlow-vGPU/</id>
-        <title><![CDATA[Ubuntu16.04配置TensorFlow-vGPU环境]]></title>
-        <updated>2020-04-29T18:07:07+08:00</updated>
-        <link href="https://miaotony.xyz/2020/04/29/Server_TensorFlow-vGPU/"/>
-        <content type="text/html" src="https://miaotony.xyz/2020/04/29/Server_TensorFlow-vGPU/"><![CDATA[折腾了一个下午，终于在Ubuntu 16.04系统上配置好了TensorFlow的vGPU环境，主要涉及显卡驱动、CUDA、Anaconda、Tensorflow-gpu安装等，这里来做一下笔记喵。]]></content>
-        <author>
-            <name><![CDATA[MiaoTony]]></name>
         </author>
     </entry>
     
