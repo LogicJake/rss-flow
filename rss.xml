@@ -3,12 +3,23 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2020-08-31T12:12:37+08:00</updated>
+    <updated>2020-08-31T18:10:27+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
     </author>
     
+    
+    <entry>
+        <id>https://miaotony.xyz/2020/08/31/CTF_2020GACTF/</id>
+        <title><![CDATA[CTF | 2020 GACTF 一点点WriteUp]]></title>
+        <updated>2020-08-31T16:11:34+08:00</updated>
+        <link href="https://miaotony.xyz/2020/08/31/CTF_2020GACTF/"/>
+        <content type="text/html" src="https://miaotony.xyz/2020/08/31/CTF_2020GACTF/"><![CDATA[这几天有个GACTF，随意来看看题目，就佛系做了几个题嘤嘤嘤，顺便来学点东西吧。]]></content>
+        <author>
+            <name><![CDATA[MiaoTony]]></name>
+        </author>
+    </entry>
     
     <entry>
         <id>https://miaotony.xyz/2020/08/27/CTF_2020CISCN_preliminary/</id>
@@ -813,17 +824,6 @@ Body stored in: /tmp/tmpkeq3ospo
 <p>The post <a rel="nofollow" href="https://blog.triplez.cn/using-curl-analyzing-time-cost-at-request-diff-phases/">使用 curl 来分析请求各个阶段的耗时</a> appeared first on <a rel="nofollow" href="https://blog.triplez.cn">Blog</a>.</p>]]></content>
         <author>
             <name><![CDATA[TripleZ’s Blog]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://miaotony.xyz/2020/05/04/CTF_2020De1CTF/</id>
-        <title><![CDATA[CTF | 2020 De1CTF Misc Chowder WriteUp]]></title>
-        <updated>2020-05-04T15:23:22+08:00</updated>
-        <link href="https://miaotony.xyz/2020/05/04/CTF_2020De1CTF/"/>
-        <content type="text/html" src="https://miaotony.xyz/2020/05/04/CTF_2020De1CTF/"><![CDATA[这几天有个 De1CTF，结束前来看了一眼题目，做了个Misc杂烩题，还是挺有意思的。顺便来总结一下关于 NTFS 交换数据流的相关应用吧。]]></content>
-        <author>
-            <name><![CDATA[MiaoTony]]></name>
         </author>
     </entry>
     
