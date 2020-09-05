@@ -3,12 +3,23 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2020-09-05T12:23:00+08:00</updated>
+    <updated>2020-09-05T18:10:50+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
     </author>
     
+    
+    <entry>
+        <id>https://blog.stdioa.com/2020/09/using-beancount/</id>
+        <title><![CDATA[开始使用 Beancount]]></title>
+        <updated>2020-09-05T15:55:27+08:00</updated>
+        <link href="https://blog.stdioa.com/2020/09/using-beancount/"/>
+        <content type="text/html" src="https://blog.stdioa.com/2020/09/using-beancount/"><![CDATA[<!-- build time:Sat Sep 05 2020 23:55:39 GMT+0800 (GMT+08:00) --><p>使用 Beancount 记账已经有将近两个月了，简单写一写我都做了什么。</p>]]></content>
+        <author>
+            <name><![CDATA[Stdio’s Blog]]></name>
+        </author>
+    </entry>
     
     <entry>
         <id>https://www.suruifu.com/posts/476</id>
@@ -2333,7 +2344,7 @@ $ sudo pacman -S libdbusmenu-glib  # For electron apps menu
         <title><![CDATA[《深入解析Go》笔记]]></title>
         <updated>2019-06-24T08:40:49+08:00</updated>
         <link href="https://blog.stdioa.com/2019/06/go-internal-note/"/>
-        <content type="text/html" src="https://blog.stdioa.com/2019/06/go-internal-note/"><![CDATA[<!-- build time:Mon Jun 24 2019 16:41:29 GMT+0800 (中国标准时间) --><p>在 GitHub 上找到一本解读 Go 实现细节的好书，名叫<a href="https://github.com/tiancaiamao/go-internals/" target="_blank" rel="noopener">《深入解析 Go》</a>。<br>大致看了一遍，简单做了些笔记。</p>]]></content>
+        <content type="text/html" src="https://blog.stdioa.com/2019/06/go-internal-note/"><![CDATA[<!-- build time:Sat Sep 05 2020 23:51:27 GMT+0800 (GMT+08:00) --><p>在 GitHub 上找到一本解读 Go 实现细节的好书，名叫<a href="https://github.com/tiancaiamao/go-internals/" target="_blank" rel="noopener">《深入解析 Go》</a>。<br>大致看了一遍，简单做了些笔记。</p>]]></content>
         <author>
             <name><![CDATA[Stdio’s Blog]]></name>
         </author>
@@ -2344,7 +2355,7 @@ $ sudo pacman -S libdbusmenu-glib  # For electron apps menu
         <title><![CDATA[Golang 学习记录]]></title>
         <updated>2019-06-24T08:25:39+08:00</updated>
         <link href="https://blog.stdioa.com/2019/06/golang-learning-experience/"/>
-        <content type="text/html" src="https://blog.stdioa.com/2019/06/golang-learning-experience/"><![CDATA[<!-- build time:Mon Jun 24 2019 16:41:29 GMT+0800 (中国标准时间) --><p>这几个月在考虑从 Python 转向 Golang，所以专门学习了 Golang.<br>这里是 Golang 学习的一些记录。</p>]]></content>
+        <content type="text/html" src="https://blog.stdioa.com/2019/06/golang-learning-experience/"><![CDATA[<!-- build time:Sat Sep 05 2020 23:51:27 GMT+0800 (GMT+08:00) --><p>这几个月在考虑从 Python 转向 Golang，所以专门学习了 Golang.<br>这里是 Golang 学习的一些记录。</p>]]></content>
         <author>
             <name><![CDATA[Stdio’s Blog]]></name>
         </author>
@@ -2355,7 +2366,7 @@ $ sudo pacman -S libdbusmenu-glib  # For electron apps menu
         <title><![CDATA[用堆找出最小的 N 个数]]></title>
         <updated>2019-05-21T08:46:12+08:00</updated>
         <link href="https://blog.stdioa.com/2019/05/find-minn-with-heap/"/>
-        <content type="text/html" src="https://blog.stdioa.com/2019/05/find-minn-with-heap/"><![CDATA[<!-- build time:Wed Jun 19 2019 17:59:18 GMT+0800 (中国标准时间) --><p>不知道为啥，突然想水一篇很水的算法文章。</p>]]></content>
+        <content type="text/html" src="https://blog.stdioa.com/2019/05/find-minn-with-heap/"><![CDATA[<!-- build time:Sat Sep 05 2020 23:51:27 GMT+0800 (GMT+08:00) --><p>不知道为啥，突然想水一篇很水的算法文章。</p>]]></content>
         <author>
             <name><![CDATA[Stdio’s Blog]]></name>
         </author>
@@ -2709,7 +2720,7 @@ $ sudo pacman -S libdbusmenu-glib  # For electron apps menu
         <title><![CDATA[微服务架构下的数据迁移指南]]></title>
         <updated>2019-04-09T07:50:37+08:00</updated>
         <link href="https://blog.stdioa.com/2019/04/data-migration-between-microservices/"/>
-        <content type="text/html" src="https://blog.stdioa.com/2019/04/data-migration-between-microservices/"><![CDATA[<!-- build time:Wed Jun 19 2019 17:59:18 GMT+0800 (中国标准时间) --><p>在扇贝，除了 CRUD 以外，做的最多的事情大概也就是数据迁移了，以至于后来简单的数据迁移工作都变成了一种搬砖。今天动笔写一写在扇贝做数据迁移的方法，以及一些需要关注的点。</p>]]></content>
+        <content type="text/html" src="https://blog.stdioa.com/2019/04/data-migration-between-microservices/"><![CDATA[<!-- build time:Sat Sep 05 2020 23:51:27 GMT+0800 (GMT+08:00) --><p>在扇贝，除了 CRUD 以外，做的最多的事情大概也就是数据迁移了，以至于后来简单的数据迁移工作都变成了一种搬砖。今天动笔写一写在扇贝做数据迁移的方法，以及一些需要关注的点。</p>]]></content>
         <author>
             <name><![CDATA[Stdio’s Blog]]></name>
         </author>
@@ -2777,17 +2788,6 @@ logger -t IPv6 <span class="s2">&#34;Add IPv6 default route.&#34;</span>
 </blockquote>]]></content>
         <author>
             <name><![CDATA[Creedowl’s Blog]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://blog.stdioa.com/2019/03/geektime-microservice-notes/</id>
-        <title><![CDATA[《从 0 开始学微服务》阅读笔记]]></title>
-        <updated>2019-03-30T11:58:25+08:00</updated>
-        <link href="https://blog.stdioa.com/2019/03/geektime-microservice-notes/"/>
-        <content type="text/html" src="https://blog.stdioa.com/2019/03/geektime-microservice-notes/"><![CDATA[<!-- build time:Wed Jun 19 2019 17:59:18 GMT+0800 (中国标准时间) --><p>前一阵子购买了胡忠想老师的《从 0 开始学微服务》极客时间专栏，二月份看完以后做了一些笔记。</p>]]></content>
-        <author>
-            <name><![CDATA[Stdio’s Blog]]></name>
         </author>
     </entry>
     
