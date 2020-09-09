@@ -3,12 +3,29 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2020-09-09T00:27:04+08:00</updated>
+    <updated>2020-09-09T06:11:26+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
     </author>
     
+    
+    <entry>
+        <id>https://www.suruifu.com/posts/485</id>
+        <title><![CDATA[瑞辅南航停止运营公告]]></title>
+        <updated>2020-09-09T05:52:20+08:00</updated>
+        <link href="https://www.suruifu.com/posts/485"/>
+        <content type="text/html" src="https://www.suruifu.com/posts/485"><![CDATA[<p>开始的开始，这只是一个查询校车的工具，而起因是为了来江宁找单同学。这个软件的校车时刻界面也是在单同学的设计之下，在谁的咖啡，由我来完成的。</p>
+<p>后来的后来，我们逐渐开发出了课程表查询功能、上课提醒功能等等，也得到了了南航同学的认可，对此我苏瑞辅十分感激。</p>
+<p>最后的最后，应南航相关部门要求，我们将于近日关停这个小程序的主要功能（课程表等教务系统相关功能）。</p>
+<p>有的时候，失去也是一种得到，而结束才是一段新的开始。上帝关了一扇门，也开了一扇窗。</p>
+<p>我还年轻，我一直都年轻；我在路上，我一直都在路上。南京瑞辅科技有限公司是一家现代科技企业，致力于提供工业4.0解决方案。</p>
+<p>请转告其他同学，再次感谢大家长期以来的支持，再见！</p>
+<p>（苏瑞辅微信：ruifu-su）</p>]]></content>
+        <author>
+            <name><![CDATA[苏瑞辅的个人网站]]></name>
+        </author>
+    </entry>
     
     <entry>
         <id>https://blog.stdioa.com/2020/09/using-beancount/</id>
@@ -1614,23 +1631,6 @@ fastcgi_busy_buffers_size 512k;</code></pre><p>对于使用 <code>proxy_pass</co
         <content type="text/html" src="https://invariant.me/version-2/"><![CDATA[<img src="https://images.unsplash.com/photo-1530714457710-6bf1899c1d32?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=2000&fit=max&ixid=eyJhcHBfaWQiOjExNzczfQ" alt="Version 2"><p>I'm migrating and restarting my blog, which is previously at <a href="https://mnotes.me">https://mnotes.me</a> .</p><p>Take a look at the <a href="https://invariant.me/about/">About</a> page or <a href="https://invariant.me/subscribe/">subscribe</a> now!</p>]]></content>
         <author>
             <name><![CDATA[The Invariant]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://www.suruifu.com/posts/408</id>
-        <title><![CDATA[那些年的运动（观《朝阳沟》有感）]]></title>
-        <updated>2020-02-11T09:34:26+08:00</updated>
-        <link href="https://www.suruifu.com/posts/408"/>
-        <content type="text/html" src="https://www.suruifu.com/posts/408"><![CDATA[<h3>关于戏曲文化</h3>
-<p>与其说是戏曲，我更愿意称其为“中国电影”。爷爷奶奶会比较喜欢这个东西，很多年轻人会对之嗤之以鼻。而豫剧《朝阳沟》则是一个那个年代的经典，之所以这样，更多还是政治因素罢了。<br />
-* 节奏欢快，不熟各种流行音乐，自成一家，别具风韵<br />
-* 说话太慢，开二倍速还是觉得慢，我平常是很少开二倍速的<br />
-* 故事情节很少，但各种表现却很到位</p>
-<h3>关于电影内容</h3>
-<p>家里长辈讲并没有人思想觉悟高到想要在农村奋斗一百年，整个剧不过就是一个文化宣传片而已，因此也就没有那么多需要思考的东西了。</p>]]></content>
-        <author>
-            <name><![CDATA[苏瑞辅的个人网站]]></name>
         </author>
     </entry>
     
