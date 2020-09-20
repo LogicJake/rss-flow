@@ -3,12 +3,114 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2020-09-20T06:11:36+08:00</updated>
+    <updated>2020-09-20T12:13:22+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
     </author>
     
+    
+    <entry>
+        <id>https://blog.rexskz.info/use-openresty-to-optimize-image-size-with-avif-and-webp.html</id>
+        <title><![CDATA[使用 OpenResty 无痛优化图片体积（AVIF / WebP）]]></title>
+        <updated>2020-09-20T09:12:00+08:00</updated>
+        <link href="https://blog.rexskz.info/use-openresty-to-optimize-image-size-with-avif-and-webp.html"/>
+        <content type="text/html" src="https://blog.rexskz.info/use-openresty-to-optimize-image-size-with-avif-and-webp.html"><![CDATA[<h1>图片体积优化计划</h1><p>两年半之前，我第一次了解到 WebP 可以有效减少图片体积的时候，有一瞬间产生了“把网站中所有资源替换成 WebP”的冲动，但当我打开 caniuse 的时候，发现 Safari 迟迟不支持，况且网站中涉及到图片的地方实在是太多，修改代码不太现实。</p><p>我当时搜了一些资料，是关于让 Nginx 针对浏览器提供的 Accept 头来分别提供不同格式的文件。这个方法确实有，然而我实在是太懒了，以至于写一段命令将所有图片转个格式都不想写，并且想到以后所有图片都要提供两个版本，实在是太麻烦了！于是这个计划就被搁置了。</p><p>后来我更多的接触了 OpenResty，这是一个集成了 Lua 的 Nginx，可以利用 Lua 脚本来方便的做一些扩展。我还摸索出了如何利用 Lua FFI 调用 OpenCC API 无痛让网站支持了繁体版本。既然 FFI 都能支持，那么如果发现浏览器支持 WebP，则调用一个 <code>cwebp</code> 命令转换图片格式并返回，不是更好实现了？不过我的服务器已经完全 Docker 化，OpenResty 是使用了现成的 <a href="https://github.com/hustshawn/openresty-opencc-docker">hustshawn/openresty-opencc-docker</a>，如果想安装 <code>cwebp</code> 进去，需要修改 Dockerfile，因此这个计划又被懒惰的我给搁置了。</p><p>直到前两天，我无意间看到了这样一篇文章：<a href="https://jakearchibald.com/2020/avif-has-landed/">AVIF has landed</a>，里面提到了一个新的图片格式：AVIF，文章里提供了很多例子，看起来压缩率和效果都 WebP 要好。这激起了我的兴趣，想试一下能否为支持 AVIF 的浏览器提供 AVIF 的图片。</p><p>当然，由于 AVIF 的浏览器支持率实在是太低（据说很快会高起来），于是我还是需要顺便提供一个 WebP 的转换。</p><p>于是计划正式开始！</p><h1>将 AVIF 与 WebP 转换器打包进 Docker</h1><p>之前我为了升级 OpenCC 版本，自己 Fork 了一下 hustshawn 的镜像：<a href="https://github.com/RexSkz/openresty-opencc-docker">RexSkz/openresty-opencc-docker</a>，刚好在这个上面做修改。我要做的就是将 AVIF 和 WebP 相关的程序打包进去。</p><p>WebP 很简单，用 <code>cwebp</code> 就可以了，我用的 OpenResty 镜像是基于 Alpine 的，因此需要找到在 Alpine 下面安装 <code>cwebp</code> 的方法。在 <a href="https://pkgs.alpinelinux.org/contents?file=cwebp">Alpine Package</a> 中搜索 <code>cwebp</code>，发现需要安装 <code>libwebp-tools</code>，于是在 Dockerfile 中添加了一句：</p><pre><code class="lang-dockerfile">RUN apk add libwebp-tools</code></pre><p>至于 AVIF 的部分，我找到了一个 <a href="https://github.com/Kagami/go-avif">Kagami/go-avif</a> 项目。这个项目提供了 Linux 环境的二进制可执行文件，我可以直接用 <code>curl</code> 在 Build 的时候下载到镜像中，但还需要安装 <code>libaom-dev</code>，我搜了一下，并没有发现相关的包，于是只能 Google 了一下 <code>alpine libaom-dev</code> 关键字，发现了 <a href="https://pkgs.org/search/?q=libaom-dev">这样一个网站</a>，但里面只有 Debian 的数据，没有 Alpine……</p><p>熟悉 Linux 的小伙伴可能会知道，<code>libaom-dev</code> 最核心的部分应当是 <code>aom</code>，之前的 <code>lib</code> 表示是一个库，<code>-dev</code> 表示这会带上一些必要的 C 语言头文件。于是我在网站搜索框里搜索 <code>aom</code>，发现了一个叫 <code>aom-dev</code> 的包，应该是符合要求的，但需要至少 Alpine 3.12，因此我不得不升级了 OpenResty 镜像版本。最终跟 AVIF 相关的部分如下：</p><pre><code class="lang-dockerfile">FROM openresty/openresty:1.17.8.2-5-alpine
+
+ARG AOM_VERSION=&quot;v1.0.0&quot;
+
+# Alpine 是没有 curl 的，这个也要自己安装
+RUN apk add aom-dev curl \
+    &amp;&amp; curl -L https://github.com/Kagami/go-avif/releases/download/${GO_AVIF_VERSION}/avif-linux-x64 &gt; /usr/bin/avif \
+    &amp;&amp; chmod +x /usr/bin/avif \
+    &amp;&amp; rm -rf /var/cache/apk/*</code></pre><p>将 Dockerfile 推到 GitHub，触发了 Docker Hub 的自动构建。当构建完成后，我在本地输入了这两条命令：</p><pre><code class="lang-text">$ docker pull rexskz/openresty-opencc-docker
+$ docker-compose -f local.yaml up -d nginx</code></pre><p>然后我又上 Portainer 的 Shell 中看了一下，<code>cwebp</code> 和 <code>avif</code> 两个命令都已经可以使用，并可以转换文件了。</p><h1>使用 OpenResty 转换图片并返回</h1><p>由于我对 Lua 和 OpenResty 还没有那么熟悉，于是还是得参考网上大佬们写的 OpenResty 配置 WebP 的文章，例如 <a href="https://mikublog.com/tech/2090">这篇</a>。关键代码如下：</p><pre><code class="lang-lua">-- 作者假定我们访问 xxx.jpg.webp
+-- 才会返回 WebP 格式
+local newFile = ngx.var.request_filename
+local originalFile = newFile:sub(1, #newFile - 5)
+
+-- 如果源文件不存在，直接报 404
+if not fileExists(originalFile) then
+    ngx.exit(404)
+    return
+end
+
+-- 转换格式，生成新文件
+os.execute(&quot;cwebp -q 75 &quot; .. originalFile .. &quot; -o &quot; .. newFile)
+
+-- 如果转换成功则返回新文件，否则报 404
+if not fileExists(newFile) then
+    ngx.exit(404)
+    return
+end
+ngx.exec(ngx.var.uri)</code></pre><p>我稍加改动，又封装了几个函数，便使它支持了 AVIF，并且在已有转换结果的时候不会重复转换：</p><pre><code class="lang-lua">-- 当 Accept 中有 image/avif 时才转换
+if string.find(ngx.req.get_headers()[&quot;accept&quot;], &quot;image/avif&quot;) ~= nil then
+    local newFile = originalFile .. &quot;.converted.avif&quot;
+    -- 首先尝试 serve 新文件，如果没有才会做转换
+    if not tryServeFile(newFile, &quot;image/avif&quot;) then
+        os.execute(&quot;avif -e &quot; .. originalFile .. &quot; -o &quot; .. newFile .. &quot; --best -q 12&quot;);
+        serveFileOr404(newFile, &quot;image/avif&quot;)
+    end
+end
+-- WebP 的配置类似，就不重复写了</code></pre><p>最后我还不忘把 <code>*.converted.avif</code> 和 <code>*.converted.webp</code> 加入了 <code>.gitignore</code>，简直 Perfect！</p><h1>转换的效果如何呢？</h1><p>我打开本地的网站试了一下，发现一张 Banner 图片就等了十几秒，大部分时间都花在转换上了……我可是用的外星人啊！</p><p><img src="https://static.rexskz.info/blog/article/qiaoqiaohua/keng-die-ne.gif" alt="这不是坑爹吗！" title="这不是坑爹吗！"></p><p>没关系，大不了之后我每次上传图片，都触发一下自动转换，然后再把页面公开化就好了。那么 AVIF 的压缩率有多少呢？</p><p>我去目录下 <code>ls</code> 之后发现：对于 Banner 这种 JPG 格式压缩率还是挺高的，能在之前 75% 的基础上几乎无损的再压缩一半体积；但对于 PNG 文件来说，由于我需要保证图片不失真，因此选择了无损压缩，结果一个 1.2 KB 的图标硬是被压缩成了 2 KB……</p><p><img src="https://static.rexskz.info/blog/article/qiaoqiaohua/keng-die-ne.gif" alt="这不是坑爹吗！" title="这不是坑爹吗！"></p><p>难道 AVIF 的无损压缩率其实并没有想象中的好？我又搜了一圈，发现了一个 <a href="https://docs.google.com/spreadsheets/d/1TE5iLE08oV90EqOmFHnzBLwiPtQSs1XAvI3QfoMgKQM/edit#gid=0">Google 表格</a>，里面是 WebP 与 AVIF 的无损压缩对比。数据表明，在一半以上的情况下，AVIF 的无损压缩会让图片体积增大，甚至经常能达到两三倍！</p><p>得了，我用于无损的 PNG 就不要考虑转换为 AVIF 了，又慢体积还大。</p><h1>最终的效果与代码</h1><p>部署到服务器上之后，我发现，一直在提示 404。看了 Nginx 的 Log 才发现，由于 Docker 权限的原因，无法将生成的图片写入到目标路径。修复了一下权限问题后，图片终于显示了出来。</p><p><img src="https://static.rexskz.info/blog/article/use-openresty-to-optimize-image-size-with-avif-and-webp/0.png" alt="可以看到图片的 Type 已经变成了 webp 和 avif" title="可以看到图片的 Type 已经变成了 webp 和 avif"></p><p>既然都调通了，就放出来造福一下大众吧。不过写的比较冗余，也没有太多优化。</p><pre><code class="lang-nginx">location ~ \.(jpe?g|png|gif)$ {
+    # convert using lua code
+    content_by_lua_file /etc/nginx/conf.d/image-convert.lua;
+}</code></pre><pre><code class="lang-lua">function tryServeFile(name, contentType)
+    if fileExists(name) then
+        local f = io.open(name, &quot;rb&quot;)
+        local content = f:read(&quot;*all&quot;)
+        f:close()
+        if contentType ~= &quot;&quot; then
+            ngx.header[&quot;Content-Type&quot;] = contentType
+        end
+        ngx.print(content)
+        return true
+    end
+    return false
+end
+
+function serveFileOr404(name, contentType)
+    if not tryServeFile(name, contentType) then
+        ngx.exit(404)
+    end
+end
+
+-- According to https://docs.google.com/spreadsheets/d/1TE5iLE08oV90EqOmFHnzBLwiPtQSs1XAvI3QfoMgKQM/edit#gid=0
+-- not all formats should be converted to avif because it may have larger file size
+
+if string.find(originalFile, &quot;.png&quot;) ~= nil then
+    -- for PNG (lossless) we only try to use lossless webp
+    if string.find(ngx.req.get_headers()[&quot;accept&quot;], &quot;image/webp&quot;) ~= nil then
+        local newFile = originalFile .. &quot;.converted.webp&quot;
+        if not tryServeFile(newFile, &quot;image/webp&quot;) then
+            os.execute(&quot;cwebp -q 100 -lossless &quot; .. originalFile .. &quot; -o &quot; .. newFile);
+            serveFileOr404(newFile, &quot;image/webp&quot;)
+        end
+    else
+        serveFileOr404(originalFile, &quot;&quot;)
+    end
+else
+    -- for other formats, we first try to use avif, then webp
+    if string.find(ngx.req.get_headers()[&quot;accept&quot;], &quot;image/avif&quot;) ~= nil then
+        local newFile = originalFile .. &quot;.converted.avif&quot;
+        if not tryServeFile(newFile, &quot;image/avif&quot;) then
+            os.execute(&quot;avif -e &quot; .. originalFile .. &quot; -o &quot; .. newFile .. &quot; --best -q 12&quot;);
+            serveFileOr404(newFile, &quot;image/avif&quot;)
+        end
+    elseif string.find(ngx.req.get_headers()[&quot;accept&quot;], &quot;image/webp&quot;) ~= nil then
+        local newFile = originalFile .. &quot;.converted.webp&quot;
+        if not tryServeFile(newFile, &quot;image/webp&quot;) then
+            os.execute(&quot;cwebp -q 80 &quot; .. originalFile .. &quot; -o &quot; .. newFile);
+            serveFileOr404(newFile, &quot;image/webp&quot;)
+        end
+    else
+        serveFileOr404(originalFile, &quot;&quot;)
+    end
+end</code></pre><h1>参考资料</h1><ul><li><a href="https://jakearchibald.com/2020/avif-has-landed/">AVIF has landed - JakeArchibald.com</a></li><li><a href="https://mikublog.com/tech/2090">通过 Nginx-Lua 自动转换图片为 WebP 格式 - MikuBlog</a></li><li><a href="https://pkgs.org/search/?q=aom-dev">Search Results for aom-dev</a></li><li><a href="https://docs.google.com/spreadsheets/d/1TE5iLE08oV90EqOmFHnzBLwiPtQSs1XAvI3QfoMgKQM/edit#gid=0">AVIF test results - Google 表格</a></li></ul>]]></content>
+        <author>
+            <name><![CDATA[R·ex / Zeng]]></name>
+        </author>
+    </entry>
     
     <entry>
         <id>https://cosmosning.github.io/2020/09/19/pac-learning-and-its-variants/</id>
@@ -1512,74 +1614,6 @@ pinentry-mode loopback
 <!--kg-card-end: markdown--><p>The similarities are quite common, so I will focus on the differences here.</p><p><strong>1. Separated code and data</strong></p><p>Most modern architectures use a unique addressing space for code and data, including RISC-V. But WebAssembly doesn't, and actually the running code is not even provided with a way to access itself. Possible reasons:</p><ul><li>Simplicity for JIT compilation. If code can modify itself, then the JIT compiler needs to detect the modification and update the corresponding machine code - which is very complex.</li><li>WebAssembly's assumption about a powerful host environment. Linking, etc. will be done entirely by the host, and the program doesn't need to care about bringing itself up.</li><li>Security. Generating code at runtime is dangerous.</li></ul><p><strong>2. Typing and control flow</strong></p><p>WebAssembly is very "structured": The JIT compiler requires all function calls, loops, jumps and value types to conform to structural constraints. For example, you can't pass two values to a function that accepts three arguments, you can't jump to a location in another function, and you can't execute the floating point add instruction on two integers.</p><p>RISC-V however has none of these constraints. Everything is just values in registers and it's up to the programmer to decide how to use them.</p><p><strong>3. Machine model</strong></p><p>WebAssembly is built upon the <a href="https://en.wikipedia.org/wiki/Stack_machine">stack machine</a> model, while RISC-V (along with most other hardware architectures) is a <a href="https://en.wikipedia.org/wiki/Register_machine">register machine</a>.</p><p>In WebAssembly, <em>semantically</em> any instruction pops its operands (if any) from the value stack, performs the defined operation, and pushes its results (if any) back on to the value stack. However, the structure of the value stack at any point in the program can be statically determined - which is different from the Java bytecode, for example, in that keeping the stack structure statically determinable is not an optimization but a compile-time mandatory requirement.</p><p><strong>4. Memory</strong></p><p>While both ISAs define an untyped, byte-addressable memory, some details are different. Memory in WebAssembly is literally a large byte array: addresses start from zero and continuously span to an upper limit (which can be dynamically increased by executing an instruction). In comparison, RISC-V uses <em><a href="https://en.wikipedia.org/wiki/Virtual_memory">virtual memory</a></em> where page tables are used to map addresses to the underlying physical memory.</p><figure class="kg-card kg-image-card kg-card-hascaption"><img src="https://invariant.me/content/images/2020/03/wasm-riscv-comp.png" class="kg-image" alt="A Comparison between WebAssembly and RISC-V"><figcaption>Memory layouts</figcaption></figure><p>WebAssembly's memory model, although being simple to implement and efficient when JIT compiled, has several issues compared to RISC-V:</p><ul><li>Address zero is valid, causing programs that assume a crash for dereferencing the null pointer to misbehave.</li><li>No "gaps" are possible. Therefore the guard page trick to prevent stack overflow in a multi-threaded environment won't work.</li></ul><p>Virtual memory usually comes with memory protection where each memory page has a combination of <em>read</em>, <em>write</em> and <em>execute</em> permissions. This is an important security mechanism because it prevents execution and writes on memory regions where such operations aren't expected. RISC-V implements memory protection but WebAssembly does not - maybe it's less important in an architecture where executable code isn't addressable?</p><p><strong>5. Synchronization</strong></p><p>A computing machine needs at least one conditional branch instruction to be turing complete. Similarly, a multiprocessor architecture needs at least one "atomic conditional branch" instruction for proper synchronization. This instruction is <code>i{32,64}.atomic.rmw.<a href="https://en.wikipedia.org/wiki/Compare-and-swap">cmpxchg</a></code> in WebAssembly, and <code><a href="https://en.wikipedia.org/wiki/Load-link/store-conditional">LR/SC</a></code> in RISC-V.</p><p><code>LR/SC</code> has stronger semantics than <code>cmpxchg</code>. With <code>cmpxchg</code> we have the famous <a href="https://en.wikipedia.org/wiki/ABA_problem">ABA problem</a>, but <code>LR/SC</code> is not affected. It also means that emulating <code>LR/SC</code> with a <code>cmpxchg</code>-only architecture is much more difficult than the other way; something like a global lock or transactional memory has to be used, greatly increasing the complexity. RISC-V is designed for hardware anyway, but if you ever want to write a software implementation you will have to work around this issue.</p><hr><blockquote>Side note: I worked on/am working on both a RISC-V interpreter, <a href="https://github.com/losfair/FlatRv">FlatRv</a>, and a full WebAssembly JIT runtime, <a href="https://github.com/wasmerio/wasmer">Wasmer</a>. Take a look at them and star if you like my work :)</blockquote>]]></content>
         <author>
             <name><![CDATA[The Invariant]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://blog.rexskz.info/support-traditional-chinese-using-openresty-and-opencc.html</id>
-        <title><![CDATA[用 OpenResty+OpenCC 让网站支持正体中文]]></title>
-        <updated>2020-02-29T12:30:00+08:00</updated>
-        <link href="https://blog.rexskz.info/support-traditional-chinese-using-openresty-and-opencc.html"/>
-        <content type="text/html" src="https://blog.rexskz.info/support-traditional-chinese-using-openresty-and-opencc.html"><![CDATA[<blockquote><p>想要查看本站的正体中文版本，点击页脚处的“正體中文”链接即可。</p></blockquote><p>关于这篇文章的背景，真是说来话长……</p><p>大概在八年前，我去 CTSC 打了个酱油（非集训队，只是去玩的），在那几天里，我接受了许多大佬们的培训，印象比较深刻的是 <a href="https://www.byvoid.com/">BYVoid</a> 大佬，因为他在 PPT 中放了自己网站的链接，我点进去之后发现可以随意切换“简体”和“繁体”，而且似乎跟我以前见过的国际化不同，文章内容也会随着切换。当时我对 Web 开发一窍不通，所以没有能力好好研究这究竟是怎么实现的。</p><p>后来有一次机缘巧合，我看到了一个叫 <a href="https://github.com/BYVoid/OpenCC">OpenCC</a> 的项目（巧合的是，作者就是 BYVoid），这个项目可以把汉字在中国大陆、香港、台湾三种模式下互相转换，对于专用词汇和地区惯用字的转换做的相当不错，而且已经是 Linux 下非常通用的库。后来我又得知，BYVoid 的网站就是利用了 OpenCC 做的转换。</p><p>当时的我尝试用 PHP 来调用 OpenCC 的函数，但由于工作量过大（加上我菜），于是也没能实现。后来想到为什么不在 Nginx 直接调用 OpenCC 把页面转换一下再返回给浏览器呢？我查了一下，Nginx 自身虽然没有调用外部函数的功能，但 OpenResty（本质上是 Nginx+Lua）似乎可以。但是由于当时我对 Nginx 也不熟，感觉换成 OpenResty 又要踩一堆坑，于是也作罢了。</p><p>去年某一天，我将自己的网站迁移到了一个配置更好的服务器，并且全面 Docker 化（本地开发的时候也在 Docker 上，只是用了另一份配置文件而已），从 Nginx 换成 OpenResty 简直跟换衣服一样轻松；加上自我感觉现在的水平应当足够了，于是便开始了又一次的尝试。</p><p>通过一些搜索，我发现已经有人成功使用 OpenResty 提供的 Lua FFI 调用了 OpenCC 的 <code>.so</code> 库，但由于是给付费客户做的，因此不方便公开源码。虽然有点遗憾，但我觉得，既然有了一个可行的思路，那我一定能搞出来。</p><h1>在 Docker 中搭建 OpenResty+OpenCC</h1><p>这应当是全文最容易理解的部分了。简而言之，要想达成目标，我们首先需要有一个 OpenResty 和 OpenCC。经过搜索，我找到了 <a href="https://github.com/hustshawn/openresty-opencc-docker">hustshawn/openresty-opencc-docker</a> 这个项目。</p><p>看起来它的 Dockerfile 没什么问题，只是 OpenResty 的版本稍微旧了一些，于是我 Fork 了一份、改了一下版本后，打成了自己的一个 Docker 镜像 <a href="https://hub.docker.com/r/rexskz/openresty-opencc-docker">rexskz/openresty-opencc-docker</a>。要想启动起来，只需要在 <code>compose.yml</code> 中这样写（之所以 <code>name</code> 还叫 <code>nginx</code>，因为它本质上就是个 Nginx，就好比 MariaDB 的可执行程序依旧叫 <code>mysql</code>）：</p><pre><code class="lang-yaml">services:
-  nginx:
-    image: rexskz/openresty-opencc-docker
-    container_name: nginx
-    hostname: nginx
-    # ....省略其它的配置</code></pre><p>启动容器后进去转了一圈，发现 OpenCC 相关的所有数据文件都在 <code>/usr/share/opencc/</code> 目录下，由于我想把简体中文转换为台湾的正体中文，并需要转换专用词汇和地区惯用字，因此需要加载其中的 <code>s2twp.json</code> 文件。</p><h1>了解 OpenResty 的一些基础知识</h1><p>OpenResty 之所以可以做到许多事情，因为它内置了一个 LuaJIT，可以使用 Lua 这个脚本语言来自定义处理逻辑，例如 CloudFlare 就用它来做 WAF。我们这次的目标很单纯——如果发现有 <code>cc_lang=zh_TW</code> 这个 Cookie，就将 Response 中的汉字转换为台湾的正体中文。</p><p>经过查阅 OpenResty 的文档，我发现有两个指令可以满足我的需求：<code>body_filter_by_lua_block</code> 和 <code>body_filter_by_lua_file</code>（至于 <code>body_filter_by_lua</code>，文档说已经不推荐使用了），前者是直接将 Lua 代码写到 Nginx 配置文件中，后者是写到特定的 Lua 文件中。我选择了后者，因为后者在开发环境中会更好用一些：可以在 Nginx 配置文件中添加 <code>lua_code_cache off</code> 指令，每次修改了 Lua 文件后无需 <code>nginx -s reload</code>。</p><h1>了解 OpenResty 的 Lua 文件</h1><p>OpenResty 之所以可以调用 Lua 来修改请求和响应，是因为在 LuaJIT 中，可以通过一个叫 <code>ngx</code> 的全局变量来获取 Nginx 的数据或者与 Nginx 互动，例如在 <code>body_filter_by_lua</code> 中加载的 Lua 脚本：</p><ul><li>可以用 <code>ngx.arg[1]</code> 获取 Nginx 的 Response body；</li><li>可以用 <code>ngx.var['cookie_cc_lang']</code> 获取名为 <code>cc_lang</code> 的 Cookie 值；</li><li>可以用 <code>ngx.log(ngx.NOTICE, &quot;xxx&quot;)</code> 往 Nginx 的 Notice 级别的 Log 中输出一句话。</li></ul><p>完整的 <code>ngx</code> API 在这里：<a href="https://openresty-reference.readthedocs.io/en/latest/Lua_Nginx_API/">Lua Ngx API - OpenResty Reference</a>。</p><p>至于 Lua 的 FFI，看了文档之后也发现是相当简单，只需要如下几步：</p><ol><li><code>require('ffi')</code>（废话）；</li><li>定义函数签名，用的是 C 的语法；</li><li>通过一条命令加载动态链接库；</li><li>直接跟 JavaScript 一样调用即可。</li></ol><p>要想完成本文的目标，只需看 <a href="https://moonbingbing.gitbooks.io/openresty-best-practices/lua/FFI.html">FFI · OpenResty最佳实践</a> 这一个页面就足够了。</p><h1>了解 OpenCC 的 C API</h1><p>所有可以通过 FFI 调用的 C API 在这里：<a href="http://byvoid.github.io/OpenCC/1.0.4/group__opencc__c__api.html">Open Chinese Convert: OpenCC C API</a>，只有非常少的几个函数，通过描述我们大概可以得出调用顺序：</p><pre><code class="lang-c">opencc_t inst = opencc_open(&quot;/usr/share/opencc/s2twp.json&quot;);
-
-// 文字是 utf8 编码
-char *input = &quot;这是一段文字&quot;;
-char *output = opencc_convert_utf8(inst, input, strlen(input));
-
-// 当然也可以用这一种思路：即提前分配好 output 的空间
-// char *output = (char *)malloc(sizeof(char) * strlen(input) + 1);
-// opencc_convert_utf8_to_buffer(inst, input, strlen(input), output);
-
-// 想办法把 output 保存起来
-....
-
-// 最后需要做一些清理，否则可能会内存泄漏
-opencc_convert_utf8_free(output);
-opencc_close(inst);</code></pre><h1>开始正式的实践</h1><p>理清思路之后，我们就可以开始写了！首先新建一个 <code>nginx-opencc-filter.lua</code> 的文件，并将其挂载到 OpenResty 容器中：</p><pre><code class="lang-yaml">services:
-  nginx:
-    volumes:
-      # 这是我网站的配置文件
-      - ./nginx-docker-live.conf:/path/to/rexskz.conf
-      # 这是刚刚新建的 .lua 文件
-      - ./nginx-opencc-filter.lua:/path/to/opencc-filter.lua
-    # ....省略其它的配置</code></pre><p>然后在 OpenResty 配置文件中加载这个 Lua 文件：</p><pre><code class="lang-nginx"># 只为你需要转换的页面添加这个配置，不要所有的 location 都加
-location /your-page {
-    body_filter_by_lua_file /path/to/opencc-filter.lua;
-    # ....省略其它的配置
-}</code></pre><p>接下来开始写 Lua 脚本了！至于 Lua 的简单语法，网上有很多，这儿就不赘述了。整个脚本是这样的，基本的思路跟刚才写的 C 代码差不多，应当非常好理解：</p><pre><code class="lang-lua">local cookie_value = ngx.var['cookie_cc_lang']
-
-if cookie_value == 'zh_TW' then
-    local ffi = require('ffi')
-
-    ffi.cdef[[
-        typedef void* opencc_t;
-
-        opencc_t opencc_open(const char *configFileName);
-        int      opencc_close(opencc_t opencc);
-        char*    opencc_convert_utf8(opencc_t opencc, const char *input, size_t length);
-        void     opencc_convert_utf8_free(char *str);
-    ]]
-
-    local cc = ffi.load('opencc')
-
-    local inst = cc.opencc_open('/usr/share/opencc/s2twp.json')
-    local input = ngx.arg[1]
-    local res = cc.opencc_convert_utf8(inst, input, #input)
-
-    ngx.arg[1] = ffi.string(res)
-
-    cc.opencc_convert_utf8_free(res)
-    cc.opencc_close(inst)
-end</code></pre><p>添加了 Cookie 之后刷新一下，发现页面已经是正体中文版本了！之后的操作就是在页面中适当的地方加上简体中文和正体中文的链接。</p><h1>由于 Buffer 导致的 Bug</h1><p>奇怪的是，不是所有的页面都可以成功转换，有些页面进去之后只能加载很少的一部分文本，甚至有的页面直接提示 <code>ERR_INCOMPLETE_CHUNKED_ENCODING</code>。回去看 Nginx 的 Log，发现只要一访问这样的页面，就会多一句 <code>worker process 8 exited on signal 11</code>，我看了半天，感觉 Lua 脚本不应该有 Bug，但 OpenResty 的 Lua 脚本又不方便单步调试，于是我祭出了八年前就熟练掌握的输出调试大法，在一开始先输出 <code>ngx.arg[1]</code>，保存刷新，于是发现了一堆 UTF-8 下面的乱码……没错，就是黑色菱形里面带一个问号的那种。</p><p>一次正常的请求，会输出一次或多次，每一次都没有这样的乱码；但对于不正常的请求，一定会在最后一次输出这样的乱码，然后 Worker process 就崩溃了。经验告诉我，一定是因为 Nginx 为了加快速度，对请求做了流式处理，将请求和响应切分成若干个 Chunk 发送给了 Lua 脚本。一旦切分的位置恰好在一个汉字（占 3 个字节）的中间，那么这个汉字就会被切分成两个乱码，被分散到了两个 Chunk 中。</p><p>OpenCC 不需要对这种特殊情况做兼容，而且即使做了兼容，也无法转换这个字（甚至这个字所在的词语），因此我们能做的就是让 Nginx 不切分页面的 Response body。由于我的网站是 FastCGI + PHP-FPM（上古时期的技术了），因此只需要调大一下 Buffer 的值即可（直接设置 <code>fastcgi_buffering off</code> 我试了似乎没用，不知道为什么）：</p><pre><code class="lang-nginx">fastcgi_buffers           8 256k;
-fastcgi_buffer_size       256k;
-fastcgi_busy_buffers_size 512k;</code></pre><p>对于使用 <code>proxy_pass</code> 代理的情况，有等价的 <code>proxy_buffer_size</code> 等指令，用法完全一样。</p><p>于是……我的网站就这样支持了正体中文。</p>]]></content>
-        <author>
-            <name><![CDATA[R·ex / Zeng]]></name>
         </author>
     </entry>
     
