@@ -3,7 +3,7 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2020-10-13T12:15:53+08:00</updated>
+    <updated>2020-10-13T18:13:16+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
@@ -3074,7 +3074,7 @@ void start_coroutine(struct Coroutine *co) {
 
 
 
-<div class="wp-block-image"><figure class="aligncenter"><a href="https://www.noisyfox.io/wp-content/uploads/2019/01/image.png" target="_blank" rel="noreferrer noopener"><img src="https://www.noisyfox.io/wp-content/uploads/2019/01/image-300x189.png" alt="" class="wp-image-569" srcset="https://www.noisyfox.io/wp-content/uploads/2019/01/image-300x189.png 300w, https://www.noisyfox.io/wp-content/uploads/2019/01/image-768x483.png 768w, https://www.noisyfox.io/wp-content/uploads/2019/01/image-1024x644.png 1024w, https://www.noisyfox.io/wp-content/uploads/2019/01/image.png 1588w" sizes="(max-width: 300px) 100vw, 300px" /></a><figcaption>Import resources: FoxWinShave 对话框</figcaption></figure></div>
+<div class="wp-block-image"><figure class="aligncenter"><a href="https://www.noisyfox.io/wp-content/uploads/2019/01/image.png" target="_blank" rel="noreferrer noopener"><img loading="lazy" width="300" height="189" src="https://www.noisyfox.io/wp-content/uploads/2019/01/image-300x189.png" alt="" class="wp-image-569" srcset="https://www.noisyfox.io/wp-content/uploads/2019/01/image-300x189.png 300w, https://www.noisyfox.io/wp-content/uploads/2019/01/image-768x483.png 768w, https://www.noisyfox.io/wp-content/uploads/2019/01/image-1024x644.png 1024w, https://www.noisyfox.io/wp-content/uploads/2019/01/image.png 1588w" sizes="(max-width: 300px) 100vw, 300px" /></a><figcaption>Import resources: FoxWinShave 对话框</figcaption></figure></div>
 
 
 
@@ -3098,11 +3098,11 @@ void start_coroutine(struct Coroutine *co) {
 
 
 
-<div class="wp-block-image"><figure class="aligncenter"><a href="https://www.noisyfox.io/wp-content/uploads/2019/01/image-2.png" target="_blank" rel="noreferrer noopener"><img src="https://www.noisyfox.io/wp-content/uploads/2019/01/image-2-300x240.png" alt="" class="wp-image-592" srcset="https://www.noisyfox.io/wp-content/uploads/2019/01/image-2-300x240.png 300w, https://www.noisyfox.io/wp-content/uploads/2019/01/image-2.png 512w" sizes="(max-width: 300px) 100vw, 300px" /></a><figcaption>GM 8 设置无边框</figcaption></figure></div>
+<div class="wp-block-image"><figure class="aligncenter"><a href="https://www.noisyfox.io/wp-content/uploads/2019/01/image-2.png" target="_blank" rel="noreferrer noopener"><img loading="lazy" width="300" height="240" src="https://www.noisyfox.io/wp-content/uploads/2019/01/image-2-300x240.png" alt="" class="wp-image-592" srcset="https://www.noisyfox.io/wp-content/uploads/2019/01/image-2-300x240.png 300w, https://www.noisyfox.io/wp-content/uploads/2019/01/image-2.png 512w" sizes="(max-width: 300px) 100vw, 300px" /></a><figcaption>GM 8 设置无边框</figcaption></figure></div>
 
 
 
-<div class="wp-block-image"><figure class="aligncenter"><a href="https://www.noisyfox.io/wp-content/uploads/2019/01/image-1.png" target="_blank" rel="noreferrer noopener"><img src="https://www.noisyfox.io/wp-content/uploads/2019/01/image-1-300x237.png" alt="" class="wp-image-591" srcset="https://www.noisyfox.io/wp-content/uploads/2019/01/image-1-300x237.png 300w, https://www.noisyfox.io/wp-content/uploads/2019/01/image-1.png 695w" sizes="(max-width: 300px) 100vw, 300px" /></a><figcaption>GMS 2 设置无边框</figcaption></figure></div>
+<div class="wp-block-image"><figure class="aligncenter"><a href="https://www.noisyfox.io/wp-content/uploads/2019/01/image-1.png" target="_blank" rel="noreferrer noopener"><img loading="lazy" width="300" height="237" src="https://www.noisyfox.io/wp-content/uploads/2019/01/image-1-300x237.png" alt="" class="wp-image-591" srcset="https://www.noisyfox.io/wp-content/uploads/2019/01/image-1-300x237.png 300w, https://www.noisyfox.io/wp-content/uploads/2019/01/image-1.png 695w" sizes="(max-width: 300px) 100vw, 300px" /></a><figcaption>GMS 2 设置无边框</figcaption></figure></div>
 
 
 
@@ -3155,7 +3155,7 @@ NF_WS_Free(); // 释放插件
 
 
 
-<div class="wp-block-image"><figure class="aligncenter"><a href="https://www.noisyfox.io/wp-content/uploads/2019/01/win-coord-1.png" target="_blank" rel="noreferrer noopener"><img src="https://www.noisyfox.io/wp-content/uploads/2019/01/win-coord-1.png" alt="" class="wp-image-635" srcset="https://www.noisyfox.io/wp-content/uploads/2019/01/win-coord-1.png 574w, https://www.noisyfox.io/wp-content/uploads/2019/01/win-coord-1-300x234.png 300w" sizes="(max-width: 574px) 100vw, 574px" /></a><figcaption> <br>窗口坐标系统 </figcaption></figure></div>
+<div class="wp-block-image"><figure class="aligncenter"><a href="https://www.noisyfox.io/wp-content/uploads/2019/01/win-coord-1.png" target="_blank" rel="noreferrer noopener"><img loading="lazy" width="574" height="447" src="https://www.noisyfox.io/wp-content/uploads/2019/01/win-coord-1.png" alt="" class="wp-image-635" srcset="https://www.noisyfox.io/wp-content/uploads/2019/01/win-coord-1.png 574w, https://www.noisyfox.io/wp-content/uploads/2019/01/win-coord-1-300x234.png 300w" sizes="(max-width: 574px) 100vw, 574px" /></a><figcaption> <br>窗口坐标系统 </figcaption></figure></div>
 
 
 
@@ -3202,7 +3202,7 @@ NF_WS_ShaveWindowSurfaceExt(surface, x, y, xscale, yscale, alpha); // 仅限 GMS
 
 
 
-<div class="wp-block-image"><figure class="aligncenter"><a href="https://www.noisyfox.io/wp-content/uploads/2019/01/mask.png" target="_blank" rel="noreferrer noopener"><img src="https://www.noisyfox.io/wp-content/uploads/2019/01/mask.png" alt="" class="wp-image-654" srcset="https://www.noisyfox.io/wp-content/uploads/2019/01/mask.png 640w, https://www.noisyfox.io/wp-content/uploads/2019/01/mask-300x225.png 300w" sizes="(max-width: 640px) 100vw, 640px" /></a><figcaption>“遮罩层”内容</figcaption></figure></div>
+<div class="wp-block-image"><figure class="aligncenter"><a href="https://www.noisyfox.io/wp-content/uploads/2019/01/mask.png" target="_blank" rel="noreferrer noopener"><img loading="lazy" width="640" height="480" src="https://www.noisyfox.io/wp-content/uploads/2019/01/mask.png" alt="" class="wp-image-654" srcset="https://www.noisyfox.io/wp-content/uploads/2019/01/mask.png 640w, https://www.noisyfox.io/wp-content/uploads/2019/01/mask-300x225.png 300w" sizes="(max-width: 640px) 100vw, 640px" /></a><figcaption>“遮罩层”内容</figcaption></figure></div>
 
 
 
@@ -3231,7 +3231,7 @@ draw_clear_alpha(c_white, 0); // Alpha = 0, 使用的颜色无所谓.
 
 
 
-<div class="wp-block-image"><figure class="aligncenter"><a href="https://www.noisyfox.io/wp-content/uploads/2019/01/purpose.png" target="_blank" rel="noreferrer noopener"><img src="https://www.noisyfox.io/wp-content/uploads/2019/01/purpose-1.png" alt="" class="wp-image-661" srcset="https://www.noisyfox.io/wp-content/uploads/2019/01/purpose-1.png 640w, https://www.noisyfox.io/wp-content/uploads/2019/01/purpose-1-300x225.png 300w" sizes="(max-width: 640px) 100vw, 640px" /></a><figcaption>游戏实际绘制内容</figcaption></figure></div>
+<div class="wp-block-image"><figure class="aligncenter"><a href="https://www.noisyfox.io/wp-content/uploads/2019/01/purpose.png" target="_blank" rel="noreferrer noopener"><img loading="lazy" width="640" height="480" src="https://www.noisyfox.io/wp-content/uploads/2019/01/purpose-1.png" alt="" class="wp-image-661" srcset="https://www.noisyfox.io/wp-content/uploads/2019/01/purpose-1.png 640w, https://www.noisyfox.io/wp-content/uploads/2019/01/purpose-1-300x225.png 300w" sizes="(max-width: 640px) 100vw, 640px" /></a><figcaption>游戏实际绘制内容</figcaption></figure></div>
 
 
 
@@ -3251,7 +3251,7 @@ draw_clear_alpha(c_white, 0); // Alpha = 0, 使用的颜色无所谓.
 
 
 
-<div class="wp-block-image"><figure class="aligncenter"><a href="https://www.noisyfox.io/wp-content/uploads/2019/01/image-4.png" target="_blank" rel="noreferrer noopener"><img src="https://www.noisyfox.io/wp-content/uploads/2019/01/image-4.png" alt="" class="wp-image-669"/></a><figcaption> <br>绘制内容与窗口形状没有同步更新 </figcaption></figure></div>
+<div class="wp-block-image"><figure class="aligncenter"><a href="https://www.noisyfox.io/wp-content/uploads/2019/01/image-4.png" target="_blank" rel="noreferrer noopener"><img loading="lazy" width="286" height="262" src="https://www.noisyfox.io/wp-content/uploads/2019/01/image-4.png" alt="" class="wp-image-669"/></a><figcaption> <br>绘制内容与窗口形状没有同步更新 </figcaption></figure></div>
 
 
 
@@ -3286,7 +3286,7 @@ NF_WS_ShaveWindowSurfaceExt(surface, x, y, xscale, yscale, alpha); // 仅限 GMS
 
 
 
-<div class="wp-block-image"><figure class="aligncenter"><a href="https://www.noisyfox.io/wp-content/uploads/2019/01/complex.png" target="_blank" rel="noreferrer noopener"><img src="https://www.noisyfox.io/wp-content/uploads/2019/01/complex.png" alt="" class="wp-image-678" srcset="https://www.noisyfox.io/wp-content/uploads/2019/01/complex.png 640w, https://www.noisyfox.io/wp-content/uploads/2019/01/complex-300x225.png 300w" sizes="(max-width: 640px) 100vw, 640px" /></a><figcaption>复杂遮罩</figcaption></figure></div>
+<div class="wp-block-image"><figure class="aligncenter"><a href="https://www.noisyfox.io/wp-content/uploads/2019/01/complex.png" target="_blank" rel="noreferrer noopener"><img loading="lazy" width="640" height="480" src="https://www.noisyfox.io/wp-content/uploads/2019/01/complex.png" alt="" class="wp-image-678" srcset="https://www.noisyfox.io/wp-content/uploads/2019/01/complex.png 640w, https://www.noisyfox.io/wp-content/uploads/2019/01/complex-300x225.png 300w" sizes="(max-width: 640px) 100vw, 640px" /></a><figcaption>复杂遮罩</figcaption></figure></div>
 
 
 
@@ -3969,11 +3969,11 @@ resolve_file=php%3A%2F%2Ffilter%2Fread%3Dconvert.base64-encode%2Fresource%3D../.
 <h1>真相</h1>
 <p>后来我机智的看了下磁盘的占用情况：</p>
 <pre class="brush: bash; title: ; notranslate">df -hl</pre>
-<p><a href="https://www.noisyfox.cn/wp-content/uploads/2017/05/df-hl.png"><img class="aligncenter size-full wp-image-483" src="https://www.noisyfox.cn/wp-content/uploads/2017/05/df-hl.png" alt="df -hl" width="543" height="152" srcset="https://www.noisyfox.io/wp-content/uploads/2017/05/df-hl.png 543w, https://www.noisyfox.io/wp-content/uploads/2017/05/df-hl-300x84.png 300w" sizes="(max-width: 543px) 100vw, 543px" /></a></p>
+<p><a href="https://www.noisyfox.cn/wp-content/uploads/2017/05/df-hl.png"><img loading="lazy" class="aligncenter size-full wp-image-483" src="https://www.noisyfox.cn/wp-content/uploads/2017/05/df-hl.png" alt="df -hl" width="543" height="152" srcset="https://www.noisyfox.io/wp-content/uploads/2017/05/df-hl.png 543w, https://www.noisyfox.io/wp-content/uploads/2017/05/df-hl-300x84.png 300w" sizes="(max-width: 543px) 100vw, 543px" /></a></p>
 <p>然后我就震惊了！！<span style="color: #000000;"><del>震惊！过气博主硬盘为何被榨干！这背后究竟是人性的&#8230;（啪</del></span></p>
 <p>经过一番折腾，终于找到了问题的所在：</p>
 <pre class="brush: bash; title: ; notranslate">du -sh .</pre>
-<p><a href="https://www.noisyfox.cn/wp-content/uploads/2017/05/du-sh.png"><img class="aligncenter size-full wp-image-484" src="https://www.noisyfox.cn/wp-content/uploads/2017/05/du-sh.png" alt="df -hl" width="481" height="96" srcset="https://www.noisyfox.io/wp-content/uploads/2017/05/du-sh.png 481w, https://www.noisyfox.io/wp-content/uploads/2017/05/du-sh-300x60.png 300w" sizes="(max-width: 481px) 100vw, 481px" /></a></p>
+<p><a href="https://www.noisyfox.cn/wp-content/uploads/2017/05/du-sh.png"><img loading="lazy" class="aligncenter size-full wp-image-484" src="https://www.noisyfox.cn/wp-content/uploads/2017/05/du-sh.png" alt="df -hl" width="481" height="96" srcset="https://www.noisyfox.io/wp-content/uploads/2017/05/du-sh.png 481w, https://www.noisyfox.io/wp-content/uploads/2017/05/du-sh-300x60.png 300w" sizes="(max-width: 481px) 100vw, 481px" /></a></p>
 <p>Nginx 的日志文件居然占用了14G的空间！Why？</p>
 <h1>论日志</h1>
 <p>日志文件通常情况下是未压缩的明文文本文件，在一个运行时间较长的系统中日志文件的体积会越来越大，甚至远超你的预期。</p>
@@ -3992,10 +3992,10 @@ resolve_file=php%3A%2F%2Ffilter%2Fread%3Dconvert.base64-encode%2Fresource%3D../.
 <p><del>天空一声巨响，英雄闪亮登场！</del>这时候一个叫做 <strong>logrotate</strong> 的程序就派上了用处。</p>
 <p>根据使用的系统不同，logrotate的安装方式也不尽相同，有些系统更是自带了 logrotate 并且带有很多默认的配置（比如我所使用的 Ubuntu Server）。</p>
 <p>你可以在自己的系统上查看一下 /var/log/ 目录下的日志文件，如果见到了类似“服务名.log.0”、“服务名.log.1”等一大堆具有相同服务名称但是带有后缀序号的日志文件，那么可以99%肯定这个系统已经安装了 logrotate 并且能够工作。</p>
-<p><a href="https://www.noisyfox.cn/wp-content/uploads/2017/05/logs.png"><img class="aligncenter size-full wp-image-492" src="https://www.noisyfox.cn/wp-content/uploads/2017/05/logs.png" alt="logrotate" width="663" height="579" srcset="https://www.noisyfox.io/wp-content/uploads/2017/05/logs.png 663w, https://www.noisyfox.io/wp-content/uploads/2017/05/logs-300x262.png 300w" sizes="(max-width: 663px) 100vw, 663px" /></a></p>
+<p><a href="https://www.noisyfox.cn/wp-content/uploads/2017/05/logs.png"><img loading="lazy" class="aligncenter size-full wp-image-492" src="https://www.noisyfox.cn/wp-content/uploads/2017/05/logs.png" alt="logrotate" width="663" height="579" srcset="https://www.noisyfox.io/wp-content/uploads/2017/05/logs.png 663w, https://www.noisyfox.io/wp-content/uploads/2017/05/logs-300x262.png 300w" sizes="(max-width: 663px) 100vw, 663px" /></a></p>
 <p>如果你的系统没有带logrotate，别担心，百度一下就能装上啦！而且配置巨简单！</p>
 <p>在 /etc/logrotate.d/ 目录下（不同系统可能有所区别）通常会有很多配置文件，这些文件的名字通常对应了该文件所管辖的服务（文件名仅仅是便于管理，和实际内容没有必然关联）。</p>
-<p><a href="https://www.noisyfox.cn/wp-content/uploads/2017/05/logrotate_cfg.png"><img class="aligncenter size-full wp-image-494" src="https://www.noisyfox.cn/wp-content/uploads/2017/05/logrotate_cfg.png" alt="logrotate config" width="663" height="435" srcset="https://www.noisyfox.io/wp-content/uploads/2017/05/logrotate_cfg.png 663w, https://www.noisyfox.io/wp-content/uploads/2017/05/logrotate_cfg-300x197.png 300w" sizes="(max-width: 663px) 100vw, 663px" /></a></p>
+<p><a href="https://www.noisyfox.cn/wp-content/uploads/2017/05/logrotate_cfg.png"><img loading="lazy" class="aligncenter size-full wp-image-494" src="https://www.noisyfox.cn/wp-content/uploads/2017/05/logrotate_cfg.png" alt="logrotate config" width="663" height="435" srcset="https://www.noisyfox.io/wp-content/uploads/2017/05/logrotate_cfg.png 663w, https://www.noisyfox.io/wp-content/uploads/2017/05/logrotate_cfg-300x197.png 300w" sizes="(max-width: 663px) 100vw, 663px" /></a></p>
 <p>而这些配置文件的格式非常的简要，如图所示。通常第一行以目标日志文件路径起头，可以使用通配符，而后面的花括号内部则是需要应用于该日志文件的滚动规则。</p>
 <p>其中几个常用的规则在这里稍微解释一下，通常就够用了。更详细的规则可以自行查找，不再赘述。</p>
 <pre class="brush: bash; title: ; notranslate">
@@ -4059,10 +4059,10 @@ maxsize 100M # 重要！活动日志的最大尺寸，超过该尺寸则强制�
 <p>所谓的后量子时代算法，大意是说该算法难以被将来可能出现的量子计算机轻易破解。<br />
 而目前常用的非对称加密/密钥交换算法的安全性大多依赖于大数分解以及逆推椭圆曲线的难度。而这些问题可能对于量子计算机来说可以轻松解决。故而需要一种新的加密原理来对抗量子计算机的威胁。</p>
 <p>当然将来能不能制造出大型的量子计算机并破解现有的加密算法依旧是个未知数。<a href="https://community.letsencrypt.org/t/google-is-experimenting-with-post-quantum-crypto-for-tls/17720" target="_blank" rel="noopener noreferrer">不过谷歌在前段时间开始已经在自己的 chrome 以及服务器上启用了该密钥交换算法</a>，使用 Chrome 54+ 访问谷歌的服务，可以看到类似下图的结果：<br />
-<a href="https://www.noisyfox.cn/wp-content/uploads/2016/09/QQ截图20160913150853.png"><img class="aligncenter size-full wp-image-416" src="https://www.noisyfox.cn/wp-content/uploads/2016/09/QQ截图20160913150853.png" alt="CECPQ1 on Google" width="642" height="401" /></a></p>
+<a href="https://www.noisyfox.cn/wp-content/uploads/2016/09/QQ截图20160913150853.png"><img loading="lazy" class="aligncenter size-full wp-image-416" src="https://www.noisyfox.cn/wp-content/uploads/2016/09/QQ截图20160913150853.png" alt="CECPQ1 on Google" width="642" height="401" /></a></p>
 <p>其中的“CECPQ1_ECDSA”即表明了其采用了 CECPQ1 密钥交换 + ECDSA 签名算法。</p>
 <p>当然纯粹是好玩，我也装修了一下我的小窝，让它也支持了这种厉害的算法~<br />
-<a href="https://www.noisyfox.cn/wp-content/uploads/2016/09/QQ截图20160913151547.png"><img class="aligncenter size-full wp-image-418" src="https://www.noisyfox.cn/wp-content/uploads/2016/09/QQ截图20160913151547.png" alt="CECPQ1 on Noisyfox" width="642" height="401" /></a></p>
+<a href="https://www.noisyfox.cn/wp-content/uploads/2016/09/QQ截图20160913151547.png"><img loading="lazy" class="aligncenter size-full wp-image-418" src="https://www.noisyfox.cn/wp-content/uploads/2016/09/QQ截图20160913151547.png" alt="CECPQ1 on Noisyfox" width="642" height="401" /></a></p>
 <p>不过由于我的证书是 RSA 签名的，故图中采用的是“CECPQ1_RSA”而不是 ECDSA。</p>
 <p>如果你也想让自己的网站支持这种算法，那么就跟着狐狸我一步一步来配置你的网站吧~</p>
 <hr />
@@ -4439,7 +4439,7 @@ dr.close()</pre>
 <hr />
 <p>首先用C#（其它.NET语言也可）创建一个windows经典桌面dll，然后在Nuget中搜索并安装Unmanaged Exports这个包。</p>
 <p>随后编写你要导出的静态函数，并添加[DllExport]注解，范例如下：</p>
-<p><pre data-enlighter-language="csharp" class="EnlighterJSRAW">
+<pre class="brush: csharp; title: ; notranslate">
 class Test
 {
   [DllExport(&quot;add&quot;, CallingConvention = CallingConvention.Cdecl)]
@@ -4448,7 +4448,7 @@ class Test
      return left + right;
   } 
 }
-</pre></p>
+</pre>
 <p>然后生成平台选择一个具体的平台（不能是AnyCPU否则该工具不生效），生成解决方案即可。<br />
 该工具最新版只支持vs2008以后的vs，因为vs2008及以前的版本不支持nuget。</p>
 <hr />
@@ -4458,16 +4458,16 @@ class Test
 <p>关于编译错误<br />
 该工具在非英文操作系统上可能会出现编译错误的问题，具体表现如下：<br />
 <a href="http://stackoverflow.com/questions/20288469/cant-create-unmanaged-dll-using-c-sharp-and-robert-gieseckes-unmanaged-exports" target="_blank">http://stackoverflow.com/questions/20288469/cant-create-unmanaged-dll-using-c-sharp-and-robert-gieseckes-unmanaged-exports</a><br />
-<a href="https://www.noisyfox.cn/wp-content/uploads/2016/06/QQ截图20160619143947.png"><img class="aligncenter size-full wp-image-402" src="https://www.noisyfox.cn/wp-content/uploads/2016/06/QQ截图20160619143947.png" alt="Unmanaged Exports 编译错误" width="1452" height="90" /></a><br />
+<a href="https://www.noisyfox.cn/wp-content/uploads/2016/06/QQ截图20160619143947.png"><img loading="lazy" class="aligncenter size-full wp-image-402" src="https://www.noisyfox.cn/wp-content/uploads/2016/06/QQ截图20160619143947.png" alt="Unmanaged Exports 编译错误" width="1452" height="90" /></a><br />
 主要原因是因为非英文操作系统中IL代码中含有非英文注释导致插件工作异常。<br />
 虽然将系统语言切换成英文可以解决这个问题，但是这个方法过于麻烦，故本人修改了这个工具，修正了其在非英文操作系统上不能正常使用的问题。</p>
 <p>文末附上修改后的文件，解压后将其中的两个dll替换进项目NuGet包中packages\UnmanagedExports.1.2.7\tools文件夹下的两个同名dll即可。<br />
 改修正版仅针对Unmanaged Exports 1.2.7版本制作，其它版本未测，可能不能正常使用。<br />
 替换完成后即可正常编译：<br />
-<a href="https://www.noisyfox.cn/wp-content/uploads/2016/06/QQ截图20160619145913.png"><img class="aligncenter size-full wp-image-403" src="https://www.noisyfox.cn/wp-content/uploads/2016/06/QQ截图20160619145913.png" alt="Unmanaged Exports 编译正常" width="662" height="65" /></a><br />
+<a href="https://www.noisyfox.cn/wp-content/uploads/2016/06/QQ截图20160619145913.png"><img loading="lazy" class="aligncenter size-full wp-image-403" src="https://www.noisyfox.cn/wp-content/uploads/2016/06/QQ截图20160619145913.png" alt="Unmanaged Exports 编译正常" width="662" height="65" /></a><br />
 <div class="sdm_download_item "><div class="sdm_download_item_top"><div class="sdm_download_thumbnail"></div><div class="sdm_download_title">DllExport-Fixed-1.2.7.7z</div></div><div style="clear:both;"></div><div class="sdm_download_description"><p>修正了非英文系统编译错误的Unmanaged Exports 1.2.7</p>
 <h1></h1>
-</div><div class="sdm_download_link"><span class="sdm_download_button"><a href="https://www.noisyfox.io/?smd_process_download=1&download_id=404" class="sdm_download green" title="DllExport-Fixed-1.2.7.7z" target="_blank">Download Now!</a></span><span class="sdm_download_item_count"><span class="sdm_item_count_number">1020</span><span class="sdm_item_count_string"> Downloads</span></span></div></div><div class="sdm_clear_float"></div></p>
+</div><div class="sdm_download_link"><span class="sdm_download_button"><a href="https://www.noisyfox.io/?smd_process_download=1&download_id=404" class="sdm_download green" title="DllExport-Fixed-1.2.7.7z" target="_blank">立即下载！</a></span><span class="sdm_download_item_count"><span class="sdm_item_count_number">1021</span><span class="sdm_item_count_string"> 下载</span></span></div></div><div class="sdm_clear_float"></div></p>
 <p><a rel="nofollow" href="https://www.noisyfox.io/unmanaged-exports.html">Unmanaged Exports 修正版 .NET导出非托管函数</a>，首发于<a rel="nofollow" href="https://www.noisyfox.io">狐狸的小小窝</a>。</p>]]></content>
         <author>
             <name><![CDATA[狐狸的小小窝]]></name>
