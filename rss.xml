@@ -3,12 +3,23 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2020-10-25T12:16:00+08:00</updated>
+    <updated>2020-10-25T18:13:08+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
     </author>
     
+    
+    <entry>
+        <id>https://miaotony.xyz/2020/10/26/CTF_2020bilibiliSec1024/</id>
+        <title><![CDATA[CTF | 2020 bilibili Sec1024 WriteUp]]></title>
+        <updated>2020-10-25T17:52:07+08:00</updated>
+        <link href="https://miaotony.xyz/2020/10/26/CTF_2020bilibiliSec1024/"/>
+        <content type="text/html" src="https://miaotony.xyz/2020/10/26/CTF_2020bilibiliSec1024/"><![CDATA[小破站整了个Sec1024，看了看感觉题目更像是脑筋急转弯，略偏娱乐化这样吧。随意写个WriteUp好了。]]></content>
+        <author>
+            <name><![CDATA[MiaoTony]]></name>
+        </author>
+    </entry>
     
     <entry>
         <id>https://blog.triplez.cn/macos-user-guide/</id>
@@ -582,17 +593,6 @@ end</code></pre><h1>参考资料</h1><ul><li><a href="https://jakearchibald.com/
         <content type="text/html" src="http://www.jiebcoder.top/2020/05/19/blog7/"><![CDATA[<p>我在参加学校老师手下的一个项目时，负责的云存储套餐这块业务的后端开发，遇到了计算套餐开始和结束时间的问题，并使用了 SimpleDateFormat 类。SimpleDateFormat 是 Java 中使用较多的格式化日期的工具，配合 Calendar 类可以实现时间的计算。</p><h2 id="SimpleDateFormat-的使用"><a href="#SimpleDateFormat-的使用" class="headerlink" title="SimpleDateFormat 的使用"></a>SimpleDateFormat 的使用</h2><p>SimpleDateFormat 的构造方法传入想要的日期格式，parse() 将字符串转化为日期，format 则是将日期转化为字符：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SimpleDateFormat simpleDateFormat &#x3D; new SimpleDateFormat(&quot;yyyy-MM-dd HH:mm:ss&quot;);</span><br><span class="line">Date date &#x3D; simpleDateFormat.parse(&quot;2020-05-19 15:06:13&quot;);    &#x2F;&#x2F; Tue May 19 15:06:13 CST 2020</span><br><span class="line">String time &#x3D; simpleDateFormat.format(date);    &#x2F;&#x2F; 2020-05-19 15:06:13</span><br></pre></td></tr></table></figure><p>注意 parse() 中当字符串和日期格式 pattern 不一样时，会抛 ParseException。ParseException 属于受检型的异常，需要在 try…catch… 代码块中捕获并进行处理 。</p><h2 id="配合-Calendar-完成日期的加减"><a href="#配合-Calendar-完成日期的加减" class="headerlink" title="配合 Calendar 完成日期的加减"></a>配合 Calendar 完成日期的加减</h2><p>Calendar 的 getInstance() 获取 Calendar 实例，setTime() 设置起始时间，add() 进行日期的加减。add() 中 Calendar.DAY_OF_MONTH 表示以天作为计算的单位，Calendar.DATE 也是相同的效果，方法的第二个参数 amount 取负数即可实现减法。如下计算下个月的日期：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">SimpleDateFormat simpleDateFormat &#x3D; new SimpleDateFormat(&quot;yyyy-MM-dd HH:mm:ss&quot;);</span><br><span class="line">Date date &#x3D; simpleDateFormat.parse(&quot;2020-05-19 15:06:13&quot;);</span><br><span class="line">Calendar calendar &#x3D; Calendar.getInstance();</span><br><span class="line">calendar.setTime(date);</span><br><span class="line">calendar.add(Calendar.DAY_OF_MONTH, 31);</span><br><span class="line">String endTime &#x3D; simpleDateFormat.format(calendar.getTime());    &#x2F;&#x2F; 2020-06-19 15:06:13</span><br></pre></td></tr></table></figure><h2 id="SimpleDateFormat-避坑"><a href="#SimpleDateFormat-避坑" class="headerlink" title="SimpleDateFormat 避坑"></a>SimpleDateFormat 避坑</h2><p><u>重点来惹</u>！一定要按照日期格式的标准写法，比如使用错误的日期格式 “YYYY-MM-dd” 时，format() 将会出现奇怪的日期：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SimpleDateFormat simpleDateFormat &#x3D; new SimpleDateFormat(&quot;YYYY-MM-dd&quot;);</span><br><span class="line">Date date &#x3D; simpleDateFormat.parse(&quot;2020-05-19&quot;);    &#x2F;&#x2F; Sun Dec 29 00:00:00 CST 2019</span><br></pre></td></tr></table></figure><p>标准表示日期的字符和其含义：</p><table><thead><tr><th align="center">字符</th><th align="center">含义</th></tr></thead><tbody><tr><td align="center">yyyy</td><td align="center">年</td></tr><tr><td align="center">MM</td><td align="center">月</td></tr><tr><td align="center">dd</td><td align="center">日</td></tr><tr><td align="center">hh</td><td align="center">12小时制</td></tr><tr><td align="center">HH</td><td align="center">24小时制</td></tr><tr><td align="center">mm</td><td align="center">分</td></tr><tr><td align="center">ss</td><td align="center">秒</td></tr><tr><td align="center">S</td><td align="center">毫秒</td></tr><tr><td align="center">E</td><td align="center">星期几</td></tr><tr><td align="center">D</td><td align="center">一年中的第几天</td></tr><tr><td align="center">F</td><td align="center">一月中的第几个星期(会把这个月总共过的天数除以7)</td></tr><tr><td align="center">w</td><td align="center">一年中的第几个星期</td></tr><tr><td align="center">W</td><td align="center">一月中的第几星期(会根据实际情况来算)</td></tr><tr><td align="center">a</td><td align="center">上下午标识</td></tr><tr><td align="center">k</td><td align="center">和HH差不多，表示24小时制</td></tr><tr><td align="center">K</td><td align="center">和hh差不多，表示12小时制</td></tr><tr><td align="center">z</td><td align="center">表示时区</td></tr></tbody></table><h2 id="SimpleDateFormat-为什么不是线程安全的？"><a href="#SimpleDateFormat-为什么不是线程安全的？" class="headerlink" title="SimpleDateFormat 为什么不是线程安全的？"></a>SimpleDateFormat 为什么不是线程安全的？</h2><p>额外拓展一个知识点，SimpleDateFormat 不是线程安全的。</p><h3 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h3><p>在 SimpleDateFormat 转换日期是通过 Calendar 对象来操作的，SimpleDateFormat 继承 DateFormat 类，DateFormat 类中维护一个 Calendar 对象，Calendar 实例被用来进行日期-时间计算，既被用于 format 方法也被用于 parse 方法。</p><p>在 parse 方法的最后，会调用 CalendarBuilder 的 establish 方法，入参就是 SimpleDateFormat 维护的 Calendar 实例，在 establish 方法中会调用 calendar 的 clear 方法。</p><p>SimpleDateFormat 维护的用于 format 和 parse 方法计算日期-时间的 calendar 被清空了，如果此时线程 A 将 calendar 清空且没有设置新值，线程 B 也进入 parse 方法用到了 SimpleDateFormat 对象中的 calendar 对象，此时就会产生线程安全问题。</p><h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><p>每一个使用 SimpleDateFormat 对象进行日期-时间进行 format 和 parse 方法的时候就创建一个新的 SimpleDateFormat 对象，用完就销毁。此时就可以使用 ThreadLocal 将 SimpleDateFormat 绑定到线程上。</p><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>SimpleDateFormat 虽小，但是有坑有拓展点，使用起来还是需要注意的。</p>]]></content>
         <author>
             <name><![CDATA[Jieb的个人网站]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://miaotony.xyz/2020/07/11/Tips_CCS_RWDataFromPort/</id>
-        <title><![CDATA[DSP | CCS v3.3 利用I/O端口从外部文件传送数据的相关配置]]></title>
-        <updated>2020-07-12T12:07:34+08:00</updated>
-        <link href="https://miaotony.xyz/2020/07/11/Tips_CCS_RWDataFromPort/"/>
-        <content type="text/html" src="https://miaotony.xyz/2020/07/11/Tips_CCS_RWDataFromPort/"><![CDATA[最近做DSP大作业需要用到古老的CCS v3.3软件，而对于利用Simulator的I/O端口从外部文件传送数据的方法，查了各种资料几乎没有相关介绍，正好就来记录一下吧。]]></content>
-        <author>
-            <name><![CDATA[MiaoTony]]></name>
         </author>
     </entry>
     
