@@ -3,7 +3,7 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2020-11-12T18:09:53+08:00</updated>
+    <updated>2020-11-13T00:21:35+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
@@ -1470,6 +1470,108 @@ pinentry-mode loopback
     </entry>
     
     <entry>
+        <id>https://blog.invariant.cn/a-comparison-between-webassembly-and-risc-v/</id>
+        <title><![CDATA[WebAssembly 与 RISC-V 指令集架构的对比]]></title>
+        <updated>2020-03-15T09:51:51+08:00</updated>
+        <link href="https://blog.invariant.cn/a-comparison-between-webassembly-and-risc-v/"/>
+        <content type="text/html" src="https://blog.invariant.cn/a-comparison-between-webassembly-and-risc-v/"><![CDATA[<figure class="kg-card kg-bookmark-card"><a class="kg-bookmark-container" href="https://invariant.me/a-comparison-between-webassembly-and-risc-v/"><div class="kg-bookmark-content"><div class="kg-bookmark-title">A Comparison between WebAssembly and RISC-V</div><div class="kg-bookmark-description">WebAssembly and RISC-V are both new Instruction Set Architectures (ISAs) that evolved in the recent 10 years. Let’s do a comparison.</div><div class="kg-bookmark-metadata"><img class="kg-bookmark-icon" src="https://invariant.me/favicon.ico" alt="WebAssembly 与 RISC-V 指令集架构的对比"><span class="kg-bookmark-author">Heyang Zhou</span><span class="kg-bookmark-publisher">The Invariant</span></div></div><div class="kg-bookmark-thumbnail"><img src="https://invariant.me/content/images/2020/03/wasm-riscv.png" alt="WebAssembly 与 RISC-V 指令集架构的对比"></div></a></figure><img src="https://blog.invariant.cn/content/images/2020/03/wasm-riscv.png" alt="WebAssembly 与 RISC-V 指令集架构的对比"><p>WebAssembly 与 RISC-V 都是近十年内新出现的指令集架构。摘录一段 <a href="https://webassembly.org/">WebAssembly 官方网站</a>的介绍：</p><blockquote>WebAssembly (abbreviated <em><em>Wasm</em></em>) is a binary instruction format for a stack-based virtual machine. Wasm is designed as a portable target for compilation of high-level languages like C/C++/Rust, enabling deployment on the web for client and server applications.</blockquote><blockquote>WebAssembly （简写为 Wasm）是一种栈虚拟机的二进制指令格式。Wasm 被设计为 C/C++/Rust 等高级语言的可移植编译目标，从而允许客户端和服务器应用程序部署在 Web 上。</blockquote><p>和 <a href="https://riscv.org/">RISC-V 的官方介绍</a>：</p><blockquote>RISC-V is a free and open ISA enabling a new era of processor innovation through open standard collaboration. Born in academia and research, RISC-V ISA delivers a new level of free, extensible software and hardware freedom on architecture, paving the way for the next 50 years of computing design and innovation.</blockquote><blockquote>RISC-V 是一种自由、开放的指令集架构，通过开放标准协作使新的处理器创新成为可能。RISC-V 来自学术研究，提供了更加自由、可扩展的软硬件架构，为未来 50 年的计算技术设计与创新铺平道路。</blockquote><p>这两种指令集架构看起来很不一样。WebAssembly 的目标平台主要是 JIT 编译器（以及浏览器）；而 RISC-V 则专为硬件设计，其目标之一即是在 FPGA 和电路上的高效实现。WebAssembly 与 RISC-V 的关系似乎类似于早期的 Java 与 x86：一种字节码格式，和一个硬件指令集。它们有什么关系呢？</p><p>其实字节码格式与硬件指令集的分界线并不是非常清晰。例如在 x86 指令集的早期实现中，指令经过一层解码直接被分发到执行电路去执行。但近年的 Intel/AMD CPU 采用了不同的执行策略：每条 x86 指令首先被翻译为某种内部 RISC 指令，执行组件收到的指令其实已经是翻译后的 RISC 编码格式。这实际上相当于从 x86 到内部 RISC 指令集的某种“硬件实时编译”过程。同时，<a href="https://en.wikipedia.org/wiki/Java_processor">Java</a> 与 <a href="https://github.com/piranna/wasmachine">WebAssembly</a> 也有实验性的硬件实现，虽然它们还不能赶上 JIT 编译器在现代 CPU 上所能达到的效率。</p><blockquote>我们已经可以看到 RISC-V 指令集<a href="https://github.com/nervosnetwork/ckb-vm">被用于区块链的智能合约</a>，而 WebAssembly 此前几乎是原生语言智能合约的唯一选择。</blockquote><p>在这里我们对 WebAssembly 与 RISC-V 做一个比较。</p><!--kg-card-begin: markdown--><table>
+<thead>
+<tr>
+<th></th>
+<th>WebAssembly</th>
+<th>RISC-V</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong><font color="#512da8">开源</font></strong></td>
+<td>是</td>
+<td>是</td>
+</tr>
+<tr>
+<td><strong><font color="#512da8">内存架构</font></strong></td>
+<td>Load/Store</td>
+<td>Load/Store</td>
+</tr>
+<tr>
+<td><strong><font color="#512da8">浮点支持</font></strong></td>
+<td>是</td>
+<td>是 (定义于扩展)</td>
+</tr>
+<tr>
+<td><strong><font color="#512da8">SIMD</font></strong></td>
+<td>是</td>
+<td>是 (定义于扩展)</td>
+</tr>
+<tr>
+<td><strong><font color="#bb4d00">代码/数据分离</font></strong></td>
+<td>是</td>
+<td>否</td>
+</tr>
+<tr>
+<td><strong><font color="#bb4d00">指针宽度</font></strong></td>
+<td>32</td>
+<td>32/64</td>
+</tr>
+<tr>
+<td><strong><font color="#bb4d00">最大数据宽度</font></strong></td>
+<td>64</td>
+<td>32/64</td>
+</tr>
+<tr>
+<td><strong><font color="#bb4d00">静态类型</font></strong></td>
+<td>弱</td>
+<td>无</td>
+</tr>
+<tr>
+<td><strong><font color="#bb4d00">控制流约束</font></strong></td>
+<td>是</td>
+<td>否</td>
+</tr>
+<tr>
+<td><strong><font color="#bb4d00">机器模型</font></strong></td>
+<td>栈机</td>
+<td>寄存器机</td>
+</tr>
+<tr>
+<td><strong><font color="#bb4d00">内存布局</font></strong></td>
+<td>线性</td>
+<td>分页</td>
+</tr>
+<tr>
+<td><strong><font color="#bb4d00">内存保护</font></strong></td>
+<td>无</td>
+<td>RWX</td>
+</tr>
+<tr>
+<td><strong><font color="#bb4d00">多线程同步</font></strong></td>
+<td>CAS</td>
+<td>LL/SC</td>
+</tr>
+<tr>
+<td><strong><font color="#bb4d00">指令编码</font></strong></td>
+<td>变长</td>
+<td>定长 (2 或 4 字节)</td>
+</tr>
+<tr>
+<td><strong><font color="#bb4d00">与环境交互</font></strong></td>
+<td>导入函数</td>
+<td>系统调用</td>
+</tr>
+<tr>
+<td><strong><font color="#bb4d00">可执行映像格式</font></strong></td>
+<td>WebAssembly</td>
+<td>ELF</td>
+</tr>
+</tbody>
+</table>
+<!--kg-card-end: markdown--><p><strong>1. 代码/数据分离</strong></p><p>包括 RISC-V 在内的大多数现代架构对代码和数据使用同一个地址空间，但是 WebAssembly 没有这样做。实际上，运行中的代码甚至没有办法读/写它自己。这个设计的原因可能是：</p><ul><li>简化 JIT 编译器的实现。如果代码可以自我修改，那么 JIT 编译器则需要有检测修改和重新生成目标代码的能力，而这需要相当复杂的实现机制。</li><li>WebAssembly 假设了一个功能完善的运行环境。运行环境会处理链接、重定位等准备工作，程序不需要关心怎样把它自己运行起来。</li><li>安全。能够动态生成和修改的代码是个很危险的攻击点。</li></ul><p><strong>2. 静态类型与控制流约束</strong></p><p>WebAssembly 具有很强的“结构性”。其标准要求所有函数调用、循环、跳转和值类型遵循特定的结构约束，例如向一个接受三个参数的函数传入两个参数、跳转到其他函数里的某个位置、在两个整数上执行浮点加操作等都会导致编译/验证失败。RISC-V 则不具有此类约束，指令的有效与否只取决于其自身的编码是否正确。</p><p><strong>3. 机器模型</strong></p><p>WebAssembly 是一种<a href="https://en.wikipedia.org/wiki/Stack_machine">栈机</a>指令集，而 RISC-V 是一种<a href="https://en.wikipedia.org/wiki/Register_machine">寄存器机</a>指令集。</p><p>在 WebAssembly 中，每条指令<em>语义上</em>会从值栈上弹出它的操作数，然后将结果推入值栈。然而与 Java 等其他基于栈机的字节码格式不同的是，程序中任意指令处值栈的结构都可以被静态确定。这一设计有利于更好的编译优化。</p><p>在 RISC-V 中，每条指令的编码包含 0 - 3 个寄存器编号 <code>rd, rs1, rs2</code> 。其中 <code>rs1</code>与 <code>rs2</code> 是输入寄存器， <code>rd</code> 是输出寄存器。除内存访问、特权指令等特殊类型指令外，每条指令只从输入寄存器中读取数据，在输出寄存器中存放结果。</p><p><strong>4. 内存管理</strong></p><p>虽然 WebAssembly 与 RISC-V 都定义了一个无类型的、字节可寻址的内存，它们之间还是有一些细节上的区别。WebAssembly 的内存等同于一个大数组：有效地址从 0 开始，连续扩展到某个由程序定义初值、可增长的上限。而 RISC-V 则使用了<a href="https://en.wikipedia.org/wiki/Virtual_memory">虚拟内存</a>，用页表将地址映射到物理内存。</p><figure class="kg-card kg-image-card kg-card-hascaption"><img src="https://invariant.me/content/images/2020/03/wasm-riscv-comp.png" class="kg-image" alt="WebAssembly 与 RISC-V 指令集架构的对比"><figcaption>内存布局</figcaption></figure><p>WebAssembly 的内存设计虽然简洁且易于实现，但存在一些问题：</p><ul><li>地址 0 是有效的，这会导致一些程序在解引用空指针时的行为与预期不同。</li><li>无法建立不映射到任何物理地址的“无效”地址区间，因此无法实现多线程环境下的栈保护页 (guard page) 。</li></ul><p><strong>5. 同步机制</strong></p><p>图灵完备的计算机器需要至少一条条件分支指令。同样，支持多线程同步的指令集架构需要至少一条“原子条件分支”指令。这类指令在 WebAssembly 下是 <code>i{32,64}.atomic.rmw.cmpxchg</code>，在 RISC-V 下是 <code>LR/SC</code>，分别对应 <a href="https://en.wikipedia.org/wiki/Compare-and-swap">CAS</a> 模型和 <a href="https://en.wikipedia.org/wiki/Load-link/store-conditional">LL/SC</a> 模型。</p><p>LL/SC 的语义比 CAS 更强。CAS 存在难以解决的 <a href="https://en.wikipedia.org/wiki/ABA_problem">ABA 问题</a>，但 LL/SC 不受影响。这也意味着在 CAS 架构上模拟 LL/SC 比反过来要困难很多。</p><hr><blockquote>Note: 我写过一个 RISC-V 解释器 <a href="https://github.com/losfair/FlatRv">FlatRv</a> ，且正在参与一个 WebAssembly JIT 运行环境 <a href="https://github.com/wasmerio/wasmer">Wasmer</a> 的开发。如果你感兴趣可以点个 Star :)</blockquote>]]></content>
+        <author>
+            <name><![CDATA[The Invariant 中文]]></name>
+        </author>
+    </entry>
+    
+    <entry>
         <id>https://invariant.me/a-comparison-between-webassembly-and-risc-v/</id>
         <title><![CDATA[A Comparison between WebAssembly and RISC-V]]></title>
         <updated>2020-03-13T16:38:53+08:00</updated>
@@ -1568,6 +1670,17 @@ pinentry-mode loopback
 <!--kg-card-end: markdown--><p>The similarities are quite common, so I will focus on the differences here.</p><p><strong>1. Separated code and data</strong></p><p>Most modern architectures use a unique addressing space for code and data, including RISC-V. But WebAssembly doesn't, and actually the running code is not even provided with a way to access itself. Possible reasons:</p><ul><li>Simplicity for JIT compilation. If code can modify itself, then the JIT compiler needs to detect the modification and update the corresponding machine code - which is very complex.</li><li>WebAssembly's assumption about a powerful host environment. Linking, etc. will be done entirely by the host, and the program doesn't need to care about bringing itself up.</li><li>Security. Generating code at runtime is dangerous.</li></ul><p><strong>2. Typing and control flow</strong></p><p>WebAssembly is very "structured": The JIT compiler requires all function calls, loops, jumps and value types to conform to structural constraints. For example, you can't pass two values to a function that accepts three arguments, you can't jump to a location in another function, and you can't execute the floating point add instruction on two integers.</p><p>RISC-V however has none of these constraints. Everything is just values in registers and it's up to the programmer to decide how to use them.</p><p><strong>3. Machine model</strong></p><p>WebAssembly is built upon the <a href="https://en.wikipedia.org/wiki/Stack_machine">stack machine</a> model, while RISC-V (along with most other hardware architectures) is a <a href="https://en.wikipedia.org/wiki/Register_machine">register machine</a>.</p><p>In WebAssembly, <em>semantically</em> any instruction pops its operands (if any) from the value stack, performs the defined operation, and pushes its results (if any) back on to the value stack. However, the structure of the value stack at any point in the program can be statically determined - which is different from the Java bytecode, for example, in that keeping the stack structure statically determinable is not an optimization but a compile-time mandatory requirement.</p><p><strong>4. Memory</strong></p><p>While both ISAs define an untyped, byte-addressable memory, some details are different. Memory in WebAssembly is literally a large byte array: addresses start from zero and continuously span to an upper limit (which can be dynamically increased by executing an instruction). In comparison, RISC-V uses <em><a href="https://en.wikipedia.org/wiki/Virtual_memory">virtual memory</a></em> where page tables are used to map addresses to the underlying physical memory.</p><figure class="kg-card kg-image-card kg-card-hascaption"><img src="https://invariant.me/content/images/2020/03/wasm-riscv-comp.png" class="kg-image" alt="A Comparison between WebAssembly and RISC-V"><figcaption>Memory layouts</figcaption></figure><p>WebAssembly's memory model, although being simple to implement and efficient when JIT compiled, has several issues compared to RISC-V:</p><ul><li>Address zero is valid, causing programs that assume a crash for dereferencing the null pointer to misbehave.</li><li>No "gaps" are possible. Therefore the guard page trick to prevent stack overflow in a multi-threaded environment won't work.</li></ul><p>Virtual memory usually comes with memory protection where each memory page has a combination of <em>read</em>, <em>write</em> and <em>execute</em> permissions. This is an important security mechanism because it prevents execution and writes on memory regions where such operations aren't expected. RISC-V implements memory protection but WebAssembly does not - maybe it's less important in an architecture where executable code isn't addressable?</p><p><strong>5. Synchronization</strong></p><p>A computing machine needs at least one conditional branch instruction to be turing complete. Similarly, a multiprocessor architecture needs at least one "atomic conditional branch" instruction for proper synchronization. This instruction is <code>i{32,64}.atomic.rmw.<a href="https://en.wikipedia.org/wiki/Compare-and-swap">cmpxchg</a></code> in WebAssembly, and <code><a href="https://en.wikipedia.org/wiki/Load-link/store-conditional">LR/SC</a></code> in RISC-V.</p><p><code>LR/SC</code> has stronger semantics than <code>cmpxchg</code>. With <code>cmpxchg</code> we have the famous <a href="https://en.wikipedia.org/wiki/ABA_problem">ABA problem</a>, but <code>LR/SC</code> is not affected. It also means that emulating <code>LR/SC</code> with a <code>cmpxchg</code>-only architecture is much more difficult than the other way; something like a global lock or transactional memory has to be used, greatly increasing the complexity. RISC-V is designed for hardware anyway, but if you ever want to write a software implementation you will have to work around this issue.</p><hr><blockquote>Side note: I worked on/am working on both a RISC-V interpreter, <a href="https://github.com/losfair/FlatRv">FlatRv</a>, and a full WebAssembly JIT runtime, <a href="https://github.com/wasmerio/wasmer">Wasmer</a>. Take a look at them and star if you like my work :)</blockquote>]]></content>
         <author>
             <name><![CDATA[The Invariant]]></name>
+        </author>
+    </entry>
+    
+    <entry>
+        <id>https://blog.invariant.cn/try-jslinux/</id>
+        <title><![CDATA[用 JSLinux 在浏览器中运行 Linux]]></title>
+        <updated>2020-02-24T16:24:41+08:00</updated>
+        <link href="https://blog.invariant.cn/try-jslinux/"/>
+        <content type="text/html" src="https://blog.invariant.cn/try-jslinux/"><![CDATA[<figure class="kg-card kg-bookmark-card"><a class="kg-bookmark-container" href="https://invariant.me/try-jslinux/"><div class="kg-bookmark-content"><div class="kg-bookmark-title">Running Linux in your Browser with JSLinux</div><div class="kg-bookmark-description">Yesterday I ported the Wasm-based hardware emulator, JSLinux, to use xterm.js for frontend and my wstunnel for networking.</div><div class="kg-bookmark-metadata"><img class="kg-bookmark-icon" src="https://invariant.me/favicon.ico" alt="用 JSLinux 在浏览器中运行 Linux"><span class="kg-bookmark-author">Heyang Zhou</span><span class="kg-bookmark-publisher">The Invariant</span></div></div><div class="kg-bookmark-thumbnail"><img src="https://invariant.me/content/images/2020/02/Alpine_logo.png" alt="用 JSLinux 在浏览器中运行 Linux"></div></a></figure><img src="https://blog.invariant.cn/content/images/2020/03/Alpine_logo.png" alt="用 JSLinux 在浏览器中运行 Linux"><p><a href="https://bellard.org/jslinux/">JSLinux</a> 是 <a href="https://bellard.org/">Fabrice Bellard</a> 写的一个支持 32 位 x86 和 32/64 位 RISC-V 系统模拟的硬件模拟器，可编译为 WebAssembly 以在浏览器中运行。</p><p>昨天我<a href="https://github.com/losfair/jslinux-wstunnel">开了一个分支</a>，把字符终端实现换成了 <a href="https://xtermjs.org/">xterm.js</a> ，把网络实现换成了我的 <a href="https://github.com/losfair/wstunnel">wstunnel</a> 。这里是一个在修改后的 JSLinux 上运行 Alpine Linux 的 x86 虚拟机，可以在线试用。请不要滥用网络 :)</p><!--kg-card-begin: html--><iframe style="width: 100%; height: 500px" src="https://jslinux.invariant.me/widget.html">&lt;iframe disabled?&gt;</iframe><!--kg-card-end: html-->]]></content>
+        <author>
+            <name><![CDATA[The Invariant 中文]]></name>
         </author>
     </entry>
     
