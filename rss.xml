@@ -3,12 +3,67 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2020-11-19T00:24:22+08:00</updated>
+    <updated>2020-11-19T06:11:14+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
     </author>
     
+    
+    <entry>
+        <id>https://blog.vvzero.com/2020/04/28/use-virtual-machine-to-bypass-windows-samba-port-limit/</id>
+        <title><![CDATA[使用虚拟机绕过 Windows Samba 客户端端口限制]]></title>
+        <updated>2020-11-19T00:54:43+08:00</updated>
+        <link href="https://blog.vvzero.com/2020/04/28/use-virtual-machine-to-bypass-windows-samba-port-limit/"/>
+        <content type="text/html" src="https://blog.vvzero.com/2020/04/28/use-virtual-machine-to-bypass-windows-samba-port-limit/"><![CDATA[<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>迫于不能浪费宿舍联通宽带的公网 IP，我用树莓派搭建了一个 NAS，使用 Samba 提供访问。但是，由于运营商限制，入站和出站的 139、445 端口都被封禁（对！你不能访问其他机器的 445 端口！），这样做只能让同一个局域网的服务访问。我尝试修改了端口号，把本地的 445 端口映射到公网的其它端口，算是可以给大部分 Samba 客户端使用了（比如安卓手机）。但是，Windows 的 Samba 客户端，并不支持设置端口号（如果在文件管理器地址栏输入 <code>\\a.b.c.d:xxx</code> 将会被认为是 WebDAV 协议）。</p><p>网上某些教程说，在 Windows 本地设置端口转发，把访问本机 445 端口的流量转发至你的 Samba 服务器端口。但是，这样做需要关闭 Windows 自己的 Samba 服务器，会导致网络共享、网络打印机等很多功能无法使用，导致莫名其妙的问题，所以不推荐。</p><p>但是可以换个思路。</p><h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>既然不能使用本机（127.0.0.1）做转发，那么为什么不使用本地网络中其他的机器进行数据转发呢？一开始我想在本地网络中加一个树莓派之类的小主机，但觉得这样太累赘了。虚拟机也是独立的机器，我觉得一样有效。</p><p>所以，只要在虚拟机里面装一个反向代理应用（Nginx），把发往虚拟机 445 端口的流量转发到 Samba 服务器，然后使用 Windows Samba 客户端访问这个虚拟机，就等于访问 Samba 服务器。</p><h2 id="实践"><a href="#实践" class="headerlink" title="实践"></a>实践</h2><p>这里，我使用了 Windows Hyper V，创建了 Ubuntu 20.04 Server 虚拟机（直接下载官方 ISO），然后使用默认交换机作为虚拟机的网络。</p><p><img src="https://img.vvzero.com/ih/2020/04/28/2416a9e0b66ec.png" alt="Snipaste_2020-04-28_14-07-57.png" style="zoom:33%;"></p><p>启动后，安装系统，然后除了更新镜像源、安装 Nginx，什么都不用做。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo apt install nginx</span><br></pre></td></tr></table></figure><p>装好 Nginx 后，修改配置文件：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/nginx/nginx.conf</span><br></pre></td></tr></table></figure><p>添加一个 stream 模块，大致像下面：</p><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">http</span> &#123;</span><br><span class="line">    ......</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="section">stream</span> &#123;</span><br><span class="line">    <span class="section">server</span> &#123;</span><br><span class="line">        <span class="attribute">listen</span> <span class="number">445</span>;</span><br><span class="line">        </span><br><span class="line">        // 你的 NAS 地址</span><br><span class="line">        <span class="attribute">proxy_pass</span> mynas.example.com:<span class="number">12345</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>然后重启 Nginx：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo nginx -s reload</span><br></pre></td></tr></table></figure><p>转发的模块就做好了。</p><p>然后，再在 Windows 中打开 <code>\\&lt;虚拟机的ip&gt;\&lt;samba 路径（可选）&gt;</code> 就完成了。虚拟机 ip 可以在虚拟机里面用 ifconfig 命令查看。</p><h2 id="后续"><a href="#后续" class="headerlink" title="后续"></a>后续</h2><p>也许可以用 docker 实现，但我还没想好怎么搞。</p>]]></content>
+        <author>
+            <name><![CDATA[VVBLOG]]></name>
+        </author>
+    </entry>
+    
+    <entry>
+        <id>https://blog.vvzero.com/2020/02/08/build-powerful-remote-desktops-with-aliyun-ECS-at-low-price/</id>
+        <title><![CDATA[使用阿里云 ECS 搭建廉价的高性能云桌面]]></title>
+        <updated>2020-11-19T00:54:43+08:00</updated>
+        <link href="https://blog.vvzero.com/2020/02/08/build-powerful-remote-desktops-with-aliyun-ECS-at-low-price/"/>
+        <content type="text/html" src="https://blog.vvzero.com/2020/02/08/build-powerful-remote-desktops-with-aliyun-ECS-at-low-price/"><![CDATA[<blockquote><p>要想读懂本文，你需要：</p><ol><li>了解阿里云等云服务的基本 WEB 界面操作；</li><li>了解 Windows 操作系统的中阶操作；</li><li>了解基础的软件开发术语。</li></ol></blockquote><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文面向的是需要使用高性能计算设备，但是身边只有低性能PC机的群体。最近由于 NCP 疫情，出不了门，返回不了工作地，想必不少人的高性能计算设备（好电脑）没带回家，但是，肯定也有人跟我一样，受不了笔记本电脑的龟速。</p><p>我的配置需求是，能够流畅运行安装多个插件的 VSCode、能够同时打开数十个 Firefox 标签页、能够快速完成 node 项目构建。但是我身边只有一台五年前的 intel NUC (i3-4010U, 4GB RAM)。</p><p>在详细了解了各大云服务商的云计算平台后，个人排除了华为云（弹性计算服务价格较高、云桌面售罄）、腾讯云（云计算服务类别过少）、天翼云（云桌面需要安装指定 APP 且性能不满足要求），决定使用阿里云的云计算服务。</p><h2 id="使用阿里云初步搭建云桌面"><a href="#使用阿里云初步搭建云桌面" class="headerlink" title="使用阿里云初步搭建云桌面"></a>使用阿里云初步搭建云桌面</h2><p>经过权衡，我决定使用阿里云 ESC “抢占式实例”付费模式下的“突发性能实例”。为什么这么选？</p><p>因为没钱……</p><p>开玩笑的。我觉得这是我需求下的合理选择方式。为什么选择“抢占式实例”？首先，我们复工的时间还是个未知数，而且可能随时就不想用这个云桌面了。“抢占式实例”是按量付费的一种，也就是，用多长时间给多少钱。并且，相对于按量付费，有相当大的折扣。<strong>“抢占式实例”的最大问题在于，这是竞价模式。也就是说，当别人出价比你高的时候，或者阿里云供给紧张而你又给钱给得不够的时候，它会自动帮你释放。我了解的是，在释放前5分钟，阿里云会有提醒。</strong>为了尽量避免实例被自动释放，我选择了“使用自动出价”，也就是说，系统会每小时自动判断当前时间该实例的价格，并选择一个高于市场均价的价格进行付费。<strong>但是，这并不是万无一失，阿里云在供给紧张的时候，仍然会将实例释放。</strong>所以，在处理重要数据时，应该随时备份。我的处理方法是，随时将代码提交到我的 Git 仓库。</p><p><img src="https://img.vvzero.com/ih/2020/02/09/ea3d50f39b198.png" alt="Snipaste_2020-02-09_17-32-20.png"></p><p><img src="https://img.vvzero.com/ih/2020/02/09/df1fabf212984.png" alt="Snipaste_2020-02-09_17-34-24.png"></p><p>如果要保证不会被释放，建议使用包年包月制。</p><p>为什么使用“突发性能实例”？因为个人电脑与服务器不同。个人电脑不会时时刻刻占用大量 CPU，CPU使用率是离散化的，所以 CPU 的使用积分，我觉得是用不完，25% 的使用基线，完全够用。</p><p><img src="https://img.vvzero.com/ih/2020/02/09/d74c0622ec620.png" alt="Snipaste_2020-02-09_17-34-05.png"></p><p>哎，目前好像国内也只有阿里云能做出“抢占式实例”和“突发性能实例”。</p><p>其他的配置就简单了，区域选择靠近你的（不同地区的价格好像差别挺大），镜像选择 Windows Server，另外，SSD 是很关键的，我觉得现在已经没有多少人能忍受机械硬盘的龟速了。</p><p><img src="https://img.vvzero.com/ih/2020/02/09/6ae75caa75c6a.png" alt="Snipaste_2020-02-09_18-03-26.png"></p><p><img src="https://img.vvzero.com/ih/2020/02/09/cbe75edc3c797.png" alt="Snipaste_2020-02-09_17-36-25.png"></p><p>在下一个页面配置网络，为了保证远程桌面流畅，按使用流量计费，带宽拉满！</p><p><img src="https://img.vvzero.com/ih/2020/02/09/2c112190ea447.png" alt="Snipaste_2020-02-09_17-45-57.png"></p><p>最终，我的配置如下：</p><ul><li>4核16GB，25% 平均CPU 计算性能；</li><li>100Mbps 按流量付费网络；</li><li>80GB SSD；</li><li>Windows Server 2019 数据中心版；</li></ul><p>这样的话，实例价格为 0.412 元每小时（我选的是上海区的，其他区的可能更便宜，在深夜、早上也会更便宜），流量费用为 0.8 元每 GB。算一算，一天大概要 10 元，一个月大概要 300 元，是不是还是有点贵？没关系，继续看。</p><p><img src="https://img.vvzero.com/ih/2020/02/09/ecfef72872df3.png" alt="Snipaste_2020-02-09_17-36-50.png"></p><h2 id="价格的进一步优化"><a href="#价格的进一步优化" class="headerlink" title="价格的进一步优化"></a>价格的进一步优化</h2><p>现在我已经启动了这个实例：</p><p><img src="https://img.vvzero.com/ih/2020/02/09/3ea24c1929367.png" alt="Snipaste_2020-02-09_18-21-04.png"></p><p>我还想更便宜。</p><h3 id="与基友合租一台机器"><a href="#与基友合租一台机器" class="headerlink" title="与基友合租一台机器"></a>与基友合租一台机器</h3><p>我想你一定不可能一天24小时都在用它，用它的时候也一定不会一直占满 CPU。关键是，我们这是 Windows Server，跟家庭版、专业版、企业版什么的都不一样，它支持多个用户同时登陆！所以，我觉得，如果有信任的人选，完全可以合租。</p><h3 id="关机时选择“停机不计费”"><a href="#关机时选择“停机不计费”" class="headerlink" title="关机时选择“停机不计费”"></a>关机时选择“停机不计费”</h3><p>阿里云真的是神奇的存在，在 ECS 管理界面，选择停机，竟然可以停机不收费！</p><p><img src="https://img.vvzero.com/ih/2020/02/09/28437c5fae934.png" alt="图片1.png"></p><p>实际上也不是完全不收费，硬盘和弹性公网 IP 仍然是收费的。但是，与停机后仍然保留CPU、内存相比，价格大幅降低。也就是说，我们在每天晚上，完全可以关机并选择不收费，可以节约一大笔。如果想要一直使用同一个 IP，可以选择绑定弹性公网 IP。</p><h3 id="依据个人需求选择实例规格"><a href="#依据个人需求选择实例规格" class="headerlink" title="依据个人需求选择实例规格"></a>依据个人需求选择实例规格</h3><p>我觉得，可能 8GB 内存已经够我用了，另外，青岛区的实例好像每小时能更便宜一毛钱……</p><h2 id="云桌面体验"><a href="#云桌面体验" class="headerlink" title="云桌面体验"></a>云桌面体验</h2><p>在体验之前，再确保一下：该实例网络安全组，需要放通 3389 端口（TCP 和 UDP 都要放通）。</p><p>打开本地的远程桌面客户端试试吧！</p><p><img src="https://img.vvzero.com/ih/2020/02/09/b4629c62b4373.png" alt="Snipaste_2020-02-09_18-38-25.png"></p><p>网络方面，我是江苏电信网络，连接上海区的 ECS，延迟很小，可以忽略，而且画质很清晰，暂时没有什么画面卡顿。至于下行网络，由于这是阿里云的专线，比家用运营商网络好太多，下载速度嗖嗖的，不管国内外。</p><p>计算性能方面，在我本地机器上，VSCode 的 Python 插件，进行一次文件错误扫描需要 5 秒左右，而这台云桌面，只要 1 秒。</p><p>操作系统方面，Windows Server 比 Windows PC 简洁很多，没有乱七八糟的服务，但也没有缺少日常开发所需的重要组件。可能会有点不一样，但是如果出问题，一般能很快解决。比如我在安装 Python 时出错，Google 一下便知要直接以管理员身份打开。</p><p>以下截图自我的云桌面。</p><p><img src="https://img.vvzero.com/ih/2020/02/09/d3b52ba297968.png" alt="Screenshot _1_.png"></p><p><img src="https://img.vvzero.com/ih/2020/02/09/e9ae18b879037.png" alt="Screenshot _3_.png"></p><p><img src="https://img.vvzero.com/ih/2020/02/09/9f2c0741b0057.png" alt="Screenshot _4_.png"></p><p><img src="https://img.vvzero.com/ih/2020/02/09/8109324fabb58.png" alt="Screenshot _2_.png"></p><h3 id="提高体验的可选项"><a href="#提高体验的可选项" class="headerlink" title="提高体验的可选项"></a>提高体验的可选项</h3><ol><li>关闭 Windows 的过渡动画，这在远程桌面上会导致卡顿，且会消耗大量的流量费；</li><li>安全起见，重新创建一个管理员用户并禁用 Administrator 用户；</li><li>用好各种云同步功能，比如 Git 仓库、浏览器云同步、云盘等。</li></ol><h2 id="实测价格"><a href="#实测价格" class="headerlink" title="实测价格"></a>实测价格</h2><p>我正常使用了一天，晚上停机不收费，消费如下：</p><p><img src="https://img.vvzero.com/ih/2020/02/09/176c67e7015fa.png" alt="Snipaste_2020-02-09_18-54-30.png"></p><p><img src="https://img.vvzero.com/ih/2020/02/09/140f26bd1d962.png" alt="Snipaste_2020-02-09_18-55-07.png"></p><p>可见，我一天大致消费5元。</p><h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>确实不是很贵，可行性也很高。假如有模型渲染需求，甚至可以绑定个显卡（</p><p>抢占式实例也不是很可怕吧？我的实例目前没被回收。</p><p>另外，有人想跟我合租吗？</p>]]></content>
+        <author>
+            <name><![CDATA[VVBLOG]]></name>
+        </author>
+    </entry>
+    
+    <entry>
+        <id>https://blog.vvzero.com/2019/07/22/set-user-alias-for-windows-PowerShell/</id>
+        <title><![CDATA[为 Windows PowerShell 设置 User Alias （命令别名）]]></title>
+        <updated>2020-11-19T00:54:43+08:00</updated>
+        <link href="https://blog.vvzero.com/2019/07/22/set-user-alias-for-windows-PowerShell/"/>
+        <content type="text/html" src="https://blog.vvzero.com/2019/07/22/set-user-alias-for-windows-PowerShell/"><![CDATA[<blockquote><p>直接看步骤的话，在最下方。</p></blockquote><h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>Windows Terminal 虽然还处于预览阶段，但是也出来很长一段时间了。它的历史使命，也许就是让原生 Windows 也能有一个像样的命令行环境。以前我一直在用 Cmder，但是 Cmder 的启动速度确实不敢恭维，而 Windows Terminal 启动确实很快。相比 Cmder， Windows Terminal 还缺少很多功能，不过以后应该很快也会补上。</p><p><img src="https://img.vvzero.com/ih/2019/07/22/5d35bef29b3f1.png" style="zoom:50%;"></p><p>我想尝试使用 Windows Termimal 进行开发。Windows Terminal 默认可以使用 <code>PowerShell</code>、<code>cmd</code>、<code>wsl bash</code>作为脚本工具。既然是在 Windows 环境下嘛，还是得尊敬一下 Windows PoweShell 的。初次使用，我觉得 PowerShell 跟 Cmder 用起来，最不方便的一点就是，我在 Cmder 里面设了很多的 Alias，也就是通过修改 <code>config/user_aliases.cmd</code> 写一串 <code>&lt;alia&gt;=&lt;xxx&gt; &lt;xxx&gt;</code> 来实现的。</p><p><img src="https://img.vvzero.com/ih/2019/07/22/5d35bef29ad52.png" style="zoom:50%;"></p><p>但是，PowerShell 如何实现命令的别名设置呢？</p><h2 id="探索过程及原理概述"><a href="#探索过程及原理概述" class="headerlink" title="探索过程及原理概述"></a>探索过程及原理概述</h2><p>如果搜索关键词 <code>windows powershell set user alias</code>，通常谷歌会给出<a href="https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/set-alias?view=powershell-6" target="_blank" rel="noopener">微软官方文档</a>，但是这个文档只是告诉我们如何在脚本里面设置临时的别名，如果要设置永久别名，该怎么办？实际上，“别名”这种东西，也就是 <code>alias</code>，几乎所有的脚本语言，都没有所谓的“永久别名”(Permanent alias)，我们使用 Linux bash 、Cmder 之类的脚本工具，打开终端时，系统会默认执行一个脚本文件（ bash 是用户目录下的 <code>.bashrc</code>，Cmder 是 <code>config/user_aliases.cmd</code> ），而这样的脚本文件里，就包含了别名的定义。这也是为什么，我们在 Linux 类系统中，修改 <code>.bashrc</code> 后，必须要重新登出登录、或者 <code>source .bashrc</code> 的原因了。</p><p>所以，我们只要修改 Windows Powershell 启动时执行的文件就行了。很多论坛里面说，默认执行的脚本是 <code>$Home\Documents\profile.ps1</code> ，也就是 <code>C:\Users\你的用户名\Documents\profile.ps1</code> ，但是这并不正确，最好的方式是，先启动 PowerShell ，再执行 <code>echo $profile</code>，这样得到的文件路径，才是 PowerShell 的默认执行文件路径。</p><p><img src="https://img.vvzero.com/ih/2019/07/22/5d35bef29d447.png" alt></p><p>然后，创建这个文件就好啦。</p><p>在文件里面，写上别名设置的语句。再一次注意，假如你的别名指代的命令含有空格，就不可以使用 <code>New-Alias</code> 命令，因为它不能带空格，即使你把指代的命令用引号括起来也没用。那怎么办呢？继续谷歌，原来，正确姿势是用 <code>function</code> ，也就是，我们把自己要定义的指令，定义为一个函数，就行啦。</p><p><img src="https://img.vvzero.com/ih/2019/07/22/5d35bef339443.png" style="zoom: 67%;"></p><p>保存文件，重新启动 PowerShell 以后，不出意外，应该会报一个 <code>File xxxxxxx\Microsoft.PowerShell_profile.ps1 cannot be loaded because running scripts is disabled on this system.</code> 根据<a href="https://tecadmin.net/powershell-running-scripts-is-disabled-system/" target="_blank" rel="noopener">此链接</a>，出现这种情况，是因为 Windows 系统为了防止恶意脚本自动执行，故默认不允许自动运行脚本。所以，在确定自己有能力把控的情况下，<strong>以管理员身份</strong>，在 PowerShell 中执行 <code>Set-ExecutionPolicy RemoteSigned</code>，即可。</p><p>再次重启 PowerShell，应该可以发现，自定义别名已经生效了。</p><h2 id="步骤整理"><a href="#步骤整理" class="headerlink" title="步骤整理"></a>步骤整理</h2><p>如果你想为自己的 Windows PowerShell 设置永久的命令别名 (Alias)，可以遵循以下步骤：</p><ol><li><p>打开 PowerShell ，运行 <code>echo $profile</code>，会输出一个文件路径。创建这个文件。</p></li><li><p>打开刚创建的文件，按以下格式设置多条别名：</p><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> 别名 &#123; 需要替代的命令，可以包含空格 &#125;</span><br></pre></td></tr></table></figure></li><li><p>以管理员身份打开 PowerShell，执行 <code>Set-ExecutionPolicy RemoteSigned</code>。</p></li><li><p>重新启动 PowerShell ，应该已经完成了。</p></li></ol>]]></content>
+        <author>
+            <name><![CDATA[VVBLOG]]></name>
+        </author>
+    </entry>
+    
+    <entry>
+        <id>https://blog.vvzero.com/2019/05/23/thinking-in-20190523/</id>
+        <title><![CDATA[20190523 随想]]></title>
+        <updated>2020-11-19T00:54:43+08:00</updated>
+        <link href="https://blog.vvzero.com/2019/05/23/thinking-in-20190523/"/>
+        <content type="text/html" src="https://blog.vvzero.com/2019/05/23/thinking-in-20190523/"><![CDATA[<p>四年之前，我高二的时候，一天傍晚放学，我跟当时教我化学的6老师（代称），开玩笑式地起了争执。6老师人很好，我们都跟他称兄道弟的。起因是，6老师向我们秀他新买的球鞋，很酷，是某个日本名牌。当时的我笑道：“日货啊，不能穿啊！”（当时的学生中间，这样的思想氛围还比较浓）。</p><p>6老师立刻就反驳了：“为什么不能穿？”“东西好用，为什么不买？”当时我还有一些现在看来可笑的话，都被6老师“讽刺”了一番。我仍不服气，要争辩，6老师对我说：“很多你看到的事情，并不一定是真的……是被修饰过的……”</p><p>我大致听懂了他的意思，但进一步问：“既然各种历史、事情都会被修饰，那么我们怎么才能知晓真实的情况呢？毕竟，不管哪一方说出的话，都有可能因为要符合其利益而将其修饰。”</p><p>6老师说：“要思考，学会思考！”</p><p>……</p><p>我当时不以为然，思考？怎么思考嘛！</p><p>后来我慢慢知道了，直到现在，我都很认可6老师，我觉得他很对。</p><p>不管是什么，都会被人修饰，只有自然科学不能被修饰。就像，不管是谁，也不能让人相信 1+1=3，这是数学。物理、化学等其他自然科学的原理，乃至经济学原理，都不能被修饰。</p><p>也许思考，就是要从自然科学立足吧？</p><p>就比如从数学逻辑里延申——任何事情都是有逻辑的，都应有前因后果。当一件事发生时，也许周围人都会讲述“这件事发生了”，可却鲜有人追溯，这件事为什么发生？当全社会都在为这件事痴狂，乃至要将这件事作为“原因”，采取行动（产生新的“结果”）时，还是没有多少人去关注这件事的根本原因、历史原因、直接原因之间的关系。然后，绝大多数人都被鼓动起来了，就像四年前的我，去笑6老师……</p><p>观察身边的各种变化，各种自然环境社会环境的变化，各种让人开心或难受或鄙夷的事，去思考，“为什么会这样？”</p><p>也许这就是所谓“理性”？</p><p>我不知道几百年前欧洲启蒙运动提倡的“理性”是否就是为了解决这样的问题。</p><p>“要思考，学会思考！”</p>]]></content>
+        <author>
+            <name><![CDATA[VVBLOG]]></name>
+        </author>
+    </entry>
+    
+    <entry>
+        <id>https://blog.vvzero.com/2020/11/18/May-be-I-know-why-use-complement/</id>
+        <title><![CDATA[我终于知道了补码的意义]]></title>
+        <updated>2020-11-19T00:54:42+08:00</updated>
+        <link href="https://blog.vvzero.com/2020/11/18/May-be-I-know-why-use-complement/"/>
+        <content type="text/html" src="https://blog.vvzero.com/2020/11/18/May-be-I-know-why-use-complement/"><![CDATA[<blockquote><p>本文供初学者学习，供大佬批判。</p></blockquote><h2 id="补码背景"><a href="#补码背景" class="headerlink" title="补码背景"></a>补码背景</h2><p>很久很久以前，当我参加 NOIP（信息学奥林匹克竞赛）的时候，老师是这么讲补码的：</p><blockquote><p>int 型数据的最高位是符号位，符号位为 0 就代表这是正数，为 1 就是负数。但是，+0 和 -0 理应是同一个数，但在二进制中却表示成了两个不同的数（以 8 位为例，二进制表示）： 00000000 和 10000000。所以，我们引入了补码，补码就是，对负数而言，符号位不变，其他位取反，然后再加 1。于是， -0 的补码就是 10000000 -&gt; 11111111 -&gt; 00000000 与 +0 一致了。</p></blockquote><h2 id="补码的意义"><a href="#补码的意义" class="headerlink" title="补码的意义"></a>补码的意义</h2><p>其实当时我就该意识到，仅仅为了 0 这一个数便创建了“补码”这个概念，未免太浪费了。我最近看了 <em>CS: APP</em> 这本书，才进一步理解了补码。</p><p>补码，就是为有符号整数而创建的概念。对于无符号整数，是不存在“补码”的概念的。我们先看一个无符号数 00100101，它是怎么转换成十进制的？加权求和，<code>0×2^7+0×2^6+1×2^5+0×2^4+0×2^3+1×2^2+0×2^1+1×2^0=37</code>；无符号数 10000011，<code>1×2^7+0×2^6+0×2^5+0×2^4+0×2^3+0×2^2+1×2^1+1×2^0=131</code>。</p><p>对于有符号数呢？假如我们不用补码，那么有符号数 10000011，就是 <code>-(0×2^6+0×2^5+0×2^4+0×2^3+0×2^2+1×2^1+1×2^0)=-3</code>。人这么算起来是挺舒服，但是计算机会很难受，凭什么我最高位的权值没了？只能做符号？</p><p>然后我们试试补码。10000011 的补码是 11111101，如何用补码求它的十进制呢？其实这跟无符号数是一样的，只不过，最高位的权值，不是 2^7，而是 -2^7。求值：<code>1×(-2^7)+1×2^6+1×2^5+1×2^4+1×2^3+1×2^2+0×2^1+1×2^0=-3</code>，是不是很神奇？</p><p>对于正数而言，就更简单了，与无符号数一致。</p><h2 id="补码再探"><a href="#补码再探" class="headerlink" title="补码再探"></a>补码再探</h2><p>计算机只能做加法（不是），所以，我们看看用补码做加法，有什么好处。</p><p>先计算 -13+10 吧，很简单的二进制竖式加法：</p><table><thead><tr><th>7</th><th>6</th><th>5</th><th>4</th><th>3</th><th>2</th><th>1</th><th>0</th></tr></thead><tbody><tr><td>1</td><td>1</td><td>1</td><td>1</td><td>0</td><td>0</td><td>1</td><td>1</td></tr><tr><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>1</td><td>0</td></tr><tr><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>0</td><td>1</td></tr></tbody></table><p>11111101 即为 -3 的补码。</p><p>再算一个，-8+9：</p><table><thead><tr><th>7</th><th>6</th><th>5</th><th>4</th><th>3</th><th>2</th><th>1</th><th>0</th></tr></thead><tbody><tr><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>0</td><td>0</td><td>0</td></tr><tr><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td>1</td></tr><tr><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td></tr></tbody></table><p>神奇吗？最高位的 0 不见了，变成正数 1 了。</p><h2 id="补码小结"><a href="#补码小结" class="headerlink" title="补码小结"></a>补码小结</h2><p>补码，就是计算机内部有符号数的存储方式，我们不要认为补码是由原码“转换”而来的，补码本来就代表了实际的数字，11111101 == -3，就这样。</p>]]></content>
+        <author>
+            <name><![CDATA[VVBLOG]]></name>
+        </author>
+    </entry>
     
     <entry>
         <id>https://cosmosning.github.io/2020/10/08/notes-of-keyword-search-knowledge-2020/</id>
@@ -95,122 +150,6 @@
         <content type="text/html" src="https://miaotony.xyz/2020/10/26/CTF_2020bilibiliSec1024/"><![CDATA[小破站整了个Sec1024，看了看感觉题目更像是脑筋急转弯，略偏娱乐化这样吧。随意写个WriteUp好了。]]></content>
         <author>
             <name><![CDATA[MiaoTony]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://blog.triplez.cn/macos-user-guide/</id>
-        <title><![CDATA[macOS 使用笔记]]></title>
-        <updated>2020-10-20T13:34:15+08:00</updated>
-        <link href="https://blog.triplez.cn/macos-user-guide/"/>
-        <content type="text/html" src="https://blog.triplez.cn/macos-user-guide/"><![CDATA[<h2><span class="ez-toc-section" id="TL_DR">TL; DR</span></h2>
-<p>如果觉得这篇文章太长了，遇到问题直接在 <a href="https://support.apple.com/zh-cn/guide/mac-help/welcome/mac">这里</a> 搜索吧～</p>
-<h2><span class="ez-toc-section" id="i">外设使用</span></h2>
-<h3><span class="ez-toc-section" id="i-2">鼠标翻转</span></h3>
-<p><a href="https://github.com/pilotmoon/Scroll-Reverser">Scroll-Reverser</a></p>
-<h3><span class="ez-toc-section" id="4K_HiDPI">4K 及以下分辨率屏幕开启 HiDPI</span></h3>
-<p>笔者之前买的屏幕是 2K 分辨率的，如果不使用 Apple 的 HiDPI 技术，MacBook 会把这个屏幕当做是电视，投影效果非常的差，文字模糊的不行。使用以下项目的脚本可以在低分辨率屏幕上强制打开 HiDPI 功能，效果卓群，建议折腾一下。</p>
-<p><a href="https://github.com/xzhih/one-key-hidpi/blob/master/README-zh.md">xzhih/one-key-hidpi</a></p>
-<blockquote><p>
-  笔者注：运行脚本需要关闭 SIP，步骤可见 <a href="#打开/关闭-macOS-SIP（系统完整性保护）">打开/关闭 macOS SIP（系统完整性保护）</a> 。
-</p></blockquote>
-<h3><span class="ez-toc-section" id="Windows">Windows 键盘按键兼容</span></h3>
-<p>可在系统设置的 <code>键盘 &gt; 修饰键</code> 中将 Command 和 Option 键调换。</p>
-<p><img src="https://triplez-public-1251926021.cos.ap-shanghai.myqcloud.com/picgoimage-20200920172108802.png" alt="image-20200920172108802" /></p>
-<h2><span class="ez-toc-section" id="i-3">系统相关</span></h2>
-<h3><span class="ez-toc-section" id="i-4">无法打开来自身分不明开发者的应用</span></h3>
-<p><img src="https://triplez-public-1251926021.cos.ap-shanghai.myqcloud.com/picgomacos-mojave-unidentified-developer-alert-open-dark.jpg" alt="img" /></p>
-<p>按住 <kbd>Control ⌃</kbd> 键并点击应用，在菜单中选择“打开”，弹出的对话框周就会如上有“打开”选项了。</p>
-<h3><span class="ez-toc-section" id="_macOS_SIP">打开/关闭 macOS SIP（系统完整性保护）</span></h3>
-<p>重启后按住 <kbd>Command ⌘</kbd> + <kbd>R</kbd> ，直到看到 Apple 标志再松开。在菜单栏中选择“实用工具”，打开“终端”。</p>
-<p>打开 SIP：</p>
-<pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash">csrutil enable
-</code></pre>
-<p>关闭 SIP：</p>
-<pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash">csrutil disable
-</code></pre>
-<p>需要重启生效。</p>
-<h2><span class="ez-toc-section" id="i-5">常用快捷键</span></h2>
-<table>
-<thead>
-<tr>
-<th>功能</th>
-<th>快捷键</th>
-<th>备注</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>截图</td>
-<td><kbd>Command ⌘</kbd> + <kbd>Shift ⇧</kbd> + <kbd>4</kbd></td>
-<td>进入截图后长按 <kbd>Space</kbd> 可以<del>优雅地</del>截取某个指定窗口</td>
-</tr>
-<tr>
-<td>截图并复制到剪切板</td>
-<td><kbd>Control ⌃</kbd> + <kbd>Command ⌘</kbd> + <kbd>Shift ⇧</kbd> + <kbd>4</kbd></td>
-<td>进入截图后长按 <kbd>Space</kbd> 可以<del>优雅地</del>截取某个指定窗口</td>
-</tr>
-<tr>
-<td>Spotlight “聚焦”搜索</td>
-<td><kbd>Command ⌘</kbd> + <kbd>Space</kbd></td>
-<td></td>
-</tr>
-<tr>
-<td>切换输入法</td>
-<td><kbd>Caps Lock ⇪</kbd></td>
-<td>短按为切换输入法，长按为切换大小写</td>
-</tr>
-<tr>
-<td>切换任务</td>
-<td><kbd>Command ⌘</kbd> + <kbd>Tab</kbd></td>
-<td></td>
-</tr>
-<tr>
-<td>切换桌面</td>
-<td><kbd>Control ⌃</kbd> + <kbd>左/右箭头</kbd></td>
-<td></td>
-</tr>
-<tr>
-<td>调度中心</td>
-<td><kbd>Control ⌃</kbd> + <kbd>上箭头</kbd></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<p>更多快捷键请看 Apple 支持网站中的 <a href="https://support.apple.com/zh-cn/HT201236">Mac 键盘快捷键</a>。</p>
-<h2><span class="ez-toc-section" id="OneNote">OneNote</span></h2>
-<p>从 <a href="https://apps.apple.com/cn/app/microsoft-onenote/id784801555?mt=12">AppStore 下载</a> 即可，或者直接点击下方的链接。</p>
-<p><a href="itms-apps://apps.apple.com/cn/app/microsoft-onenote/id784801555?mt=12">Click here to direct download OneNote from AppStore for macOS</a></p>
-<h2><span class="ez-toc-section" id="Clipboard">Clipboard</span></h2>
-<p>剪切板管理应用：<a href="https://github.com/p0deje/Maccy/releases">Maccy</a> 。</p>
-<blockquote><p>
-  从 GitHub Release 中下载最新 zip 包解压即可。</p>
-<p>  安装方式：将 <code>maccy.app</code> 拖入 Application 文件夹中。
-</p></blockquote>
-<h2><span class="ez-toc-section" id="Terminal">Terminal</span></h2>
-<h3><span class="ez-toc-section" id="iTerm2">iTerm2</span></h3>
-<h3><span class="ez-toc-section" id="proxychains-ng">proxychains-ng</span></h3>
-<p>For proxy in Command ⌘ line.</p>
-<h3><span class="ez-toc-section" id="oh-my-zsh">oh-my-zsh</span></h3>
-<p>Great terminal theme and other fancy functions.</p>
-<h3><span class="ez-toc-section" id="zsh_plugins">zsh plugins</span></h3>
-<p>More in <a href="https://github.com/unixorn/awesome-zsh-plugins#plugins">here</a>.</p>
-<h4><span class="ez-toc-section" id="autosuggestion">autosuggestion</span></h4>
-<p><a href="https://github.com/zsh-users/zsh-autosuggestions">zsh-users/zsh-autosuggestions</a></p>
-<h4><span class="ez-toc-section" id="syntax-highlighting">syntax-highlighting</span></h4>
-<p><a href="https://github.com/zsh-users/zsh-syntax-highlighting">zsh-users/zsh-syntax-highlighting</a></p>
-<h3><span class="ez-toc-section" id="vimrc">vimrc</span></h3>
-<p>The most comfortable configuration for vim.</p>
-<p><a href="https://github.com/amix/vimrc">amix/vimrc</a></p>
-<h2><span class="ez-toc-section" id="Markdown">Markdown</span></h2>
-<h3><span class="ez-toc-section" id="Typora">Typora</span></h3>
-<p><a href="https://typora.io/">Typora -- a markdown editor, markdown reader</a></p>
-<h3><span class="ez-toc-section" id="PicGo">PicGo</span></h3>
-<p><a href="https://github.com/Molunerfinn/PicGo">PicGo - 图片上传新体验</a></p>
-<p>在 Typora 中设置 PicGo 上传图片：https://support.typora.io/Upload-Image/#picgoapp-chinese-language-only</p>
-<p>The post <a rel="nofollow" href="https://blog.triplez.cn/macos-user-guide/">macOS 使用笔记</a> appeared first on <a rel="nofollow" href="https://blog.triplez.cn">Blog</a>.</p>]]></content>
-        <author>
-            <name><![CDATA[TripleZ’s Blog]]></name>
         </author>
     </entry>
     
@@ -775,74 +714,6 @@ for (
     </entry>
     
     <entry>
-        <id>https://blog.triplez.cn/using-systemd-manage-frpc-service/</id>
-        <title><![CDATA[使用 systemd 管理 frpc 服务]]></title>
-        <updated>2020-06-27T14:26:07+08:00</updated>
-        <link href="https://blog.triplez.cn/using-systemd-manage-frpc-service/"/>
-        <content type="text/html" src="https://blog.triplez.cn/using-systemd-manage-frpc-service/"><![CDATA[<h2><span class="ez-toc-section" id="i">前言</span></h2>
-<p>frp[1] 是著名的内网穿透软件，支持 TCP、UDP 协议，且只需简单配置服务端，通过编辑客户端配置即可完成内网穿透的功能。但是其只提供了二进制可执行文件，并没有将其打包，也就无法使用 systemd。而对于一个需要开机启动、失败拉起的基础功能来说，我们有对其通过 systemd 进行管理的需求，也就有了本文。</p>
-<h2><span class="ez-toc-section" id="_frpc">注册 frpc 服务</span></h2>
-<p>其实使用 systemd 来管理程序相当简单。只需要在 <code>/etc/systemd/system/</code> 下写一个 <code>*.service</code> 的文件注册即可。</p>
-<p>在 <code>/etc/systemd/system/</code> 目录下新建 <code>frpc.service</code> ：</p>
-<pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash">$ sudo touch /etc/systemd/system/frpc.service
-</code></pre>
-<p>将以下内容填入至 <code>frpc.service</code> ：</p>
-<pre class="line-numbers prism-highlight" data-start="1"><code class="language-ini">[Unit]
-Description=FRP Client Daemon
-After=network.target
-Wants=network.target
-
-[Service]
-Type=simple
-ExecStart=/path/to/your/frpc -c /path/to/your/frpc.ini
-Restart=always
-RestartSec=20s
-LimitNOFILE=infinity
-
-[Install]
-WantedBy=multi-user.target
-</code></pre>
-<blockquote><p>
-  <code>frpc.service</code> 的内容遵循 systemd 的配置格式[2]&#091;3]。
-</p></blockquote>
-<p>保存后重载 systemd 配置：</p>
-<pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash">$ sudo systemctl daemon-reload
-</code></pre>
-<h2><span class="ez-toc-section" id="_systemd_frpc">通过 systemd 控制 frpc</span></h2>
-<p>启动 frpc：</p>
-<pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash">$ sudo systemctl start frpc
-</code></pre>
-<p>停止 frpc：</p>
-<pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash">$ sudo systemctl stop frpc
-</code></pre>
-<p>查看 frpc 状态：</p>
-<pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash">$ systemctl status frpc
-</code></pre>
-<p>将 frpc 设为开机启动：</p>
-<pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash">$ sudo systemctl enable frpc
-</code></pre>
-<p>取消 frpc 开机启动：</p>
-<pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash">$ sudo systemctl disable frpc
-</code></pre>
-<p>使用方法与 systemd units [4]相同。</p>
-<h2><span class="ez-toc-section" id="References">References</span></h2>
-<ol start="1.">
-<li>fatedier/frp in GitHub<br />
-<a href="https://github.com/fatedier/frp">https://github.com/fatedier/frp</a></li>
-<li>systemd.unit<br />
-<a href="https://www.freedesktop.org/software/systemd/man/systemd.unit.html">https://www.freedesktop.org/software/systemd/man/systemd.unit.html</a></li>
-<li>systemd.service<br />
-<a href="https://www.freedesktop.org/software/systemd/man/systemd.service.html">https://www.freedesktop.org/software/systemd/man/systemd.service.html</a></li>
-<li>systemd (Using units) - ArchWiki<br />
-<a href="https://wiki.archlinux.org/index.php/Systemd#Using_units">https://wiki.archlinux.org/index.php/Systemd#Using_units</a></li>
-</ol start="1.">
-<p>The post <a rel="nofollow" href="https://blog.triplez.cn/using-systemd-manage-frpc-service/">使用 systemd 管理 frpc 服务</a> appeared first on <a rel="nofollow" href="https://blog.triplez.cn">Blog</a>.</p>]]></content>
-        <author>
-            <name><![CDATA[TripleZ’s Blog]]></name>
-        </author>
-    </entry>
-    
-    <entry>
         <id>https://blog.rexskz.info/state-driving-business-code-2.html</id>
         <title><![CDATA[编写状态驱动的业务代码（2）]]></title>
         <updated>2020-06-15T16:54:00+08:00</updated>
@@ -964,138 +835,6 @@ switcher.updateGraph(nextState, false);</code></pre><p>大功告成！之后产�
     </entry>
     
     <entry>
-        <id>https://blog.triplez.cn/u-disk-4mb-recovery/</id>
-        <title><![CDATA[U盘写入系统后变为4MB的还原方法]]></title>
-        <updated>2020-05-16T09:52:48+08:00</updated>
-        <link href="https://blog.triplez.cn/u-disk-4mb-recovery/"/>
-        <content type="text/html" src="https://blog.triplez.cn/u-disk-4mb-recovery/"><![CDATA[<p>在 <code>cmd</code> 中或 <code>powershell</code> 中输入 <code>diskpart</code> 命令，进入 <code>diskpart</code> 程序。</p>
-<ol start="1.">
-<li>输入 <code>list disk</code> 查看磁盘列表<br />
-<img src="https://triplez-public-1251926021.cos.ap-shanghai.myqcloud.com/11.7.2019_U%E7%9B%98%E5%9B%A0%E4%B8%BA%E5%86%99%E5%85%A5%E7%B3%BB%E7%BB%9F%E5%8F%98%E4%B8%BA4MB%E7%9A%84%E8%BF%98%E5%8E%9F%E6%96%B9%E6%B3%95/image-20191107223340468.png" alt="image-20191107223340468" /></p>
-</li>
-<li>
-<p>输入 <code>select disk 2</code> 以选择目标 U 盘（要根据自己 U 盘的数字标识来选择）。<br />
-<img src="https://triplez-public-1251926021.cos.ap-shanghai.myqcloud.com/11.7.2019_U%E7%9B%98%E5%9B%A0%E4%B8%BA%E5%86%99%E5%85%A5%E7%B3%BB%E7%BB%9F%E5%8F%98%E4%B8%BA4MB%E7%9A%84%E8%BF%98%E5%8E%9F%E6%96%B9%E6%B3%95/image-20191107223559778.png" alt="image-20191107223559778" /></p>
-</li>
-<li>输入 <code>clean</code> 清除整个 U 盘。<img src="https://triplez-public-1251926021.cos.ap-shanghai.myqcloud.com/11.7.2019_U%E7%9B%98%E5%9B%A0%E4%B8%BA%E5%86%99%E5%85%A5%E7%B3%BB%E7%BB%9F%E5%8F%98%E4%B8%BA4MB%E7%9A%84%E8%BF%98%E5%8E%9F%E6%96%B9%E6%B3%95/image-20191107223817331.png" alt="image-20191107223817331" /></li>
-<li>此时 U 盘是空但未分区状态，使用 <code>create partition primary</code> 命令来建立默认分区：<br />
-<img src="https://triplez-public-1251926021.cos.ap-shanghai.myqcloud.com/11.7.2019_U%E7%9B%98%E5%9B%A0%E4%B8%BA%E5%86%99%E5%85%A5%E7%B3%BB%E7%BB%9F%E5%8F%98%E4%B8%BA4MB%E7%9A%84%E8%BF%98%E5%8E%9F%E6%96%B9%E6%B3%95/image-20191107223945186.png" alt="image-20191107223945186" /></li>
-</ol start="1.">
-<p>这样这个过程就结束了，恭喜你成功救回了你的 U 盘 :smile::tada:</p>
-<p>The post <a rel="nofollow" href="https://blog.triplez.cn/u-disk-4mb-recovery/">U盘写入系统后变为4MB的还原方法</a> appeared first on <a rel="nofollow" href="https://blog.triplez.cn">Blog</a>.</p>]]></content>
-        <author>
-            <name><![CDATA[TripleZ’s Blog]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://blog.triplez.cn/using-curl-analyzing-time-cost-at-request-diff-phases/</id>
-        <title><![CDATA[使用 curl 来分析请求各个阶段的耗时]]></title>
-        <updated>2020-05-11T15:35:41+08:00</updated>
-        <link href="https://blog.triplez.cn/using-curl-analyzing-time-cost-at-request-diff-phases/"/>
-        <content type="text/html" src="https://blog.triplez.cn/using-curl-analyzing-time-cost-at-request-diff-phases/"><![CDATA[<h2>How</h2>
-<p>这个功能用到的是 <code>curl</code> 的 <code>-w</code> 选项，让我们来先看看 <code>curl</code> 的 man page：</p>
-<pre class="line-numbers prism-highlight" data-start="1"><code class="language-null">-w, --write-out &lt;format&gt;
-       Make curl display information on stdout after a completed transfer. The format is  a  string  that  may  contain lain  text  mixed  with  any number of variables. The format can be specified as a literal "string", or you can have curl read the format from a file with "@filename" and to tell curl to read the format from stdin you  write "@-".
-
-       The variables present in the output format will be substituted by the value or text that curl thinks fit, as de‐ scribed below. All variables are specified as %{variable_name} and to output a normal % you just write  them  as %%. You can output a newline by using \n, a carriage return with \r and a tab space with \t.
-
-       The output will be written to standard output, but this can be switched to standard error by using %{stderr}.使用 curl 命令分析请求的耗时情况
-</code></pre>
-<p>下面的内容就是各种内置变量了，我们可以通过这些变量的值来一窥请求的真实信息。</p>
-<p>以下有一个“广为流传”的格式：</p>
-<pre class="line-numbers prism-highlight" data-start="1"><code class="language-null">    time_namelookup:  %{time_namelookup}\n
-       time_connect:  %{time_connect}\n
-    time_appconnect:  %{time_appconnect}\n
-      time_redirect:  %{time_redirect}\n
-   time_pretransfer:  %{time_pretransfer}\n
- time_starttransfer:  %{time_starttransfer}\n
-                    ----------\n
-         time_total:  %{time_total}\n
-</code></pre>
-<p>将如上内容写至 <code>curl-format</code> 文件中，然后在当前目录运行：</p>
-<pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash">$ curl -w @curl-format -o /dev/null -s -L http://triplez.cn
-</code></pre>
-<blockquote>
-<ul>
-<li><code>-w @curl-format</code> ：使用 <code>curl-format</code> 文件模板进行输出。</p>
-</li>
-<li>
-<p><code>-o /dev/null</code> ：忽略输出内容。</p>
-</li>
-<li>
-<p><code>-s</code> ：不输出多余信息。</p>
-</li>
-<li><code>-L</code> ：支持跳转（如 HTTP 跳转至 HTTPS）。</li>
-</ul>
-</blockquote>
-<p>就会看到像这样的输出：</p>
-<pre class="line-numbers prism-highlight" data-start="1"><code class="language-null">    time_namelookup:  0.001931
-       time_connect:  0.032337
-    time_appconnect:  0.120072
-      time_redirect:  0.000000
-   time_pretransfer:  0.120124
- time_starttransfer:  0.151386
-                    ----------
-         time_total:  0.152068
-</code></pre>
-<p>这些变量的意义是：</p>
-<ul>
-<li><code>time_namelookup</code>：DNS 域名解析的耗时。</li>
-<li><code>time_connect</code>：TCP 连接建立耗时。</li>
-<li><code>time_appconnect</code>：SSL/SSH 等上层协议建立连接的耗时，比如 connect/handshake 耗时（从此处也可看出，最后还是请求了 <code>https://triplez.cn</code> ，否则 HTTP 不会产生 <code>time_appconnect</code> 的耗时。</li>
-<li><code>time_redirect</code>：从开始到最后一个请求事务的耗时。</li>
-<li><code>time_pretransfer</code>：从请求开始到响应开始传输的耗时。</li>
-<li><code>time_starttransfer</code>：从请求开始到第一个字节将要传输的耗时。</li>
-<li><code>time_total</code>：这次请求的总耗时。</li>
-</ul>
-<h2>One more thing...</h2>
-<p><a href="https://github.com/reorx">reorx</a> 写了个 Python 的小工具 <a href="https://github.com/reorx/httpstat">httpstat</a>，让命令行分析请求耗时更加直观。通过以下命令即可安装：</p>
-<pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash">$ pip install httpstat
-</code></pre>
-<p>让我们来试一下：</p>
-<pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash">$ httpstat -L http://triplez.cn
-Connected to 123.206.208.167:443 from 192.168.0.10:34372
-
-HTTP/1.1 302 Found
-Date: Mon, 11 May 2020 15:24:00 GMT
-Server: Apache
-Location: https://triplez.cn/
-Content-Length: 203
-Content-Type: text/html; charset=iso-8859-1
-
-HTTP/1.1 200 OK
-Date: Mon, 11 May 2020 15:24:00 GMT
-Server: Apache
-Last-Modified: Sun, 08 Mar 2020 07:48:35 GMT
-ETag: "7258f-f13-5a0531d213ac0"
-Accept-Ranges: bytes
-Content-Length: 3859
-Content-Type: text/html; charset=UTF-8
-
-Body stored in: /tmp/tmpkeq3ospo
-
-  DNS Lookup   TCP Connection   Server Processing   Content Transfer
-[    32ms    |      66ms      |       73ms        |        1ms       ]
-             |                |                   |                  |
-    namelookup:32ms           |                   |                  |
-                        connect:98ms              |                  |
-                                      starttransfer:266ms            |
-                                                                 total:267ms  
-</code></pre>
-<p>从输出上我们就可以很直观地看出来，从 <code>http://triplez.cn</code> 到 <code>https://triplez.cn</code> 中完成了一次 302 跳转，在输出末尾的示意图上我们也可以清楚地看到各阶段的耗时。</p>
-<p>Happy hacking 😛</p>
-<h2>References</h2>
-<ul>
-<li><a href="https://cizixs.com/2017/04/11/use-curl-to-analyze-request/">使用 curl 命令分析请求的耗时情况</a></li>
-</ul>
-<p>The post <a rel="nofollow" href="https://blog.triplez.cn/using-curl-analyzing-time-cost-at-request-diff-phases/">使用 curl 来分析请求各个阶段的耗时</a> appeared first on <a rel="nofollow" href="https://blog.triplez.cn">Blog</a>.</p>]]></content>
-        <author>
-            <name><![CDATA[TripleZ’s Blog]]></name>
-        </author>
-    </entry>
-    
-    <entry>
         <id>https://blog.rexskz.info/awb-tool-ultimate-optimization-for-chrome-headless.html</id>
         <title><![CDATA[面单工具：对 Chrome Headless 渲染的极致优化]]></title>
         <updated>2020-05-02T21:05:00+08:00</updated>
@@ -1133,61 +872,6 @@ Array.from(document.querySelectorAll('tbody')).forEach(el =&gt; {
 });</code></pre><p>看一下 Performance，是这样的：</p><p><img src="https://static.rexskz.info/blog/article/awb-tool-ultimate-optimization-for-chrome-headless/4.png" alt="优化了 Layout 后的性能" title="优化了 Layout 后的性能"></p><p>这效果也太好了吧！分析一下这个图的含义：</p><ul><li>0 ms ~ 400 ms 是在加载页面，这个理论上是没法再优化的；</li><li>400 ms ~ 2300 ms 是一开始将所有元素显示出来，于是 Chrome 做了一遍 Layout；</li><li>2300 ms ~ 2500 ms 是我的排版代码，此时由于没有任何获取样式的操作，浏览器会将所有的样式计算集中到下一个事件循环中统一处理；</li><li>2500 ms ~ 4900 ms 是统一处理的样式计算，这需要一次 Layout。</li></ul><p>理论上讲，Layout 的次数已经不可能再少了，两次 Layout 的时间取决于面单的复杂程度，可能可以通过优化 CSS 的方式来提速，但不确定效果如何（毕竟现在平均每个元素只有不到 0.5 ms 的绘制时间）。因此我觉得，这可以算是非常极致的优化了。</p><h1>参考资料（部分图源）</h1><ul><li><a href="https://chromium.googlesource.com/chromium/src/+/master/third_party/blink/renderer/core/dom/README.md">DOM - Chromium Source Code README</a></li><li><a href="https://what-if.xkcd.com/13/">Laser Pointer - What If - xkcd</a></li></ul>]]></content>
         <author>
             <name><![CDATA[R·ex / Zeng]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://blog.vvzero.com/2019/07/22/set-user-alias-for-windows-PowerShell/</id>
-        <title><![CDATA[为 Windows PowerShell 设置 User Alias （命令别名）]]></title>
-        <updated>2020-04-28T09:16:41+08:00</updated>
-        <link href="https://blog.vvzero.com/2019/07/22/set-user-alias-for-windows-PowerShell/"/>
-        <content type="text/html" src="https://blog.vvzero.com/2019/07/22/set-user-alias-for-windows-PowerShell/"><![CDATA[<blockquote><p>直接看步骤的话，在最下方。</p></blockquote><h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>Windows Terminal 虽然还处于预览阶段，但是也出来很长一段时间了。它的历史使命，也许就是让原生 Windows 也能有一个像样的命令行环境。以前我一直在用 Cmder，但是 Cmder 的启动速度确实不敢恭维，而 Windows Terminal 启动确实很快。相比 Cmder， Windows Terminal 还缺少很多功能，不过以后应该很快也会补上。</p><p><img src="https://img.vvzero.com/ih/2019/07/22/5d35bef29b3f1.png" style="zoom:50%;"></p><p>我想尝试使用 Windows Termimal 进行开发。Windows Terminal 默认可以使用 <code>PowerShell</code>、<code>cmd</code>、<code>wsl bash</code>作为脚本工具。既然是在 Windows 环境下嘛，还是得尊敬一下 Windows PoweShell 的。初次使用，我觉得 PowerShell 跟 Cmder 用起来，最不方便的一点就是，我在 Cmder 里面设了很多的 Alias，也就是通过修改 <code>config/user_aliases.cmd</code> 写一串 <code>&lt;alia&gt;=&lt;xxx&gt; &lt;xxx&gt;</code> 来实现的。</p><p><img src="https://img.vvzero.com/ih/2019/07/22/5d35bef29ad52.png" style="zoom:50%;"></p><p>但是，PowerShell 如何实现命令的别名设置呢？</p><h2 id="探索过程及原理概述"><a href="#探索过程及原理概述" class="headerlink" title="探索过程及原理概述"></a>探索过程及原理概述</h2><p>如果搜索关键词 <code>windows powershell set user alias</code>，通常谷歌会给出<a href="https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/set-alias?view=powershell-6" target="_blank" rel="noopener">微软官方文档</a>，但是这个文档只是告诉我们如何在脚本里面设置临时的别名，如果要设置永久别名，该怎么办？实际上，“别名”这种东西，也就是 <code>alias</code>，几乎所有的脚本语言，都没有所谓的“永久别名”(Permanent alias)，我们使用 Linux bash 、Cmder 之类的脚本工具，打开终端时，系统会默认执行一个脚本文件（ bash 是用户目录下的 <code>.bashrc</code>，Cmder 是 <code>config/user_aliases.cmd</code> ），而这样的脚本文件里，就包含了别名的定义。这也是为什么，我们在 Linux 类系统中，修改 <code>.bashrc</code> 后，必须要重新登出登录、或者 <code>source .bashrc</code> 的原因了。</p><p>所以，我们只要修改 Windows Powershell 启动时执行的文件就行了。很多论坛里面说，默认执行的脚本是 <code>$Home\Documents\profile.ps1</code> ，也就是 <code>C:\Users\你的用户名\Documents\profile.ps1</code> ，但是这并不正确，最好的方式是，先启动 PowerShell ，再执行 <code>echo $profile</code>，这样得到的文件路径，才是 PowerShell 的默认执行文件路径。</p><p><img src="https://img.vvzero.com/ih/2019/07/22/5d35bef29d447.png" alt></p><p>然后，创建这个文件就好啦。</p><p>在文件里面，写上别名设置的语句。再一次注意，假如你的别名指代的命令含有空格，就不可以使用 <code>New-Alias</code> 命令，因为它不能带空格，即使你把指代的命令用引号括起来也没用。那怎么办呢？继续谷歌，原来，正确姿势是用 <code>function</code> ，也就是，我们把自己要定义的指令，定义为一个函数，就行啦。</p><p><img src="https://img.vvzero.com/ih/2019/07/22/5d35bef339443.png" style="zoom: 67%;"></p><p>保存文件，重新启动 PowerShell 以后，不出意外，应该会报一个 <code>File xxxxxxx\Microsoft.PowerShell_profile.ps1 cannot be loaded because running scripts is disabled on this system.</code> 根据<a href="https://tecadmin.net/powershell-running-scripts-is-disabled-system/" target="_blank" rel="noopener">此链接</a>，出现这种情况，是因为 Windows 系统为了防止恶意脚本自动执行，故默认不允许自动运行脚本。所以，在确定自己有能力把控的情况下，<strong>以管理员身份</strong>，在 PowerShell 中执行 <code>Set-ExecutionPolicy RemoteSigned</code>，即可。</p><p>再次重启 PowerShell，应该可以发现，自定义别名已经生效了。</p><h2 id="步骤整理"><a href="#步骤整理" class="headerlink" title="步骤整理"></a>步骤整理</h2><p>如果你想为自己的 Windows PowerShell 设置永久的命令别名 (Alias)，可以遵循以下步骤：</p><ol><li><p>打开 PowerShell ，运行 <code>echo $profile</code>，会输出一个文件路径。创建这个文件。</p></li><li><p>打开刚创建的文件，按以下格式设置多条别名：</p><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> 别名 &#123; 需要替代的命令，可以包含空格 &#125;</span><br></pre></td></tr></table></figure></li><li><p>以管理员身份打开 PowerShell，执行 <code>Set-ExecutionPolicy RemoteSigned</code>。</p></li><li><p>重新启动 PowerShell ，应该已经完成了。</p></li></ol>]]></content>
-        <author>
-            <name><![CDATA[VVBLOG]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://blog.vvzero.com/2020/04/28/use-virtual-machine-to-bypass-windows-samba-port-limit/</id>
-        <title><![CDATA[使用虚拟机绕过 Windows Samba 客户端端口限制]]></title>
-        <updated>2020-04-28T06:19:26+08:00</updated>
-        <link href="https://blog.vvzero.com/2020/04/28/use-virtual-machine-to-bypass-windows-samba-port-limit/"/>
-        <content type="text/html" src="https://blog.vvzero.com/2020/04/28/use-virtual-machine-to-bypass-windows-samba-port-limit/"><![CDATA[<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>迫于不能浪费宿舍联通宽带的公网 IP，我用树莓派搭建了一个 NAS，使用 Samba 提供访问。但是，由于运营商限制，入站和出站的 139、445 端口都被封禁（对！你不能访问其他机器的 445 端口！），这样做只能让同一个局域网的服务访问。我尝试修改了端口号，把本地的 445 端口映射到公网的其它端口，算是可以给大部分 Samba 客户端使用了（比如安卓手机）。但是，Windows 的 Samba 客户端，并不支持设置端口号（如果在文件管理器地址栏输入 <code>\\a.b.c.d:xxx</code> 将会被认为是 WebDAV 协议）。</p><p>网上某些教程说，在 Windows 本地设置端口转发，把访问本机 445 端口的流量转发至你的 Samba 服务器端口。但是，这样做需要关闭 Windows 自己的 Samba 服务器，会导致网络共享、网络打印机等很多功能无法使用，导致莫名其妙的问题，所以不推荐。</p><p>但是可以换个思路。</p><h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>既然不能使用本机（127.0.0.1）做转发，那么为什么不使用本地网络中其他的机器进行数据转发呢？一开始我想在本地网络中加一个树莓派之类的小主机，但觉得这样太累赘了。虚拟机也是独立的机器，我觉得一样有效。</p><p>所以，只要在虚拟机里面装一个反向代理应用（Nginx），把发往虚拟机 445 端口的流量转发到 Samba 服务器，然后使用 Windows Samba 客户端访问这个虚拟机，就等于访问 Samba 服务器。</p><h2 id="实践"><a href="#实践" class="headerlink" title="实践"></a>实践</h2><p>这里，我使用了 Windows Hyper V，创建了 Ubuntu 20.04 Server 虚拟机（直接下载官方 ISO），然后使用默认交换机作为虚拟机的网络。</p><p><img src="https://img.vvzero.com/ih/2020/04/28/2416a9e0b66ec.png" alt="Snipaste_2020-04-28_14-07-57.png" style="zoom:33%;"></p><p>启动后，安装系统，然后除了更新镜像源、安装 Nginx，什么都不用做。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo apt install nginx</span><br></pre></td></tr></table></figure><p>装好 Nginx 后，修改配置文件：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/nginx/nginx.conf</span><br></pre></td></tr></table></figure><p>添加一个 stream 模块，大致像下面：</p><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">http</span> &#123;</span><br><span class="line">    ......</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="section">stream</span> &#123;</span><br><span class="line">    <span class="section">server</span> &#123;</span><br><span class="line">        <span class="attribute">listen</span> <span class="number">445</span>;</span><br><span class="line">        </span><br><span class="line">        // 你的 NAS 地址</span><br><span class="line">        <span class="attribute">proxy_pass</span> mynas.example.com:<span class="number">12345</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>然后重启 Nginx：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo nginx -s reload</span><br></pre></td></tr></table></figure><p>转发的模块就做好了。</p><p>然后，再在 Windows 中打开 <code>\\&lt;虚拟机的ip&gt;\&lt;samba 路径（可选）&gt;</code> 就完成了。虚拟机 ip 可以在虚拟机里面用 ifconfig 命令查看。</p><h2 id="后续"><a href="#后续" class="headerlink" title="后续"></a>后续</h2><p>也许可以用 docker 实现，但我还没想好怎么搞。</p>]]></content>
-        <author>
-            <name><![CDATA[VVBLOG]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://blog.vvzero.com/2020/02/08/build-powerful-remote-desktops-with-aliyun-ECS-at-low-price/</id>
-        <title><![CDATA[使用阿里云 ECS 搭建廉价的高性能云桌面]]></title>
-        <updated>2020-04-28T05:26:07+08:00</updated>
-        <link href="https://blog.vvzero.com/2020/02/08/build-powerful-remote-desktops-with-aliyun-ECS-at-low-price/"/>
-        <content type="text/html" src="https://blog.vvzero.com/2020/02/08/build-powerful-remote-desktops-with-aliyun-ECS-at-low-price/"><![CDATA[<blockquote><p>要想读懂本文，你需要：</p><ol><li>了解阿里云等云服务的基本 WEB 界面操作；</li><li>了解 Windows 操作系统的中阶操作；</li><li>了解基础的软件开发术语。</li></ol></blockquote><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文面向的是需要使用高性能计算设备，但是身边只有低性能PC机的群体。最近由于 NCP 疫情，出不了门，返回不了工作地，想必不少人的高性能计算设备（好电脑）没带回家，但是，肯定也有人跟我一样，受不了笔记本电脑的龟速。</p><p>我的配置需求是，能够流畅运行安装多个插件的 VSCode、能够同时打开数十个 Firefox 标签页、能够快速完成 node 项目构建。但是我身边只有一台五年前的 intel NUC (i3-4010U, 4GB RAM)。</p><p>在详细了解了各大云服务商的云计算平台后，个人排除了华为云（弹性计算服务价格较高、云桌面售罄）、腾讯云（云计算服务类别过少）、天翼云（云桌面需要安装指定 APP 且性能不满足要求），决定使用阿里云的云计算服务。</p><h2 id="使用阿里云初步搭建云桌面"><a href="#使用阿里云初步搭建云桌面" class="headerlink" title="使用阿里云初步搭建云桌面"></a>使用阿里云初步搭建云桌面</h2><p>经过权衡，我决定使用阿里云 ESC “抢占式实例”付费模式下的“突发性能实例”。为什么这么选？</p><p>因为没钱……</p><p>开玩笑的。我觉得这是我需求下的合理选择方式。为什么选择“抢占式实例”？首先，我们复工的时间还是个未知数，而且可能随时就不想用这个云桌面了。“抢占式实例”是按量付费的一种，也就是，用多长时间给多少钱。并且，相对于按量付费，有相当大的折扣。<strong>“抢占式实例”的最大问题在于，这是竞价模式。也就是说，当别人出价比你高的时候，或者阿里云供给紧张而你又给钱给得不够的时候，它会自动帮你释放。我了解的是，在释放前5分钟，阿里云会有提醒。</strong>为了尽量避免实例被自动释放，我选择了“使用自动出价”，也就是说，系统会每小时自动判断当前时间该实例的价格，并选择一个高于市场均价的价格进行付费。<strong>但是，这并不是万无一失，阿里云在供给紧张的时候，仍然会将实例释放。</strong>所以，在处理重要数据时，应该随时备份。我的处理方法是，随时将代码提交到我的 Git 仓库。</p><p><img src="https://img.vvzero.com/ih/2020/02/09/ea3d50f39b198.png" alt="Snipaste_2020-02-09_17-32-20.png"></p><p><img src="https://img.vvzero.com/ih/2020/02/09/df1fabf212984.png" alt="Snipaste_2020-02-09_17-34-24.png"></p><p>如果要保证不会被释放，建议使用包年包月制。</p><p>为什么使用“突发性能实例”？因为个人电脑与服务器不同。个人电脑不会时时刻刻占用大量 CPU，CPU使用率是离散化的，所以 CPU 的使用积分，我觉得是用不完，25% 的使用基线，完全够用。</p><p><img src="https://img.vvzero.com/ih/2020/02/09/d74c0622ec620.png" alt="Snipaste_2020-02-09_17-34-05.png"></p><p>哎，目前好像国内也只有阿里云能做出“抢占式实例”和“突发性能实例”。</p><p>其他的配置就简单了，区域选择靠近你的（不同地区的价格好像差别挺大），镜像选择 Windows Server，另外，SSD 是很关键的，我觉得现在已经没有多少人能忍受机械硬盘的龟速了。</p><p><img src="https://img.vvzero.com/ih/2020/02/09/6ae75caa75c6a.png" alt="Snipaste_2020-02-09_18-03-26.png"></p><p><img src="https://img.vvzero.com/ih/2020/02/09/cbe75edc3c797.png" alt="Snipaste_2020-02-09_17-36-25.png"></p><p>在下一个页面配置网络，为了保证远程桌面流畅，按使用流量计费，带宽拉满！</p><p><img src="https://img.vvzero.com/ih/2020/02/09/2c112190ea447.png" alt="Snipaste_2020-02-09_17-45-57.png"></p><p>最终，我的配置如下：</p><ul><li>4核16GB，25% 平均CPU 计算性能；</li><li>100Mbps 按流量付费网络；</li><li>80GB SSD；</li><li>Windows Server 2019 数据中心版；</li></ul><p>这样的话，实例价格为 0.412 元每小时（我选的是上海区的，其他区的可能更便宜，在深夜、早上也会更便宜），流量费用为 0.8 元每 GB。算一算，一天大概要 10 元，一个月大概要 300 元，是不是还是有点贵？没关系，继续看。</p><p><img src="https://img.vvzero.com/ih/2020/02/09/ecfef72872df3.png" alt="Snipaste_2020-02-09_17-36-50.png"></p><h2 id="价格的进一步优化"><a href="#价格的进一步优化" class="headerlink" title="价格的进一步优化"></a>价格的进一步优化</h2><p>现在我已经启动了这个实例：</p><p><img src="https://img.vvzero.com/ih/2020/02/09/3ea24c1929367.png" alt="Snipaste_2020-02-09_18-21-04.png"></p><p>我还想更便宜。</p><h3 id="与基友合租一台机器"><a href="#与基友合租一台机器" class="headerlink" title="与基友合租一台机器"></a>与基友合租一台机器</h3><p>我想你一定不可能一天24小时都在用它，用它的时候也一定不会一直占满 CPU。关键是，我们这是 Windows Server，跟家庭版、专业版、企业版什么的都不一样，它支持多个用户同时登陆！所以，我觉得，如果有信任的人选，完全可以合租。</p><h3 id="关机时选择“停机不计费”"><a href="#关机时选择“停机不计费”" class="headerlink" title="关机时选择“停机不计费”"></a>关机时选择“停机不计费”</h3><p>阿里云真的是神奇的存在，在 ECS 管理界面，选择停机，竟然可以停机不收费！</p><p><img src="https://img.vvzero.com/ih/2020/02/09/28437c5fae934.png" alt="图片1.png"></p><p>实际上也不是完全不收费，硬盘和弹性公网 IP 仍然是收费的。但是，与停机后仍然保留CPU、内存相比，价格大幅降低。也就是说，我们在每天晚上，完全可以关机并选择不收费，可以节约一大笔。如果想要一直使用同一个 IP，可以选择绑定弹性公网 IP。</p><h3 id="依据个人需求选择实例规格"><a href="#依据个人需求选择实例规格" class="headerlink" title="依据个人需求选择实例规格"></a>依据个人需求选择实例规格</h3><p>我觉得，可能 8GB 内存已经够我用了，另外，青岛区的实例好像每小时能更便宜一毛钱……</p><h2 id="云桌面体验"><a href="#云桌面体验" class="headerlink" title="云桌面体验"></a>云桌面体验</h2><p>在体验之前，再确保一下：该实例网络安全组，需要放通 3389 端口（TCP 和 UDP 都要放通）。</p><p>打开本地的远程桌面客户端试试吧！</p><p><img src="https://img.vvzero.com/ih/2020/02/09/b4629c62b4373.png" alt="Snipaste_2020-02-09_18-38-25.png"></p><p>网络方面，我是江苏电信网络，连接上海区的 ECS，延迟很小，可以忽略，而且画质很清晰，暂时没有什么画面卡顿。至于下行网络，由于这是阿里云的专线，比家用运营商网络好太多，下载速度嗖嗖的，不管国内外。</p><p>计算性能方面，在我本地机器上，VSCode 的 Python 插件，进行一次文件错误扫描需要 5 秒左右，而这台云桌面，只要 1 秒。</p><p>操作系统方面，Windows Server 比 Windows PC 简洁很多，没有乱七八糟的服务，但也没有缺少日常开发所需的重要组件。可能会有点不一样，但是如果出问题，一般能很快解决。比如我在安装 Python 时出错，Google 一下便知要直接以管理员身份打开。</p><p>以下截图自我的云桌面。</p><p><img src="https://img.vvzero.com/ih/2020/02/09/d3b52ba297968.png" alt="Screenshot _1_.png"></p><p><img src="https://img.vvzero.com/ih/2020/02/09/e9ae18b879037.png" alt="Screenshot _3_.png"></p><p><img src="https://img.vvzero.com/ih/2020/02/09/9f2c0741b0057.png" alt="Screenshot _4_.png"></p><p><img src="https://img.vvzero.com/ih/2020/02/09/8109324fabb58.png" alt="Screenshot _2_.png"></p><h3 id="提高体验的可选项"><a href="#提高体验的可选项" class="headerlink" title="提高体验的可选项"></a>提高体验的可选项</h3><ol><li>关闭 Windows 的过渡动画，这在远程桌面上会导致卡顿，且会消耗大量的流量费；</li><li>安全起见，重新创建一个管理员用户并禁用 Administrator 用户；</li><li>用好各种云同步功能，比如 Git 仓库、浏览器云同步、云盘等。</li></ol><h2 id="实测价格"><a href="#实测价格" class="headerlink" title="实测价格"></a>实测价格</h2><p>我正常使用了一天，晚上停机不收费，消费如下：</p><p><img src="https://img.vvzero.com/ih/2020/02/09/176c67e7015fa.png" alt="Snipaste_2020-02-09_18-54-30.png"></p><p><img src="https://img.vvzero.com/ih/2020/02/09/140f26bd1d962.png" alt="Snipaste_2020-02-09_18-55-07.png"></p><p>可见，我一天大致消费5元。</p><h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>确实不是很贵，可行性也很高。假如有模型渲染需求，甚至可以绑定个显卡（</p><p>抢占式实例也不是很可怕吧？我的实例目前没被回收。</p><p>另外，有人想跟我合租吗？</p>]]></content>
-        <author>
-            <name><![CDATA[VVBLOG]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://blog.vvzero.com/2019/05/23/thinking-in-20190523/</id>
-        <title><![CDATA[20190523 随想]]></title>
-        <updated>2020-04-28T05:26:07+08:00</updated>
-        <link href="https://blog.vvzero.com/2019/05/23/thinking-in-20190523/"/>
-        <content type="text/html" src="https://blog.vvzero.com/2019/05/23/thinking-in-20190523/"><![CDATA[<p>四年之前，我高二的时候，一天傍晚放学，我跟当时教我化学的6老师（代称），开玩笑式地起了争执。6老师人很好，我们都跟他称兄道弟的。起因是，6老师向我们秀他新买的球鞋，很酷，是某个日本名牌。当时的我笑道：“日货啊，不能穿啊！”（当时的学生中间，这样的思想氛围还比较浓）。</p><p>6老师立刻就反驳了：“为什么不能穿？”“东西好用，为什么不买？”当时我还有一些现在看来可笑的话，都被6老师“讽刺”了一番。我仍不服气，要争辩，6老师对我说：“很多你看到的事情，并不一定是真的……是被修饰过的……”</p><p>我大致听懂了他的意思，但进一步问：“既然各种历史、事情都会被修饰，那么我们怎么才能知晓真实的情况呢？毕竟，不管哪一方说出的话，都有可能因为要符合其利益而将其修饰。”</p><p>6老师说：“要思考，学会思考！”</p><p>……</p><p>我当时不以为然，思考？怎么思考嘛！</p><p>后来我慢慢知道了，直到现在，我都很认可6老师，我觉得他很对。</p><p>不管是什么，都会被人修饰，只有自然科学不能被修饰。就像，不管是谁，也不能让人相信 1+1=3，这是数学。物理、化学等其他自然科学的原理，乃至经济学原理，都不能被修饰。</p><p>也许思考，就是要从自然科学立足吧？</p><p>就比如从数学逻辑里延申——任何事情都是有逻辑的，都应有前因后果。当一件事发生时，也许周围人都会讲述“这件事发生了”，可却鲜有人追溯，这件事为什么发生？当全社会都在为这件事痴狂，乃至要将这件事作为“原因”，采取行动（产生新的“结果”）时，还是没有多少人去关注这件事的根本原因、历史原因、直接原因之间的关系。然后，绝大多数人都被鼓动起来了，就像四年前的我，去笑6老师……</p><p>观察身边的各种变化，各种自然环境社会环境的变化，各种让人开心或难受或鄙夷的事，去思考，“为什么会这样？”</p><p>也许这就是所谓“理性”？</p><p>我不知道几百年前欧洲启蒙运动提倡的“理性”是否就是为了解决这样的问题。</p><p>“要思考，学会思考！”</p>]]></content>
-        <author>
-            <name><![CDATA[VVBLOG]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://blog.vvzero.com/2019/01/13/Use-the-Internet-via-nuaa-portal-for-free/</id>
-        <title><![CDATA[免费使用 nuaa.portal 上网]]></title>
-        <updated>2020-04-28T05:26:07+08:00</updated>
-        <link href="https://blog.vvzero.com/2019/01/13/Use-the-Internet-via-nuaa-portal-for-free/"/>
-        <content type="text/html" src="https://blog.vvzero.com/2019/01/13/Use-the-Internet-via-nuaa-portal-for-free/"><![CDATA[<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>学校赐予我的 nuaa.portal 账号在一个月之前就到期了，这一个月内，虽然对我的生活没有太大的影响，但是还是感受到了某些不便（总觉得某些东西有了更好，没有却不能拉倒）。前些天跟创新区内的同学讨论了本校的ipv6部署情况，突然就有兴致来折腾一下。</p><p>没错，免费上网还是有可能的。</p><h2 id="前提概要"><a href="#前提概要" class="headerlink" title="前提概要"></a>前提概要</h2><ul><li>学校的 nuaa.portal 公共无线网，Windows 电脑只要连接上，就能获取一个 ipv4 内网地址和一个 ipv6 地址。如果没有在指定 Web 页面上认证，则无法使用 ipv4 连接互联网。但是可以通过 ipv6 联网。</li><li>学校默认不分配 ipv6 的 DNS 服务器。</li><li>学校教学办公区有线宽带，经直接拨号，同样可以获得一个 ipv4 内网地址和一个 ipv6 地址，均可以访问互联网。</li></ul><h2 id="一步步的尝试"><a href="#一步步的尝试" class="headerlink" title="一步步的尝试"></a>一步步的尝试</h2><h3 id="直接用-ipv6-上提供-ipv6-服务的网站"><a href="#直接用-ipv6-上提供-ipv6-服务的网站" class="headerlink" title="直接用 ipv6 上提供 ipv6 服务的网站"></a>直接用 ipv6 上提供 ipv6 服务的网站</h3><p>既然可以从 nuaa.portal 获取可以访问互联网的 ipv6 地址，那么最简单的思路，就是直接使用这条通道。但是，由于学校没有 ipv6 的 DNS（认证后，如果访问 ipv6 站点，其实仍然是使用 ipv4 的 DNS 服务器），故必须配置 ipv6 的 DNS。这一点很简单，直接修改 DNS 服务器即可：</p><p><img src="https://img.vvzero.com/Use-the-Internet-via-nuaa-portal-for-free_2.png" alt></p><p>这里推荐两个 ipv6 的 DNS 服务器，一个是 Google 家的，一个是清华大学 TUNA 协会的：</p><ul><li><code>2001:4860:4860::8888</code></li><li><code>2001:da8::666</code></li></ul><p>然后，实测就可以访问提供 ipv6 服务的网站啦！</p><p>比如：</p><ul><li>google.com.hk</li><li><a href="http://www.youtube.com" target="_blank" rel="noopener">www.youtube.com</a></li><li>ipv6.baidu.com</li><li>ipv6.mirrors.ustc.edu.cn</li></ul><h3 id="使用-ipv6-代理服务器进行无限制的互联网访问"><a href="#使用-ipv6-代理服务器进行无限制的互联网访问" class="headerlink" title="使用 ipv6 代理服务器进行无限制的互联网访问"></a>使用 ipv6 代理服务器进行无限制的互联网访问</h3><p>上一条方法虽然简单，但是只能访问提供 ipv6 的网站，然而现在国内乃至国际上大多数网站并没有提供 ipv6 服务，至少，你目前还不能登微信。</p><p>但是，如果有一个同时具有有 ipv6 和 ipv4 的代理服务器，不就一切都解决了吗？把本地的所有流量都通过 ipv6 转发至代理服务器，然后就可以访问任意站点了！</p><p>这里，我借用了 Shadowsocks，配置了一台有 ipv6 和 ipv4 的服务器，然后本地开启全局代理，实际就可以访问任意站点了。</p><p>使用这个方法，本地 DNS 甚至都不需要配置。</p><h3 id="终极（硬核）蹭网方案"><a href="#终极（硬核）蹭网方案" class="headerlink" title="终极（硬核）蹭网方案"></a>终极（硬核）蹭网方案</h3><p>还记得一开始我说过，教学办公区也能获得 ipv6 地址吗？</p><p>对，我就是想用远程桌面！</p><p><img src="https://img.vvzero.com/Use-the-Internet-via-nuaa-portal-for-free_1.jpg" alt></p><p>我在学校创新区日常开着一台机器，拨号联网，（性能还不错）。</p><p>emmm，其实这个方法真的很硬核很有效，而且，由于 nuaa.portal 和教学办公区实际属于同一个大的内网环境，学校的路由器还不错，实测 ping 延迟只有 2ms，完全满足了日常电脑使用（除了不能使用显卡玩游戏什么的）。微软家的远程桌面还是很强大的！</p><h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>我其实还是想再来一年的免费 nuaa.portal 账号的。</p>]]></content>
-        <author>
-            <name><![CDATA[VVBLOG]]></name>
         </author>
     </entry>
     
@@ -2034,60 +1718,6 @@ CFRelease(urlStr);
 <p><a rel="nofollow" href="https://www.noisyfox.io/moe-native-types.html">Working with native types: Advanced</a>，首发于<a rel="nofollow" href="https://www.noisyfox.io">狐狸的小小窝</a>。</p>]]></content>
         <author>
             <name><![CDATA[狐狸的小小窝]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://blog.triplez.cn/git-initialization/</id>
-        <title><![CDATA[Git initialization]]></title>
-        <updated>2019-09-01T10:37:13+08:00</updated>
-        <link href="https://blog.triplez.cn/git-initialization/"/>
-        <content type="text/html" src="https://blog.triplez.cn/git-initialization/"><![CDATA[<ul>
-<li>Change <code>Git</code> default settings;</li>
-<li>Use <code>GPG</code> key to sign the <code>Git</code> commits.</li>
-</ul>
-<h2>Step by step</h2>
-<pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash">$ git config --global core.editor "vim"
-
-
-# config your identity
-git config --global user.email "YOUR_EMAIL"
-git config --global user.name "YOUR_NAME"
-
-# enable gpg signed commit
-git config --global commit.gpgsign true
-
-# generate gpg key
-## git &gt;= 2.1.17
-gpg --full-generate-key
-# or gpg --gen-key
-## git &lt; 2.1.17
-gpg --default-new-key-algo rsa4096 --gen-key
-
-# check your key id
-$ gpg --list-secret-keys --keyid-format LONG
-gpg: checking the trustdb
-gpg: marginals needed: 3  completes needed: 1  trust model: pgp
-gpg: depth: 0  valid:   1  signed:   0  trust: 0-, 0q, 0n, 0m, 0f, 1u
-/home/triplez/.gnupg/pubring.kbx
---------------------------------
-sec   rsa4096/96B4168C3D454E11 2018-11-28 [SC]
-      6B0B48B063F8F592CE9006DE96B4168C3D454E11
-uid                 [ultimate] Zhenzhen Zhao (my gpg) &lt;me@triplez.cn&gt;
-ssb   rsa4096/435B8EB04CBF8E8D 2018-11-28 [E]
-
-gpg --armor --export 96B4168C3D454E11
-# copy your GPG key, beginning with -----BEGIN PGP PUBLIC KEY BLOCK----- and ending with -----END PGP PUBLIC KEY BLOCK-----, then add it to the GitHub
-
-# set user to sign with this gpg key
-git config --global user.signingkey 96B4168C3D454E11
-</code></pre>
-<h2>References</h2>
-<p><a href="https://help.github.com/articles/generating-a-new-gpg-key/">Generating a new GPG key</a><br />
-<a href="https://stackoverflow.com/questions/52808365/git-error-gpg-failed-to-sign-the-data-on-linux">Git error: gpg failed to sign the data on Linux</a></p>
-<p>The post <a rel="nofollow" href="https://blog.triplez.cn/git-initialization/">Git initialization</a> appeared first on <a rel="nofollow" href="https://blog.triplez.cn">Blog</a>.</p>]]></content>
-        <author>
-            <name><![CDATA[TripleZ’s Blog]]></name>
         </author>
     </entry>
     
