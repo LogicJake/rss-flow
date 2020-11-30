@@ -3,7 +3,7 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2020-11-30T12:13:57+08:00</updated>
+    <updated>2020-11-30T18:10:52+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
@@ -1188,61 +1188,6 @@ Array.from(document.querySelectorAll('tbody')).forEach(el =&gt; {
 });</code></pre><p>看一下 Performance，是这样的：</p><p><img src="https://static.rexskz.info/blog/article/awb-tool-ultimate-optimization-for-chrome-headless/4.png" alt="优化了 Layout 后的性能" title="优化了 Layout 后的性能"></p><p>这效果也太好了吧！分析一下这个图的含义：</p><ul><li>0 ms ~ 400 ms 是在加载页面，这个理论上是没法再优化的；</li><li>400 ms ~ 2300 ms 是一开始将所有元素显示出来，于是 Chrome 做了一遍 Layout；</li><li>2300 ms ~ 2500 ms 是我的排版代码，此时由于没有任何获取样式的操作，浏览器会将所有的样式计算集中到下一个事件循环中统一处理；</li><li>2500 ms ~ 4900 ms 是统一处理的样式计算，这需要一次 Layout。</li></ul><p>理论上讲，Layout 的次数已经不可能再少了，两次 Layout 的时间取决于面单的复杂程度，可能可以通过优化 CSS 的方式来提速，但不确定效果如何（毕竟现在平均每个元素只有不到 0.5 ms 的绘制时间）。因此我觉得，这可以算是非常极致的优化了。</p><h1>参考资料（部分图源）</h1><ul><li><a href="https://chromium.googlesource.com/chromium/src/+/master/third_party/blink/renderer/core/dom/README.md">DOM - Chromium Source Code README</a></li><li><a href="https://what-if.xkcd.com/13/">Laser Pointer - What If - xkcd</a></li></ul>]]></content>
         <author>
             <name><![CDATA[R·ex / Zeng]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>http://blog.qrzbing.cn/2020/04/18/data-infector/</id>
-        <title><![CDATA[data 段代码注入]]></title>
-        <updated>2020-04-18T13:31:53+08:00</updated>
-        <link href="http://blog.qrzbing.cn/2020/04/18/data-infector/"/>
-        <content type="text/html" src="http://blog.qrzbing.cn/2020/04/18/data-infector/"><![CDATA[<p>我们可以通过向 data 段劫持代码并将程序的运行流劫持到这里实现我们希望的功能（包括执行恶意代码、软件保护等）。这一过程中可能是最复杂也是最重要的部分就是怎样将新增的代码注入到 data 段中了。</p>]]></content>
-        <author>
-            <name><![CDATA[QRZ’s Blog]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>http://blog.qrzbing.cn/2019/12/31/my-2019/</id>
-        <title><![CDATA[我的 2019 总结]]></title>
-        <updated>2020-04-18T13:31:53+08:00</updated>
-        <link href="http://blog.qrzbing.cn/2019/12/31/my-2019/"/>
-        <content type="text/html" src="http://blog.qrzbing.cn/2019/12/31/my-2019/"><![CDATA[<p>学习一下赵神做一下年终总结，虽然自己很菜就是啦。</p>]]></content>
-        <author>
-            <name><![CDATA[QRZ’s Blog]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>http://blog.qrzbing.cn/2019/10/04/angr-newhand-3/</id>
-        <title><![CDATA[angr 入门（三）]]></title>
-        <updated>2020-04-18T13:31:53+08:00</updated>
-        <link href="http://blog.qrzbing.cn/2019/10/04/angr-newhand-3/"/>
-        <content type="text/html" src="http://blog.qrzbing.cn/2019/10/04/angr-newhand-3/"><![CDATA[<p>本篇主要记录了新手使用 angr 对内存和寄存器操作的记录。题目分析顺序参考了这篇文章：<a href="https://xz.aliyun.com/t/4052" target="_blank" rel="noopener">深入浅出angr（三）</a></p>]]></content>
-        <author>
-            <name><![CDATA[QRZ’s Blog]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>http://blog.qrzbing.cn/2019/10/01/from-0-to-Travis/</id>
-        <title><![CDATA[使用 Travis CI 自动部署 Hexo 博客]]></title>
-        <updated>2020-04-18T13:31:53+08:00</updated>
-        <link href="http://blog.qrzbing.cn/2019/10/01/from-0-to-Travis/"/>
-        <content type="text/html" src="http://blog.qrzbing.cn/2019/10/01/from-0-to-Travis/"><![CDATA[<p>最近一直在 Manjaro 和 Windows 之间切换，现在学习都已经在 Manjaro 上进行了，但是博客还在 Windows 上。虽然迁移过来并不难，但还是太麻烦了。另外写博客还要开电脑，的确有点麻烦。作为一个懒人当然是动动手自动推送最好，我就想到了用 <a href="https://travis-ci.org/" target="_blank" rel="noopener">Travis CI</a> 来自动部署博客。</p>]]></content>
-        <author>
-            <name><![CDATA[QRZ’s Blog]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>http://blog.qrzbing.cn/2019/09/30/angr-newhand-2/</id>
-        <title><![CDATA[angr 入门（二）]]></title>
-        <updated>2020-04-18T13:31:53+08:00</updated>
-        <link href="http://blog.qrzbing.cn/2019/09/30/angr-newhand-2/"/>
-        <content type="text/html" src="http://blog.qrzbing.cn/2019/09/30/angr-newhand-2/"><![CDATA[<p>这里更进一步地学习了 angr 的一些知识点。</p>]]></content>
-        <author>
-            <name><![CDATA[QRZ’s Blog]]></name>
         </author>
     </entry>
     
