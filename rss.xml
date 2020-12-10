@@ -3,12 +3,34 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2020-12-09T18:11:41+08:00</updated>
+    <updated>2020-12-10T00:29:36+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
     </author>
     
+    
+    <entry>
+        <id>https://miaotony.xyz/2020/12/10/Life_2020XNUCA_trip/</id>
+        <title><![CDATA[碎碎念 | X-NUCA 2020 全国高校网安联赛总决赛 深圳游记]]></title>
+        <updated>2020-12-09T18:42:03+08:00</updated>
+        <link href="https://miaotony.xyz/2020/12/10/Life_2020XNUCA_trip/"/>
+        <content type="text/html" src="https://miaotony.xyz/2020/12/10/Life_2020XNUCA_trip/"><![CDATA[这几天去深圳打了个 X-NUCA 全国网安联赛，趁着还有兴致，就来大概总结一下吧，喵~]]></content>
+        <author>
+            <name><![CDATA[MiaoTony]]></name>
+        </author>
+    </entry>
+    
+    <entry>
+        <id>https://miaotony.xyz/2020/11/08/CTF_2020Hackergame/</id>
+        <title><![CDATA[CTF | 2020 USTC Hackergame WriteUp]]></title>
+        <updated>2020-12-09T18:31:20+08:00</updated>
+        <link href="https://miaotony.xyz/2020/11/08/CTF_2020Hackergame/"/>
+        <content type="text/html" src="https://miaotony.xyz/2020/11/08/CTF_2020Hackergame/"><![CDATA[一年一度的Hackergame又来了，题目很有梯度，很有脑洞，感觉不错，学到了许多，下次还来。]]></content>
+        <author>
+            <name><![CDATA[MiaoTony]]></name>
+        </author>
+    </entry>
     
     <entry>
         <id>https://www.suruifu.com/posts/528</id>
@@ -286,33 +308,11 @@
     </entry>
     
     <entry>
-        <id>https://miaotony.xyz/2020/11/08/CTF_2020Hackergame/</id>
-        <title><![CDATA[CTF | 2020 USTC Hackergame WriteUp]]></title>
-        <updated>2020-11-08T17:25:42+08:00</updated>
-        <link href="https://miaotony.xyz/2020/11/08/CTF_2020Hackergame/"/>
-        <content type="text/html" src="https://miaotony.xyz/2020/11/08/CTF_2020Hackergame/"><![CDATA[一年一度的Hackergame又来了，题目很有梯度，很有脑洞，感觉不错，学到了许多，下次还来。]]></content>
-        <author>
-            <name><![CDATA[MiaoTony]]></name>
-        </author>
-    </entry>
-    
-    <entry>
         <id>https://miaotony.xyz/2020/11/05/CTF_2020_0xGame/</id>
         <title><![CDATA[CTF | 2020 0xGame Web&Misc 部分WriteUp]]></title>
         <updated>2020-11-05T16:45:13+08:00</updated>
         <link href="https://miaotony.xyz/2020/11/05/CTF_2020_0xGame/"/>
         <content type="text/html" src="https://miaotony.xyz/2020/11/05/CTF_2020_0xGame/"><![CDATA[南邮的师傅们整了个 0xGame，比赛持续了一个月，大概看了看做了做，题目还是有点意思的。]]></content>
-        <author>
-            <name><![CDATA[MiaoTony]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://miaotony.xyz/2020/10/26/CTF_2020bilibiliSec1024/</id>
-        <title><![CDATA[CTF | 2020 bilibili Sec1024 WriteUp]]></title>
-        <updated>2020-10-31T08:06:00+08:00</updated>
-        <link href="https://miaotony.xyz/2020/10/26/CTF_2020bilibiliSec1024/"/>
-        <content type="text/html" src="https://miaotony.xyz/2020/10/26/CTF_2020bilibiliSec1024/"><![CDATA[小破站整了个Sec1024，看了看感觉题目更像是脑筋急转弯，略偏娱乐化这样吧。随意写个WriteUp好了。]]></content>
         <author>
             <name><![CDATA[MiaoTony]]></name>
         </author>
