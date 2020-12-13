@@ -3,12 +3,77 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2020-12-13T12:15:15+08:00</updated>
+    <updated>2020-12-13T18:12:41+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
     </author>
     
+    
+    <entry>
+        <id>https://blog.triplez.cn/install-lua-and-luarocks-in-macos/</id>
+        <title><![CDATA[macOS 上安装 Lua 及 Luarocks]]></title>
+        <updated>2020-12-13T15:38:20+08:00</updated>
+        <link href="https://blog.triplez.cn/install-lua-and-luarocks-in-macos/"/>
+        <content type="text/html" src="https://blog.triplez.cn/install-lua-and-luarocks-in-macos/"><![CDATA[<p>[TOC]</p>
+<h2><span class="ez-toc-section" id="Homebrew">Homebrew</span></h2>
+<p>Lua、LuaJIT 和 Luarocks 都可以直接通过 <code>brew</code> 包管理直接安装，而且可以处理不同版本的 Luarocks，使用的仓库为 <a href="https://github.com/mesca/homebrew-luarocks">mesca/homebrew-luarocks</a> 。</p>
+<pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash">$ brew tap mesca/luarocks
+</code></pre>
+<blockquote><p>
+  Lua 5.1, 5.3 都需要在 Homebrew 中添加 <code>mesca/luarocks</code> 仓库。
+</p></blockquote>
+<h3><span class="ez-toc-section" id="Lua_51">Lua 5.1</span></h3>
+<pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash"># Lua 5.1
+$ brew install lua51
+$ brew install luarocks51
+</code></pre>
+<p>使用方式：</p>
+<pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash"># 进入 Lua 5.1 REPL
+$ lua5.1
+# 使用 Lua 5.1 的 Luarocks
+$ luarocks-5.1 --version
+</code></pre>
+<h3><span class="ez-toc-section" id="LuaJIT">LuaJIT</span></h3>
+<pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash"># LuaJIT
+$ brew install luajit
+$ brew install luarocks51 --with-luajit
+</code></pre>
+<p>使用方式：</p>
+<pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash"># 进入 LuaJIT REPL
+$ luajit
+# LuaJIT 与 Lua 5.1 共用 Luarocks
+$ luarocks-5.1 --version
+</code></pre>
+<h3><span class="ez-toc-section" id="Lua_53">Lua 5.3</span></h3>
+<pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash"># Lua 5.3
+$ brew install lua53
+$ brew install luarocks53
+</code></pre>
+<p>使用方式：</p>
+<pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash"># 进入 Lua 5.3 REPL
+$ lua5.3
+# 使用 Lua 5.3 的 Luarocks
+$ luarocks-5.3 --version
+</code></pre>
+<h3><span class="ez-toc-section" id="Lua_54_Current">Lua 5.4 (Current)</span></h3>
+<pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash"># Current: 5.4
+$ brew install lua
+$ brew install luarocks
+</code></pre>
+<p>使用方式：</p>
+<pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash"># 进入 Lua 5.4 REPL
+$ lua
+# 使用 Lua 5.4 的 Luarocks
+$ luarocks --version
+</code></pre>
+<h2><span class="ez-toc-section" id="Build_from_Source">Build from Source</span></h2>
+<p>请参照 <a href="https://github.com/luarocks/luarocks/wiki/Installation-instructions-for-Unix">Luarocks 官方安装指南</a> 。或者 <a href="https://openresty.org/en/using-luarocks.html">OpenResty 文档中关于 Luarocks 的内容</a> 。</p>
+<p>The post <a rel="nofollow" href="https://blog.triplez.cn/install-lua-and-luarocks-in-macos/">macOS 上安装 Lua 及 Luarocks</a> appeared first on <a rel="nofollow" href="https://blog.triplez.cn">Blog</a>.</p>]]></content>
+        <author>
+            <name><![CDATA[TripleZ’s Blog]]></name>
+        </author>
+    </entry>
     
     <entry>
         <id>https://miaotony.xyz/2020/12/13/Server_Terminal_gitbash_zsh/</id>
@@ -2008,60 +2073,6 @@ CFRelease(urlStr);
 <p><a rel="nofollow" href="https://www.noisyfox.io/moe-native-types.html">Working with native types: Advanced</a>，首发于<a rel="nofollow" href="https://www.noisyfox.io">狐狸的小小窝</a>。</p>]]></content>
         <author>
             <name><![CDATA[狐狸的小小窝]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://blog.triplez.cn/git-initialization/</id>
-        <title><![CDATA[Git initialization]]></title>
-        <updated>2019-09-01T10:37:13+08:00</updated>
-        <link href="https://blog.triplez.cn/git-initialization/"/>
-        <content type="text/html" src="https://blog.triplez.cn/git-initialization/"><![CDATA[<ul>
-<li>Change <code>Git</code> default settings;</li>
-<li>Use <code>GPG</code> key to sign the <code>Git</code> commits.</li>
-</ul>
-<h2>Step by step</h2>
-<pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash">$ git config --global core.editor "vim"
-
-
-# config your identity
-git config --global user.email "YOUR_EMAIL"
-git config --global user.name "YOUR_NAME"
-
-# enable gpg signed commit
-git config --global commit.gpgsign true
-
-# generate gpg key
-## git &gt;= 2.1.17
-gpg --full-generate-key
-# or gpg --gen-key
-## git &lt; 2.1.17
-gpg --default-new-key-algo rsa4096 --gen-key
-
-# check your key id
-$ gpg --list-secret-keys --keyid-format LONG
-gpg: checking the trustdb
-gpg: marginals needed: 3  completes needed: 1  trust model: pgp
-gpg: depth: 0  valid:   1  signed:   0  trust: 0-, 0q, 0n, 0m, 0f, 1u
-/home/triplez/.gnupg/pubring.kbx
---------------------------------
-sec   rsa4096/96B4168C3D454E11 2018-11-28 [SC]
-      6B0B48B063F8F592CE9006DE96B4168C3D454E11
-uid                 [ultimate] Zhenzhen Zhao (my gpg) &lt;me@triplez.cn&gt;
-ssb   rsa4096/435B8EB04CBF8E8D 2018-11-28 [E]
-
-gpg --armor --export 96B4168C3D454E11
-# copy your GPG key, beginning with -----BEGIN PGP PUBLIC KEY BLOCK----- and ending with -----END PGP PUBLIC KEY BLOCK-----, then add it to the GitHub
-
-# set user to sign with this gpg key
-git config --global user.signingkey 96B4168C3D454E11
-</code></pre>
-<h2>References</h2>
-<p><a href="https://help.github.com/articles/generating-a-new-gpg-key/">Generating a new GPG key</a><br />
-<a href="https://stackoverflow.com/questions/52808365/git-error-gpg-failed-to-sign-the-data-on-linux">Git error: gpg failed to sign the data on Linux</a></p>
-<p>The post <a rel="nofollow" href="https://blog.triplez.cn/git-initialization/">Git initialization</a> appeared first on <a rel="nofollow" href="https://blog.triplez.cn">Blog</a>.</p>]]></content>
-        <author>
-            <name><![CDATA[TripleZ’s Blog]]></name>
         </author>
     </entry>
     
