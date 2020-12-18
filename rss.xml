@@ -3,12 +3,137 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2020-12-18T12:16:57+08:00</updated>
+    <updated>2020-12-18T18:19:34+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
     </author>
     
+    
+    <entry>
+        <id>https://blog.triplez.cn/publish-your-first-luarocks-package/</id>
+        <title><![CDATA[发布你第一个 Luarocks 包]]></title>
+        <updated>2020-12-18T15:41:57+08:00</updated>
+        <link href="https://blog.triplez.cn/publish-your-first-luarocks-package/"/>
+        <content type="text/html" src="https://blog.triplez.cn/publish-your-first-luarocks-package/"><![CDATA[<h2><span class="ez-toc-section" id="_rockspec">写一个 rockspec</span></h2>
+<p>首先写好你准备发布的包 <del>当然是自己写好了才要发布啦</del> ，然后我们在项目根目录下写一个 rockspec 文件（用来描述 LuaRocks 包的元信息文件）。</p>
+<pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash">luarocks write_rockspec &lt;package_name&gt; &lt;package_version&gt; &lt;package_location&gt;
+</code></pre>
+<p>比如，我希望发布的是 <code>busted_resty</code> 的 <code>0.5.0</code> 版本，那么我需要我的项目根目录上输入以下命令来创建我的 rockspec 文件。</p>
+<pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash">$ luarocks write_rockspec busted_resty 0.5.0 .
+</code></pre>
+<p>然后，你会得到一个这样的 rockspec 文件：</p>
+<pre class="line-numbers prism-highlight" data-start="1"><code class="language-lua">package = "package_name"
+version = "1.0-1"
+source = {
+    url = "*** please add URL for source tarball, zip or repository here ***"
+}
+description = {
+    homepage = "*** please enter a project homepage ***",
+    license = "*** please specify a license ***"
+}
+dependencies = {
+}
+build = {
+    type = "builtin",
+    modules = {}
+}
+</code></pre>
+<p>这里我们简单解释下其中的含义：</p>
+<ul>
+<li><code>package</code> ：包名称。</li>
+<li><code>version</code> ：包版本，必须为 <code>&lt;数字&gt;.&lt;数字&gt;[.&lt;数字&gt;]-&lt;数字&gt;</code> 。</li>
+<li><code>source</code> ：包的源代码位置，如 Git 地址等。</li>
+<li><code>description</code> ：包的基本描述，以及版权协议等信息。</li>
+<li><code>dependencies</code> ：与其他库的依赖关系。</li>
+<li><code>build</code> ：构建具体信息，比如安装的库名。</li>
+</ul>
+<p>更多 rockspec 的<a href="https://github.com/luarocks/luarocks/wiki/Rockspec-format">具体细节</a>可以在 <a href="https://github.com/luarocks/luarocks/wiki">LuaRocks 的 Wiki</a> 中找到。</p>
+<p>对于 <code>busted_resty</code> 的 <code>0.5.0</code> 版本（我已经事先在 Git 上打好了 <code>v0.5.0</code> 的 tag），它的 rockspec 是这样的：</p>
+<pre class="line-numbers prism-highlight" data-start="1"><code class="language-lua">package = "busted_resty"
+version = "0.5.0-1"
+source = {
+   url = "git://github.com/Triple-Z/busted_resty",
+   tag = "v0.5.0"
+}
+description = {
+   summary = "An extra mocking layer for OpenResty in busted testing environment.",
+   detailed = [[
+      This module mocks the following OpenResty APIs:
+
+      - ngx.status
+      - ngx.exit
+      - ngx.exec
+      - ngx.redirect
+      - ngx.send_headers
+      - ngx.headers_sent
+      - ngx.print
+      - ngx.say
+      - ngx.flush
+      - ngx.eof
+      - ngx.is_subrequest
+      - ngx.on_abort
+      - ngx.arg.*
+      - ngx.var.*
+      - ngx.header.*
+      - ngx.location.*
+      - ngx.req.*
+      - ngx.resp.*
+   ]],
+   homepage = "https://github.com/Triple-Z/busted_resty",
+   license = "MIT"
+}
+dependencies = {
+   'lua &gt;= 5.1',
+   'luassert &gt;= 1.7.8',
+}
+build = {
+   type = "builtin",
+   modules = {
+      busted_resty = "src/busted_resty.lua"
+   }
+}
+</code></pre>
+<p>其中，<code>modules</code> 代表着文件的安装方式及位置。如在 <code>busted_resty</code> 中，安装方式为 <code>builtin</code> ，因此 LuaRocks 只是将这些指定的文件复制粘贴到某个指定的位置。比如，库中的 <code>src/busted_resty.lua</code> 就会被复制到 LuaRocks 中 Lua 库的根目录。</p>
+<h2><span class="ez-toc-section" id="_rockspec-2">检查 rockspec 语法</span></h2>
+<p>写好了 rockspec 后，我们可以来检查下 rockspec 的语法是否正确。当然，使用的是 <code>luarocks lint</code> 命令。</p>
+<pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash">$ luarocks lint busted_resty-0.5.0-1.rockspec
+</code></pre>
+<p>如果按下 <kbd>Enter</kbd> 后什么都没发生，恭喜你，没有消息就是好消息（毕竟是高深莫测的 UNIX 哲学 ）。</p>
+<p>如果有信息输出，那就按照错误提示改吧 。</p>
+<h2><span class="ez-toc-section" id="MAKE">MAKE!</span></h2>
+<p>当我们编写好了 rockspec 后，就可以尝试构建属于我们自己的第一个 LuaRocks 包了！怎么构建呢，当然是用 LuaRocks 中的 <code>make</code> 命令啦！</p>
+<pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash">$ luarocks make
+</code></pre>
+<p>不出意外的话，你第一个 LuaRocks 包应该被 LuaRocks 安装到了指定的位置，快打开你最喜欢的 Lua 解释器，试一下吧！</p>
+<pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash">$ luajit
+&gt; require "busted_resty"
+</code></pre>
+<p>如果什么也没有发生，那可就太好了！说明我们的 LuaRocks 包已经被安装到了本地环境上了！</p>
+<h2><span class="ez-toc-section" id="i">打包并上传</span></h2>
+<p>最后，那当然就是最激动人心的环节：将我们的包发布到 LuaRocks 上。</p>
+<p>你可以先打包，验证包是否正确：</p>
+<pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash">$ luarocks pack &lt;rockspec_file&gt;
+</code></pre>
+<p>在我们的例子中，即为：</p>
+<pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash">$ luarocks pack busted_resty-0.5.0-1.rockspec
+</code></pre>
+<p>执行完打包命令后，你会在目录下看到一个后缀为 <code>.src.rock</code> 的文件。没错，那就是我们的 LuaRocks 包。</p>
+<p>接下来你有两种方式来将我们刚打出来的 LuaRocks 包上传至 LuaRocks 中心仓库，让我们分别介绍它们吧。</p>
+<h3><span class="ez-toc-section" id="_rock">直接在网站上上传 rock</span></h3>
+<p>你可以直接在 <a href="https://luarocks.org/upload">LuaRocks 网站</a>上上传你的 rockspec 描述文件以及 src.rock 包。点击“提交”即可在 LuaRocks 上发布你的 rock 包～</p>
+<h3><span class="ez-toc-section" id="i-2">用命令行上传</span></h3>
+<p>使用 <code>luarocks upload</code> 即可帮你打包并直接上传至 LuaRocks 中心仓库：</p>
+<pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash">$ luarocks upload [--api-key=&lt;api-key&gt;] &lt;rockspec_file&gt;
+</code></pre>
+<p>别忘了 API Key 哦，在<a href="https://luarocks.org/settings/api-keys">这里</a>可以获取你自己的 API Key。</p>
+<p><img src="https://triplez-public-1251926021.cos.ap-shanghai.myqcloud.com/picgoimage-20201218233542394.png" alt="image-20201218233542394" /></p>
+<p>恭喜你，成功上传了自己的第一个 LuaRocks 包！</p>
+<p>The post <a rel="nofollow" href="https://blog.triplez.cn/publish-your-first-luarocks-package/">发布你第一个 Luarocks 包</a> appeared first on <a rel="nofollow" href="https://blog.triplez.cn">Blog</a>.</p>]]></content>
+        <author>
+            <name><![CDATA[TripleZ’s Blog]]></name>
+        </author>
+    </entry>
     
     <entry>
         <id>https://blog.triplez.cn/install-lua-and-luarocks-in-macos/</id>
@@ -1132,113 +1257,6 @@ switcher.updateGraph(nextState, false);</code></pre><p>大功告成！之后产�
 </ol start="1.">
 <p>这样这个过程就结束了，恭喜你成功救回了你的 U 盘 :smile::tada:</p>
 <p>The post <a rel="nofollow" href="https://blog.triplez.cn/u-disk-4mb-recovery/">U盘写入系统后变为4MB的还原方法</a> appeared first on <a rel="nofollow" href="https://blog.triplez.cn">Blog</a>.</p>]]></content>
-        <author>
-            <name><![CDATA[TripleZ’s Blog]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://blog.triplez.cn/using-curl-analyzing-time-cost-at-request-diff-phases/</id>
-        <title><![CDATA[使用 curl 来分析请求各个阶段的耗时]]></title>
-        <updated>2020-05-11T15:35:41+08:00</updated>
-        <link href="https://blog.triplez.cn/using-curl-analyzing-time-cost-at-request-diff-phases/"/>
-        <content type="text/html" src="https://blog.triplez.cn/using-curl-analyzing-time-cost-at-request-diff-phases/"><![CDATA[<h2>How</h2>
-<p>这个功能用到的是 <code>curl</code> 的 <code>-w</code> 选项，让我们来先看看 <code>curl</code> 的 man page：</p>
-<pre class="line-numbers prism-highlight" data-start="1"><code class="language-null">-w, --write-out &lt;format&gt;
-       Make curl display information on stdout after a completed transfer. The format is  a  string  that  may  contain lain  text  mixed  with  any number of variables. The format can be specified as a literal "string", or you can have curl read the format from a file with "@filename" and to tell curl to read the format from stdin you  write "@-".
-
-       The variables present in the output format will be substituted by the value or text that curl thinks fit, as de‐ scribed below. All variables are specified as %{variable_name} and to output a normal % you just write  them  as %%. You can output a newline by using \n, a carriage return with \r and a tab space with \t.
-
-       The output will be written to standard output, but this can be switched to standard error by using %{stderr}.使用 curl 命令分析请求的耗时情况
-</code></pre>
-<p>下面的内容就是各种内置变量了，我们可以通过这些变量的值来一窥请求的真实信息。</p>
-<p>以下有一个“广为流传”的格式：</p>
-<pre class="line-numbers prism-highlight" data-start="1"><code class="language-null">    time_namelookup:  %{time_namelookup}\n
-       time_connect:  %{time_connect}\n
-    time_appconnect:  %{time_appconnect}\n
-      time_redirect:  %{time_redirect}\n
-   time_pretransfer:  %{time_pretransfer}\n
- time_starttransfer:  %{time_starttransfer}\n
-                    ----------\n
-         time_total:  %{time_total}\n
-</code></pre>
-<p>将如上内容写至 <code>curl-format</code> 文件中，然后在当前目录运行：</p>
-<pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash">$ curl -w @curl-format -o /dev/null -s -L http://triplez.cn
-</code></pre>
-<blockquote>
-<ul>
-<li><code>-w @curl-format</code> ：使用 <code>curl-format</code> 文件模板进行输出。</p>
-</li>
-<li>
-<p><code>-o /dev/null</code> ：忽略输出内容。</p>
-</li>
-<li>
-<p><code>-s</code> ：不输出多余信息。</p>
-</li>
-<li><code>-L</code> ：支持跳转（如 HTTP 跳转至 HTTPS）。</li>
-</ul>
-</blockquote>
-<p>就会看到像这样的输出：</p>
-<pre class="line-numbers prism-highlight" data-start="1"><code class="language-null">    time_namelookup:  0.001931
-       time_connect:  0.032337
-    time_appconnect:  0.120072
-      time_redirect:  0.000000
-   time_pretransfer:  0.120124
- time_starttransfer:  0.151386
-                    ----------
-         time_total:  0.152068
-</code></pre>
-<p>这些变量的意义是：</p>
-<ul>
-<li><code>time_namelookup</code>：DNS 域名解析的耗时。</li>
-<li><code>time_connect</code>：TCP 连接建立耗时。</li>
-<li><code>time_appconnect</code>：SSL/SSH 等上层协议建立连接的耗时，比如 connect/handshake 耗时（从此处也可看出，最后还是请求了 <code>https://triplez.cn</code> ，否则 HTTP 不会产生 <code>time_appconnect</code> 的耗时。</li>
-<li><code>time_redirect</code>：从开始到最后一个请求事务的耗时。</li>
-<li><code>time_pretransfer</code>：从请求开始到响应开始传输的耗时。</li>
-<li><code>time_starttransfer</code>：从请求开始到第一个字节将要传输的耗时。</li>
-<li><code>time_total</code>：这次请求的总耗时。</li>
-</ul>
-<h2>One more thing...</h2>
-<p><a href="https://github.com/reorx">reorx</a> 写了个 Python 的小工具 <a href="https://github.com/reorx/httpstat">httpstat</a>，让命令行分析请求耗时更加直观。通过以下命令即可安装：</p>
-<pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash">$ pip install httpstat
-</code></pre>
-<p>让我们来试一下：</p>
-<pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash">$ httpstat -L http://triplez.cn
-Connected to 123.206.208.167:443 from 192.168.0.10:34372
-
-HTTP/1.1 302 Found
-Date: Mon, 11 May 2020 15:24:00 GMT
-Server: Apache
-Location: https://triplez.cn/
-Content-Length: 203
-Content-Type: text/html; charset=iso-8859-1
-
-HTTP/1.1 200 OK
-Date: Mon, 11 May 2020 15:24:00 GMT
-Server: Apache
-Last-Modified: Sun, 08 Mar 2020 07:48:35 GMT
-ETag: "7258f-f13-5a0531d213ac0"
-Accept-Ranges: bytes
-Content-Length: 3859
-Content-Type: text/html; charset=UTF-8
-
-Body stored in: /tmp/tmpkeq3ospo
-
-  DNS Lookup   TCP Connection   Server Processing   Content Transfer
-[    32ms    |      66ms      |       73ms        |        1ms       ]
-             |                |                   |                  |
-    namelookup:32ms           |                   |                  |
-                        connect:98ms              |                  |
-                                      starttransfer:266ms            |
-                                                                 total:267ms  
-</code></pre>
-<p>从输出上我们就可以很直观地看出来，从 <code>http://triplez.cn</code> 到 <code>https://triplez.cn</code> 中完成了一次 302 跳转，在输出末尾的示意图上我们也可以清楚地看到各阶段的耗时。</p>
-<p>Happy hacking 😛</p>
-<h2>References</h2>
-<ul>
-<li><a href="https://cizixs.com/2017/04/11/use-curl-to-analyze-request/">使用 curl 命令分析请求的耗时情况</a></li>
-</ul>
-<p>The post <a rel="nofollow" href="https://blog.triplez.cn/using-curl-analyzing-time-cost-at-request-diff-phases/">使用 curl 来分析请求各个阶段的耗时</a> appeared first on <a rel="nofollow" href="https://blog.triplez.cn">Blog</a>.</p>]]></content>
         <author>
             <name><![CDATA[TripleZ’s Blog]]></name>
         </author>
@@ -3438,7 +3456,7 @@ class Test
 <a href="https://www.noisyfox.cn/wp-content/uploads/2016/06/QQ截图20160619145913.png"><img loading="lazy" class="aligncenter size-full wp-image-403" src="https://www.noisyfox.cn/wp-content/uploads/2016/06/QQ截图20160619145913.png" alt="Unmanaged Exports 编译正常" width="662" height="65" /></a><br />
 <div class="sdm_download_item "><div class="sdm_download_item_top"><div class="sdm_download_thumbnail"></div><div class="sdm_download_title">DllExport-Fixed-1.2.7.7z</div></div><div style="clear:both;"></div><div class="sdm_download_description"><p>修正了非英文系统编译错误的Unmanaged Exports 1.2.7</p>
 <h1></h1>
-</div><div class="sdm_download_link"><span class="sdm_download_button"><a href="https://www.noisyfox.io/?smd_process_download=1&download_id=404" class="sdm_download green" title="DllExport-Fixed-1.2.7.7z" target="_blank">立即下载！</a></span><span class="sdm_download_item_count"><span class="sdm_item_count_number">1062</span><span class="sdm_item_count_string"> 下载</span></span></div></div><div class="sdm_clear_float"></div></p>
+</div><div class="sdm_download_link"><span class="sdm_download_button"><a href="https://www.noisyfox.io/?smd_process_download=1&download_id=404" class="sdm_download green" title="DllExport-Fixed-1.2.7.7z" target="_blank">立即下载！</a></span><span class="sdm_download_item_count"><span class="sdm_item_count_number">1063</span><span class="sdm_item_count_string"> 下载</span></span></div></div><div class="sdm_clear_float"></div></p>
 <p><a rel="nofollow" href="https://www.noisyfox.io/unmanaged-exports.html">Unmanaged Exports 修正版 .NET导出非托管函数</a>，首发于<a rel="nofollow" href="https://www.noisyfox.io">狐狸的小小窝</a>。</p>]]></content>
         <author>
             <name><![CDATA[狐狸的小小窝]]></name>
