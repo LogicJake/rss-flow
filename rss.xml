@@ -3,12 +3,36 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2020-12-20T06:14:10+08:00</updated>
+    <updated>2020-12-20T12:16:51+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
     </author>
     
+    
+    <entry>
+        <id>https://blog.rexskz.info/blind-debugging-to-solve-zebra-printer-swallowing-paper-issue.html</id>
+        <title><![CDATA[盲调试解决 Zebra 打印机吞纸问题的经历]]></title>
+        <updated>2020-12-20T07:36:00+08:00</updated>
+        <link href="https://blog.rexskz.info/blind-debugging-to-solve-zebra-printer-swallowing-paper-issue.html"/>
+        <content type="text/html" src="https://blog.rexskz.info/blind-debugging-to-solve-zebra-printer-swallowing-paper-issue.html"><![CDATA[<p>本来我以为，前端的工作内容只需要跟浏览器打交道，最多再做一做客户端和后端；万万没想到，如标题所示，我居然需要解决打印机的问题。</p><h1>奇怪的需求</h1><p>我们有一个画面单的平台，关于这个平台，我之前已经写过几篇文章，这里就不多提了。</p><p>一天，面单的产品突然把我拉到了一个群里，因为我们的业务 PM（BPM）接到了一个紧急需求：在我们开始跟某个卖家合作时，他们提出：我们在打印面单的时候，必须支持通过一个叫 Zebra 的打印机来打印，否则就不跟我们合作。由于那是一个大卖家，因此这似乎是一个无法拒绝的需求。虽然我们完全没听说过这种打印机，还是硬着头皮上了。</p><p>经过调查发现，Zebra 打印机与一般的打印机不太一样，它无法通过系统的打印框来打印，甚至不是走的 COM 或 USB 接口，而是监听了一个 TCP 端口来与电脑通讯。发送给打印机的也不是一般的格式，而是一个叫 <a href="https://en.wikipedia.org/wiki/Zebra_Programming_Language">ZPL</a> 的私有格式，看起来像是纯文本（例子来自英文维基）：</p><pre><code class="lang-text">^XA
+^LH30,60
+^FO20,10
+^ADN,90,50
+^FDWikipedia^FS
+^XZ</code></pre><p>第一眼看上去并看不懂。但通过谷歌，我们搜到了 ZPL 的各类教程，以及一个简易的预览工具：<a href="http://staging.advanced-technology-group.com/">Online ZPL Viewer</a>。</p><h1>开始调研</h1><p>在调研之初就遇到了一道选择题：是直接生成 ZPL 格式，还是通过某些中间格式来转换呢？这两种方式似乎都可行：</p><ul><li>直接生成：面单平台生成的面单原始格式是 JSON，这可以很方便的存储和导入导出。我们写了一个转换器，当需要渲染面单时，可以调用转换器将 JSON 转换为 HTML，然后再调用 Headless Chrome 将 HTML 转换为 PDF 返回给第三方。既然有这个转换器，ZPL 又是纯文本，语法还是确定的，稍微学一学 ZPL 再写一个转换器似乎是个最好的办法。</li><li>转换生成：我们团队没人接触过 ZPL，甚至我周围都找不到 Zebra 打印机的影子。如何知道预览工具与实际打印出来的差距有多大？如果有一个很成熟的库可以帮忙转换，无论是我们的支持速度，还是转换效果，都会好很多。</li></ul><p>经过与同事们的讨论，如果直接生成的话，我们有学习成本，也有不可预期的兼容问题，因此决定转换生成。</p><h1>技术方案与实现</h1><p>搜遍了全网，唯一一个可用的库是 <a href="https://github.com/kylemacfarlane/zplgrf">kylemacfarlane/zplgrf</a>，是一个 Python 库。面单平台本来已经基本从 Python 切换为 Golang 了，为了这个库，还是得再起一个 Python 服务。了解了一下这个库，它可以将 PDF 转换为一个叫 GRF 的格式，再将其转换为 ZPL，只需要很简单的代码就可以实现：</p><pre><code class="lang-python">from zplgrf import GRF
+import sys
+
+with open(sys.argv[1], 'rb') as pdf:
+    data = pdf.read()
+    # 203 dpi 就是 8 dpmm，一个比较低的精度
+    pages = GRF.from_pdf(data, 'DEMO', dpi=203)
+for grf in pages:
+    print(grf.to_zpl())</code></pre><p>我随便从测试环境搞了一张面单，导出成了 PDF 文件，它长这样：</p><p><img src="https://static.rexskz.info/blog/article/blind-debugging-to-solve-zebra-printer-swallowing-paper-issue/0.png" alt="原始 PDF" title="原始 PDF"></p><p>转换后的 ZPL，虽然里面看起来一堆 Base64，但预览出来除了糊一点以外，似乎没什么问题：</p><p><img src="https://static.rexskz.info/blog/article/blind-debugging-to-solve-zebra-printer-swallowing-paper-issue/1.png" alt="转换后的 ZPL，使用了 8 dpmm 的精度" title="转换后的 ZPL，使用了 8 dpmm 的精度"></p><p>ZPL 的分辨率有很多选项，但高分辨率意味着转换速度慢。我们跟 BPM 合作，得知了目标用户持有的打印机型号，多次对 UAT 环境的几张真实面单采用 8 dpmm、12 dpmm、24 dpmm 的分辨率做转换并记录转换时间。经过权衡，我们决定还是采用 8 dpmm 的分辨率。</p><p>经过一段时间与卖家中心团队的联调与测试，功能顺利上了 UAT。</p><h1>卷纸问题的修复</h1><p>本来以为万事大吉，结果业务报来了一个问题：对于某一个特定型号的打印机，在打印结束后，打印机会多吐一点点纸，然后把它卷回去。所有卖家的那个型号的打印机都能稳定复现这个问题，但他们打印其它平台的 ZPL 面单就没有问题。这可能会让我们的用户感到不满，因此我们必须解决。</p><p>一个棘手的问题是，我们这边完全没有 Zebra 打印机，现买的话也太慢了。我只好硬着头皮看生成的文件，并且让 BPM 提供了一个其它平台的 ZPL，我要知道究竟是什么东西导致的。</p><p>经过对比，我发现我们生成的 ZPL 文件有一些奇怪的指令。参考了 <a href="https://www.zebra.com/content/dam/zebra/manuals/printers/common/programming/zpl-zbi2-pm-en.pdf">ZPL 指令集文档</a>，发现有个叫 <code>^MM</code> 的指令可以控制打印完成时打印机的行为，如果把它设置为 <code>R</code>，可以阻止带有卷纸控件的打印机的卷纸行为。我搜了一下那个型号的打印机（谷歌的结果排前几名的居然是我们的竞争对手 Lazada 与 Tokopedia），确实有卷纸控件，这应该就是解决方法了。</p><p>在上面的代码中，<code>GRF.from_pdf</code> 函数可以接受一个参数 <code>print_mode</code>，将其修改为 <code>R</code> 之后，卷纸问题解决了，但业务反馈说出现了错位问题……后来我找到了 Zebra 打印机的官方驱动文档，发现打印机的默认行为应当是 <code>T</code>，于是设置 <code>print_mode='T'</code>，问题解决。</p><p>由于我们与业务有一些时差，我们所做的所有尝试，业务都需要第二天才能验证，因此解决的时间稍微长了一些。</p><h1>文字模糊问题的迅速修复</h1><p>终于把需求上线了。但刚上线没多久，大量卖家就反馈文字不清晰，很多文字的部分是缺失的：</p><p><img src="https://static.rexskz.info/blog/article/blind-debugging-to-solve-zebra-printer-swallowing-paper-issue/2.png" alt="文字有一部分缺失" title="文字有一部分缺失"></p><p><a href="https://blog.rexskz.info/barcode-scan-bug-caused-by-hardware-issue.html#toc-link-3">之前的经验</a> 立即告诉我，是纯黑白与分辨率导致的问题：这个字号的文字在 8 dpmm 的分辨率下，一部分“笔画”由于太细，会被直接转换为白色。解决方法也很简单：要么提升分辨率（花费更多时间且需要重新发版），要么加粗一下面单的文字试一试。</p><p>我们先让业务团队帮忙修改面单，将文字加粗。问题居然就解决了，效果还不错：</p><p><img src="https://static.rexskz.info/blog/article/blind-debugging-to-solve-zebra-printer-swallowing-paper-issue/3.png" alt="加粗了文字之后的效果" title="加粗了文字之后的效果"></p><p>随即，业务发来了感谢信，许多卖家感谢我们如此迅速的解决问题。</p><p>但这毕竟只是个临时的解决方法，问题的根本原因还是分辨率太低（打印机只支持纯黑白的问题我们无法解决）。为了避免以后再出现类似的问题，我们需要提供一个高分辨率的选项。经过估算，如果从 8 dpmm 提升到 12 dpmm，由于面积扩大到两倍多，转换时间应当也是两倍多。我们的后端也会与卖家中心的后端进行进一步的测试，以评估这个修改的影响范围。</p><h1>从这个需求中学到的</h1><ol><li>理论上来说，问题都是可以解决的，需要有一定的搜索技巧和探索精神。</li><li>学好英文很重要，我查的全部资料，都是没有中文的。</li><li>在必要的情况下，可能需要深入阅读官方的驱动文档或指令集文档。</li></ol><p>总的来说，也是一次不错的经历，最后问题也解决了。之后再遇到类似的需求，我应该会比这次更加从容。</p>]]></content>
+        <author>
+            <name><![CDATA[R·ex / Zeng]]></name>
+        </author>
+    </entry>
     
     <entry>
         <id>https://blog.triplez.cn/publish-your-first-luarocks-package/</id>
@@ -1259,47 +1283,6 @@ switcher.updateGraph(nextState, false);</code></pre><p>大功告成！之后产�
 <p>The post <a rel="nofollow" href="https://blog.triplez.cn/u-disk-4mb-recovery/">U盘写入系统后变为4MB的还原方法</a> appeared first on <a rel="nofollow" href="https://blog.triplez.cn">Blog</a>.</p>]]></content>
         <author>
             <name><![CDATA[TripleZ’s Blog]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://blog.rexskz.info/awb-tool-ultimate-optimization-for-chrome-headless.html</id>
-        <title><![CDATA[面单工具：对 Chrome Headless 渲染的极致优化]]></title>
-        <updated>2020-05-02T21:05:00+08:00</updated>
-        <link href="https://blog.rexskz.info/awb-tool-ultimate-optimization-for-chrome-headless.html"/>
-        <content type="text/html" src="https://blog.rexskz.info/awb-tool-ultimate-optimization-for-chrome-headless.html"><![CDATA[<h1>背景</h1><p>有些同学对“面单工具”这个项目应该不算陌生，因为之前我已经写过几篇跟它相关的文章了。它的基础功能无非就是画面单：如果你从 Shopee 上买了点东西，那么快递上面贴的面单就是用这个工具画出来的。</p><p>可能是这工具用起来比较方便，随着业务的扩张，一些不是面单的奇奇怪怪的东西也开始切换到面单工具上，例如采购系统的合同（更像是 Word 文件）、仓库的条形码（用了特殊纸张）、拣货单（可以理解成外卖单），这就对面单工具的可扩展性提出了极高的要求。不过这不是本文的重点，之后再专门写文章好了。</p><p><img src="https://static.rexskz.info/blog/article/awb-tool-ultimate-optimization-for-chrome-headless/0.png" alt="用来画拣货单的界面" title="用来画拣货单的界面"></p><p>我之前写过一篇文章，讲的是如何优化编辑器的渲染效率（500 个元素从 1 s 降到 100 ms），这个结果我已经很满意了。但是随着大量的系统开始使用这个工具，它遇到了另外一个性能瓶颈——服务端渲染太慢了……</p><h1>问题解析</h1><p>一张面单，从编辑器的画布上，到生成一个 PDF，中间究竟经历了什么？</p><ol><li>前端将编辑器中的东西转换为模板语言（我们选择了 Django / pongo2）；</li><li>第三方系统通过 API Call 发了一个请求，要求使用某一个模板，并提供了所有必要的数据（订单号、商品详情等）；</li><li>后端对数据做了校验之后，使用模板引擎生成一份面单的 HTML；</li><li>后端使用 Chrome Headless 打开刚生成的 HTML，并将其打印为 PDF；</li><li>后端将 PDF 返回给第三方系统，第三方系统可能会将其展示在屏幕上，或直接调取特殊的打印机来打印。</li></ol><p>可以看出来，虽然实现一个编辑器的难点全在前端，但能使这个工具真正发挥其业务作用的却是后端。当业务量增加的时候，前端考虑的是如何实现可能的新需求，而后端则需要考虑如何应对逐渐增长的 QPS。</p><h1>后端的优化</h1><p>由于后端的同学无法接触到具体的面单内容（或者说，接触到了也无能为力），所以只能做一些通用的优化：</p><ul><li>使用进程池，而不是每次新打开一个 Chrome Headless；</li><li>使用 Debugging Protocol，每次复用之前打开的页面；</li><li>禁止掉插件、沙箱等功能；</li><li>加机器……</li></ul><p>其实这几点在网上都能搜到。可能他们还做了其它的优化，但我了解的暂时只有这些了。这些优化在面单内容不复杂的时候还是非常有用的，直到某个业务提出了一个奇怪的需求……</p><h1>业务的需求</h1><p>有一天，业务提出需要一个神奇的排版规则：</p><ul><li>首先，需要实现一个拣货单：可以理解为外卖的小票，一开始是一个头部区域（公司名、订单号、下单时间、备注等），然后是一个表格（商品、数量、价格），最后是一个尾部区域（付款信息、配送信息）；拣货单是打在纵向 A6 纸上的，并且表格的行数可以任意多，原则上来说，每一页的表格最后都要有一个尾部区域；</li><li>然后，需要实现一组拣货单：若干张拣货单被排列在 A4 纸上，它们之间的排版规则可以理解为 Word 的分栏排版规则。</li></ul><p>这个需求因为某些原因是推不掉的，甚至连排版规则都不能修改（业务强烈要求，说是当地的卖家希望这样，并且我们的某个竞争对手已经有这样的功能了）。</p><p>由于表格数据的不确定性，以及分栏排版的逻辑和“每一页的表格最后都要有一个尾部区域”的需求实在是超出了 Chrome 自身的排版能力，我跟后端同学商量了半天，不得不决定在服务端使用 JavaScript 排版，即我把排版的代码注入到模板中，后端在 Chrome Headless 中打开时就会执行这段排版代码。我说这可能会比其它普通面单多 100 ms 的生成时间，后端同学表示：“要哭了，我到哪儿再给你挤出 100 ms 啊……”</p><p>不过吐槽归吐槽，做还是要做的，于是经过了一周多的开发，我不光写完了排版的代码，还重构了一下编辑器，使其可以方便的扩展其它业务场景。</p><p>然后，业务要求可以在一个组中排列多达 50 张拣货单，并作为一个 PDF 文件返回。我……@%$!&^</p><p><img src="https://static.rexskz.info/blog/article/qiaoqiaohua/keng-die-ne.gif" alt="这不是坑爹吗！" title="这不是坑爹吗！"></p><p>当然，作为一个专业的工程师，业务的需求总是能做的，于是又花了两天时间搞出来了。然而 QA 小姐姐做了一下性能测试：用 50 个面单的数据来请求，结果发现需要至少 100 s。我拿到 HTML 之后在自己的外星人上跑了一下，发现也需要 16 s，这太慢了！</p><h1>前端的优化</h1><h2>最原始的代码</h2><p>拿到了生成的 HTML 文件后，在本地的 Chrome 打开。由于服务器没有 GPU，因此为了跟服务器一致，我禁用了 Chrome 的硬件加速。查看一下 Performance 面板，是这样的：</p><p><img src="https://static.rexskz.info/blog/article/awb-tool-ultimate-optimization-for-chrome-headless/1.png" alt="惨不忍睹的性能" title="惨不忍睹的性能"></p><p>妈耶，要被吓死了……也不禁感慨道，现代浏览器没有 GPU 加速是万万不能的。</p><p>QA 给的文件中，每个面单都有 30 个“商品”，每个“商品”都有四列，也就是说，我要对 <code>50*30*4=6000</code> 个元素做现场排版。</p><h2>朴素的优化</h2><p>仔细观察了一下，如果说 40 s 之后是现场排版的情况，那么前 40 s 难道只是在渲染最初的 HTML 结构？为什么 Recalculate Style 的时间越来越长？</p><p>仔细想一下也不奇怪，因为此时尚未开始执行我的排版代码，因此所有的区域和表格都会堆积在 <code>(0, 0)</code> 的位置。而 Chrome 的渲染是一边 Parse HTML 一边渲染，每渲染一次就会 Recalculate Style 一次。这意味着：每次渲染一个新的区域或表格，都需要利用之前所有区域和表格的数据（因为要覆盖在它们上面），所以每次需要计算的元素就越来越多。学过算法的同学可能会意识到，这个方法的时间复杂度高达 <code>O(N^2)</code>！</p><p>能不能只 Recalculate Style 一次呢？可以的，只需要在一开始先将最外层元素设置为 <code>display: none</code>，这样可以避免每加载一块就渲染；然后在全部加载完之后一下子全部渲染出来，思路大概是这样的：</p><pre><code class="lang-css">/* 不要用 *，只要隐藏最外层元素就足够了 */
-.template {
-    display: none;
-}</code></pre><pre><code class="lang-javascript">/* 在 body 最后的 script 中加上这段 */
-const newStyle = document.createElement('style');
-newStyle.innerHTML = '.template{display:initial !important}';
-document.body.appendChild(newStyle);</code></pre><p>以及我突然意识到，之前的代码在获取元素的时候使用了 <code>document.querySelectorAll('tr')</code>，而这个函数其实是相当慢的。如果能改用 <code>firstElementChild</code> 和 <code>nextElementSibling</code> 则会快很多，因为在 Chrome 中，Node Tree 的存储结构比较神奇，每个节点只有五个指针：</p><p><img src="https://static.rexskz.info/blog/article/awb-tool-ultimate-optimization-for-chrome-headless/next-sibling.svg" alt="Node Tree 的五个指针" title="Node Tree 的五个指针"></p><p>根据 Chrome 源码的 README 所述：</p><blockquote><p>That means:</p><ul><li>Siblings are stored as a linked list. It takes O(N) to access a parent's n-th child.</li><li>Parent can't tell how many children it has in O(1).</li></ul></blockquote><p>因此别说是 <code>node.querySelectorAll</code> 了，即使是 <code>node.children</code> 也要先花费 <code>O(N)</code> 的时间生成一个 JavaScript 的类数组，然后很可能通过 <code>Array.from</code> 或者 <code>...</code> 运算符转换成真正的数组，最后从中找到需要的元素，这样会消耗很多时间。既然我能知道表格元素的位置，那么接下来的元素都通过 <code>firstElementChild</code> 和 <code>nextElementSibling</code> 来找，会更快一点。</p><p>做完了这些修改之后，Performance 变成了这样：</p><p><img src="https://static.rexskz.info/blog/article/awb-tool-ultimate-optimization-for-chrome-headless/2.png" alt="经过优化之后的性能" title="经过优化之后的性能"></p><p>可以发现，一开始 40 s 的渲染时间减少到了 3 s，并且后面的排版代码运行速度也快了 8 s 左右。</p><p><img src="https://static.rexskz.info/blog/article/awb-tool-ultimate-optimization-for-chrome-headless/laser_pointer_more_power.png" alt="能不能再给力一点呢？" title="能不能再给力一点呢？"></p><h2>极致的优化</h2><p>之前我本来已经想不到继续优化的办法了，因为我看了一下 Sources 中每行代码对应的时间，发现大头在这里：</p><p><img src="https://static.rexskz.info/blog/article/awb-tool-ultimate-optimization-for-chrome-headless/3.png" alt="此时消耗最多时间的代码" title="此时消耗最多时间的代码"></p><p>每次获取 <code>tr.offsetHeight</code> 时都需要进行一遍 Layout 操作，而且还是 Forced reflow，但是我又必须要获取表格每一行的高度，因为表格中的数据可能会有换行，每行的高度是不确定的。</p><p>但是在写这篇文章之前，我突然又意识到：只要能保证给每个表格设置好 <code>&lt;col&gt;</code> 的宽度，那么这一行不管被排到哪个表格块中，高度都是不变的。也就是说，所有元素的高度，在渲染之后排版之前，就已经完全确定下来了！那么我完全可以在排版的一开始，将所有必要元素的 <code>offsetHeight</code> 保存在一个 <code>Map</code> 中，之后直接调用就可以了。</p><p>在优化前，获取高度的时机是在排版时，这意味着每次修改了 DOM 结构后，再在下一轮循环中获取另一个元素的高度，因此每次获取都会有 Layout；优化后，获取高度的时机是在排版之前，而排版时只会获取元素高度，不会修改样式和 DOM 结构，因此只会 Layout 一次。</p><p>思路大概是这样：</p><pre><code class="lang-javascript">const trHeights = new Map();
-const headAreaHeights = new Map();
-const tailAreaHeights = new Map();
-const theadHeights = new Map();
-const tbodyHeights = new Map();
-Array.from(document.querySelectorAll('tbody &gt; tr')).forEach(el =&gt; {
-    trHeights.set(el, el.offsetHeight);
-});
-Array.from(document.querySelectorAll('.__area_head')).forEach(el =&gt; {
-    headAreaHeights.set(el, el.offsetHeight);
-});
-Array.from(document.querySelectorAll('.__area_tail')).forEach(el =&gt; {
-    tailAreaHeights.set(el, el.offsetHeight);
-});
-Array.from(document.querySelectorAll('thead')).forEach(el =&gt; {
-    theadHeights.set(el, el.offsetHeight);
-});
-Array.from(document.querySelectorAll('tbody')).forEach(el =&gt; {
-    tbodyHeights.set(el, el.offsetHeight);
-});</code></pre><p>这段代码是一次性执行的，因此对效率的影响可以忽略。接下来把后面的 <code>offsetHeight</code> 都替换成这样：</p><pre><code class="lang-javascript">trs.forEach((tr, index) =&gt; {
-    // const rowHeight = tr.offsetHeight;
-    const rowHeight = trHeights.get(tr);
-
-    /* other codes */
-});</code></pre><p>看一下 Performance，是这样的：</p><p><img src="https://static.rexskz.info/blog/article/awb-tool-ultimate-optimization-for-chrome-headless/4.png" alt="优化了 Layout 后的性能" title="优化了 Layout 后的性能"></p><p>这效果也太好了吧！分析一下这个图的含义：</p><ul><li>0 ms ~ 400 ms 是在加载页面，这个理论上是没法再优化的；</li><li>400 ms ~ 2300 ms 是一开始将所有元素显示出来，于是 Chrome 做了一遍 Layout；</li><li>2300 ms ~ 2500 ms 是我的排版代码，此时由于没有任何获取样式的操作，浏览器会将所有的样式计算集中到下一个事件循环中统一处理；</li><li>2500 ms ~ 4900 ms 是统一处理的样式计算，这需要一次 Layout。</li></ul><p>理论上讲，Layout 的次数已经不可能再少了，两次 Layout 的时间取决于面单的复杂程度，可能可以通过优化 CSS 的方式来提速，但不确定效果如何（毕竟现在平均每个元素只有不到 0.5 ms 的绘制时间）。因此我觉得，这可以算是非常极致的优化了。</p><h1>参考资料（部分图源）</h1><ul><li><a href="https://chromium.googlesource.com/chromium/src/+/master/third_party/blink/renderer/core/dom/README.md">DOM - Chromium Source Code README</a></li><li><a href="https://what-if.xkcd.com/13/">Laser Pointer - What If - xkcd</a></li></ul>]]></content>
-        <author>
-            <name><![CDATA[R·ex / Zeng]]></name>
         </author>
     </entry>
     
