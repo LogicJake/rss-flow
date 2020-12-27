@@ -3,12 +3,23 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2020-12-27T06:15:12+08:00</updated>
+    <updated>2020-12-27T12:17:41+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
     </author>
     
+    
+    <entry>
+        <id>https://blog.stdioa.com/2020/12/protobuf-upgrade/</id>
+        <title><![CDATA[protobuf 升级后带来的一些坑]]></title>
+        <updated>2020-12-27T06:53:32+08:00</updated>
+        <link href="https://blog.stdioa.com/2020/12/protobuf-upgrade/"/>
+        <content type="text/html" src="https://blog.stdioa.com/2020/12/protobuf-upgrade/"><![CDATA[<p>前段时间把公司某项目依赖的 <code>github.com/golang/protobuf</code> 的版本从 v1.3.3 升级到了 v1.4.2，本文记录了升级过程中遇到的一些问题。</p>]]></content>
+        <author>
+            <name><![CDATA[Stdio’s Blog]]></name>
+        </author>
+    </entry>
     
     <entry>
         <id>https://blog.rexskz.info/blind-debugging-to-solve-zebra-printer-swallowing-paper-issue.html</id>
@@ -2082,7 +2093,7 @@ CFRelease(urlStr);
         <title><![CDATA[《深入解析Go》笔记]]></title>
         <updated>2019-06-24T08:40:49+08:00</updated>
         <link href="https://blog.stdioa.com/2019/06/go-internal-note/"/>
-        <content type="text/html" src="https://blog.stdioa.com/2019/06/go-internal-note/"><![CDATA[<!-- build time:Sat Sep 05 2020 23:51:27 GMT+0800 (GMT+08:00) --><p>在 GitHub 上找到一本解读 Go 实现细节的好书，名叫<a href="https://github.com/tiancaiamao/go-internals/" target="_blank" rel="noopener">《深入解析 Go》</a>。<br>大致看了一遍，简单做了些笔记。</p>]]></content>
+        <content type="text/html" src="https://blog.stdioa.com/2019/06/go-internal-note/"><![CDATA[<p>在 GitHub 上找到一本解读 Go 实现细节的好书，名叫<a href="https://github.com/tiancaiamao/go-internals/" target="_blank" rel="noopener">《深入解析 Go》</a>。<br>大致看了一遍，简单做了些笔记。</p>]]></content>
         <author>
             <name><![CDATA[Stdio’s Blog]]></name>
         </author>
@@ -2093,7 +2104,7 @@ CFRelease(urlStr);
         <title><![CDATA[Golang 学习记录]]></title>
         <updated>2019-06-24T08:25:39+08:00</updated>
         <link href="https://blog.stdioa.com/2019/06/golang-learning-experience/"/>
-        <content type="text/html" src="https://blog.stdioa.com/2019/06/golang-learning-experience/"><![CDATA[<!-- build time:Sat Sep 05 2020 23:51:27 GMT+0800 (GMT+08:00) --><p>这几个月在考虑从 Python 转向 Golang，所以专门学习了 Golang.<br>这里是 Golang 学习的一些记录。</p>]]></content>
+        <content type="text/html" src="https://blog.stdioa.com/2019/06/golang-learning-experience/"><![CDATA[<p>这几个月在考虑从 Python 转向 Golang，所以专门学习了 Golang.<br>这里是 Golang 学习的一些记录。</p>]]></content>
         <author>
             <name><![CDATA[Stdio’s Blog]]></name>
         </author>
@@ -2104,7 +2115,7 @@ CFRelease(urlStr);
         <title><![CDATA[用堆找出最小的 N 个数]]></title>
         <updated>2019-05-21T08:46:12+08:00</updated>
         <link href="https://blog.stdioa.com/2019/05/find-minn-with-heap/"/>
-        <content type="text/html" src="https://blog.stdioa.com/2019/05/find-minn-with-heap/"><![CDATA[<!-- build time:Sat Sep 05 2020 23:51:27 GMT+0800 (GMT+08:00) --><p>不知道为啥，突然想水一篇很水的算法文章。</p>]]></content>
+        <content type="text/html" src="https://blog.stdioa.com/2019/05/find-minn-with-heap/"><![CDATA[<p>不知道为啥，突然想水一篇很水的算法文章。</p>]]></content>
         <author>
             <name><![CDATA[Stdio’s Blog]]></name>
         </author>
@@ -2450,17 +2461,6 @@ CFRelease(urlStr);
 <p>本文的实例请访问<a href="https://github.com/creedowl/vue_demo/">github</a></p>]]></content>
         <author>
             <name><![CDATA[Creedowl’s Blog]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://blog.stdioa.com/2019/04/data-migration-between-microservices/</id>
-        <title><![CDATA[微服务架构下的数据迁移指南]]></title>
-        <updated>2019-04-09T07:50:37+08:00</updated>
-        <link href="https://blog.stdioa.com/2019/04/data-migration-between-microservices/"/>
-        <content type="text/html" src="https://blog.stdioa.com/2019/04/data-migration-between-microservices/"><![CDATA[<!-- build time:Sat Sep 05 2020 23:51:27 GMT+0800 (GMT+08:00) --><p>在扇贝，除了 CRUD 以外，做的最多的事情大概也就是数据迁移了，以至于后来简单的数据迁移工作都变成了一种搬砖。今天动笔写一写在扇贝做数据迁移的方法，以及一些需要关注的点。</p>]]></content>
-        <author>
-            <name><![CDATA[Stdio’s Blog]]></name>
         </author>
     </entry>
     
