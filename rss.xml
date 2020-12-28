@@ -3,12 +3,23 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2020-12-28T12:17:56+08:00</updated>
+    <updated>2020-12-28T18:31:16+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
     </author>
     
+    
+    <entry>
+        <id>https://miaotony.xyz/2020/12/28/CTF_2020zongheng/</id>
+        <title><![CDATA[CTF | 2020 纵横杯 Misc&Web WriteUp]]></title>
+        <updated>2020-12-28T13:48:14+08:00</updated>
+        <link href="https://miaotony.xyz/2020/12/28/CTF_2020zongheng/"/>
+        <content type="text/html" src="https://miaotony.xyz/2020/12/28/CTF_2020zongheng/"><![CDATA[周末和队友一起打了个纵横杯，题目还是有点意思的，结束后又复现了几道题，这里来写写WriteUp吧。]]></content>
+        <author>
+            <name><![CDATA[MiaoTony]]></name>
+        </author>
+    </entry>
     
     <entry>
         <id>https://blog.stdioa.com/2020/12/protobuf-upgrade/</id>
@@ -330,17 +341,6 @@ $ luarocks --version
         <updated>2020-12-10T06:54:52+08:00</updated>
         <link href="https://miaotony.xyz/2020/12/10/Life_2020XNUCA_trip/"/>
         <content type="text/html" src="https://miaotony.xyz/2020/12/10/Life_2020XNUCA_trip/"><![CDATA[这几天去深圳打了个 X-NUCA 全国网安联赛总决赛，趁着还有兴致，就来大概总结一下吧，喵~]]></content>
-        <author>
-            <name><![CDATA[MiaoTony]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://miaotony.xyz/2020/11/08/CTF_2020Hackergame/</id>
-        <title><![CDATA[CTF | 2020 USTC Hackergame WriteUp]]></title>
-        <updated>2020-12-09T18:31:20+08:00</updated>
-        <link href="https://miaotony.xyz/2020/11/08/CTF_2020Hackergame/"/>
-        <content type="text/html" src="https://miaotony.xyz/2020/11/08/CTF_2020Hackergame/"><![CDATA[一年一度的Hackergame又来了，题目很有梯度，很有脑洞，感觉不错，学到了许多，下次还来。]]></content>
         <author>
             <name><![CDATA[MiaoTony]]></name>
         </author>
