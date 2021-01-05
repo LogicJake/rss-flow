@@ -3,12 +3,170 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2021-01-05T12:20:56+08:00</updated>
+    <updated>2021-01-05T18:37:53+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
     </author>
     
+    
+    <entry>
+        <id>https://blog.triplez.cn/java-class-initialization/</id>
+        <title><![CDATA[Java 类的初始化顺序]]></title>
+        <updated>2021-01-05T16:16:29+08:00</updated>
+        <link href="https://blog.triplez.cn/java-class-initialization/"/>
+        <content type="text/html" src="https://blog.triplez.cn/java-class-initialization/"><![CDATA[<blockquote><p>
+  本文实例使用的 Java 版本：</p>
+<pre class="line-numbers prism-highlight" data-start="1"><code class="language-null">$ java -version
+  openjdk version "11.0.8" 2020-07-14
+  OpenJDK Runtime Environment AdoptOpenJDK (build 11.0.8+10)
+  OpenJDK 64-Bit Server VM AdoptOpenJDK (build 11.0.8+10, mixed mode)
+  </code></pre>
+</blockquote>
+<h2>TL; DR</h2>
+<p>Java 类中的初始化顺序为：</p>
+<p>父类静态变量 -> 父类静态代码块 -> 子类静态变量 -> 子类静态代码块 -> 父类变量 -> 父类代码块 -> 父类构造函数 -> 子类变量 -> 子类代码块 -> 子类构造函数 。</p>
+<h2>验证代码</h2>
+<p>父类：</p>
+<pre class="line-numbers prism-highlight" data-start="1"><code class="language-java">package initOrder;
+
+public class Parent {
+    static String staticField = "parent static field";
+    static {
+        System.out.println(staticField);
+        System.out.println("parent static code block");
+    }
+
+    String field = "parent field";
+    {
+        System.out.println(field);
+        System.out.println("parent code block");
+    }
+
+    // constructor
+    public Parent() {
+        System.out.println("parent constructor");
+    }
+
+    // override function
+    public void func() {
+        System.out.println("parent function");
+    }
+}
+</code></pre>
+<p>子类：</p>
+<pre class="line-numbers prism-highlight" data-start="1"><code class="language-java">package initOrder;
+
+public class Child extends Parent {
+    static String staticField = "child static field";
+    static {
+        System.out.println(staticField);
+        System.out.println("child static code block");
+    }
+
+    String field = "child field";
+    {
+        System.out.println(field);
+        System.out.println("child code block 1");
+    }
+
+    // constructor
+    public Child() {
+        System.out.println("child constructor");
+    }
+
+    // override function
+    @Override
+    public void func() {
+        System.out.println("child function");
+    }
+
+    public static void main(String[] args) {
+        System.out.println("child main function");
+        new Child();
+    }
+
+    static {
+        System.out.println("child static code block 2");
+    }
+}
+</code></pre>
+<p>若我们运行 Child 中的 <code>main</code> 函数，输出如下：</p>
+<pre class="line-numbers prism-highlight" data-start="1"><code class="language-null">parent static field
+parent static code block
+child static field
+child static code block
+child static code block 2
+child main function
+parent field
+parent code block
+parent constructor
+child field
+child code block
+child constructor
+</code></pre>
+<p>可见，Child 中的 <code>main</code> 函数，在静态块初始化之后，在类变量初始化之前。</p>
+<p>我们在这两个类之外编写 <code>main</code> 函数，如下：</p>
+<pre class="line-numbers prism-highlight" data-start="1"><code class="language-java">import initOrder.Child;
+
+public class testInitOrder {
+    public static void main(String[] args) {
+        System.out.println("main function start");
+        Child child = new Child();
+        child.func();
+        System.out.println("main function end");
+    }
+}
+</code></pre>
+<p>最后输出如下：</p>
+<pre class="line-numbers prism-highlight" data-start="1"><code class="language-null">main function start
+parent static field
+parent static code block
+child static field
+child static code block
+child static code block 2
+parent field
+parent code block
+parent constructor
+child field
+child code block
+child constructor
+child function
+main function end
+</code></pre>
+<p>可见，其遵循 静态变量、静态块、构造函数、变量、代码块 的初始化顺序。</p>
+<h2>Reference</h2>
+<ol start="1.">
+<li>Java 类初始化顺序<br />
+https://segmentfault.com/a/1190000004527951</li>
+</ol start="1.">
+<p>The post <a rel="nofollow" href="https://blog.triplez.cn/java-class-initialization/">Java 类的初始化顺序</a> appeared first on <a rel="nofollow" href="https://blog.triplez.cn">Blog</a>.</p>]]></content>
+        <author>
+            <name><![CDATA[TripleZ’s Blog]]></name>
+        </author>
+    </entry>
+    
+    <entry>
+        <id>https://nuaa-s3lab.github.io/dailyPaper/2021/0104.html</id>
+        <title><![CDATA[2021-01-04 论文推荐]]></title>
+        <updated>2021-01-04T00:00:00+08:00</updated>
+        <link href="https://nuaa-s3lab.github.io/dailyPaper/2021/0104.html"/>
+        <content type="text/html" src="https://nuaa-s3lab.github.io/dailyPaper/2021/0104.html"><![CDATA[2021-01-04 论文推荐]]></content>
+        <author>
+            <name><![CDATA[S3lab 每日论文推荐]]></name>
+        </author>
+    </entry>
+    
+    <entry>
+        <id>https://nuaa-s3lab.github.io/dailyPaper/2021/0102.html</id>
+        <title><![CDATA[2021-01-02 论文推荐]]></title>
+        <updated>2021-01-02T00:00:00+08:00</updated>
+        <link href="https://nuaa-s3lab.github.io/dailyPaper/2021/0102.html"/>
+        <content type="text/html" src="https://nuaa-s3lab.github.io/dailyPaper/2021/0102.html"><![CDATA[2021-01-02 论文推荐]]></content>
+        <author>
+            <name><![CDATA[S3lab 每日论文推荐]]></name>
+        </author>
+    </entry>
     
     <entry>
         <id>https://www.suruifu.com/posts/544</id>
@@ -24,6 +182,39 @@
 <p>也非常感谢今天几位朋友可以提到这个消息，也非常感谢上天让我想到这个事情。上天让我现在去意识到这个问题，其实并不晚，我对它表示感激。</p>]]></content>
         <author>
             <name><![CDATA[苏瑞辅的个人网站]]></name>
+        </author>
+    </entry>
+    
+    <entry>
+        <id>https://nuaa-s3lab.github.io/dailyPaper/2021/0101.html</id>
+        <title><![CDATA[2021-01-01 论文推荐]]></title>
+        <updated>2021-01-01T00:00:00+08:00</updated>
+        <link href="https://nuaa-s3lab.github.io/dailyPaper/2021/0101.html"/>
+        <content type="text/html" src="https://nuaa-s3lab.github.io/dailyPaper/2021/0101.html"><![CDATA[2021-01-01 论文推荐]]></content>
+        <author>
+            <name><![CDATA[S3lab 每日论文推荐]]></name>
+        </author>
+    </entry>
+    
+    <entry>
+        <id>https://nuaa-s3lab.github.io/dailyPaper/2020/1231.html</id>
+        <title><![CDATA[2020-12-31 论文推荐]]></title>
+        <updated>2020-12-31T00:00:00+08:00</updated>
+        <link href="https://nuaa-s3lab.github.io/dailyPaper/2020/1231.html"/>
+        <content type="text/html" src="https://nuaa-s3lab.github.io/dailyPaper/2020/1231.html"><![CDATA[2020-12-31 论文推荐]]></content>
+        <author>
+            <name><![CDATA[S3lab 每日论文推荐]]></name>
+        </author>
+    </entry>
+    
+    <entry>
+        <id>https://nuaa-s3lab.github.io/dailyPaper/2020/1230.html</id>
+        <title><![CDATA[2020-12-30 论文推荐]]></title>
+        <updated>2020-12-30T00:00:00+08:00</updated>
+        <link href="https://nuaa-s3lab.github.io/dailyPaper/2020/1230.html"/>
+        <content type="text/html" src="https://nuaa-s3lab.github.io/dailyPaper/2020/1230.html"><![CDATA[2020-12-30 论文推荐]]></content>
+        <author>
+            <name><![CDATA[S3lab 每日论文推荐]]></name>
         </author>
     </entry>
     
@@ -1288,31 +1479,6 @@ switcher.updateGraph(nextState, false);</code></pre><p>大功告成！之后产�
         <content type="text/html" src="https://blog.rexskz.info/barcode-scan-bug-caused-by-hardware-issue.html"><![CDATA[<blockquote><p>听一个希捷的朋友说的。有用户反映每次用笔记本播放李娜的青藏高原时，电脑就会死机。经测试发现，唱到最后的“那就是青藏高……”时，硬盘产生了共振，振幅过大，读写头读不出数据了。为了抓住这个bug，朋友听了一个月的青藏高原……</p></blockquote><p>一开始看到这个段子（出处：<a href="https://www.zhihu.com/question/21747929/answer/310031007">有哪些让你目瞪口呆的 Bug ？ - wuz的回答 - 知乎</a>）的时候，只是笑一笑。然而万万没想到，我一个前端居然也会遇到硬件问题。</p><h1>问题现象</h1><p>隔壁组有一个业务需求：在专用的纸上批量打印一大堆条形码（商品 ID 之类的数据），然后可以方便的撕下来贴在包裹上，以方便后续的操作。由于我负责的面单平台有一定的扩展性，因此他们决定让我们支持一下条形码的功能（这样他们就不用写代码画了，业务改起来也方便）。</p><p>我花了两三天的时间支持了一下，本地测试通过之后，本以为高枕无忧，然而他们报了个 Bug 过来：大部分的条形码打出来都没法扫，有一些条形码只有 PDA 设备可以扫，但普通的立式扫码枪扫不了。</p><p>需求是不能延期的，现在的瓶颈在我这里。我之前没有遇到过这样的问题，所以一时不知道该如何下手，只好跑到他们那边看一看。</p><h1>排查问题</h1><p>首先我要到了他们之前打印出来的一些条形码，发现锯齿状特别严重（下图是条码的一小部分），很多条码因为锯齿加上间距太窄，几乎黑成了一片，但有些条形码就打印的很完美，完全没有锯齿状。隔壁组的同事说，之前前端自己用 JSBarcode 画的时候一点问题都没有，自从切到了面单平台就这样了。然而面单平台生成的 PDF 是绝对不会有这种问题的，不然这两年早就各种线上事故了。</p><p><img src="https://static.rexskz.info/blog/article/barcode-scan-bug-caused-by-hardware-issue/1.jpg" alt="带有锯齿状的条码" title="带有锯齿状的条码"></p><p>一般来说，锯齿的原因是传给打印机的图片分辨率太低（打印需要 300 DPI，而一般的电脑则是 72 DPI）。但是我们所有的单位统一用了厘米，并且后端由 Chrome 来渲染生成 PDF，出来的效果应当跟 Word 差不多，而众所周知 Word 的打印是不会有这种问题的。</p><h1>失败的试探</h1><p>为了确定面单究竟是在哪一步开始变锯齿的，我找到了他们的前端、后端和打印插件的负责人，分析了所有的链路，并一点点排查问题：</p><ul><li>从面单平台生成的 PDF：正常</li><li>隔壁组后端接收到的 PDF 数据：正常</li><li>他们往打印插件发送的数据：看起来正常</li><li>打印机出来的效果：有锯齿</li></ul><p>于是我们把重点放到了打印插件中。他们用了一个开源的打印插件（底层大多是 C 代码）并加以封装，考虑到看这些代码可能会折寿，我决定放弃，想想是否有其它思路。</p><h1>一个有效的解决方案</h1><p>在不断消耗脑细胞的过程中，我突然注意到了文字也有锯齿的现象。于是我问他们的 QA 要到了以前测试的时候打过的各种各样的面单，发现都有这样的问题（这个条形码就很完美，但是文字是有锯齿的）：</p><p><img src="https://static.rexskz.info/blog/article/barcode-scan-bug-caused-by-hardware-issue/2.jpg" alt="文字有锯齿状" title="文字有锯齿状"></p><p>看到这儿，可能有些小伙伴已经能猜到原因了：打印机不支持灰度打印，只能打印纯黑和纯白，对于灰色的区域，打印机会用黑点和白点的密度来显示一个视觉效果。对于 PDF 来说，文字是有反锯齿（次像素渲染）的，因此当次像素渲染由于打印机的原因“消失”之后，就成了这个样子。条形码的图片也是如此，如果条形码图片（PNG）由于缩放而导致每一条的边缘出现了灰色像素，那么也会出现类似的问题。</p><p>我瞬间想到了为什么 JSBarcode 画的条形码没问题了。之前我在他们组的时候用过那个库，它会生成一个 SVG 元素，而 Chrome 在渲染的时候，如果一个元素的定位信息的单位是像素，那么所有的数字都会被取整。例如你设置一个 <code>left: 5.8px; width: 10.2px</code>，那么最终你只会得到 <code>left: 6px; width: 10px</code>。只要每个矩形的定位信息都是整数，那么最后一填充，必然不会出现次像素渲染的问题。</p><p>我跟我们后端商量了一下，把条形码相关的生成代码换成了 SVG 的版本，隔壁组又打印了几次，条形码已经不会再有锯齿了。</p><h1>问题结束了吗？</h1><p>我由于迅速的解决了问题，心情愉悦，决定晚上跟同事去吃萨莉亚。然而就在我们即将下班的时候，他们又报过来一个问题：虽然条形码打出来看着没问题，但只有 PDA 设备可以扫，立式扫码枪还是扫不了。我的内心：________________。</p><p>此时恰好隔壁组的老板路过，问我条形码是如何生成的，是否会因为算法的原因让某个长条偏移了一两像素？然而我快速使用公司的高质量打印机打了一下，并且粗略的将打出来的条形码（见下图）与谷歌到的在线生成工具生成的样子对比了一下，凭我的视力好像是看不出什么太大的区别。以及条形码的容错性应当非常好啊，即使偏移了一两像素应当也能识别，否则收银员扫码将是一件极其辛苦的事情。</p><p><img src="https://static.rexskz.info/blog/article/barcode-scan-bug-caused-by-hardware-issue/3.jpg" alt="一个非常简单的条形码" title="一个非常简单的条形码"></p><h1>真相原来是这样</h1><blockquote><p>When you have eliminated the impossibles, whatever remains, however improbable, must be the truth. - Sherlock Holmes</p></blockquote><p>正如这句话所说的，我在极短的时间内排除了所有可能的问题之后，最后只剩下了一个可能：QA 手中的立式扫码枪有问题。</p><p><img src="https://static.rexskz.info/blog/article/barcode-scan-bug-caused-by-hardware-issue/4.jpg" alt="就是这个扫码枪" title="就是这个扫码枪"></p><p>由于不想鸽了同事，也不想让同事等太久，我便拍下了扫码枪的背面标签，在萨莉亚等餐的时候慢慢查。这个扫码枪的型号是 Orbit MS7120，搜了一下它的参数，感觉没有什么特别的，于是跟同事开玩笑的说道：“难不成这个破扫码枪只能扫最短三个字符？”顺便随手谷歌了一下 <code>orbit ms7120 3 chars</code>，结果第一条就是这么个链接：<a href="https://support.honeywellaidc.com/s/article/MS7120-Orbit-How-to-configure-code-128-to-decode-a-minimum-of-three-characters">MS7120 Orbit - How to configure code 128 to decode a minimum of three characters</a>，我的内心：________________。</p><p>文中是这样说的：</p><blockquote><p>默认情况下 MS7120 Orbit 针对 code128 条形码只能扫最短四个字符，如果要改为最短三个字符，点击 <a href="https://honeywellsps.my.salesforce.com/sfc/p/00000000SK3U/a/A0000000HmqL/85KJ7ImV2fzDh.30zUaYfW1zB3UNG7h14_1uARcAIYc">这里</a> 下载一个 PDF，然后按顺序扫描里面的每一个条形码。注意，这会让你的设备初始化。</p></blockquote><p>我是谁？我为什么要设置为最短三个字符？我感觉自己就跟那个 <a href="https://www.sohu.com/a/211451010_250298">计算机二级准考证传错照片的哥们</a> 一样。</p><p><img src="https://static.rexskz.info/blog/article/barcode-scan-bug-caused-by-hardware-issue/5.jpg" alt="我还能说些什么？" title="我还能说些什么？"></p><p>玩梗归玩梗。为了验证我的猜想是否正确，吃完萨莉亚，我回到了公司，按照 PDF 中的方法试了一下，还真特喵的能扫三个字符的条形码了……然而我查了半天 MS7120 的手册，也没查到如何让它支持任意字符数量的条形码。</p><p>因为这个需求可能有延期风险，所以他们发了邮件并且 @ 了我，为了不被“人在家中坐，锅从天上来”，我赶紧回了邮件，并附上了自己完整的验证步骤，我给的解决方案是“4 位以下的数据就不要用条形码了，如果必须有这个需求，就加一些空白字符使得长度至少为 4”。</p><h1>后记</h1><ol><li>第二天，他们的 QA 找了过来：“你是不是把扫码枪刷坏了？”我：“嗯，昨晚我调试来着，现在帮你恢复一下出厂设置……”</li><li>之后他们让业务方用自己的扫码枪试一下，是可以扫出来的，因此大家都不需要改代码了，这个问题也算是解决了。</li></ol>]]></content>
         <author>
             <name><![CDATA[R·ex / Zeng]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://blog.triplez.cn/u-disk-4mb-recovery/</id>
-        <title><![CDATA[U盘写入系统后变为4MB的还原方法]]></title>
-        <updated>2020-05-16T09:52:48+08:00</updated>
-        <link href="https://blog.triplez.cn/u-disk-4mb-recovery/"/>
-        <content type="text/html" src="https://blog.triplez.cn/u-disk-4mb-recovery/"><![CDATA[<p>在 <code>cmd</code> 中或 <code>powershell</code> 中输入 <code>diskpart</code> 命令，进入 <code>diskpart</code> 程序。</p>
-<ol start="1.">
-<li>输入 <code>list disk</code> 查看磁盘列表<br />
-<img src="https://triplez-public-1251926021.cos.ap-shanghai.myqcloud.com/11.7.2019_U%E7%9B%98%E5%9B%A0%E4%B8%BA%E5%86%99%E5%85%A5%E7%B3%BB%E7%BB%9F%E5%8F%98%E4%B8%BA4MB%E7%9A%84%E8%BF%98%E5%8E%9F%E6%96%B9%E6%B3%95/image-20191107223340468.png" alt="image-20191107223340468" /></p>
-</li>
-<li>
-<p>输入 <code>select disk 2</code> 以选择目标 U 盘（要根据自己 U 盘的数字标识来选择）。<br />
-<img src="https://triplez-public-1251926021.cos.ap-shanghai.myqcloud.com/11.7.2019_U%E7%9B%98%E5%9B%A0%E4%B8%BA%E5%86%99%E5%85%A5%E7%B3%BB%E7%BB%9F%E5%8F%98%E4%B8%BA4MB%E7%9A%84%E8%BF%98%E5%8E%9F%E6%96%B9%E6%B3%95/image-20191107223559778.png" alt="image-20191107223559778" /></p>
-</li>
-<li>输入 <code>clean</code> 清除整个 U 盘。<img src="https://triplez-public-1251926021.cos.ap-shanghai.myqcloud.com/11.7.2019_U%E7%9B%98%E5%9B%A0%E4%B8%BA%E5%86%99%E5%85%A5%E7%B3%BB%E7%BB%9F%E5%8F%98%E4%B8%BA4MB%E7%9A%84%E8%BF%98%E5%8E%9F%E6%96%B9%E6%B3%95/image-20191107223817331.png" alt="image-20191107223817331" /></li>
-<li>此时 U 盘是空但未分区状态，使用 <code>create partition primary</code> 命令来建立默认分区：<br />
-<img src="https://triplez-public-1251926021.cos.ap-shanghai.myqcloud.com/11.7.2019_U%E7%9B%98%E5%9B%A0%E4%B8%BA%E5%86%99%E5%85%A5%E7%B3%BB%E7%BB%9F%E5%8F%98%E4%B8%BA4MB%E7%9A%84%E8%BF%98%E5%8E%9F%E6%96%B9%E6%B3%95/image-20191107223945186.png" alt="image-20191107223945186" /></li>
-</ol start="1.">
-<p>这样这个过程就结束了，恭喜你成功救回了你的 U 盘 :smile::tada:</p>
-<p>The post <a rel="nofollow" href="https://blog.triplez.cn/u-disk-4mb-recovery/">U盘写入系统后变为4MB的还原方法</a> appeared first on <a rel="nofollow" href="https://blog.triplez.cn">Blog</a>.</p>]]></content>
-        <author>
-            <name><![CDATA[TripleZ’s Blog]]></name>
         </author>
     </entry>
     
