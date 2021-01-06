@@ -3,12 +3,23 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2021-01-06T00:45:27+08:00</updated>
+    <updated>2021-01-06T06:21:53+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
     </author>
     
+    
+    <entry>
+        <id>https://nuaa-s3lab.github.io/dailyPaper/2021/0106.html</id>
+        <title><![CDATA[2021-01-06 论文推荐]]></title>
+        <updated>2021-01-06T00:00:00+08:00</updated>
+        <link href="https://nuaa-s3lab.github.io/dailyPaper/2021/0106.html"/>
+        <content type="text/html" src="https://nuaa-s3lab.github.io/dailyPaper/2021/0106.html"><![CDATA[2021-01-06 论文推荐]]></content>
+        <author>
+            <name><![CDATA[S3lab 每日论文推荐]]></name>
+        </author>
+    </entry>
     
     <entry>
         <id>https://blog.triplez.cn/java-class-initialization/</id>
@@ -202,17 +213,6 @@ https://segmentfault.com/a/1190000004527951</li>
         <updated>2020-12-31T00:00:00+08:00</updated>
         <link href="https://nuaa-s3lab.github.io/dailyPaper/2020/1231.html"/>
         <content type="text/html" src="https://nuaa-s3lab.github.io/dailyPaper/2020/1231.html"><![CDATA[2020-12-31 论文推荐]]></content>
-        <author>
-            <name><![CDATA[S3lab 每日论文推荐]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://nuaa-s3lab.github.io/dailyPaper/2020/1230.html</id>
-        <title><![CDATA[2020-12-30 论文推荐]]></title>
-        <updated>2020-12-30T00:00:00+08:00</updated>
-        <link href="https://nuaa-s3lab.github.io/dailyPaper/2020/1230.html"/>
-        <content type="text/html" src="https://nuaa-s3lab.github.io/dailyPaper/2020/1230.html"><![CDATA[2020-12-30 论文推荐]]></content>
         <author>
             <name><![CDATA[S3lab 每日论文推荐]]></name>
         </author>
