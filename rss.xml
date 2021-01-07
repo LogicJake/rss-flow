@@ -3,12 +3,23 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2021-01-07T12:21:37+08:00</updated>
+    <updated>2021-01-07T18:40:11+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
     </author>
     
+    
+    <entry>
+        <id>https://nuaa-s3lab.github.io/dailyPaper/2021/0107.html</id>
+        <title><![CDATA[2021-01-07 论文推荐]]></title>
+        <updated>2021-01-07T00:00:00+08:00</updated>
+        <link href="https://nuaa-s3lab.github.io/dailyPaper/2021/0107.html"/>
+        <content type="text/html" src="https://nuaa-s3lab.github.io/dailyPaper/2021/0107.html"><![CDATA[2021-01-07 论文推荐]]></content>
+        <author>
+            <name><![CDATA[S3lab 每日论文推荐]]></name>
+        </author>
+    </entry>
     
     <entry>
         <id>https://nuaa-s3lab.github.io/dailyPaper/2021/0106.html</id>
@@ -202,17 +213,6 @@ https://segmentfault.com/a/1190000004527951</li>
         <updated>2021-01-01T00:00:00+08:00</updated>
         <link href="https://nuaa-s3lab.github.io/dailyPaper/2021/0101.html"/>
         <content type="text/html" src="https://nuaa-s3lab.github.io/dailyPaper/2021/0101.html"><![CDATA[2021-01-01 论文推荐]]></content>
-        <author>
-            <name><![CDATA[S3lab 每日论文推荐]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://nuaa-s3lab.github.io/dailyPaper/2020/1231.html</id>
-        <title><![CDATA[2020-12-31 论文推荐]]></title>
-        <updated>2020-12-31T00:00:00+08:00</updated>
-        <link href="https://nuaa-s3lab.github.io/dailyPaper/2020/1231.html"/>
-        <content type="text/html" src="https://nuaa-s3lab.github.io/dailyPaper/2020/1231.html"><![CDATA[2020-12-31 论文推荐]]></content>
         <author>
             <name><![CDATA[S3lab 每日论文推荐]]></name>
         </author>
