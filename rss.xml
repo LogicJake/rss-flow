@@ -3,12 +3,23 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2021-01-08T00:48:11+08:00</updated>
+    <updated>2021-01-08T06:24:51+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
     </author>
     
+    
+    <entry>
+        <id>https://nuaa-s3lab.github.io/dailyPaper/2021/0108.html</id>
+        <title><![CDATA[2021-01-08 论文推荐]]></title>
+        <updated>2021-01-08T00:00:00+08:00</updated>
+        <link href="https://nuaa-s3lab.github.io/dailyPaper/2021/0108.html"/>
+        <content type="text/html" src="https://nuaa-s3lab.github.io/dailyPaper/2021/0108.html"><![CDATA[2021-01-08 论文推荐]]></content>
+        <author>
+            <name><![CDATA[S3lab 每日论文推荐]]></name>
+        </author>
+    </entry>
     
     <entry>
         <id>https://nuaa-s3lab.github.io/dailyPaper/2021/0107.html</id>
@@ -204,17 +215,6 @@ https://segmentfault.com/a/1190000004527951</li>
 <p>也非常感谢今天几位朋友可以提到这个消息，也非常感谢上天让我想到这个事情。上天让我现在去意识到这个问题，其实并不晚，我对它表示感激。</p>]]></content>
         <author>
             <name><![CDATA[苏瑞辅的个人网站]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://nuaa-s3lab.github.io/dailyPaper/2021/0101.html</id>
-        <title><![CDATA[2021-01-01 论文推荐]]></title>
-        <updated>2021-01-01T00:00:00+08:00</updated>
-        <link href="https://nuaa-s3lab.github.io/dailyPaper/2021/0101.html"/>
-        <content type="text/html" src="https://nuaa-s3lab.github.io/dailyPaper/2021/0101.html"><![CDATA[2021-01-01 论文推荐]]></content>
-        <author>
-            <name><![CDATA[S3lab 每日论文推荐]]></name>
         </author>
     </entry>
     
