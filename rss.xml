@@ -3,7 +3,7 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2021-01-21T01:07:21+08:00</updated>
+    <updated>2021-01-21T06:40:54+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
@@ -476,7 +476,35 @@ class App extends SvelteComponent {
     }
 }
 
-export default App;</code></pre><h1>参考资料</h1><ul><li><a href="https://tc9011.com/2018/06/07/%E3%80%90%E8%AF%91%E3%80%91angular%20ivy%E7%9A%84%E5%8F%98%E6%9B%B4%E6%A3%80%E6%B5%8B%E6%89%A7%E8%A1%8C%EF%BC%9A%E4%BD%A0%E5%87%86%E5%A4%87%E5%A5%BD%E4%BA%86%E5%90%97%EF%BC%9F/">【译】Angular Ivy的变更检测执行：你准备好了吗？ | tc9011's</a></li><li><a href="https://www.codenong.com/j5e72ec58e51d45270c2/">都2020年了你还不知道Svelte（2）—— 更新渲染原理 | 码农家园</a></li><li><a href="https://developers.google.com/closure/compiler/docs/api-tutorial3">Advanced Compilation | Closure Compiler | Google Developers</a></li></ul><hr><h1>Update 2021-01-18</h1><p>经大佬提示，有个叫 <a href="https://2020.stateofjs.com/en-US/technologies/front-end-frameworks/">State of JS</a> 的网站会对开发者做调查，并发布一份报告。在链接中，可以看到目前用途最广泛的是 React，然后 Angular 比 Vue 略高一筹。此外，Svelte 无论是满意度、使用量还是价值，都在稳步提升，公众对它也始终保持很高的兴趣。</p>]]></content>
+export default App;</code></pre><h1>参考资料</h1><ul><li><a href="https://tc9011.com/2018/06/07/%E3%80%90%E8%AF%91%E3%80%91angular%20ivy%E7%9A%84%E5%8F%98%E6%9B%B4%E6%A3%80%E6%B5%8B%E6%89%A7%E8%A1%8C%EF%BC%9A%E4%BD%A0%E5%87%86%E5%A4%87%E5%A5%BD%E4%BA%86%E5%90%97%EF%BC%9F/">【译】Angular Ivy的变更检测执行：你准备好了吗？ | tc9011's</a></li><li><a href="https://www.codenong.com/j5e72ec58e51d45270c2/">都2020年了你还不知道Svelte（2）—— 更新渲染原理 | 码农家园</a></li><li><a href="https://developers.google.com/closure/compiler/docs/api-tutorial3">Advanced Compilation | Closure Compiler | Google Developers</a></li></ul><hr><h1>Update 2021-01-18</h1><p>经大佬提示，有个叫 <a href="https://2020.stateofjs.com/en-US/technologies/front-end-frameworks/">State of JS</a> 的网站会对开发者做调查，并发布一份报告。在链接中，可以看到目前用途最广泛的是 React，然后 Angular 比 Vue 略高一筹。此外，Svelte 无论是满意度、使用量还是价值，都在稳步提升，公众对它也始终保持很高的兴趣。</p><h1>Update 2021-01-21</h1><p>从另一个大佬那里得知了 Vue 有两个新提案：<a href="https://github.com/vuejs/rfcs/pull/222">New script setup and ref sugar</a>，第一个是为了直接用最新的 <code>setup</code> 函数替代之前的组件创建流程，第二个是跟 Svelte 类似，利用 JS Label 的语法来做响应式的语法糖。</p><p>它俩分别是这样用的：</p><pre><code class="lang-html">&lt;script setup&gt;
+// imported components are also directly usable in template
+import Foo from './Foo.vue'
+import { ref } from 'vue'
+
+// write Composition API code just like in a normal setup()
+// but no need to manually return everything
+const count = ref(0)
+const inc = () =&gt; { count.value++ }
+&lt;/script&gt;
+
+&lt;template&gt;
+    &lt;Foo :count=&quot;count&quot; @click=&quot;inc&quot; /&gt;
+&lt;/template&gt;</code></pre><pre><code class="lang-html">&lt;script setup&gt;
+// declaring a variable that compiles to a ref
+ref: count = 1
+
+function inc() {
+    // the variable can be used like a plain value
+    count++
+}
+
+// access the raw ref object by prefixing with $
+console.log($count.value)
+&lt;/script&gt;
+
+&lt;template&gt;
+    &lt;button @click=&quot;inc&quot;&gt;{{ count }}&lt;/button&gt;
+&lt;/template&gt;</code></pre><p>跟大佬聊了一下，我的观点主要是这样的：</p><ul><li>我对这提案的看法，和对 Svelte 的看法类似，甚至我都觉得 Evan You 也发现了编译器可能是个未来的优化点。</li><li>至于它破坏了 JS 语义的问题，我觉得与其让 Label 这个语法被忘记，不如赋予它新的意义，因为目前写 JS 已经基本离不开编译器了（例如 TypeScript、JSX、Vue Loader）。</li><li>此外，语言本身就是在变化中的，JS 正是因为以前的语法不好，才有了那么多提案和 Linter。</li><li>在其它行业，Lisp 有 Clojure、Common Lisp、Scheme 这样一堆方言，Java“语系”中的 Groovy、Scala、Kotlin 也差不多能算是方言，我觉得 JS 演变出 React、Vue、Angular、Svelte 几种方言是完全合理的。</li></ul><p>之后，大佬拿出了另外一份 JS 的提案：<a href="https://github.com/rbuckton/proposal-refs">Reference (ref) declarations and expressions</a>，这样确实不会 Break the Web 了，不过看起来有点像 C 中的 <code>int const a = 1</code> 或者 Rust 中的 <code>let mut x = 5</code>，这在我看来也不是坏事。</p><p>当然，语言不可能无限添加 Feature，否则容易长成这样：<a href="https://gist.github.com/Jack-Works/829246dcae9d9d3b874d44bae5ef5e0b#file-2020-js">cRAzY eSnEXt (*all* proposals mixed in)</a>……</p>]]></content>
         <author>
             <name><![CDATA[R·ex / Zeng]]></name>
         </author>
@@ -604,6 +632,142 @@ export default App;</code></pre><h1>参考资料</h1><ul><li><a href="https://tc
     </entry>
     
     <entry>
+        <id>https://blog.triplez.cn/java-class-initialization/</id>
+        <title><![CDATA[Java 类的初始化顺序]]></title>
+        <updated>2021-01-05T16:16:29+08:00</updated>
+        <link href="https://blog.triplez.cn/java-class-initialization/"/>
+        <content type="text/html" src="https://blog.triplez.cn/java-class-initialization/"><![CDATA[<blockquote><p>
+  本文实例使用的 Java 版本：</p>
+<pre class="line-numbers prism-highlight" data-start="1"><code class="language-null">$ java -version
+  openjdk version "11.0.8" 2020-07-14
+  OpenJDK Runtime Environment AdoptOpenJDK (build 11.0.8+10)
+  OpenJDK 64-Bit Server VM AdoptOpenJDK (build 11.0.8+10, mixed mode)
+  </code></pre>
+</blockquote>
+<h2>TL; DR</h2>
+<p>Java 类中的初始化顺序为：</p>
+<p>父类静态变量 -> 父类静态代码块 -> 子类静态变量 -> 子类静态代码块 -> 父类变量 -> 父类代码块 -> 父类构造函数 -> 子类变量 -> 子类代码块 -> 子类构造函数 。</p>
+<h2>验证代码</h2>
+<p>父类：</p>
+<pre class="line-numbers prism-highlight" data-start="1"><code class="language-java">package initOrder;
+
+public class Parent {
+    static String staticField = "parent static field";
+    static {
+        System.out.println(staticField);
+        System.out.println("parent static code block");
+    }
+
+    String field = "parent field";
+    {
+        System.out.println(field);
+        System.out.println("parent code block");
+    }
+
+    // constructor
+    public Parent() {
+        System.out.println("parent constructor");
+    }
+
+    // override function
+    public void func() {
+        System.out.println("parent function");
+    }
+}
+</code></pre>
+<p>子类：</p>
+<pre class="line-numbers prism-highlight" data-start="1"><code class="language-java">package initOrder;
+
+public class Child extends Parent {
+    static String staticField = "child static field";
+    static {
+        System.out.println(staticField);
+        System.out.println("child static code block");
+    }
+
+    String field = "child field";
+    {
+        System.out.println(field);
+        System.out.println("child code block 1");
+    }
+
+    // constructor
+    public Child() {
+        System.out.println("child constructor");
+    }
+
+    // override function
+    @Override
+    public void func() {
+        System.out.println("child function");
+    }
+
+    public static void main(String[] args) {
+        System.out.println("child main function");
+        new Child();
+    }
+
+    static {
+        System.out.println("child static code block 2");
+    }
+}
+</code></pre>
+<p>若我们运行 Child 中的 <code>main</code> 函数，输出如下：</p>
+<pre class="line-numbers prism-highlight" data-start="1"><code class="language-null">parent static field
+parent static code block
+child static field
+child static code block
+child static code block 2
+child main function
+parent field
+parent code block
+parent constructor
+child field
+child code block
+child constructor
+</code></pre>
+<p>可见，Child 中的 <code>main</code> 函数，在静态块初始化之后，在类变量初始化之前。</p>
+<p>我们在这两个类之外编写 <code>main</code> 函数，如下：</p>
+<pre class="line-numbers prism-highlight" data-start="1"><code class="language-java">import initOrder.Child;
+
+public class testInitOrder {
+    public static void main(String[] args) {
+        System.out.println("main function start");
+        Child child = new Child();
+        child.func();
+        System.out.println("main function end");
+    }
+}
+</code></pre>
+<p>最后输出如下：</p>
+<pre class="line-numbers prism-highlight" data-start="1"><code class="language-null">main function start
+parent static field
+parent static code block
+child static field
+child static code block
+child static code block 2
+parent field
+parent code block
+parent constructor
+child field
+child code block
+child constructor
+child function
+main function end
+</code></pre>
+<p>可见，其遵循 静态变量、静态块、构造函数、变量、代码块 的初始化顺序。</p>
+<h2>Reference</h2>
+<ol start="1.">
+<li>Java 类初始化顺序<br />
+https://segmentfault.com/a/1190000004527951</li>
+</ol start="1.">
+<p>The post <a rel="nofollow" href="https://blog.triplez.cn/java-class-initialization/">Java 类的初始化顺序</a> appeared first on <a rel="nofollow" href="https://blog.triplez.cn">Blog</a>.</p>]]></content>
+        <author>
+            <name><![CDATA[TripleZ’s Blog]]></name>
+        </author>
+    </entry>
+    
+    <entry>
         <id>https://www.suruifu.com/posts/544</id>
         <title><![CDATA[未来已来 我真是没有想到]]></title>
         <updated>2021-01-01T16:18:46+08:00</updated>
@@ -698,6 +862,196 @@ for grf in pages:
     print(grf.to_zpl())</code></pre><p>我随便从测试环境搞了一张面单，导出成了 PDF 文件，它长这样：</p><p><img src="https://static.rexskz.info/blog/article/blind-debugging-to-solve-zebra-printer-swallowing-paper-issue/0.png" alt="原始 PDF" title="原始 PDF"></p><p>转换后的 ZPL，虽然里面看起来一堆 Base64，但预览出来除了糊一点以外，似乎没什么问题：</p><p><img src="https://static.rexskz.info/blog/article/blind-debugging-to-solve-zebra-printer-swallowing-paper-issue/1.png" alt="转换后的 ZPL，使用了 8 dpmm 的精度" title="转换后的 ZPL，使用了 8 dpmm 的精度"></p><p>ZPL 的分辨率有很多选项，但高分辨率意味着转换速度慢。我们跟 BPM 合作，得知了目标用户持有的打印机型号，多次对 UAT 环境的几张真实面单采用 8 dpmm、12 dpmm、24 dpmm 的分辨率做转换并记录转换时间。经过权衡，我们决定还是采用 8 dpmm 的分辨率。</p><p>经过一段时间与卖家中心团队的联调与测试，功能顺利上了 UAT。</p><h1>卷纸问题的修复</h1><p>本来以为万事大吉，结果业务报来了一个问题：对于某一个特定型号的打印机，在打印结束后，打印机会多吐一点点纸，然后把它卷回去。所有卖家的那个型号的打印机都能稳定复现这个问题，但他们打印其它平台的 ZPL 面单就没有问题。这可能会让我们的用户感到不满，因此我们必须解决。</p><p>一个棘手的问题是，我们这边完全没有 Zebra 打印机，现买的话也太慢了。我只好硬着头皮看生成的文件，并且让 BPM 提供了一个其它平台的 ZPL，我要知道究竟是什么东西导致的。</p><p>经过对比，我发现我们生成的 ZPL 文件有一些奇怪的指令。参考了 <a href="https://www.zebra.com/content/dam/zebra/manuals/printers/common/programming/zpl-zbi2-pm-en.pdf">ZPL 指令集文档</a>，发现有个叫 <code>^MM</code> 的指令可以控制打印完成时打印机的行为，如果把它设置为 <code>R</code>，可以阻止带有卷纸控件的打印机的卷纸行为。我搜了一下那个型号的打印机（谷歌的结果排前几名的居然是我们的竞争对手 Lazada 与 Tokopedia），确实有卷纸控件，这应该就是解决方法了。</p><p>在上面的代码中，<code>GRF.from_pdf</code> 函数可以接受一个参数 <code>print_mode</code>，将其修改为 <code>R</code> 之后，卷纸问题解决了，但业务反馈说出现了错位问题……后来我找到了 Zebra 打印机的官方驱动文档，发现打印机的默认行为应当是 <code>T</code>，于是设置 <code>print_mode='T'</code>，问题解决。</p><p>由于我们与业务有一些时差，我们所做的所有尝试，业务都需要第二天才能验证，因此解决的时间稍微长了一些。</p><h1>文字模糊问题的迅速修复</h1><p>终于把需求上线了。但刚上线没多久，大量卖家就反馈文字不清晰，很多文字的部分是缺失的：</p><p><img src="https://static.rexskz.info/blog/article/blind-debugging-to-solve-zebra-printer-swallowing-paper-issue/2.png" alt="文字有一部分缺失" title="文字有一部分缺失"></p><p><a href="https://blog.rexskz.info/barcode-scan-bug-caused-by-hardware-issue.html#toc-link-3">之前的经验</a> 立即告诉我，是纯黑白与分辨率导致的问题：这个字号的文字在 8 dpmm 的分辨率下，一部分“笔画”由于太细，会被直接转换为白色。解决方法也很简单：要么提升分辨率（花费更多时间且需要重新发版），要么加粗一下面单的文字试一试。</p><p>我们先让业务团队帮忙修改面单，将文字加粗。问题居然就解决了，效果还不错：</p><p><img src="https://static.rexskz.info/blog/article/blind-debugging-to-solve-zebra-printer-swallowing-paper-issue/3.png" alt="加粗了文字之后的效果" title="加粗了文字之后的效果"></p><p>随即，业务发来了感谢信，许多卖家感谢我们如此迅速的解决问题。</p><p>但这毕竟只是个临时的解决方法，问题的根本原因还是分辨率太低（打印机只支持纯黑白的问题我们无法解决）。为了避免以后再出现类似的问题，我们需要提供一个高分辨率的选项。经过估算，如果从 8 dpmm 提升到 12 dpmm，由于面积扩大到两倍多，转换时间应当也是两倍多。我们的后端也会与卖家中心的后端进行进一步的测试，以评估这个修改的影响范围。</p><h1>从这个需求中学到的</h1><ol><li>理论上来说，问题都是可以解决的，需要有一定的搜索技巧和探索精神。</li><li>学好英文很重要，我查的全部资料，都是没有中文的。</li><li>在必要的情况下，可能需要深入阅读官方的驱动文档或指令集文档。</li></ol><p>总的来说，也是一次不错的经历，最后问题也解决了。之后再遇到类似的需求，我应该会比这次更加从容。</p>]]></content>
         <author>
             <name><![CDATA[R·ex / Zeng]]></name>
+        </author>
+    </entry>
+    
+    <entry>
+        <id>https://blog.triplez.cn/publish-your-first-luarocks-package/</id>
+        <title><![CDATA[发布你第一个 Luarocks 包]]></title>
+        <updated>2020-12-18T15:41:57+08:00</updated>
+        <link href="https://blog.triplez.cn/publish-your-first-luarocks-package/"/>
+        <content type="text/html" src="https://blog.triplez.cn/publish-your-first-luarocks-package/"><![CDATA[<h2><span class="ez-toc-section" id="_rockspec">写一个 rockspec</span></h2>
+<p>首先写好你准备发布的包 <del>当然是自己写好了才要发布啦</del> ，然后我们在项目根目录下写一个 rockspec 文件（用来描述 LuaRocks 包的元信息文件）。</p>
+<pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash">luarocks write_rockspec &lt;package_name&gt; &lt;package_version&gt; &lt;package_location&gt;
+</code></pre>
+<p>比如，我希望发布的是 <code>busted_resty</code> 的 <code>0.5.0</code> 版本，那么我需要我的项目根目录上输入以下命令来创建我的 rockspec 文件。</p>
+<pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash">$ luarocks write_rockspec busted_resty 0.5.0 .
+</code></pre>
+<p>然后，你会得到一个这样的 rockspec 文件：</p>
+<pre class="line-numbers prism-highlight" data-start="1"><code class="language-lua">package = "package_name"
+version = "1.0-1"
+source = {
+    url = "*** please add URL for source tarball, zip or repository here ***"
+}
+description = {
+    homepage = "*** please enter a project homepage ***",
+    license = "*** please specify a license ***"
+}
+dependencies = {
+}
+build = {
+    type = "builtin",
+    modules = {}
+}
+</code></pre>
+<p>这里我们简单解释下其中的含义：</p>
+<ul>
+<li><code>package</code> ：包名称。</li>
+<li><code>version</code> ：包版本，必须为 <code>&lt;数字&gt;.&lt;数字&gt;[.&lt;数字&gt;]-&lt;数字&gt;</code> 。</li>
+<li><code>source</code> ：包的源代码位置，如 Git 地址等。</li>
+<li><code>description</code> ：包的基本描述，以及版权协议等信息。</li>
+<li><code>dependencies</code> ：与其他库的依赖关系。</li>
+<li><code>build</code> ：构建具体信息，比如安装的库名。</li>
+</ul>
+<p>更多 rockspec 的<a href="https://github.com/luarocks/luarocks/wiki/Rockspec-format">具体细节</a>可以在 <a href="https://github.com/luarocks/luarocks/wiki">LuaRocks 的 Wiki</a> 中找到。</p>
+<p>对于 <code>busted_resty</code> 的 <code>0.5.0</code> 版本（我已经事先在 Git 上打好了 <code>v0.5.0</code> 的 tag），它的 rockspec 是这样的：</p>
+<pre class="line-numbers prism-highlight" data-start="1"><code class="language-lua">package = "busted_resty"
+version = "0.5.0-1"
+source = {
+   url = "git://github.com/Triple-Z/busted_resty",
+   tag = "v0.5.0"
+}
+description = {
+   summary = "An extra mocking layer for OpenResty in busted testing environment.",
+   detailed = [[
+      This module mocks the following OpenResty APIs:
+
+      - ngx.status
+      - ngx.exit
+      - ngx.exec
+      - ngx.redirect
+      - ngx.send_headers
+      - ngx.headers_sent
+      - ngx.print
+      - ngx.say
+      - ngx.flush
+      - ngx.eof
+      - ngx.is_subrequest
+      - ngx.on_abort
+      - ngx.arg.*
+      - ngx.var.*
+      - ngx.header.*
+      - ngx.location.*
+      - ngx.req.*
+      - ngx.resp.*
+   ]],
+   homepage = "https://github.com/Triple-Z/busted_resty",
+   license = "MIT"
+}
+dependencies = {
+   'lua &gt;= 5.1',
+   'luassert &gt;= 1.7.8',
+}
+build = {
+   type = "builtin",
+   modules = {
+      busted_resty = "src/busted_resty.lua"
+   }
+}
+</code></pre>
+<p>其中，<code>modules</code> 代表着文件的安装方式及位置。如在 <code>busted_resty</code> 中，安装方式为 <code>builtin</code> ，因此 LuaRocks 只是将这些指定的文件复制粘贴到某个指定的位置。比如，库中的 <code>src/busted_resty.lua</code> 就会被复制到 LuaRocks 中 Lua 库的根目录。</p>
+<h2><span class="ez-toc-section" id="_rockspec-2">检查 rockspec 语法</span></h2>
+<p>写好了 rockspec 后，我们可以来检查下 rockspec 的语法是否正确。当然，使用的是 <code>luarocks lint</code> 命令。</p>
+<pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash">$ luarocks lint busted_resty-0.5.0-1.rockspec
+</code></pre>
+<p>如果按下 <kbd>Enter</kbd> 后什么都没发生，恭喜你，没有消息就是好消息（毕竟是高深莫测的 UNIX 哲学 ）。</p>
+<p>如果有信息输出，那就按照错误提示改吧 。</p>
+<h2><span class="ez-toc-section" id="MAKE">MAKE!</span></h2>
+<p>当我们编写好了 rockspec 后，就可以尝试构建属于我们自己的第一个 LuaRocks 包了！怎么构建呢，当然是用 LuaRocks 中的 <code>make</code> 命令啦！</p>
+<pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash">$ luarocks make
+</code></pre>
+<p>不出意外的话，你第一个 LuaRocks 包应该被 LuaRocks 安装到了指定的位置，快打开你最喜欢的 Lua 解释器，试一下吧！</p>
+<pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash">$ luajit
+&gt; require "busted_resty"
+</code></pre>
+<p>如果什么也没有发生，那可就太好了！说明我们的 LuaRocks 包已经被安装到了本地环境上了！</p>
+<h2><span class="ez-toc-section" id="i">打包并上传</span></h2>
+<p>最后，那当然就是最激动人心的环节：将我们的包发布到 LuaRocks 上。</p>
+<p>你可以先打包，验证包是否正确：</p>
+<pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash">$ luarocks pack &lt;rockspec_file&gt;
+</code></pre>
+<p>在我们的例子中，即为：</p>
+<pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash">$ luarocks pack busted_resty-0.5.0-1.rockspec
+</code></pre>
+<p>执行完打包命令后，你会在目录下看到一个后缀为 <code>.src.rock</code> 的文件。没错，那就是我们的 LuaRocks 包。</p>
+<p>接下来你有两种方式来将我们刚打出来的 LuaRocks 包上传至 LuaRocks 中心仓库，让我们分别介绍它们吧。</p>
+<h3><span class="ez-toc-section" id="_rock">直接在网站上上传 rock</span></h3>
+<p>你可以直接在 <a href="https://luarocks.org/upload">LuaRocks 网站</a>上上传你的 rockspec 描述文件以及 src.rock 包。点击“提交”即可在 LuaRocks 上发布你的 rock 包～</p>
+<h3><span class="ez-toc-section" id="i-2">用命令行上传</span></h3>
+<p>使用 <code>luarocks upload</code> 即可帮你打包并直接上传至 LuaRocks 中心仓库：</p>
+<pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash">$ luarocks upload [--api-key=&lt;api-key&gt;] &lt;rockspec_file&gt;
+</code></pre>
+<p>别忘了 API Key 哦，在<a href="https://luarocks.org/settings/api-keys">这里</a>可以获取你自己的 API Key。</p>
+<p><img src="https://triplez-public-1251926021.cos.ap-shanghai.myqcloud.com/picgoimage-20201218233542394.png" alt="image-20201218233542394" /></p>
+<p>恭喜你，成功上传了自己的第一个 LuaRocks 包！</p>
+<p>The post <a rel="nofollow" href="https://blog.triplez.cn/publish-your-first-luarocks-package/">发布你第一个 Luarocks 包</a> appeared first on <a rel="nofollow" href="https://blog.triplez.cn">Blog</a>.</p>]]></content>
+        <author>
+            <name><![CDATA[TripleZ’s Blog]]></name>
+        </author>
+    </entry>
+    
+    <entry>
+        <id>https://blog.triplez.cn/install-lua-and-luarocks-in-macos/</id>
+        <title><![CDATA[macOS 上安装 Lua 及 Luarocks]]></title>
+        <updated>2020-12-13T15:38:20+08:00</updated>
+        <link href="https://blog.triplez.cn/install-lua-and-luarocks-in-macos/"/>
+        <content type="text/html" src="https://blog.triplez.cn/install-lua-and-luarocks-in-macos/"><![CDATA[<p>[TOC]</p>
+<h2><span class="ez-toc-section" id="Homebrew">Homebrew</span></h2>
+<p>Lua、LuaJIT 和 Luarocks 都可以直接通过 <code>brew</code> 包管理直接安装，而且可以处理不同版本的 Luarocks，使用的仓库为 <a href="https://github.com/mesca/homebrew-luarocks">mesca/homebrew-luarocks</a> 。</p>
+<pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash">$ brew tap mesca/luarocks
+</code></pre>
+<blockquote><p>
+  Lua 5.1, 5.3 都需要在 Homebrew 中添加 <code>mesca/luarocks</code> 仓库。
+</p></blockquote>
+<h3><span class="ez-toc-section" id="Lua_51">Lua 5.1</span></h3>
+<pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash"># Lua 5.1
+$ brew install lua51
+$ brew install luarocks51
+</code></pre>
+<p>使用方式：</p>
+<pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash"># 进入 Lua 5.1 REPL
+$ lua5.1
+# 使用 Lua 5.1 的 Luarocks
+$ luarocks-5.1 --version
+</code></pre>
+<h3><span class="ez-toc-section" id="LuaJIT">LuaJIT</span></h3>
+<pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash"># LuaJIT
+$ brew install luajit
+$ brew install luarocks51 --with-luajit
+</code></pre>
+<p>使用方式：</p>
+<pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash"># 进入 LuaJIT REPL
+$ luajit
+# LuaJIT 与 Lua 5.1 共用 Luarocks
+$ luarocks-5.1 --version
+</code></pre>
+<h3><span class="ez-toc-section" id="Lua_53">Lua 5.3</span></h3>
+<pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash"># Lua 5.3
+$ brew install lua53
+$ brew install luarocks53
+</code></pre>
+<p>使用方式：</p>
+<pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash"># 进入 Lua 5.3 REPL
+$ lua5.3
+# 使用 Lua 5.3 的 Luarocks
+$ luarocks-5.3 --version
+</code></pre>
+<h3><span class="ez-toc-section" id="Lua_54_Current">Lua 5.4 (Current)</span></h3>
+<pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash"># Current: 5.4
+$ brew install lua
+$ brew install luarocks
+</code></pre>
+<p>使用方式：</p>
+<pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash"># 进入 Lua 5.4 REPL
+$ lua
+# 使用 Lua 5.4 的 Luarocks
+$ luarocks --version
+</code></pre>
+<h2><span class="ez-toc-section" id="Build_from_Source">Build from Source</span></h2>
+<p>请参照 <a href="https://github.com/luarocks/luarocks/wiki/Installation-instructions-for-Unix">Luarocks 官方安装指南</a> 。或者 <a href="https://openresty.org/en/using-luarocks.html">OpenResty 文档中关于 Luarocks 的内容</a> 。</p>
+<p>The post <a rel="nofollow" href="https://blog.triplez.cn/install-lua-and-luarocks-in-macos/">macOS 上安装 Lua 及 Luarocks</a> appeared first on <a rel="nofollow" href="https://blog.triplez.cn">Blog</a>.</p>]]></content>
+        <author>
+            <name><![CDATA[TripleZ’s Blog]]></name>
         </author>
     </entry>
     
@@ -875,6 +1229,122 @@ for grf in pages:
         <content type="text/html" src="https://blog.vvzero.com/2020/11/18/May-be-I-know-why-use-complement/"><![CDATA[<blockquote><p>本文供初学者学习，供大佬批判。</p></blockquote><h2 id="补码背景"><a href="#补码背景" class="headerlink" title="补码背景"></a>补码背景</h2><p>很久很久以前，当我参加 NOIP（信息学奥林匹克竞赛）的时候，老师是这么讲补码的：</p><blockquote><p>int 型数据的最高位是符号位，符号位为 0 就代表这是正数，为 1 就是负数。但是，+0 和 -0 理应是同一个数，但在二进制中却表示成了两个不同的数（以 8 位为例，二进制表示）： 00000000 和 10000000。所以，我们引入了补码，补码就是，对负数而言，符号位不变，其他位取反，然后再加 1。于是， -0 的补码就是 10000000 -&gt; 11111111 -&gt; 00000000 与 +0 一致了。</p></blockquote><h2 id="补码的意义"><a href="#补码的意义" class="headerlink" title="补码的意义"></a>补码的意义</h2><p>其实当时我就该意识到，仅仅为了 0 这一个数便创建了“补码”这个概念，未免太浪费了。我最近看了 <em>CS: APP</em> 这本书，才进一步理解了补码。</p><p>补码，就是为有符号整数而创建的概念。对于无符号整数，是不存在“补码”的概念的。我们先看一个无符号数 00100101，它是怎么转换成十进制的？加权求和，<code>0×2^7+0×2^6+1×2^5+0×2^4+0×2^3+1×2^2+0×2^1+1×2^0=37</code>；无符号数 10000011，<code>1×2^7+0×2^6+0×2^5+0×2^4+0×2^3+0×2^2+1×2^1+1×2^0=131</code>。</p><p>对于有符号数呢？假如我们不用补码，那么有符号数 10000011，就是 <code>-(0×2^6+0×2^5+0×2^4+0×2^3+0×2^2+1×2^1+1×2^0)=-3</code>。人这么算起来是挺舒服，但是计算机会很难受，凭什么我最高位的权值没了？只能做符号？</p><p>然后我们试试补码。10000011 的补码是 11111101，如何用补码求它的十进制呢？其实这跟无符号数是一样的，只不过，最高位的权值，不是 2^7，而是 -2^7。求值：<code>1×(-2^7)+1×2^6+1×2^5+1×2^4+1×2^3+1×2^2+0×2^1+1×2^0=-3</code>，是不是很神奇？</p><p>对于正数而言，就更简单了，与无符号数一致。</p><h2 id="补码再探"><a href="#补码再探" class="headerlink" title="补码再探"></a>补码再探</h2><p>计算机只能做加法（不是），所以，我们看看用补码做加法，有什么好处。</p><p>先计算 -13+10 吧，很简单的二进制竖式加法：</p><table><thead><tr><th>7</th><th>6</th><th>5</th><th>4</th><th>3</th><th>2</th><th>1</th><th>0</th></tr></thead><tbody><tr><td>1</td><td>1</td><td>1</td><td>1</td><td>0</td><td>0</td><td>1</td><td>1</td></tr><tr><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>1</td><td>0</td></tr><tr><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>0</td><td>1</td></tr></tbody></table><p>11111101 即为 -3 的补码。</p><p>再算一个，-8+9：</p><table><thead><tr><th>7</th><th>6</th><th>5</th><th>4</th><th>3</th><th>2</th><th>1</th><th>0</th></tr></thead><tbody><tr><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>0</td><td>0</td><td>0</td></tr><tr><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td>1</td></tr><tr><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td></tr></tbody></table><p>神奇吗？最高位的 0 不见了，变成正数 1 了。</p><h2 id="补码小结"><a href="#补码小结" class="headerlink" title="补码小结"></a>补码小结</h2><p>补码，就是计算机内部有符号数的存储方式，我们不要认为补码是由原码“转换”而来的，补码本来就代表了实际的数字，11111101 == -3，就这样。</p>]]></content>
         <author>
             <name><![CDATA[VVBLOG]]></name>
+        </author>
+    </entry>
+    
+    <entry>
+        <id>https://blog.triplez.cn/macos-user-guide/</id>
+        <title><![CDATA[macOS 使用笔记]]></title>
+        <updated>2020-10-20T13:34:15+08:00</updated>
+        <link href="https://blog.triplez.cn/macos-user-guide/"/>
+        <content type="text/html" src="https://blog.triplez.cn/macos-user-guide/"><![CDATA[<h2><span class="ez-toc-section" id="TL_DR">TL; DR</span></h2>
+<p>如果觉得这篇文章太长了，遇到问题直接在 <a href="https://support.apple.com/zh-cn/guide/mac-help/welcome/mac">这里</a> 搜索吧～</p>
+<h2><span class="ez-toc-section" id="i">外设使用</span></h2>
+<h3><span class="ez-toc-section" id="i-2">鼠标翻转</span></h3>
+<p><a href="https://github.com/pilotmoon/Scroll-Reverser">Scroll-Reverser</a></p>
+<h3><span class="ez-toc-section" id="4K_HiDPI">4K 及以下分辨率屏幕开启 HiDPI</span></h3>
+<p>笔者之前买的屏幕是 2K 分辨率的，如果不使用 Apple 的 HiDPI 技术，MacBook 会把这个屏幕当做是电视，投影效果非常的差，文字模糊的不行。使用以下项目的脚本可以在低分辨率屏幕上强制打开 HiDPI 功能，效果卓群，建议折腾一下。</p>
+<p><a href="https://github.com/xzhih/one-key-hidpi/blob/master/README-zh.md">xzhih/one-key-hidpi</a></p>
+<blockquote><p>
+  笔者注：运行脚本需要关闭 SIP，步骤可见 <a href="#打开/关闭-macOS-SIP（系统完整性保护）">打开/关闭 macOS SIP（系统完整性保护）</a> 。
+</p></blockquote>
+<h3><span class="ez-toc-section" id="Windows">Windows 键盘按键兼容</span></h3>
+<p>可在系统设置的 <code>键盘 &gt; 修饰键</code> 中将 Command 和 Option 键调换。</p>
+<p><img src="https://triplez-public-1251926021.cos.ap-shanghai.myqcloud.com/picgoimage-20200920172108802.png" alt="image-20200920172108802" /></p>
+<h2><span class="ez-toc-section" id="i-3">系统相关</span></h2>
+<h3><span class="ez-toc-section" id="i-4">无法打开来自身分不明开发者的应用</span></h3>
+<p><img src="https://triplez-public-1251926021.cos.ap-shanghai.myqcloud.com/picgomacos-mojave-unidentified-developer-alert-open-dark.jpg" alt="img" /></p>
+<p>按住 <kbd>Control ⌃</kbd> 键并点击应用，在菜单中选择“打开”，弹出的对话框周就会如上有“打开”选项了。</p>
+<h3><span class="ez-toc-section" id="_macOS_SIP">打开/关闭 macOS SIP（系统完整性保护）</span></h3>
+<p>重启后按住 <kbd>Command ⌘</kbd> + <kbd>R</kbd> ，直到看到 Apple 标志再松开。在菜单栏中选择“实用工具”，打开“终端”。</p>
+<p>打开 SIP：</p>
+<pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash">csrutil enable
+</code></pre>
+<p>关闭 SIP：</p>
+<pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash">csrutil disable
+</code></pre>
+<p>需要重启生效。</p>
+<h2><span class="ez-toc-section" id="i-5">常用快捷键</span></h2>
+<table>
+<thead>
+<tr>
+<th>功能</th>
+<th>快捷键</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>截图</td>
+<td><kbd>Command ⌘</kbd> + <kbd>Shift ⇧</kbd> + <kbd>4</kbd></td>
+<td>进入截图后长按 <kbd>Space</kbd> 可以<del>优雅地</del>截取某个指定窗口</td>
+</tr>
+<tr>
+<td>截图并复制到剪切板</td>
+<td><kbd>Control ⌃</kbd> + <kbd>Command ⌘</kbd> + <kbd>Shift ⇧</kbd> + <kbd>4</kbd></td>
+<td>进入截图后长按 <kbd>Space</kbd> 可以<del>优雅地</del>截取某个指定窗口</td>
+</tr>
+<tr>
+<td>Spotlight “聚焦”搜索</td>
+<td><kbd>Command ⌘</kbd> + <kbd>Space</kbd></td>
+<td></td>
+</tr>
+<tr>
+<td>切换输入法</td>
+<td><kbd>Caps Lock ⇪</kbd></td>
+<td>短按为切换输入法，长按为切换大小写</td>
+</tr>
+<tr>
+<td>切换任务</td>
+<td><kbd>Command ⌘</kbd> + <kbd>Tab</kbd></td>
+<td></td>
+</tr>
+<tr>
+<td>切换桌面</td>
+<td><kbd>Control ⌃</kbd> + <kbd>左/右箭头</kbd></td>
+<td></td>
+</tr>
+<tr>
+<td>调度中心</td>
+<td><kbd>Control ⌃</kbd> + <kbd>上箭头</kbd></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>更多快捷键请看 Apple 支持网站中的 <a href="https://support.apple.com/zh-cn/HT201236">Mac 键盘快捷键</a>。</p>
+<h2><span class="ez-toc-section" id="OneNote">OneNote</span></h2>
+<p>从 <a href="https://apps.apple.com/cn/app/microsoft-onenote/id784801555?mt=12">AppStore 下载</a> 即可，或者直接点击下方的链接。</p>
+<p><a href="itms-apps://apps.apple.com/cn/app/microsoft-onenote/id784801555?mt=12">Click here to direct download OneNote from AppStore for macOS</a></p>
+<h2><span class="ez-toc-section" id="Clipboard">Clipboard</span></h2>
+<p>剪切板管理应用：<a href="https://github.com/p0deje/Maccy/releases">Maccy</a> 。</p>
+<blockquote><p>
+  从 GitHub Release 中下载最新 zip 包解压即可。</p>
+<p>  安装方式：将 <code>maccy.app</code> 拖入 Application 文件夹中。
+</p></blockquote>
+<h2><span class="ez-toc-section" id="Terminal">Terminal</span></h2>
+<h3><span class="ez-toc-section" id="iTerm2">iTerm2</span></h3>
+<h3><span class="ez-toc-section" id="proxychains-ng">proxychains-ng</span></h3>
+<p>For proxy in Command ⌘ line.</p>
+<h3><span class="ez-toc-section" id="oh-my-zsh">oh-my-zsh</span></h3>
+<p>Great terminal theme and other fancy functions.</p>
+<h3><span class="ez-toc-section" id="zsh_plugins">zsh plugins</span></h3>
+<p>More in <a href="https://github.com/unixorn/awesome-zsh-plugins#plugins">here</a>.</p>
+<h4><span class="ez-toc-section" id="autosuggestion">autosuggestion</span></h4>
+<p><a href="https://github.com/zsh-users/zsh-autosuggestions">zsh-users/zsh-autosuggestions</a></p>
+<h4><span class="ez-toc-section" id="syntax-highlighting">syntax-highlighting</span></h4>
+<p><a href="https://github.com/zsh-users/zsh-syntax-highlighting">zsh-users/zsh-syntax-highlighting</a></p>
+<h3><span class="ez-toc-section" id="vimrc">vimrc</span></h3>
+<p>The most comfortable configuration for vim.</p>
+<p><a href="https://github.com/amix/vimrc">amix/vimrc</a></p>
+<h2><span class="ez-toc-section" id="Markdown">Markdown</span></h2>
+<h3><span class="ez-toc-section" id="Typora">Typora</span></h3>
+<p><a href="https://typora.io/">Typora -- a markdown editor, markdown reader</a></p>
+<h3><span class="ez-toc-section" id="PicGo">PicGo</span></h3>
+<p><a href="https://github.com/Molunerfinn/PicGo">PicGo - 图片上传新体验</a></p>
+<p>在 Typora 中设置 PicGo 上传图片：https://support.typora.io/Upload-Image/#picgoapp-chinese-language-only</p>
+<p>The post <a rel="nofollow" href="https://blog.triplez.cn/macos-user-guide/">macOS 使用笔记</a> appeared first on <a rel="nofollow" href="https://blog.triplez.cn">Blog</a>.</p>]]></content>
+        <author>
+            <name><![CDATA[TripleZ’s Blog]]></name>
         </author>
     </entry>
     
@@ -1221,6 +1691,74 @@ for (
 }</code></pre><h1>修改之前的分页排版算法</h1><p>如果没有分页功能的话，那么这个需求已经完成了，但是事情就是没有那么简单……</p><p>很快我就发现：如果还跟之前一样，为了不拆单元格中的内容，强制当空间不够时将下一行直接扔到下一页，势必会造成极大的空间浪费，因为有可能“大格”里面的内容并不多，但每个“大格”对应的“小格”特别多，这样一个“大格”的高度很有可能超过一页，并且这在业务上是绝对无法避免的：</p><p><img src="https://static.rexskz.info/blog/article/manually-table-layout-with-cell-merging/2.png" alt="一种无法避免的需要拆分单元格的场景" title="一种无法避免的需要拆分单元格的场景"></p><p>不过有一个值得注意的地方——业务要求的“大格”里面的内容确实不算多，一般就是一个商品名称或者图片，内容本身不会超过一页。如果我可以将这个单元格拆成有内容和没内容两部分，也能在一定程度上缓解空间浪费的问题。</p><p>之前对的排版思路是这样的：</p><ol><li>令当前高度 <code>current = headAreaHeight + thHeight</code></li><li><p>从头开始枚举每一行</p><ol><li>获取当前行的高度 <code>height = tr.offsetHeight</code></li><li><p>如果 <code>current + height + tailAreaHeight</code> 大于一页高度：</p><ol><li>在当前页的最后插入一个尾部区域</li><li>将表头和当前行放到新页，更新 <code>current</code></li></ol></li><li>否则，将当前行插入到当前页的最后，并更新 <code>current</code></li></ol></li></ol><p>需要改动的地方有两个。</p><h2>重新定义“当前行”</h2><p>如果依旧按照以前那样直接获取 <code>tr.offsetHeight</code>，可能会在这种组合场景下出现问题：</p><ul><li>当前行中有一个“大格”，高度介于一行和两行“小格”高度之间</li><li>当前页可以放下当前行，但无法放下两行“小格”的高度</li></ul><p>如果出现了这种场景，那么我是在当前页放一行“小格”还是强行放两行呢？如果是放一行，那么这个“小格”会被纵向拉伸以适应“大格”高度，不是很美观；强行放两行又可能会把尾部区域挤到下一页。</p><p>最终我决定用这样的方法：如果当前行包含“大格”，说明一定是整行，那么我先找到所有“大格”中内容高度最高的那个，假设高度为 <code>x</code>，接下来从当前行往下找非整行，根据之前的约定，在遍历到下一个整行之前，我一定能找到某个非整行，从当前行到它的所有行，加起来的高度恰好大于等于 <code>x</code>。如果是大于，说明“大格”的内容确实不多；如果是等于，说明“大格”的内容比较多，甚至会把“小格”撑开。</p><p><img src="https://static.rexskz.info/blog/article/manually-table-layout-with-cell-merging/3.png" alt="当前行高度的计算方法" title="当前行高度的计算方法"></p><p>在上图中，左边表格中的“大格”内容很少，于是我们先取红框的高度，再从上往下扫，看有多少“小格”加起来高度恰好比它高，答案是蓝框的部分，于是我们就用蓝框的高度作为当前行的高度；右边表格中的“大格”内容很多，按照这种方法蓝框会取到所有的三个“小格”，也符合预期。</p><p>如果按照这个方法计算出的“当前行高度”加上尾部区域高度已经无法放到当前页，我们就按照之前的思路，先在当前页插入一个尾部区域，然后将当前行以及蓝框中的“小格”所在的行一起放到下一页，并令 <code>current</code> 等于蓝框高度；否则，将当前行以及蓝框中的“小格”所在的行一起插入到当前页，并为 <code>current</code> 加上蓝框的高度。</p><h2>对跨页后“大格”的处理</h2><p>由于表头要在每一页的表格中展示，因此“大格”被拆分后，属于下一页的单元格必须要被显式的绘制出来。下图中的绿框就是这样一个单元格：</p><p><img src="https://static.rexskz.info/blog/article/manually-table-layout-with-cell-merging/4.png" alt="一个必须被显式绘制出来的单元格" title="一个必须被显式绘制出来的单元格"></p><p>但是还好，我们在排版时，可以记录一下“自从上一个整行过后，已经用了多少个非整行。”在上图的例子中，“内容很少”和“元素 1”是最近一个整行，然后一直到“元素 5”都是非整行（一共 4 个）。由于在计算合并单元格时，我们知道“内容很少”这一格的 <code>rowspan = 8</code>，那么可以确定绿框的 <code>rowspan = 8 - 4 - 1 = 3</code>。只要发现“元素 6”所在的行是个非整行，我们就在每个缺失的地方各插入一个 <code>rowspan = 3</code>、内容为空的“大格”，将其补充为整行。</p><p>于是，这个需求终于做完了。</p><h1>Don't Break The Web</h1><p>上文提到，我为排版代码做过一次性能优化，那么这次新增的功能是否会影响到之前的优化效果呢？答案是不会的。先来回顾一下之前我做的优化：</p><blockquote><p>只需要在一开始先将最外层元素设置为 <code>display: none</code>，这样可以避免每加载一块就渲染；然后在全部加载完之后一下子全部渲染出来。</p><p>只要能保证给每个表格设置好 <code>&lt;col&gt;</code> 的宽度，那么这一行不管被排到哪个表格块中，高度都是不变的。也就是说，所有元素的高度，在渲染之后排版之前，就已经完全确定下来了！那么我完全可以在排版的一开始，将所有必要元素的 <code>offsetHeight</code> 保存在一个 <code>Map</code> 中，之后直接调用就可以了。</p></blockquote><p>对于第一个优化，控制是否显示只会影响面单自身，与每个面单内部的元素无关。只需要保证我的合并单元格代码和排版代码可以在“一下子全部渲染出来”之后执行即可；对于第二个优化，因为将一个单元格拆到两页并不会影响总体高度，每个“大格”的内容高度也不会变，因此可以将行高与内容高度提前缓存在之前的 <code>Map</code> 中，供排版时调用。</p>]]></content>
         <author>
             <name><![CDATA[R·ex / Zeng]]></name>
+        </author>
+    </entry>
+    
+    <entry>
+        <id>https://blog.triplez.cn/using-systemd-manage-frpc-service/</id>
+        <title><![CDATA[使用 systemd 管理 frpc 服务]]></title>
+        <updated>2020-06-27T14:26:07+08:00</updated>
+        <link href="https://blog.triplez.cn/using-systemd-manage-frpc-service/"/>
+        <content type="text/html" src="https://blog.triplez.cn/using-systemd-manage-frpc-service/"><![CDATA[<h2><span class="ez-toc-section" id="i">前言</span></h2>
+<p>frp[1] 是著名的内网穿透软件，支持 TCP、UDP 协议，且只需简单配置服务端，通过编辑客户端配置即可完成内网穿透的功能。但是其只提供了二进制可执行文件，并没有将其打包，也就无法使用 systemd。而对于一个需要开机启动、失败拉起的基础功能来说，我们有对其通过 systemd 进行管理的需求，也就有了本文。</p>
+<h2><span class="ez-toc-section" id="_frpc">注册 frpc 服务</span></h2>
+<p>其实使用 systemd 来管理程序相当简单。只需要在 <code>/etc/systemd/system/</code> 下写一个 <code>*.service</code> 的文件注册即可。</p>
+<p>在 <code>/etc/systemd/system/</code> 目录下新建 <code>frpc.service</code> ：</p>
+<pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash">$ sudo touch /etc/systemd/system/frpc.service
+</code></pre>
+<p>将以下内容填入至 <code>frpc.service</code> ：</p>
+<pre class="line-numbers prism-highlight" data-start="1"><code class="language-ini">[Unit]
+Description=FRP Client Daemon
+After=network.target
+Wants=network.target
+
+[Service]
+Type=simple
+ExecStart=/path/to/your/frpc -c /path/to/your/frpc.ini
+Restart=always
+RestartSec=20s
+LimitNOFILE=infinity
+
+[Install]
+WantedBy=multi-user.target
+</code></pre>
+<blockquote><p>
+  <code>frpc.service</code> 的内容遵循 systemd 的配置格式[2]&#091;3]。
+</p></blockquote>
+<p>保存后重载 systemd 配置：</p>
+<pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash">$ sudo systemctl daemon-reload
+</code></pre>
+<h2><span class="ez-toc-section" id="_systemd_frpc">通过 systemd 控制 frpc</span></h2>
+<p>启动 frpc：</p>
+<pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash">$ sudo systemctl start frpc
+</code></pre>
+<p>停止 frpc：</p>
+<pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash">$ sudo systemctl stop frpc
+</code></pre>
+<p>查看 frpc 状态：</p>
+<pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash">$ systemctl status frpc
+</code></pre>
+<p>将 frpc 设为开机启动：</p>
+<pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash">$ sudo systemctl enable frpc
+</code></pre>
+<p>取消 frpc 开机启动：</p>
+<pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash">$ sudo systemctl disable frpc
+</code></pre>
+<p>使用方法与 systemd units [4]相同。</p>
+<h2><span class="ez-toc-section" id="References">References</span></h2>
+<ol start="1.">
+<li>fatedier/frp in GitHub<br />
+<a href="https://github.com/fatedier/frp">https://github.com/fatedier/frp</a></li>
+<li>systemd.unit<br />
+<a href="https://www.freedesktop.org/software/systemd/man/systemd.unit.html">https://www.freedesktop.org/software/systemd/man/systemd.unit.html</a></li>
+<li>systemd.service<br />
+<a href="https://www.freedesktop.org/software/systemd/man/systemd.service.html">https://www.freedesktop.org/software/systemd/man/systemd.service.html</a></li>
+<li>systemd (Using units) - ArchWiki<br />
+<a href="https://wiki.archlinux.org/index.php/Systemd#Using_units">https://wiki.archlinux.org/index.php/Systemd#Using_units</a></li>
+</ol start="1.">
+<p>The post <a rel="nofollow" href="https://blog.triplez.cn/using-systemd-manage-frpc-service/">使用 systemd 管理 frpc 服务</a> appeared first on <a rel="nofollow" href="https://blog.triplez.cn">Blog</a>.</p>]]></content>
+        <author>
+            <name><![CDATA[TripleZ’s Blog]]></name>
         </author>
     </entry>
     
@@ -1624,108 +2162,6 @@ pinentry-mode loopback
     </entry>
     
     <entry>
-        <id>https://blog.invariant.cn/a-comparison-between-webassembly-and-risc-v/</id>
-        <title><![CDATA[WebAssembly 与 RISC-V 指令集架构的对比]]></title>
-        <updated>2020-03-15T09:51:51+08:00</updated>
-        <link href="https://blog.invariant.cn/a-comparison-between-webassembly-and-risc-v/"/>
-        <content type="text/html" src="https://blog.invariant.cn/a-comparison-between-webassembly-and-risc-v/"><![CDATA[<figure class="kg-card kg-bookmark-card"><a class="kg-bookmark-container" href="https://invariant.me/a-comparison-between-webassembly-and-risc-v/"><div class="kg-bookmark-content"><div class="kg-bookmark-title">A Comparison between WebAssembly and RISC-V</div><div class="kg-bookmark-description">WebAssembly and RISC-V are both new Instruction Set Architectures (ISAs) that evolved in the recent 10 years. Let’s do a comparison.</div><div class="kg-bookmark-metadata"><img class="kg-bookmark-icon" src="https://invariant.me/favicon.ico" alt="WebAssembly 与 RISC-V 指令集架构的对比"><span class="kg-bookmark-author">Heyang Zhou</span><span class="kg-bookmark-publisher">The Invariant</span></div></div><div class="kg-bookmark-thumbnail"><img src="https://invariant.me/content/images/2020/03/wasm-riscv.png" alt="WebAssembly 与 RISC-V 指令集架构的对比"></div></a></figure><img src="https://blog.invariant.cn/content/images/2020/03/wasm-riscv.png" alt="WebAssembly 与 RISC-V 指令集架构的对比"><p>WebAssembly 与 RISC-V 都是近十年内新出现的指令集架构。摘录一段 <a href="https://webassembly.org/">WebAssembly 官方网站</a>的介绍：</p><blockquote>WebAssembly (abbreviated <em><em>Wasm</em></em>) is a binary instruction format for a stack-based virtual machine. Wasm is designed as a portable target for compilation of high-level languages like C/C++/Rust, enabling deployment on the web for client and server applications.</blockquote><blockquote>WebAssembly （简写为 Wasm）是一种栈虚拟机的二进制指令格式。Wasm 被设计为 C/C++/Rust 等高级语言的可移植编译目标，从而允许客户端和服务器应用程序部署在 Web 上。</blockquote><p>和 <a href="https://riscv.org/">RISC-V 的官方介绍</a>：</p><blockquote>RISC-V is a free and open ISA enabling a new era of processor innovation through open standard collaboration. Born in academia and research, RISC-V ISA delivers a new level of free, extensible software and hardware freedom on architecture, paving the way for the next 50 years of computing design and innovation.</blockquote><blockquote>RISC-V 是一种自由、开放的指令集架构，通过开放标准协作使新的处理器创新成为可能。RISC-V 来自学术研究，提供了更加自由、可扩展的软硬件架构，为未来 50 年的计算技术设计与创新铺平道路。</blockquote><p>这两种指令集架构看起来很不一样。WebAssembly 的目标平台主要是 JIT 编译器（以及浏览器）；而 RISC-V 则专为硬件设计，其目标之一即是在 FPGA 和电路上的高效实现。WebAssembly 与 RISC-V 的关系似乎类似于早期的 Java 与 x86：一种字节码格式，和一个硬件指令集。它们有什么关系呢？</p><p>其实字节码格式与硬件指令集的分界线并不是非常清晰。例如在 x86 指令集的早期实现中，指令经过一层解码直接被分发到执行电路去执行。但近年的 Intel/AMD CPU 采用了不同的执行策略：每条 x86 指令首先被翻译为某种内部 RISC 指令，执行组件收到的指令其实已经是翻译后的 RISC 编码格式。这实际上相当于从 x86 到内部 RISC 指令集的某种“硬件实时编译”过程。同时，<a href="https://en.wikipedia.org/wiki/Java_processor">Java</a> 与 <a href="https://github.com/piranna/wasmachine">WebAssembly</a> 也有实验性的硬件实现，虽然它们还不能赶上 JIT 编译器在现代 CPU 上所能达到的效率。</p><blockquote>我们已经可以看到 RISC-V 指令集<a href="https://github.com/nervosnetwork/ckb-vm">被用于区块链的智能合约</a>，而 WebAssembly 此前几乎是原生语言智能合约的唯一选择。</blockquote><p>在这里我们对 WebAssembly 与 RISC-V 做一个比较。</p><!--kg-card-begin: markdown--><table>
-<thead>
-<tr>
-<th></th>
-<th>WebAssembly</th>
-<th>RISC-V</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong><font color="#512da8">开源</font></strong></td>
-<td>是</td>
-<td>是</td>
-</tr>
-<tr>
-<td><strong><font color="#512da8">内存架构</font></strong></td>
-<td>Load/Store</td>
-<td>Load/Store</td>
-</tr>
-<tr>
-<td><strong><font color="#512da8">浮点支持</font></strong></td>
-<td>是</td>
-<td>是 (定义于扩展)</td>
-</tr>
-<tr>
-<td><strong><font color="#512da8">SIMD</font></strong></td>
-<td>是</td>
-<td>是 (定义于扩展)</td>
-</tr>
-<tr>
-<td><strong><font color="#bb4d00">代码/数据分离</font></strong></td>
-<td>是</td>
-<td>否</td>
-</tr>
-<tr>
-<td><strong><font color="#bb4d00">指针宽度</font></strong></td>
-<td>32</td>
-<td>32/64</td>
-</tr>
-<tr>
-<td><strong><font color="#bb4d00">最大数据宽度</font></strong></td>
-<td>64</td>
-<td>32/64</td>
-</tr>
-<tr>
-<td><strong><font color="#bb4d00">静态类型</font></strong></td>
-<td>弱</td>
-<td>无</td>
-</tr>
-<tr>
-<td><strong><font color="#bb4d00">控制流约束</font></strong></td>
-<td>是</td>
-<td>否</td>
-</tr>
-<tr>
-<td><strong><font color="#bb4d00">机器模型</font></strong></td>
-<td>栈机</td>
-<td>寄存器机</td>
-</tr>
-<tr>
-<td><strong><font color="#bb4d00">内存布局</font></strong></td>
-<td>线性</td>
-<td>分页</td>
-</tr>
-<tr>
-<td><strong><font color="#bb4d00">内存保护</font></strong></td>
-<td>无</td>
-<td>RWX</td>
-</tr>
-<tr>
-<td><strong><font color="#bb4d00">多线程同步</font></strong></td>
-<td>CAS</td>
-<td>LL/SC</td>
-</tr>
-<tr>
-<td><strong><font color="#bb4d00">指令编码</font></strong></td>
-<td>变长</td>
-<td>定长 (2 或 4 字节)</td>
-</tr>
-<tr>
-<td><strong><font color="#bb4d00">与环境交互</font></strong></td>
-<td>导入函数</td>
-<td>系统调用</td>
-</tr>
-<tr>
-<td><strong><font color="#bb4d00">可执行映像格式</font></strong></td>
-<td>WebAssembly</td>
-<td>ELF</td>
-</tr>
-</tbody>
-</table>
-<!--kg-card-end: markdown--><p><strong>1. 代码/数据分离</strong></p><p>包括 RISC-V 在内的大多数现代架构对代码和数据使用同一个地址空间，但是 WebAssembly 没有这样做。实际上，运行中的代码甚至没有办法读/写它自己。这个设计的原因可能是：</p><ul><li>简化 JIT 编译器的实现。如果代码可以自我修改，那么 JIT 编译器则需要有检测修改和重新生成目标代码的能力，而这需要相当复杂的实现机制。</li><li>WebAssembly 假设了一个功能完善的运行环境。运行环境会处理链接、重定位等准备工作，程序不需要关心怎样把它自己运行起来。</li><li>安全。能够动态生成和修改的代码是个很危险的攻击点。</li></ul><p><strong>2. 静态类型与控制流约束</strong></p><p>WebAssembly 具有很强的“结构性”。其标准要求所有函数调用、循环、跳转和值类型遵循特定的结构约束，例如向一个接受三个参数的函数传入两个参数、跳转到其他函数里的某个位置、在两个整数上执行浮点加操作等都会导致编译/验证失败。RISC-V 则不具有此类约束，指令的有效与否只取决于其自身的编码是否正确。</p><p><strong>3. 机器模型</strong></p><p>WebAssembly 是一种<a href="https://en.wikipedia.org/wiki/Stack_machine">栈机</a>指令集，而 RISC-V 是一种<a href="https://en.wikipedia.org/wiki/Register_machine">寄存器机</a>指令集。</p><p>在 WebAssembly 中，每条指令<em>语义上</em>会从值栈上弹出它的操作数，然后将结果推入值栈。然而与 Java 等其他基于栈机的字节码格式不同的是，程序中任意指令处值栈的结构都可以被静态确定。这一设计有利于更好的编译优化。</p><p>在 RISC-V 中，每条指令的编码包含 0 - 3 个寄存器编号 <code>rd, rs1, rs2</code> 。其中 <code>rs1</code>与 <code>rs2</code> 是输入寄存器， <code>rd</code> 是输出寄存器。除内存访问、特权指令等特殊类型指令外，每条指令只从输入寄存器中读取数据，在输出寄存器中存放结果。</p><p><strong>4. 内存管理</strong></p><p>虽然 WebAssembly 与 RISC-V 都定义了一个无类型的、字节可寻址的内存，它们之间还是有一些细节上的区别。WebAssembly 的内存等同于一个大数组：有效地址从 0 开始，连续扩展到某个由程序定义初值、可增长的上限。而 RISC-V 则使用了<a href="https://en.wikipedia.org/wiki/Virtual_memory">虚拟内存</a>，用页表将地址映射到物理内存。</p><figure class="kg-card kg-image-card kg-card-hascaption"><img src="https://invariant.me/content/images/2020/03/wasm-riscv-comp.png" class="kg-image" alt="WebAssembly 与 RISC-V 指令集架构的对比"><figcaption>内存布局</figcaption></figure><p>WebAssembly 的内存设计虽然简洁且易于实现，但存在一些问题：</p><ul><li>地址 0 是有效的，这会导致一些程序在解引用空指针时的行为与预期不同。</li><li>无法建立不映射到任何物理地址的“无效”地址区间，因此无法实现多线程环境下的栈保护页 (guard page) 。</li></ul><p><strong>5. 同步机制</strong></p><p>图灵完备的计算机器需要至少一条条件分支指令。同样，支持多线程同步的指令集架构需要至少一条“原子条件分支”指令。这类指令在 WebAssembly 下是 <code>i{32,64}.atomic.rmw.cmpxchg</code>，在 RISC-V 下是 <code>LR/SC</code>，分别对应 <a href="https://en.wikipedia.org/wiki/Compare-and-swap">CAS</a> 模型和 <a href="https://en.wikipedia.org/wiki/Load-link/store-conditional">LL/SC</a> 模型。</p><p>LL/SC 的语义比 CAS 更强。CAS 存在难以解决的 <a href="https://en.wikipedia.org/wiki/ABA_problem">ABA 问题</a>，但 LL/SC 不受影响。这也意味着在 CAS 架构上模拟 LL/SC 比反过来要困难很多。</p><hr><blockquote>Note: 我写过一个 RISC-V 解释器 <a href="https://github.com/losfair/FlatRv">FlatRv</a> ，且正在参与一个 WebAssembly JIT 运行环境 <a href="https://github.com/wasmerio/wasmer">Wasmer</a> 的开发。如果你感兴趣可以点个 Star :)</blockquote>]]></content>
-        <author>
-            <name><![CDATA[The Invariant 中文]]></name>
-        </author>
-    </entry>
-    
-    <entry>
         <id>https://invariant.me/a-comparison-between-webassembly-and-risc-v/</id>
         <title><![CDATA[A Comparison between WebAssembly and RISC-V]]></title>
         <updated>2020-03-13T16:38:53+08:00</updated>
@@ -1824,17 +2260,6 @@ pinentry-mode loopback
 <!--kg-card-end: markdown--><p>The similarities are quite common, so I will focus on the differences here.</p><p><strong>1. Separated code and data</strong></p><p>Most modern architectures use a unique addressing space for code and data, including RISC-V. But WebAssembly doesn't, and actually the running code is not even provided with a way to access itself. Possible reasons:</p><ul><li>Simplicity for JIT compilation. If code can modify itself, then the JIT compiler needs to detect the modification and update the corresponding machine code - which is very complex.</li><li>WebAssembly's assumption about a powerful host environment. Linking, etc. will be done entirely by the host, and the program doesn't need to care about bringing itself up.</li><li>Security. Generating code at runtime is dangerous.</li></ul><p><strong>2. Typing and control flow</strong></p><p>WebAssembly is very "structured": The JIT compiler requires all function calls, loops, jumps and value types to conform to structural constraints. For example, you can't pass two values to a function that accepts three arguments, you can't jump to a location in another function, and you can't execute the floating point add instruction on two integers.</p><p>RISC-V however has none of these constraints. Everything is just values in registers and it's up to the programmer to decide how to use them.</p><p><strong>3. Machine model</strong></p><p>WebAssembly is built upon the <a href="https://en.wikipedia.org/wiki/Stack_machine">stack machine</a> model, while RISC-V (along with most other hardware architectures) is a <a href="https://en.wikipedia.org/wiki/Register_machine">register machine</a>.</p><p>In WebAssembly, <em>semantically</em> any instruction pops its operands (if any) from the value stack, performs the defined operation, and pushes its results (if any) back on to the value stack. However, the structure of the value stack at any point in the program can be statically determined - which is different from the Java bytecode, for example, in that keeping the stack structure statically determinable is not an optimization but a compile-time mandatory requirement.</p><p><strong>4. Memory</strong></p><p>While both ISAs define an untyped, byte-addressable memory, some details are different. Memory in WebAssembly is literally a large byte array: addresses start from zero and continuously span to an upper limit (which can be dynamically increased by executing an instruction). In comparison, RISC-V uses <em><a href="https://en.wikipedia.org/wiki/Virtual_memory">virtual memory</a></em> where page tables are used to map addresses to the underlying physical memory.</p><figure class="kg-card kg-image-card kg-card-hascaption"><img src="https://invariant.me/content/images/2020/03/wasm-riscv-comp.png" class="kg-image" alt="A Comparison between WebAssembly and RISC-V"><figcaption>Memory layouts</figcaption></figure><p>WebAssembly's memory model, although being simple to implement and efficient when JIT compiled, has several issues compared to RISC-V:</p><ul><li>Address zero is valid, causing programs that assume a crash for dereferencing the null pointer to misbehave.</li><li>No "gaps" are possible. Therefore the guard page trick to prevent stack overflow in a multi-threaded environment won't work.</li></ul><p>Virtual memory usually comes with memory protection where each memory page has a combination of <em>read</em>, <em>write</em> and <em>execute</em> permissions. This is an important security mechanism because it prevents execution and writes on memory regions where such operations aren't expected. RISC-V implements memory protection but WebAssembly does not - maybe it's less important in an architecture where executable code isn't addressable?</p><p><strong>5. Synchronization</strong></p><p>A computing machine needs at least one conditional branch instruction to be turing complete. Similarly, a multiprocessor architecture needs at least one "atomic conditional branch" instruction for proper synchronization. This instruction is <code>i{32,64}.atomic.rmw.<a href="https://en.wikipedia.org/wiki/Compare-and-swap">cmpxchg</a></code> in WebAssembly, and <code><a href="https://en.wikipedia.org/wiki/Load-link/store-conditional">LR/SC</a></code> in RISC-V.</p><p><code>LR/SC</code> has stronger semantics than <code>cmpxchg</code>. With <code>cmpxchg</code> we have the famous <a href="https://en.wikipedia.org/wiki/ABA_problem">ABA problem</a>, but <code>LR/SC</code> is not affected. It also means that emulating <code>LR/SC</code> with a <code>cmpxchg</code>-only architecture is much more difficult than the other way; something like a global lock or transactional memory has to be used, greatly increasing the complexity. RISC-V is designed for hardware anyway, but if you ever want to write a software implementation you will have to work around this issue.</p><hr><blockquote>Side note: I worked on/am working on both a RISC-V interpreter, <a href="https://github.com/losfair/FlatRv">FlatRv</a>, and a full WebAssembly JIT runtime, <a href="https://github.com/wasmerio/wasmer">Wasmer</a>. Take a look at them and star if you like my work :)</blockquote>]]></content>
         <author>
             <name><![CDATA[The Invariant]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://blog.invariant.cn/try-jslinux/</id>
-        <title><![CDATA[用 JSLinux 在浏览器中运行 Linux]]></title>
-        <updated>2020-02-24T16:24:41+08:00</updated>
-        <link href="https://blog.invariant.cn/try-jslinux/"/>
-        <content type="text/html" src="https://blog.invariant.cn/try-jslinux/"><![CDATA[<figure class="kg-card kg-bookmark-card"><a class="kg-bookmark-container" href="https://invariant.me/try-jslinux/"><div class="kg-bookmark-content"><div class="kg-bookmark-title">Running Linux in your Browser with JSLinux</div><div class="kg-bookmark-description">Yesterday I ported the Wasm-based hardware emulator, JSLinux, to use xterm.js for frontend and my wstunnel for networking.</div><div class="kg-bookmark-metadata"><img class="kg-bookmark-icon" src="https://invariant.me/favicon.ico" alt="用 JSLinux 在浏览器中运行 Linux"><span class="kg-bookmark-author">Heyang Zhou</span><span class="kg-bookmark-publisher">The Invariant</span></div></div><div class="kg-bookmark-thumbnail"><img src="https://invariant.me/content/images/2020/02/Alpine_logo.png" alt="用 JSLinux 在浏览器中运行 Linux"></div></a></figure><img src="https://blog.invariant.cn/content/images/2020/03/Alpine_logo.png" alt="用 JSLinux 在浏览器中运行 Linux"><p><a href="https://bellard.org/jslinux/">JSLinux</a> 是 <a href="https://bellard.org/">Fabrice Bellard</a> 写的一个支持 32 位 x86 和 32/64 位 RISC-V 系统模拟的硬件模拟器，可编译为 WebAssembly 以在浏览器中运行。</p><p>昨天我<a href="https://github.com/losfair/jslinux-wstunnel">开了一个分支</a>，把字符终端实现换成了 <a href="https://xtermjs.org/">xterm.js</a> ，把网络实现换成了我的 <a href="https://github.com/losfair/wstunnel">wstunnel</a> 。这里是一个在修改后的 JSLinux 上运行 Alpine Linux 的 x86 虚拟机，可以在线试用。请不要滥用网络 :)</p><!--kg-card-begin: html--><iframe style="width: 100%; height: 500px" src="https://jslinux.invariant.me/widget.html">&lt;iframe disabled?&gt;</iframe><!--kg-card-end: html-->]]></content>
-        <author>
-            <name><![CDATA[The Invariant 中文]]></name>
         </author>
     </entry>
     
@@ -3487,7 +3912,7 @@ class Test
 <a href="https://www.noisyfox.cn/wp-content/uploads/2016/06/QQ截图20160619145913.png"><img loading="lazy" class="aligncenter size-full wp-image-403" src="https://www.noisyfox.cn/wp-content/uploads/2016/06/QQ截图20160619145913.png" alt="Unmanaged Exports 编译正常" width="662" height="65" /></a><br />
 <div class="sdm_download_item "><div class="sdm_download_item_top"><div class="sdm_download_thumbnail"></div><div class="sdm_download_title">DllExport-Fixed-1.2.7.7z</div></div><div style="clear:both;"></div><div class="sdm_download_description"><p>修正了非英文系统编译错误的Unmanaged Exports 1.2.7</p>
 <h1></h1>
-</div><div class="sdm_download_link"><span class="sdm_download_button"><a href="https://www.noisyfox.io/?smd_process_download=1&download_id=404" class="sdm_download green" title="DllExport-Fixed-1.2.7.7z" target="_blank">立即下载！</a></span><span class="sdm_download_item_count"><span class="sdm_item_count_number">1082</span><span class="sdm_item_count_string"> 下载</span></span></div></div><div class="sdm_clear_float"></div></p>
+</div><div class="sdm_download_link"><span class="sdm_download_button"><a href="https://www.noisyfox.io/?smd_process_download=1&download_id=404" class="sdm_download green" title="DllExport-Fixed-1.2.7.7z" target="_blank">立即下载！</a></span><span class="sdm_download_item_count"><span class="sdm_item_count_number">1083</span><span class="sdm_item_count_string"> 下载</span></span></div></div><div class="sdm_clear_float"></div></p>
 <p><a rel="nofollow" href="https://www.noisyfox.io/unmanaged-exports.html">Unmanaged Exports 修正版 .NET导出非托管函数</a>，首发于<a rel="nofollow" href="https://www.noisyfox.io">狐狸的小小窝</a>。</p>]]></content>
         <author>
             <name><![CDATA[狐狸的小小窝]]></name>
