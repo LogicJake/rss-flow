@@ -3,12 +3,23 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2021-01-24T12:34:58+08:00</updated>
+    <updated>2021-01-24T18:48:37+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
     </author>
     
+    
+    <entry>
+        <id>https://blog.vvzero.com/2021/01/24/Become-a-CA-and-generate-self-signed-certificate/</id>
+        <title><![CDATA[如何成为 CA，并签发自己的证书]]></title>
+        <updated>2021-01-24T13:39:04+08:00</updated>
+        <link href="https://blog.vvzero.com/2021/01/24/Become-a-CA-and-generate-self-signed-certificate/"/>
+        <content type="text/html" src="https://blog.vvzero.com/2021/01/24/Become-a-CA-and-generate-self-signed-certificate/"><![CDATA[<blockquote><p>要读懂此文章，你需要了解对称加密、非对称加密的基本概念，并了解证书签发的基本流程。</p></blockquote><h2 id="工具准备"><a href="#工具准备" class="headerlink" title="工具准备"></a>工具准备</h2><ol><li>一台 Linux 主机</li><li>openssl</li></ol><h2 id="创建-CA-的私钥"><a href="#创建-CA-的私钥" class="headerlink" title="创建 CA 的私钥"></a>创建 CA 的私钥</h2><p>很容易理解，CA 也有自己的公钥和私钥。</p><p><code>openssl genrsa -des3 -out CAPrivate.key 2048</code></p><p>这个命令会生成一个私钥 <code>CAPrivate.key</code>，并且必须要填写私钥的密码。可以将 2048 改成 4096。不要奇怪这里只有一个私钥，其实公钥也保存在这个文件里了。</p><h2 id="创建根证书"><a href="#创建根证书" class="headerlink" title="创建根证书"></a>创建根证书</h2><p><code>openssl req -x509 -new -nodes -key CAPrivate.key -sha256 -days 365 -out CAPrivate.pem</code></p><p>根证书，顾名思义，肯定是自签发的。这个证书待会需要安装到你的终端设备里面，不然靠这个根证书签发的其他证书不会被信任。</p><p>这个命令里面需要填写很多信息，按照实际填写就好。</p><p>至此，作为一个简单的 CA，所有的文件都已经齐全了。</p><h2 id="创建待签发证书的私钥"><a href="#创建待签发证书的私钥" class="headerlink" title="创建待签发证书的私钥"></a>创建待签发证书的私钥</h2><p>这个私钥与 CA 无关，是待签发的下一级证书。这一步和下一步可以在另一台机器上完成，然后把文件传给保存 CA 信息的机器就好。</p><p><code>openssl genrsa -out MyPrivate.key 2048</code></p><p>同样，可以把 2048 改成 4096。</p><h2 id="创建-CSR"><a href="#创建-CSR" class="headerlink" title="创建 CSR"></a>创建 CSR</h2><p>可以理解为一个待发送给 CA、为你签发证书的一个请求。</p><p><code>openssl req -new -key MyPrivate.key -out MyRequest.csr</code></p><p>同样，这里需要填写很多信息，需要注意的是 <code>Common Name</code> 这个项目，如果你的证书是给 https 用的，这里就填你的域名。</p><h2 id="使用-CA-的私钥签发证书"><a href="#使用-CA-的私钥签发证书" class="headerlink" title="使用 CA 的私钥签发证书"></a>使用 CA 的私钥签发证书</h2><p><code>openssl x509 -req -in MyRequest.csr -CA CAPrivate.pem -CAkey CAPrivate.key -CAcreateserial -out X509Certificate.crt -days 365 -sha256</code></p><h2 id="试一试刚刚签发的证书"><a href="#试一试刚刚签发的证书" class="headerlink" title="试一试刚刚签发的证书"></a>试一试刚刚签发的证书</h2><ol><li>在待测试终端设备上安装 CA 的根证书 <code>CAPricate.pem</code>，比如 Windows、Android，某些浏览器必须单独安装证书。</li><li>把 <code>MyPrivate.key</code> 和 <code>X509Certificate.crt</code> 作为 HTTPS 服务（比如 Nginx）的私钥和证书，写好配置文件。</li><li>在浏览器里面试试看，应该可以显示小锁，且没有安全警告。</li></ol><p>你可以试试安装 <a href="https://source.vvzero.com/CAPrivate.pem" target="_blank" rel="noopener">我的证书</a> ，并尝试访问 <a href="https://private.vvzero.com" target="_blank" rel="noopener">https://private.vvzero.com</a> .</p>]]></content>
+        <author>
+            <name><![CDATA[VVBLOG]]></name>
+        </author>
+    </entry>
     
     <entry>
         <id>https://www.suruifu.com/posts/554</id>
@@ -1869,17 +1880,6 @@ console.log(switcher('prev'));
 switcher.updateGraph(nextState, false);</code></pre><p>大功告成！之后产品如果想再修改这些步骤，对于开发人员来说就简单多了，只需要修改 <code>buildGraph</code> 部分的代码就可以了。</p><p>为了保险起见，我针对不同的图、当前点、操作类型，为这些函数仔细编写了单元测试。</p>]]></content>
         <author>
             <name><![CDATA[R·ex / Zeng]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://blog.vvzero.com/2019/05/23/thinking-in-20190523/</id>
-        <title><![CDATA[20190523 随想]]></title>
-        <updated>2020-04-28T05:26:07+08:00</updated>
-        <link href="https://blog.vvzero.com/2019/05/23/thinking-in-20190523/"/>
-        <content type="text/html" src="https://blog.vvzero.com/2019/05/23/thinking-in-20190523/"><![CDATA[<p>四年之前，我高二的时候，一天傍晚放学，我跟当时教我化学的6老师（代称），开玩笑式地起了争执。6老师人很好，我们都跟他称兄道弟的。起因是，6老师向我们秀他新买的球鞋，很酷，是某个日本名牌。当时的我笑道：“日货啊，不能穿啊！”（当时的学生中间，这样的思想氛围还比较浓）。</p><p>6老师立刻就反驳了：“为什么不能穿？”“东西好用，为什么不买？”当时我还有一些现在看来可笑的话，都被6老师“讽刺”了一番。我仍不服气，要争辩，6老师对我说：“很多你看到的事情，并不一定是真的……是被修饰过的……”</p><p>我大致听懂了他的意思，但进一步问：“既然各种历史、事情都会被修饰，那么我们怎么才能知晓真实的情况呢？毕竟，不管哪一方说出的话，都有可能因为要符合其利益而将其修饰。”</p><p>6老师说：“要思考，学会思考！”</p><p>……</p><p>我当时不以为然，思考？怎么思考嘛！</p><p>后来我慢慢知道了，直到现在，我都很认可6老师，我觉得他很对。</p><p>不管是什么，都会被人修饰，只有自然科学不能被修饰。就像，不管是谁，也不能让人相信 1+1=3，这是数学。物理、化学等其他自然科学的原理，乃至经济学原理，都不能被修饰。</p><p>也许思考，就是要从自然科学立足吧？</p><p>就比如从数学逻辑里延申——任何事情都是有逻辑的，都应有前因后果。当一件事发生时，也许周围人都会讲述“这件事发生了”，可却鲜有人追溯，这件事为什么发生？当全社会都在为这件事痴狂，乃至要将这件事作为“原因”，采取行动（产生新的“结果”）时，还是没有多少人去关注这件事的根本原因、历史原因、直接原因之间的关系。然后，绝大多数人都被鼓动起来了，就像四年前的我，去笑6老师……</p><p>观察身边的各种变化，各种自然环境社会环境的变化，各种让人开心或难受或鄙夷的事，去思考，“为什么会这样？”</p><p>也许这就是所谓“理性”？</p><p>我不知道几百年前欧洲启蒙运动提倡的“理性”是否就是为了解决这样的问题。</p><p>“要思考，学会思考！”</p>]]></content>
-        <author>
-            <name><![CDATA[VVBLOG]]></name>
         </author>
     </entry>
     
