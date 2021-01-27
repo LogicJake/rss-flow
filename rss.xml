@@ -3,12 +3,23 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2021-01-27T00:32:39+08:00</updated>
+    <updated>2021-01-27T06:15:34+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
     </author>
     
+    
+    <entry>
+        <id>https://nuaa-s3lab.github.io/dailyPaper/2021/0127.html</id>
+        <title><![CDATA[2021-01-27 论文推荐]]></title>
+        <updated>2021-01-27T00:00:00+08:00</updated>
+        <link href="https://nuaa-s3lab.github.io/dailyPaper/2021/0127.html"/>
+        <content type="text/html" src="https://nuaa-s3lab.github.io/dailyPaper/2021/0127.html"><![CDATA[2021-01-27 论文推荐]]></content>
+        <author>
+            <name><![CDATA[S3lab 每日论文推荐]]></name>
+        </author>
+    </entry>
     
     <entry>
         <id>https://nuaa-s3lab.github.io/dailyPaper/2021/0126.html</id>
@@ -71,17 +82,6 @@
         <updated>2021-01-21T00:00:00+08:00</updated>
         <link href="https://nuaa-s3lab.github.io/dailyPaper/2021/0121.html"/>
         <content type="text/html" src="https://nuaa-s3lab.github.io/dailyPaper/2021/0121.html"><![CDATA[2021-01-21 论文推荐]]></content>
-        <author>
-            <name><![CDATA[S3lab 每日论文推荐]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://nuaa-s3lab.github.io/dailyPaper/2021/0120.html</id>
-        <title><![CDATA[2021-01-20 论文推荐]]></title>
-        <updated>2021-01-20T00:00:00+08:00</updated>
-        <link href="https://nuaa-s3lab.github.io/dailyPaper/2021/0120.html"/>
-        <content type="text/html" src="https://nuaa-s3lab.github.io/dailyPaper/2021/0120.html"><![CDATA[2021-01-20 论文推荐]]></content>
         <author>
             <name><![CDATA[S3lab 每日论文推荐]]></name>
         </author>
