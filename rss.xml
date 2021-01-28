@@ -3,12 +3,46 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2021-01-28T12:18:16+08:00</updated>
+    <updated>2021-01-28T18:26:57+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
     </author>
     
+    
+    <entry>
+        <id>https://www.suruifu.com/posts/557</id>
+        <title><![CDATA[我捡了一只猫]]></title>
+        <updated>2021-01-28T12:43:46+08:00</updated>
+        <link href="https://www.suruifu.com/posts/557"/>
+        <content type="text/html" src="https://www.suruifu.com/posts/557"><![CDATA[<p>俗话说得好，好男不养猫，好女不养狗，这也是我心里面的政治正确。</p>
+<p>为什么这么说呢，我姑且解释好男不养猫这一点。人活着只有奋斗才有价值。而猫这种东西，就非常衰，非常懒。天天看这种东西，整个人也会懒惰起来。</p>
+<p>但是办公室楼道里面有只猫，天天叫，日日叫。流浪猫吧，已经一个多月，甚至两个月了。</p>
+<p>我想着，饿死了就不好了。于是就尝试着喂了一下。</p>
+<p>为了三四天吧，我想，猫在外面其实是很冷的。</p>
+<p>我最近一直是想养个边牧来着，但是囊中羞涩。</p>
+<p>想着，先养个流浪猫练习练习也行。</p>
+<p>这玩意应该是很麻烦的。同时呢，还会使人堕落。</p>
+<p>如果我养了猫，人还没有堕落，我应该就很厉害了。</p>
+<p>趁着外面没人，我把猫撸到了我的办公室。</p>
+<p>第一件事情竟然是舔毛，神奇。</p>
+<p>我现在想着怎么把这个笨猫带回公寓，初步方案是，直接放在我的小米背包里面背回去。如果没有更好方案的话，就这样做。<br />
+<img src="https://s.suruifu.com/www/2021/01/WeChat-Image_20210128204320-rotated.jpg" alt="" /></p>]]></content>
+        <author>
+            <name><![CDATA[苏瑞辅的个人网站]]></name>
+        </author>
+    </entry>
+    
+    <entry>
+        <id>https://nuaa-s3lab.github.io/dailyPaper/2021/0128.html</id>
+        <title><![CDATA[2021-01-28 论文推荐]]></title>
+        <updated>2021-01-28T00:00:00+08:00</updated>
+        <link href="https://nuaa-s3lab.github.io/dailyPaper/2021/0128.html"/>
+        <content type="text/html" src="https://nuaa-s3lab.github.io/dailyPaper/2021/0128.html"><![CDATA[2021-01-28 论文推荐]]></content>
+        <author>
+            <name><![CDATA[S3lab 每日论文推荐]]></name>
+        </author>
+    </entry>
     
     <entry>
         <id>https://nuaa-s3lab.github.io/dailyPaper/2021/0127.html</id>
@@ -71,17 +105,6 @@
         <updated>2021-01-22T00:00:00+08:00</updated>
         <link href="https://nuaa-s3lab.github.io/dailyPaper/2021/0122.html"/>
         <content type="text/html" src="https://nuaa-s3lab.github.io/dailyPaper/2021/0122.html"><![CDATA[2021-01-22 论文推荐]]></content>
-        <author>
-            <name><![CDATA[S3lab 每日论文推荐]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://nuaa-s3lab.github.io/dailyPaper/2021/0121.html</id>
-        <title><![CDATA[2021-01-21 论文推荐]]></title>
-        <updated>2021-01-21T00:00:00+08:00</updated>
-        <link href="https://nuaa-s3lab.github.io/dailyPaper/2021/0121.html"/>
-        <content type="text/html" src="https://nuaa-s3lab.github.io/dailyPaper/2021/0121.html"><![CDATA[2021-01-21 论文推荐]]></content>
         <author>
             <name><![CDATA[S3lab 每日论文推荐]]></name>
         </author>
@@ -1151,18 +1174,6 @@ $ luarocks --version
         <content type="text/html" src="https://cosmosning.github.io/2020/09/13/intro-to-ml/"><![CDATA[<blockquote><p>最近上了一门课，叫做“智能信息检索”。老师推荐了一本教材 《Understanding Machine Learning: From Theory to Algorithms》（文末提供官方下载链接），来解释<strong>智能</strong>的含义。本文基于我对教材的理解，对其引言部分做了一些要点概括，供读者参考。</p></blockquote><h1 id="what-is-learning">What Is Learning？</h1><p>粗略地讲，<strong>学习是一个将经历（<em>experience</em>）转换为技能（<em>expertise</em>）或知识（<em>knowledge</em>）的过程</strong>。一般地，一个学习算法的<strong>输入</strong>是<strong>训练数据</strong>（代表经历），<strong>输出</strong>是<strong>技能</strong>。</p><p>一种常见的学习方法是 “记忆学习”（<em>learning by memorization</em>）。类似人类学习的“死记硬背”，这种学习方法有时候十分有效，但是它却缺失了学习系统中一个十分重要的能力，即<strong>泛化能力</strong>（<em>generalization</em>）。换句话讲，一个成功的学习系统理应能够依据已知知识，正确处理未知的情况。</p><div class="note info"><p><strong>泛化能力</strong> （<em>generalization</em>） 有时也被称作<strong>归纳推理</strong> （<em>inductive reasoning / inductive inference</em>）</p></div><p>然而，<strong>归纳推理可能会导致错误结论</strong>。那么怎样才能减少犯错呢？</p><p>答案是：在学习系统中<strong>引入先验知识</strong>（<em>prior knowledge</em>）！</p><div class="note info"><p><strong>先验知识</strong>（<em>prior knowledge</em>） 有时也被称作<strong>归纳偏好</strong> （<em>inductive bias</em>）</p></div><p>从书中举得几个例子来看，<strong>引入先验知识，使整个学习过程带有偏好，是一个成功的学习算法必然发生的事情</strong>（这种现象是 <strong>No-Free-Lunch Theorem</strong> 的具体表现）。粗略来说，学习算法开始训练时所引入的先验知识越强，从训练样本中学习就越简单。但是，先验知识越强，学习的灵活性也就越低，因为整个学习过程被这些预定假设束缚住了。</p><h1 id="when-we-need-machine-learning">When We Need Machine Learning？</h1><p>那么，在哪些情况下，我们需要利用机器学习解决问题呢？主要有以下两个方面：</p><ul><li>问题的复杂性（<em>complexity</em>）</li><li>任务的适应性需求（<em>adaptivity</em>）</li></ul><h2 id="tasks-that-are-to-complex-to-program">Tasks That Are to Complex to Program</h2><ul><li><em>Tasks Performed by Animals / Humans</em>：我们暂时无法理解一些我们能够处理的日常任务，例如驾驶汽车、语音识别、图像理解。以现有的知识，难以抽象出一个良好的程序去执行这些任务。然而，先进的机器学习程序，只要接受足够的训练样本训练，就可以从中学习经验，并在这些任务中达到不错的效果。</li><li><em>Tasks beyond Human Capabilities</em>：另一类适合用机器学习解决的问题是对巨大的且复杂的数据（例如宇宙空间数据、医疗数据、天气数据等）进行分析。这些数据的处理和分析通常超越了我们自身的分析能力。使用机器学习，可以充分利用计算机的能力，找到数据中有价值的信息。</li></ul><h2 id="adaptivity">Adaptivity</h2><ul><li>预先编程的程序有一个缺陷，即死板性（<em>rigidity</em>）。也就是说，一旦程序写好了，安装到系统中后，程序就不会变化了。然而，现实中许多任务都是在不断变化的。</li><li>而机器学习（其天生可以适应不同的输入数据）提供了一种解决此类任务的方案。</li></ul><h1 id="types-of-learning">Types of Learning</h1><h2 id="supervised-versus-unsupervised">Supervised versus Unsupervised</h2><p>如果将学习看作是一个“利用经历来获取技能”的过程，那么监督学习和非监督学习可以描述如下：</p><ul><li><strong>监督（<em>Supervised</em>）学习</strong>：在该场景中，“经历”（亦可称作训练样本）包含了十分重要的信息；而这些信息却在测试样本中丢失了。从监督学习中学习到的技能的目标是，预测测试数据中的确实信息。这就好像环境作为一名老师通过提供额外的信息（通常称作<strong>“标签”</strong> <em>label</em>）"监督"学生（学习算法）的学习。</li><li><strong>非监督（<em>Unsupervised</em>）学习</strong>：对于非监督学习来说，训练数据和测试数据几乎没什么区别。通常，这种学习方法通过处理输入数据，来达到<strong>总结数据</strong>、<strong>压缩数据</strong>的目标。<strong>聚类</strong>——将一个数据集分成几个子集，同一子集具有相似性——是非监督学习中一个典型的例子。</li><li>在监督与非监督之间，还存在一种不同的方法——<strong>强化学习</strong>。</li></ul><h2 id="active-versus-passive">Active versus Passive</h2><ul><li><strong>主动（<em>Active</em>）学习</strong>：主动学习在在训练过程中将会与环境交互。</li><li><strong>被动（<em>Passive</em>）学习</strong>：被动学习只会观测环境所提供的信息，而不会影响（influence）或指导（direct）它。</li></ul><div class="note info"><p><strong>例子</strong></p><ul><li>垃圾邮件识别通常是被动学习，因为它等着用户为它标记收到的邮件是否是垃圾邮件。</li><li>在主动学习的场景下，学习算法会在训练过程中要求用户标记它指定的邮件，或者甚至是由学习算法生成的邮件，来增强它对什么是垃圾邮件的理解。</li></ul></div><h2 id="helpful-of-the-teacher">Helpful of the Teacher</h2><ul><li>主动提供信息<ul><li>训练信息<strong>正相关</strong>——普通学习：例如，教师会不断尝试为学生提供最有用的信息，来达到某种学习目标。</li><li>训练信息<strong>负相关</strong>——<strong>对抗（<em>Adversarial</em>）学习</strong>：例如垃圾邮件生成器将会努力误导垃圾邮件识别器。</li></ul></li><li>被动提供信息<ul><li><strong>统计学习（<em>Statistical Learning</em>）</strong>：有时候，信息并不是他人主动提供的。例如科学家在认识自然时，环境，作为一位老师，并不会根据学生的需求主动的提供信息，因此是被动的提供信息。这种情况下，输入数据常常被认为是由某种随机过程（<em>random process</em>）产生。这样，就可以使用统计学习解决问题</li></ul></li></ul><h2 id="online-versus-batch-learning-protocol">Online versus Batch Learning Protocol</h2><ul><li><strong>在线学习（<em>Online Learning</em>）</strong>：学习算法必须在训练过程中，在线反馈。例如，股票交易员需要基于目前位置积累的经验，做出每日决策。虽说随着时间推移，他会称为一名专家，但是也可能在此过程中犯下代价高昂的错误。</li><li><strong>批处理学习（<em>Batch Learning</em>）</strong>：只有在处理大量的数据后，该算法才能获得所需的技能。在数据挖掘场景下，数据挖掘算法会处理大量的数据之后，才会得出相关的结论。</li></ul><h1 id="relations-to-other-fields">Relations to Other Fields</h1><h2 id="with-ai">With AI</h2><ul><li>机器学习是 AI 的一个分支。</li><li>机器学习更关注<strong>利用计算机的优势和独特的能力</strong>来<strong>补充</strong>人类的智能，因此常常处理一些远超人类能力的任务。</li><li>AI 更关注创造一个能够自动<strong>模仿</strong>智能行为的机器。</li></ul><h2 id="with-statistics">With Statistics</h2><ul><li>统计学：提出假设（专业人员） <span class="math inline">\(\rightarrow\)</span> <strong>验证假设</strong>（统计学）</li><li>机器学习：利用数据，<strong>挖掘规律</strong>，解释原因。</li><li>机器学习对<strong>算法</strong>层面的考虑更多</li><li>统计学常常关注数据的<strong>渐进性</strong>（<strong>无穷</strong>情况下的特性），机器学习则关注<strong>有限</strong>的样本空间</li><li>统计学通常<strong>预先假设数据分布</strong>，而机器学习是<strong>分布无关</strong>的（<em>distribution-free</em>）</li></ul><h1 id="reference">Reference</h1><p>Shai Shalev-Shwartz, Shai Ben-David. <a href="https://www.cs.huji.ac.il/~shais/UnderstandingMachineLearning/index.html" target="_blank" rel="noopener">Understanding Machine Learning: From Theory to Algorithms</a></p>]]></content>
         <author>
             <name><![CDATA[CosmosNing的个人博客]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://www.suruifu.com/posts/530</id>
-        <title><![CDATA[想起了初中挨饿的日子]]></title>
-        <updated>2020-12-11T04:33:12+08:00</updated>
-        <link href="https://www.suruifu.com/posts/530"/>
-        <content type="text/html" src="https://www.suruifu.com/posts/530"><![CDATA[<p>初中的时候18天回一趟家，好多时候都是不到18天钱就花得不剩多少了。于是就每天早上馒头+酱，配免费鸡蛋汤维持生命。然后上课的时候都饿得不行。</p>
-<p>我想我要学会热爱生活，每种生活的感受、状态只在那种特定状态下出现，然后就一去不复返了，无论你喜欢还是讨厌，快乐还是痛苦。</p>]]></content>
-        <author>
-            <name><![CDATA[苏瑞辅的个人网站]]></name>
         </author>
     </entry>
     
