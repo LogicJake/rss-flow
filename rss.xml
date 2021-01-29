@@ -3,7 +3,7 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2021-01-29T12:18:15+08:00</updated>
+    <updated>2021-01-29T18:27:47+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
@@ -121,6 +121,17 @@
     </entry>
     
     <entry>
+        <id>https://nuaa-s3lab.github.io/dailyPaper/2021/0129.html</id>
+        <title><![CDATA[2021-01-29 论文推荐]]></title>
+        <updated>2021-01-29T00:00:00+08:00</updated>
+        <link href="https://nuaa-s3lab.github.io/dailyPaper/2021/0129.html"/>
+        <content type="text/html" src="https://nuaa-s3lab.github.io/dailyPaper/2021/0129.html"><![CDATA[2021-01-29 论文推荐]]></content>
+        <author>
+            <name><![CDATA[S3lab 每日论文推荐]]></name>
+        </author>
+    </entry>
+    
+    <entry>
         <id>https://www.suruifu.com/posts/557</id>
         <title><![CDATA[我捡了一只猫]]></title>
         <updated>2021-01-28T12:43:46+08:00</updated>
@@ -206,17 +217,6 @@
         <content type="text/html" src="https://www.suruifu.com/posts/554"><![CDATA[<p><img src="https://s.suruifu.com/www/2021/01/5468EB04-22BD-4D7E-956F-9CE4C7070C87.jpeg" alt="" /></p>]]></content>
         <author>
             <name><![CDATA[苏瑞辅的个人网站]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://nuaa-s3lab.github.io/dailyPaper/2021/0122.html</id>
-        <title><![CDATA[2021-01-22 论文推荐]]></title>
-        <updated>2021-01-22T00:00:00+08:00</updated>
-        <link href="https://nuaa-s3lab.github.io/dailyPaper/2021/0122.html"/>
-        <content type="text/html" src="https://nuaa-s3lab.github.io/dailyPaper/2021/0122.html"><![CDATA[2021-01-22 论文推荐]]></content>
-        <author>
-            <name><![CDATA[S3lab 每日论文推荐]]></name>
         </author>
     </entry>
     
