@@ -3,12 +3,251 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2021-02-09T12:15:22+08:00</updated>
+    <updated>2021-02-09T18:13:12+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
     </author>
     
+    
+    <entry>
+        <id>https://blog.triplez.cn/ddia-chapter3/</id>
+        <title><![CDATA[[DDIA] 数据存储与检索]]></title>
+        <updated>2021-02-09T15:18:49+08:00</updated>
+        <link href="https://blog.triplez.cn/ddia-chapter3/"/>
+        <content type="text/html" src="https://blog.triplez.cn/ddia-chapter3/"><![CDATA[<p>本文内容为笔者阅读 DDIA 第三章：数据存储与检索 的读书笔记。</p>
+<h2><span class="ez-toc-section" id="i">数据结构</span></h2>
+<h3><span class="ez-toc-section" id="i-2">哈希索引</span></h3>
+<p>适合内存，不适合磁盘。对于磁盘而言，追加效率更高。而哈希索引需要频繁的随机读取，磁盘效率很低。</p>
+<p>实现中需要考虑的问题：</p>
+<ul>
+<li>文件格式：使用二进制而不是字符串</li>
+<li>删除记录（墓碑）：合并日志段时需要识别来丢弃指定记录</li>
+<li>崩溃恢复：用快照来提高启动速度</li>
+<li>部分写入记录：校验</li>
+<li>并发控制：写入可依赖写入原子性，数据文件段会被不同的线程同时读取（读锁）</li>
+</ul>
+<h3><span class="ez-toc-section" id="SSTable1_LSM-Tree2">SSTable<sup id="fnref-1015-1"><a href="#fn-1015-1" class="jetpack-footnote">1</a></sup> 和 LSM-Tree<sup id="fnref-1015-2"><a href="#fn-1015-2" class="jetpack-footnote">2</a></sup></span></h3>
+<p>即排序字符串表：key-value 对按照 key 排序。</p>
+<p>相比哈希索引，有以下优势：</p>
+<ol start="1.">
+<li>合并段简单高效，即使在文件比可用内存大的情况下：因为 kv 有序，并发读取+多指针比对即可完成合并。</li>
+<li>查找特定的 key 成本更低：不用在内存中保存所有的索引，内存中可以存储一个稀疏索引（kv 有序，可以做比对，找到相应区间）（注：此处跟二分查找仍有差别，因为 key 在实际中并不时固定长度的），每几千字节，增加一个 key 即可。</li>
+<li>kv 块在被写到磁盘块前，进行合并压缩后，并将该块的开头存储至内存的稀疏索引中：节省磁盘空间，减少 I/O 带宽占用。</li>
+</ol start="1.">
+<p>在内存中维护内存表：可使用 红黑树 或 AVL 树，它们有 <strong>按任意顺序插入键并以排序后的顺序读取</strong> 的性质。</p>
+<p>使用 SSTable 的存储引擎大致工作流程：</p>
+<ol start="1.">
+<li>写入时，将内容添加到内存的平衡树数据结构中（即内存表）。</li>
+<li>当内存表大于写入阈值（一般为几 MB）后，将其作为 SSTable 写入磁盘（此时写入较高效，因为内存表已经维护了 kv 的顺序）。</li>
+<li>读取时，首先尝试在内存表中寻找 key，然后从新的磁盘段至最老的磁盘段为顺序，逐个检索。</li>
+<li>有一个后台进程，周期性执行段合并和压缩过程，合并多个段文件，降低存储占用，并删除被覆盖/删除的值。</li>
+</ol start="1.">
+<p>这个流程无法处理在突然宕机的情况下，未写入磁盘的内存表数据丢失的问题。因此，还需要一个额外的写入日志，每次写入操作都直接追加到该日志中。它的唯一目的就是在内存崩溃之后恢复内存表，因此在内存表写入 SSTable 之后，这部分日志就可以丢弃了。</p>
+<p>使用项目：LevelDB、RocksDB、Cassandra、HBase 等。</p>
+<p>性能优化：</p>
+<ul>
+<li>查找 key 不存在，使用布隆过滤器加速。</li>
+<li>合并压缩策略：大小分级 和 分层压缩。</li>
+</ul>
+<p>由于磁盘是顺序写入的， 因此该法能支持较高的写入吞吐量。</p>
+<p>优点：</p>
+<ul>
+<li>LST-Tree 有较低的写放大，因此能够承载比 B-tree 更高的写入量。</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>压缩过程会影响到读写操作，使得性能不确定。</li>
+<li>压缩过程会与写操作抢占写带宽。</li>
+</ul>
+<h3><span class="ez-toc-section" id="B-tree">B-tree</span></h3>
+<p>特点：</p>
+<ol start="1.">
+<li>按 key 排序的 key-value 对（这点与 LSM-Tree 一致）</li>
+<li>将数据库分解成固定大小的块/页（传统上为 4KB）页是读写的最小单元。</li>
+<li>每个页面都使用地址/位置进行标识，通过这些页面引用构造出一个树状页面。</li>
+</ol start="1.">
+<p>读取/修改：沿着页引用不断查找到目标 key，获取/修改 value。</p>
+<p>写入：找到范围包含新 key 的页，若该页无额外空间，需要做 <strong>分裂页面</strong> 操作（将其分裂成两个半满的页，同时更新上层索引）。</p>
+<p>具有 n 个键的（平衡的） B-tree 总是有 $O(logn)$ 深度（分支因子为 500 的 4KB 页的四级树存储高达 256 TB）。</p>
+<p>由于 B-tree 直接写入磁盘，因此存在若在写入部分页后发生宕机事件，会导致索引被破坏（产生孤儿页）。因此常见实现中会加入预写日志(WAL, write-ahead log)<sup id="fnref-1015-3"><a href="#fn-1015-3" class="jetpack-footnote">3</a></sup> 来恢复 B-tree 到最近的状态。</p>
+<p>多个线程同时访问 B-tree，需要进行并发控制：使用锁存器（轻量级的锁）【这是啥？】来保护树的数据结构。</p>
+<p>常见优化：</p>
+<ul>
+<li>写时复制：修改也被写入不同的位置，树的父页新版本被创建出来，并指向新位置（可不用覆盖页和 WAL 来做崩溃恢复）。</li>
+<li>保留 key 的缩略信息：让更多的 key 能被压入到页中（B+ 树）。</li>
+<li>邻叶子页顺序保存：提高 I/O 性能，但是随着树的增长，这是很难的事。</li>
+<li>添加额外引用到树中：如同级兄弟形成同级链表，可以顺序扫描键。</li>
+<li>分形树：减少磁盘寻道。</li>
+</ul>
+<p>相比于 LSM-Tree 来说，B-tree 读取速度更快。</p>
+<p>缺点：</p>
+<ul>
+<li>写入过程繁琐，需要维护 WAL 和页面。并且每次修改都以整个页面为单位，写入性能不高。</li>
+</ul>
+<h3><span class="ez-toc-section" id="i-3">其他索引</span></h3>
+<p>索引可以增加查询速度，但是需要额外存储，且所有索引都会额外增加写入开销。</p>
+<h4><span class="ez-toc-section" id="i-4">二级索引</span></h4>
+<p>可以基于 key-value 构建，key 不一定唯一。</p>
+<p>构建方法：</p>
+<ol start="1.">
+<li>索引中的 value 成为匹配行标识符的列表（全文索引中的 position list）。</li>
+<li>追加行标识符使 key 唯一。</li>
+</ol start="1.">
+<p>B-tree 和 LSM-Tree 都可以用作二级索引。</p>
+<h4><span class="ez-toc-section" id="i-5">堆文件</span></h4>
+<p>索引中的 value 存储的是对其他地方存储的行的<strong>引用</strong>（并不以特定的顺序存储数据），而不是实际行内容。这种方式被称为：堆文件（非聚集索引）。</p>
+<p>堆文件在更新 value 而不更新 key 的时候非常高效。但若 value 较大，存储目标需要重新创建，则要重新将该索引的所有 value 都更新为新的地址引用（或在旧堆位置保留一个间接指针）。</p>
+<h4><span class="ez-toc-section" id="i-6">聚集/聚簇索引</span></h4>
+<p>即：将索引行直接存储到索引中。</p>
+<p>MySQL 的 InnoDB 存储引擎使用该方式：表主键始终是聚集索引（聚簇索引），二级索引直接引用主键。</p>
+<h4><span class="ez-toc-section" id="i-7">覆盖索引/包含列的索引</span></h4>
+<p>是聚集索引与非聚集索引的折中设计，特点为：</p>
+<ul>
+<li>索引中保存了一些表的列值。</li>
+<li>支持指通过索引即可回答“简单查询”（索引覆盖了查询）。</li>
+</ul>
+<h4><span class="ez-toc-section" id="i-8">多列索引</span></h4>
+<h5><span class="ez-toc-section" id="i-9">级联索引</span></h5>
+<p>级联索引：将一列追加到另一列，将几个字段简单的组成一个 key。</p>
+<p>如 (lastname, firstname) 的级联索引：能搜索特定 lastname 数据，能搜索特性 lastname-firstname 数据，但不能搜索特定 firstname 数据。</p>
+<p>适用于地理位置等多维搜索。</p>
+<h5><span class="ez-toc-section" id="R-tree">R-tree</span></h5>
+<p>专门的空间索引。</p>
+<h4><span class="ez-toc-section" id="i-10">全文搜索</span></h4>
+<p>通常支持对一个单词的所有同义词进行查询，并忽略单词语法上的变体。</p>
+<p>Lucene 对词典使用类似 SSTable 的结构，因此需要一个小的内存索引。</p>
+<p>这个内存索引在 Lucene 中是 key 的字符序列的有限状态自动机（DFA），类似于字典树。它可以转换为 Levenshtein 自动机【这是什么？】，支持在给定编辑距离<sup id="fnref-1015-4"><a href="#fn-1015-4" class="jetpack-footnote">4</a></sup>内高效搜索单词。</p>
+<h4><span class="ez-toc-section" id="i-11">内存中保存所有内容</span></h4>
+<p>内存数据库更快的原因是：它们可以避免使用写磁盘的格式对内存数据结构编码的开销（即序列化/反序列化）。</p>
+<p>内存数据库能够提供基于磁盘索引难以实现的数据模型，如 Redis 实现了各种数据结构，都提供了内存数据库的相关接口，且因为数据都保存在内存中，实现比较简单。</p>
+<p>事实上，内存数据库架构能够支撑远高于可用内存的数据集，而不会导致以磁盘为中心架构的开销。</p>
+<p>反缓存方法：当没有足够的内存时，通过将最近最少使用的数据从内存写入磁盘，在未来再次被访问时重新加载到内存中。</p>
+<p>未来 NVM（非易失性存储，non-volatile memory）的普及，会影响到存储引擎的设计。</p>
+<h2><span class="ez-toc-section" id="i-12">事务处理和分析处理</span></h2>
+<p>事务处理只意味着允许客户端进行低延迟读写和写入，并不一定具有 ACID 属性。</p>
+<h3><span class="ez-toc-section" id="OLTP_OLAP">OLTP 和 OLAP</span></h3>
+<p>在线事务处理 OLTP（OnLine Transaction Processing）：应用通常使用索引中某些键来查找少量记录，根据用户的输入来插入或更新记录。</p>
+<p>在线分析处理 OLAP（OnLine Analytic Processing）：分析查询需要扫描大量记录，并计算汇总统计信息（计数/求和/平均值），并不返回原始数据给用户。</p>
+<p>对比 OLTP 和 OLAP：</p>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>OLTP</th>
+<th>OLAP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>主要读特征</td>
+<td>基于 key，每次查询返回少量的输入</td>
+<td>对大量记录进行汇总</td>
+</tr>
+<tr>
+<td>主要写特征</td>
+<td>随机访问，低延迟写入用户的输入</td>
+<td>批量导入（ETL）或事件流</td>
+</tr>
+<tr>
+<td>典型使用场景</td>
+<td>终端用户，通过网络应用</td>
+<td>内部分析师，为决策提供数据支持</td>
+</tr>
+<tr>
+<td>数据表征</td>
+<td>最新的数据状态（当前时间点）</td>
+<td>随时间而变化的所有事件历史</td>
+</tr>
+<tr>
+<td>数据规模</td>
+<td>GB ~ TB</td>
+<td>TB ~ PB</td>
+</tr>
+<tr>
+<td>主要瓶颈</td>
+<td>磁盘寻道时间（查找请求 key 的数据）</td>
+<td>磁盘带宽（扫描大批数据）</td>
+</tr>
+</tbody>
+</table>
+<h3><span class="ez-toc-section" id="i-13">数据仓库</span></h3>
+<p>动机：数据管理员（DBA）通常不愿意让业务分析人员在 OLTP 数据库上直接运行临时分析查询，这些查询通常代价很高，需要扫描大量数据集，可能会损害并发执行事务的性能。</p>
+<p>数据仓库：单独的数据库，包含公司所有 OLTP 系统的只读副本。会从 OLTP 系统中提取数据（周期性数据转储或连续更新流，extract），并转换为分析友好的模式（transform）执行清理后，导入到数据仓库中（load）。这个过程也被称为 ETL（Extract-Transform-Load）。</p>
+<h3><span class="ez-toc-section" id="i-14">星型分析模式</span></h3>
+<p>该模式的中心是一个“事实表”（fact table）：事实表的每一行表示在特定时间发生的事件，列是事件不同的属性值；有些列可能也会引用其他表的外键，（其他表）称为维度表。</p>
+<p>事实表中每一行都代表一个事件，因此维度通常代表事件的 5W1H（who, what, where, when, how, why）。</p>
+<p><img src="https://triplez-public-1251926021.cos.ap-shanghai.myqcloud.com/picgo%E6%98%9F%E5%9E%8B%E5%88%86%E6%9E%90%E6%A8%A1%E5%BC%8F-2759452.jpg" alt="星型分析模式" /></p>
+<p>事实表通常非常宽，超过 100 列，甚至几百列。维度表也非常宽，可能包括与分析有关的所有元数据。</p>
+<h3><span class="ez-toc-section" id="i-15">雪花型分析模式</span></h3>
+<p>是星型分析模式的变种，在维度中进一步划分子空间，维度表中继续引用维度表。</p>
+<p><img src="https://triplez-public-1251926021.cos.ap-shanghai.myqcloud.com/picgo%E9%9B%AA%E8%8A%B1%E5%9E%8B%E5%88%86%E6%9E%90%E6%A8%A1%E5%BC%8F.jpg" alt="雪花型分析模式" /></p>
+<p>雪花模式更加规范。但对于分析人员而言，星型模式通常是首选，因为其使用更简单。</p>
+<h2><span class="ez-toc-section" id="i-16">列式存储</span></h2>
+<p>动机：事实表中的数据规模非常庞大，且我们经常只需要对其中几列的内容做查询计算，因此，我们不需要将目标行中所有的内容都从磁盘读入内存中。基于这个设想，我们可以通过将每一列的所有值存储在一起，这样读取和解析查询中使用的列，相比于行式存储能够节省大量的工作。</p>
+<h3><span class="ez-toc-section" id="i-17">列压缩</span></h3>
+<p>目的：降低磁盘吞吐量。</p>
+<p>数仓中有效的列压缩技术：</p>
+<ul>
+<li>位图编码（Bitmap）：列式存储能够得到一个有 n 个不同值的列。我们可以将其转换为 <strong>n 个独立位图</strong> （每个不同的值都有一个位图，每行用一位来代表是否为该值。若该行具有该值，则为 1 ，否则为 0 ）。</p>
+</li>
+<li>
+<p>游程编码（Run-length encoding）：在位图编码中，如果 n 较大，在大部分位图中会存在大量的 0（稀疏位图），我们可以对位图再进行游程编码，</p>
+</li>
+</ul>
+<p>位图索引很适合数据仓库的查询，若查找指定的值的行数，只需要按位或累加即可。</p>
+<blockquote><p>
+  Cassandra 和 HBase 中，一行中的所有列仍然与行 key 一起存储，且不会使用列压缩，因此它们并不是面向列，而仍然是面向行的。列族的概念只是从 BigTable 继承而来，并不代表其是列式存储。
+</p></blockquote>
+<p>列式存储中性能提升的方式：</p>
+<ul>
+<li>提高主存储器带宽到 CPU 缓存带宽的利用率：避免 CPU 分支预测错误和泡沫；使用 SIMD 指令。</li>
+<li>列式存储本身就能有效利用 CPU 周期：能够将大量压缩的列数据放到 CPU L1/L2 缓存中（类似于 GEMM 的性能优化），使用矢量化处理技术来提升性能。</li>
+</ul>
+<h3><span class="ez-toc-section" id="i-18">列存储排序顺序</span></h3>
+<p>按列来存储数据，也需要对整行进行排序。DBA 可以选择具体排序的 key，这样的好处有很多：</p>
+<ul>
+<li>key 中相近的 value 会在存储中组合在一起，能够提高特性范围的过滤查询效率。</li>
+<li>排序顺序可以帮助压缩列，如果重复值尽可能能够排列在一起，那么我们就可以用 <a href="#列压缩">列压缩</a> 中所提到的压缩方法，极大降低磁盘空间的占用。</li>
+<li>对第一个 key 排序的压缩效果最强，第二和第三排序 key 比较混乱。</li>
+</ul>
+<p>面向列存储的排序中，只有包含 value 的列，通常没有指向数据的指针。</p>
+<h3><span class="ez-toc-section" id="i-19">写入列存储</span></h3>
+<p>由于存在压缩和排序，写入列存储无法使用如 B-tree 这类能就地更新的方法。幸运的是，前面提及的 LSM-Tree，能够很好的处理这种情况：先存入内存，再刷入磁盘。</p>
+<h3><span class="ez-toc-section" id="i-20">聚合</span></h3>
+<p>物化视图：通常被定义为一个标准（虚拟）视图：一个类似表的对象，内容是一些查询的结果<sup id="fnref-1015-5"><a href="#fn-1015-5" class="jetpack-footnote">5</a></sup>。</p>
+<p>在底层数据发生变化时，物化视图也需要跟着更新（因为它是数据的非规范化副本）。而这个特性会影响到数据写入性能，也是为什么 OLTP 系统不经常用物化视图的原因。若有大量聚合读取，物化视图才更有意义。具体是否需要建立物化视图，如何设置物化视图，都需视实际情况而定。</p>
+<p>一种常见的物化视图的特殊情况：数据立方体 / OLAP 立方体。它是不同维度分组组成的聚合网格。</p>
+<p>一个用于求和的二维的数据立方体：</p>
+<p><img src="https://triplez-public-1251926021.cos.ap-shanghai.myqcloud.com/picgo%E6%B1%82%E5%92%8C%E4%BA%8C%E7%BB%B4%E6%95%B0%E6%8D%AE%E7%AB%8B%E6%96%B9%E4%BD%93.jpg" alt="求和二维数据立方体" /></p>
+<p>数据立方体优点：由于部分数据已经被提前计算出来，因此某些（能被数据立方体优化的）查询会非常快。</p>
+<p>数据立方体缺点：缺乏如原始数据般的灵活性。</p>
+<p>结论：大多数数仓都保留尽可能多的原始数据，仅当数据立方体能够对特定查询显著提升性能时，才会采用多维数据聚合的数据立方体。</p>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn-1015-1">
+SSTable 和 内存表 这两个词汇都来自于 Google 的 BigTable 论文。&#160;<a href="#fnref-1015-1">&#8617;</a>
+</li>
+<li id="fn-1015-2">
+Log-Structed Merge-Tree，日志结构合并树。&#160;<a href="#fnref-1015-2">&#8617;</a>
+</li>
+<li id="fn-1015-3">
+aka. Redo-log 重做日志，仅支持追加的文件。每个 B-tree 的修改必须先更新 WAL 再写磁盘页。&#160;<a href="#fnref-1015-3">&#8617;</a>
+</li>
+<li id="fn-1015-4">
+编辑距离为 1 表示已经添加、替换或删除了一个字符。&#160;<a href="#fnref-1015-4">&#8617;</a>
+</li>
+<li id="fn-1015-5">
+物化视图是查询结果的实际副本，会被写入磁盘；虚拟视图只是用于编写查询的快捷方式。&#160;<a href="#fnref-1015-5">&#8617;</a>
+</li>
+</ol>
+</div>
+<p>The post <a rel="nofollow" href="https://blog.triplez.cn/ddia-chapter3/">[DDIA] 数据存储与检索</a> appeared first on <a rel="nofollow" href="https://blog.triplez.cn">Blog</a>.</p>]]></content>
+        <author>
+            <name><![CDATA[TripleZ’s Blog]]></name>
+        </author>
+    </entry>
     
     <entry>
         <id>https://miaotony.xyz/2021/02/07/CTF_2021HgameWeek1/</id>
@@ -1663,74 +1902,6 @@ for (
 }</code></pre><h1>修改之前的分页排版算法</h1><p>如果没有分页功能的话，那么这个需求已经完成了，但是事情就是没有那么简单……</p><p>很快我就发现：如果还跟之前一样，为了不拆单元格中的内容，强制当空间不够时将下一行直接扔到下一页，势必会造成极大的空间浪费，因为有可能“大格”里面的内容并不多，但每个“大格”对应的“小格”特别多，这样一个“大格”的高度很有可能超过一页，并且这在业务上是绝对无法避免的：</p><p><img src="https://static.rexskz.info/blog/article/manually-table-layout-with-cell-merging/2.png" alt="一种无法避免的需要拆分单元格的场景" title="一种无法避免的需要拆分单元格的场景"></p><p>不过有一个值得注意的地方——业务要求的“大格”里面的内容确实不算多，一般就是一个商品名称或者图片，内容本身不会超过一页。如果我可以将这个单元格拆成有内容和没内容两部分，也能在一定程度上缓解空间浪费的问题。</p><p>之前对的排版思路是这样的：</p><ol><li>令当前高度 <code>current = headAreaHeight + thHeight</code></li><li><p>从头开始枚举每一行</p><ol><li>获取当前行的高度 <code>height = tr.offsetHeight</code></li><li><p>如果 <code>current + height + tailAreaHeight</code> 大于一页高度：</p><ol><li>在当前页的最后插入一个尾部区域</li><li>将表头和当前行放到新页，更新 <code>current</code></li></ol></li><li>否则，将当前行插入到当前页的最后，并更新 <code>current</code></li></ol></li></ol><p>需要改动的地方有两个。</p><h2>重新定义“当前行”</h2><p>如果依旧按照以前那样直接获取 <code>tr.offsetHeight</code>，可能会在这种组合场景下出现问题：</p><ul><li>当前行中有一个“大格”，高度介于一行和两行“小格”高度之间</li><li>当前页可以放下当前行，但无法放下两行“小格”的高度</li></ul><p>如果出现了这种场景，那么我是在当前页放一行“小格”还是强行放两行呢？如果是放一行，那么这个“小格”会被纵向拉伸以适应“大格”高度，不是很美观；强行放两行又可能会把尾部区域挤到下一页。</p><p>最终我决定用这样的方法：如果当前行包含“大格”，说明一定是整行，那么我先找到所有“大格”中内容高度最高的那个，假设高度为 <code>x</code>，接下来从当前行往下找非整行，根据之前的约定，在遍历到下一个整行之前，我一定能找到某个非整行，从当前行到它的所有行，加起来的高度恰好大于等于 <code>x</code>。如果是大于，说明“大格”的内容确实不多；如果是等于，说明“大格”的内容比较多，甚至会把“小格”撑开。</p><p><img src="https://static.rexskz.info/blog/article/manually-table-layout-with-cell-merging/3.png" alt="当前行高度的计算方法" title="当前行高度的计算方法"></p><p>在上图中，左边表格中的“大格”内容很少，于是我们先取红框的高度，再从上往下扫，看有多少“小格”加起来高度恰好比它高，答案是蓝框的部分，于是我们就用蓝框的高度作为当前行的高度；右边表格中的“大格”内容很多，按照这种方法蓝框会取到所有的三个“小格”，也符合预期。</p><p>如果按照这个方法计算出的“当前行高度”加上尾部区域高度已经无法放到当前页，我们就按照之前的思路，先在当前页插入一个尾部区域，然后将当前行以及蓝框中的“小格”所在的行一起放到下一页，并令 <code>current</code> 等于蓝框高度；否则，将当前行以及蓝框中的“小格”所在的行一起插入到当前页，并为 <code>current</code> 加上蓝框的高度。</p><h2>对跨页后“大格”的处理</h2><p>由于表头要在每一页的表格中展示，因此“大格”被拆分后，属于下一页的单元格必须要被显式的绘制出来。下图中的绿框就是这样一个单元格：</p><p><img src="https://static.rexskz.info/blog/article/manually-table-layout-with-cell-merging/4.png" alt="一个必须被显式绘制出来的单元格" title="一个必须被显式绘制出来的单元格"></p><p>但是还好，我们在排版时，可以记录一下“自从上一个整行过后，已经用了多少个非整行。”在上图的例子中，“内容很少”和“元素 1”是最近一个整行，然后一直到“元素 5”都是非整行（一共 4 个）。由于在计算合并单元格时，我们知道“内容很少”这一格的 <code>rowspan = 8</code>，那么可以确定绿框的 <code>rowspan = 8 - 4 - 1 = 3</code>。只要发现“元素 6”所在的行是个非整行，我们就在每个缺失的地方各插入一个 <code>rowspan = 3</code>、内容为空的“大格”，将其补充为整行。</p><p>于是，这个需求终于做完了。</p><h1>Don't Break The Web</h1><p>上文提到，我为排版代码做过一次性能优化，那么这次新增的功能是否会影响到之前的优化效果呢？答案是不会的。先来回顾一下之前我做的优化：</p><blockquote><p>只需要在一开始先将最外层元素设置为 <code>display: none</code>，这样可以避免每加载一块就渲染；然后在全部加载完之后一下子全部渲染出来。</p><p>只要能保证给每个表格设置好 <code>&lt;col&gt;</code> 的宽度，那么这一行不管被排到哪个表格块中，高度都是不变的。也就是说，所有元素的高度，在渲染之后排版之前，就已经完全确定下来了！那么我完全可以在排版的一开始，将所有必要元素的 <code>offsetHeight</code> 保存在一个 <code>Map</code> 中，之后直接调用就可以了。</p></blockquote><p>对于第一个优化，控制是否显示只会影响面单自身，与每个面单内部的元素无关。只需要保证我的合并单元格代码和排版代码可以在“一下子全部渲染出来”之后执行即可；对于第二个优化，因为将一个单元格拆到两页并不会影响总体高度，每个“大格”的内容高度也不会变，因此可以将行高与内容高度提前缓存在之前的 <code>Map</code> 中，供排版时调用。</p>]]></content>
         <author>
             <name><![CDATA[R·ex / Zeng]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://blog.triplez.cn/using-systemd-manage-frpc-service/</id>
-        <title><![CDATA[使用 systemd 管理 frpc 服务]]></title>
-        <updated>2020-06-27T14:26:07+08:00</updated>
-        <link href="https://blog.triplez.cn/using-systemd-manage-frpc-service/"/>
-        <content type="text/html" src="https://blog.triplez.cn/using-systemd-manage-frpc-service/"><![CDATA[<h2><span class="ez-toc-section" id="i">前言</span></h2>
-<p>frp[1] 是著名的内网穿透软件，支持 TCP、UDP 协议，且只需简单配置服务端，通过编辑客户端配置即可完成内网穿透的功能。但是其只提供了二进制可执行文件，并没有将其打包，也就无法使用 systemd。而对于一个需要开机启动、失败拉起的基础功能来说，我们有对其通过 systemd 进行管理的需求，也就有了本文。</p>
-<h2><span class="ez-toc-section" id="_frpc">注册 frpc 服务</span></h2>
-<p>其实使用 systemd 来管理程序相当简单。只需要在 <code>/etc/systemd/system/</code> 下写一个 <code>*.service</code> 的文件注册即可。</p>
-<p>在 <code>/etc/systemd/system/</code> 目录下新建 <code>frpc.service</code> ：</p>
-<pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash">$ sudo touch /etc/systemd/system/frpc.service
-</code></pre>
-<p>将以下内容填入至 <code>frpc.service</code> ：</p>
-<pre class="line-numbers prism-highlight" data-start="1"><code class="language-ini">[Unit]
-Description=FRP Client Daemon
-After=network.target
-Wants=network.target
-
-[Service]
-Type=simple
-ExecStart=/path/to/your/frpc -c /path/to/your/frpc.ini
-Restart=always
-RestartSec=20s
-LimitNOFILE=infinity
-
-[Install]
-WantedBy=multi-user.target
-</code></pre>
-<blockquote><p>
-  <code>frpc.service</code> 的内容遵循 systemd 的配置格式[2]&#091;3]。
-</p></blockquote>
-<p>保存后重载 systemd 配置：</p>
-<pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash">$ sudo systemctl daemon-reload
-</code></pre>
-<h2><span class="ez-toc-section" id="_systemd_frpc">通过 systemd 控制 frpc</span></h2>
-<p>启动 frpc：</p>
-<pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash">$ sudo systemctl start frpc
-</code></pre>
-<p>停止 frpc：</p>
-<pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash">$ sudo systemctl stop frpc
-</code></pre>
-<p>查看 frpc 状态：</p>
-<pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash">$ systemctl status frpc
-</code></pre>
-<p>将 frpc 设为开机启动：</p>
-<pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash">$ sudo systemctl enable frpc
-</code></pre>
-<p>取消 frpc 开机启动：</p>
-<pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash">$ sudo systemctl disable frpc
-</code></pre>
-<p>使用方法与 systemd units [4]相同。</p>
-<h2><span class="ez-toc-section" id="References">References</span></h2>
-<ol start="1.">
-<li>fatedier/frp in GitHub<br />
-<a href="https://github.com/fatedier/frp">https://github.com/fatedier/frp</a></li>
-<li>systemd.unit<br />
-<a href="https://www.freedesktop.org/software/systemd/man/systemd.unit.html">https://www.freedesktop.org/software/systemd/man/systemd.unit.html</a></li>
-<li>systemd.service<br />
-<a href="https://www.freedesktop.org/software/systemd/man/systemd.service.html">https://www.freedesktop.org/software/systemd/man/systemd.service.html</a></li>
-<li>systemd (Using units) - ArchWiki<br />
-<a href="https://wiki.archlinux.org/index.php/Systemd#Using_units">https://wiki.archlinux.org/index.php/Systemd#Using_units</a></li>
-</ol start="1.">
-<p>The post <a rel="nofollow" href="https://blog.triplez.cn/using-systemd-manage-frpc-service/">使用 systemd 管理 frpc 服务</a> appeared first on <a rel="nofollow" href="https://blog.triplez.cn">Blog</a>.</p>]]></content>
-        <author>
-            <name><![CDATA[TripleZ’s Blog]]></name>
         </author>
     </entry>
     
