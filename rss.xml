@@ -3,12 +3,30 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2021-02-16T06:13:00+08:00</updated>
+    <updated>2021-02-16T12:15:28+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
     </author>
     
+    
+    <entry>
+        <id>https://www.suruifu.com/posts/569</id>
+        <title><![CDATA[养了几天猫了]]></title>
+        <updated>2021-02-16T11:02:17+08:00</updated>
+        <link href="https://www.suruifu.com/posts/569"/>
+        <content type="text/html" src="https://www.suruifu.com/posts/569"><![CDATA[<p>养猫果然比人贵。</p>
+<p>首先需要时间，为了维持室内的整洁，就需要定时打扫。带来的工作量是比较大的。</p>
+<p>然后就是吃东西。既然把猫领了回来，我肯定给予其最好的条件。猫是肉食性动物，猫粮的价格甚至能基本达到我每天吃的东西的价格。</p>
+<p>而且猫还缺乏主观能动性，就是说我在照顾她，她却什么也不会做。</p>
+<p>其实花钱或者花时间都无所谓，因为毕竟她出现在了我的门前，这是上天的旨意。</p>
+<p>问题是我在想猫真的快乐吗？猫生的追求是什么？我们人类，一天不工作，就会觉得痛苦，有点进步就会快乐。我热爱生活本身，我享受这种进步的感觉。那猫呢，她有追求吗？她有快乐与痛苦吗？她的世界观是怎样的呢？</p>
+<p>我又不是她，我永远不会知道。但我希望猫在我这里能够实现她的猫生价值。</p>
+<p>（手机打字）</p>]]></content>
+        <author>
+            <name><![CDATA[苏瑞辅的个人网站]]></name>
+        </author>
+    </entry>
     
     <entry>
         <id>https://miaotony.xyz/2021/02/15/CTF_2021HgameWeek2/</id>
@@ -1005,17 +1023,6 @@ console.log($count.value)
 &lt;/template&gt;</code></pre><p>跟大佬聊了一下，我的观点主要是这样的：</p><ul><li>我对这提案的看法，和对 Svelte 的看法类似，甚至我都觉得 Evan You 也发现了编译器可能是个未来的优化点。</li><li>至于它破坏了 JS 语义的问题，我觉得与其让 Label 这个语法被忘记，不如赋予它新的意义，因为目前写 JS 已经基本离不开编译器了（例如 TypeScript、JSX、Vue Loader）。</li><li>此外，语言本身就是在变化中的，JS 正是因为以前的语法不好，才有了那么多提案和 Linter。</li><li>在其它行业，Lisp 有 Clojure、Common Lisp、Scheme 这样一堆方言，Java“语系”中的 Groovy、Scala、Kotlin 也差不多能算是方言，我觉得 JS 演变出 React、Vue、Angular、Svelte 几种方言是完全合理的。</li></ul><p>之后，大佬拿出了另外一份 JS 的提案：<a href="https://github.com/rbuckton/proposal-refs">Reference (ref) declarations and expressions</a>，这样确实不会 Break the Web 了，不过看起来有点像 C 中的 <code>int const a = 1</code> 或者 Rust 中的 <code>let mut x = 5</code>，这在我看来也不是坏事。</p><p>当然，语言不可能无限添加 Feature，否则容易长成这样：<a href="https://gist.github.com/Jack-Works/829246dcae9d9d3b874d44bae5ef5e0b#file-2020-js">cRAzY eSnEXt (*all* proposals mixed in)</a>……</p>]]></content>
         <author>
             <name><![CDATA[R·ex / Zeng]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://www.suruifu.com/posts/550</id>
-        <title><![CDATA[生于忧患 死于安乐！]]></title>
-        <updated>2021-01-13T13:29:45+08:00</updated>
-        <link href="https://www.suruifu.com/posts/550"/>
-        <content type="text/html" src="https://www.suruifu.com/posts/550"><![CDATA[<p><img src="https://s.suruifu.com/www/2021/01/WeChat-Image_20210113212912-rotated.jpg" alt="" /></p>]]></content>
-        <author>
-            <name><![CDATA[苏瑞辅的个人网站]]></name>
         </author>
     </entry>
     
