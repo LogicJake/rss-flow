@@ -3,12 +3,23 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2021-02-23T12:15:28+08:00</updated>
+    <updated>2021-02-23T18:12:55+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
     </author>
     
+    
+    <entry>
+        <id>https://blog.stdioa.com/2021/02/alpine-time-call/</id>
+        <title><![CDATA[由 TT-RSS 解析数据库地址失败引出的一个问题]]></title>
+        <updated>2021-02-23T12:59:07+08:00</updated>
+        <link href="https://blog.stdioa.com/2021/02/alpine-time-call/"/>
+        <content type="text/html" src="https://blog.stdioa.com/2021/02/alpine-time-call/"><![CDATA[<p>水一篇文章，主要用来告诫自己认真看文档。🌚</p>]]></content>
+        <author>
+            <name><![CDATA[Stdio’s Blog]]></name>
+        </author>
+    </entry>
     
     <entry>
         <id>https://blog.rexskz.info/typescript-hint-validate-i18n-params.html</id>
@@ -2883,17 +2894,6 @@ CFRelease(urlStr);
         <updated>2019-06-24T08:25:39+08:00</updated>
         <link href="https://blog.stdioa.com/2019/06/golang-learning-experience/"/>
         <content type="text/html" src="https://blog.stdioa.com/2019/06/golang-learning-experience/"><![CDATA[<p>这几个月在考虑从 Python 转向 Golang，所以专门学习了 Golang.<br>这里是 Golang 学习的一些记录。</p>]]></content>
-        <author>
-            <name><![CDATA[Stdio’s Blog]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://blog.stdioa.com/2019/05/find-minn-with-heap/</id>
-        <title><![CDATA[用堆找出最小的 N 个数]]></title>
-        <updated>2019-05-21T08:46:12+08:00</updated>
-        <link href="https://blog.stdioa.com/2019/05/find-minn-with-heap/"/>
-        <content type="text/html" src="https://blog.stdioa.com/2019/05/find-minn-with-heap/"><![CDATA[<p>不知道为啥，突然想水一篇很水的算法文章。</p>]]></content>
         <author>
             <name><![CDATA[Stdio’s Blog]]></name>
         </author>
