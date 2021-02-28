@@ -3,12 +3,23 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2021-02-28T12:15:23+08:00</updated>
+    <updated>2021-02-28T18:13:04+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
     </author>
     
+    
+    <entry>
+        <id>https://miaotony.xyz/2021/02/12/CTF_2021HappyChineseNewYear/</id>
+        <title><![CDATA[2021 牛年大吉！又是一年解谜闯关]]></title>
+        <updated>2021-02-28T16:51:51+08:00</updated>
+        <link href="https://miaotony.xyz/2021/02/12/CTF_2021HappyChineseNewYear/"/>
+        <content type="text/html" src="https://miaotony.xyz/2021/02/12/CTF_2021HappyChineseNewYear/"><![CDATA[<h2 id="牛年快乐"><a href="#牛年快乐" class="headerlink"]]></content>
+        <author>
+            <name><![CDATA[MiaoTony]]></name>
+        </author>
+    </entry>
     
     <entry>
         <id>https://miaotony.xyz/2021/02/23/CTF_2021HgameWeek3/</id>
@@ -281,17 +292,6 @@ output(
         <content type="text/html" src="https://blog.vvzero.com/2020/02/08/build-powerful-remote-desktops-with-aliyun-ECS-at-low-price/"><![CDATA[<blockquote><p>要想读懂本文，你需要：</p><ol><li>了解阿里云等云服务的基本 WEB 界面操作；</li><li>了解 Windows 操作系统的中阶操作；</li><li>了解基础的软件开发术语。</li></ol></blockquote><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文面向的是需要使用高性能计算设备，但是身边只有低性能PC机的群体。最近由于 NCP 疫情，出不了门，返回不了工作地，想必不少人的高性能计算设备（好电脑）没带回家，但是，肯定也有人跟我一样，受不了笔记本电脑的龟速。</p><p>我的配置需求是，能够流畅运行安装多个插件的 VSCode、能够同时打开数十个 Firefox 标签页、能够快速完成 node 项目构建。但是我身边只有一台五年前的 intel NUC (i3-4010U, 4GB RAM)。</p><p>在详细了解了各大云服务商的云计算平台后，个人排除了华为云（弹性计算服务价格较高、云桌面售罄）、腾讯云（云计算服务类别过少）、天翼云（云桌面需要安装指定 APP 且性能不满足要求），决定使用阿里云的云计算服务。</p><h2 id="使用阿里云初步搭建云桌面"><a href="#使用阿里云初步搭建云桌面" class="headerlink" title="使用阿里云初步搭建云桌面"></a>使用阿里云初步搭建云桌面</h2><p>经过权衡，我决定使用阿里云 ESC “抢占式实例”付费模式下的“突发性能实例”。为什么这么选？</p><p>因为没钱……</p><p>开玩笑的。我觉得这是我需求下的合理选择方式。为什么选择“抢占式实例”？首先，我们复工的时间还是个未知数，而且可能随时就不想用这个云桌面了。“抢占式实例”是按量付费的一种，也就是，用多长时间给多少钱。并且，相对于按量付费，有相当大的折扣。<strong>“抢占式实例”的最大问题在于，这是竞价模式。也就是说，当别人出价比你高的时候，或者阿里云供给紧张而你又给钱给得不够的时候，它会自动帮你释放。我了解的是，在释放前5分钟，阿里云会有提醒。</strong>为了尽量避免实例被自动释放，我选择了“使用自动出价”，也就是说，系统会每小时自动判断当前时间该实例的价格，并选择一个高于市场均价的价格进行付费。<strong>但是，这并不是万无一失，阿里云在供给紧张的时候，仍然会将实例释放。</strong>所以，在处理重要数据时，应该随时备份。我的处理方法是，随时将代码提交到我的 Git 仓库。</p><p><img src="https://img.vvzero.com/blog/build-powerful-remote-desktops-with-aliyun-ECS-at-low-price/ea3d50f39b198.png" alt="Snipaste_2020-02-09_17-32-20.png"></p><p><img src="https://img.vvzero.com/blog/build-powerful-remote-desktops-with-aliyun-ECS-at-low-price/df1fabf212984.png" alt="Snipaste_2020-02-09_17-34-24.png"></p><p>如果要保证不会被释放，建议使用包年包月制。</p><p>为什么使用“突发性能实例”？因为个人电脑与服务器不同。个人电脑不会时时刻刻占用大量 CPU，CPU使用率是离散化的，所以 CPU 的使用积分，我觉得是用不完，25% 的使用基线，完全够用。</p><p><img src="https://img.vvzero.com/blog/build-powerful-remote-desktops-with-aliyun-ECS-at-low-price/d74c0622ec620.png" alt="Snipaste_2020-02-09_17-34-05.png"></p><p>哎，目前好像国内也只有阿里云能做出“抢占式实例”和“突发性能实例”。</p><p>其他的配置就简单了，区域选择靠近你的（不同地区的价格好像差别挺大），镜像选择 Windows Server，另外，SSD 是很关键的，我觉得现在已经没有多少人能忍受机械硬盘的龟速了。</p><p><img src="https://img.vvzero.com/blog/build-powerful-remote-desktops-with-aliyun-ECS-at-low-price/6ae75caa75c6a.png" alt="Snipaste_2020-02-09_18-03-26.png"></p><p><img src="https://img.vvzero.com/blog/build-powerful-remote-desktops-with-aliyun-ECS-at-low-price/cbe75edc3c797.png" alt="Snipaste_2020-02-09_17-36-25.png"></p><p>在下一个页面配置网络，为了保证远程桌面流畅，按使用流量计费，带宽拉满！</p><p><img src="https://img.vvzero.com/blog/build-powerful-remote-desktops-with-aliyun-ECS-at-low-price/2c112190ea447.png" alt="Snipaste_2020-02-09_17-45-57.png"></p><p>最终，我的配置如下：</p><ul><li>4核16GB，25% 平均CPU 计算性能；</li><li>100Mbps 按流量付费网络；</li><li>80GB SSD；</li><li>Windows Server 2019 数据中心版；</li></ul><p>这样的话，实例价格为 0.412 元每小时（我选的是上海区的，其他区的可能更便宜，在深夜、早上也会更便宜），流量费用为 0.8 元每 GB。算一算，一天大概要 10 元，一个月大概要 300 元，是不是还是有点贵？没关系，继续看。</p><p><img src="https://img.vvzero.com/blog/build-powerful-remote-desktops-with-aliyun-ECS-at-low-price/ecfef72872df3.png" alt="Snipaste_2020-02-09_17-36-50.png"></p><h2 id="价格的进一步优化"><a href="#价格的进一步优化" class="headerlink" title="价格的进一步优化"></a>价格的进一步优化</h2><p>现在我已经启动了这个实例：</p><p><img src="https://img.vvzero.com/blog/build-powerful-remote-desktops-with-aliyun-ECS-at-low-price/3ea24c1929367.png" alt="Snipaste_2020-02-09_18-21-04.png"></p><p>我还想更便宜。</p><h3 id="与基友合租一台机器"><a href="#与基友合租一台机器" class="headerlink" title="与基友合租一台机器"></a>与基友合租一台机器</h3><p>我想你一定不可能一天24小时都在用它，用它的时候也一定不会一直占满 CPU。关键是，我们这是 Windows Server，跟家庭版、专业版、企业版什么的都不一样，它支持多个用户同时登陆！所以，我觉得，如果有信任的人选，完全可以合租。</p><h3 id="关机时选择“停机不计费”"><a href="#关机时选择“停机不计费”" class="headerlink" title="关机时选择“停机不计费”"></a>关机时选择“停机不计费”</h3><p>阿里云真的是神奇的存在，在 ECS 管理界面，选择停机，竟然可以停机不收费！</p><p><img src="https://img.vvzero.com/blog/build-powerful-remote-desktops-with-aliyun-ECS-at-low-price/28437c5fae934.png" alt="图片1.png"></p><p>实际上也不是完全不收费，硬盘和弹性公网 IP 仍然是收费的。但是，与停机后仍然保留CPU、内存相比，价格大幅降低。也就是说，我们在每天晚上，完全可以关机并选择不收费，可以节约一大笔。如果想要一直使用同一个 IP，可以选择绑定弹性公网 IP。</p><h3 id="依据个人需求选择实例规格"><a href="#依据个人需求选择实例规格" class="headerlink" title="依据个人需求选择实例规格"></a>依据个人需求选择实例规格</h3><p>我觉得，可能 8GB 内存已经够我用了，另外，青岛区的实例好像每小时能更便宜一毛钱……</p><h2 id="云桌面体验"><a href="#云桌面体验" class="headerlink" title="云桌面体验"></a>云桌面体验</h2><p>在体验之前，再确保一下：该实例网络安全组，需要放通 3389 端口（TCP 和 UDP 都要放通）。</p><p>打开本地的远程桌面客户端试试吧！</p><p><img src="https://img.vvzero.com/blog/build-powerful-remote-desktops-with-aliyun-ECS-at-low-price/b4629c62b4373.png" alt="Snipaste_2020-02-09_18-38-25.png"></p><p>网络方面，我是江苏电信网络，连接上海区的 ECS，延迟很小，可以忽略，而且画质很清晰，暂时没有什么画面卡顿。至于下行网络，由于这是阿里云的专线，比家用运营商网络好太多，下载速度嗖嗖的，不管国内外。</p><p>计算性能方面，在我本地机器上，VSCode 的 Python 插件，进行一次文件错误扫描需要 5 秒左右，而这台云桌面，只要 1 秒。</p><p>操作系统方面，Windows Server 比 Windows PC 简洁很多，没有乱七八糟的服务，但也没有缺少日常开发所需的重要组件。可能会有点不一样，但是如果出问题，一般能很快解决。比如我在安装 Python 时出错，Google 一下便知要直接以管理员身份打开。</p><p>以下截图自我的云桌面。</p><p><img src="https://img.vvzero.com/blog/build-powerful-remote-desktops-with-aliyun-ECS-at-low-price/d3b52ba297968.png" alt="Screenshot _1_.png"></p><p><img src="https://img.vvzero.com/blog/build-powerful-remote-desktops-with-aliyun-ECS-at-low-price/e9ae18b879037.png" alt="Screenshot _3_.png"></p><p><img src="https://img.vvzero.com/blog/build-powerful-remote-desktops-with-aliyun-ECS-at-low-price/9f2c0741b0057.png" alt="Screenshot _4_.png"></p><p><img src="https://img.vvzero.com/blog/build-powerful-remote-desktops-with-aliyun-ECS-at-low-price/8109324fabb58.png" alt="Screenshot _2_.png"></p><h3 id="提高体验的可选项"><a href="#提高体验的可选项" class="headerlink" title="提高体验的可选项"></a>提高体验的可选项</h3><ol><li>关闭 Windows 的过渡动画，这在远程桌面上会导致卡顿，且会消耗大量的流量费；</li><li>安全起见，重新创建一个管理员用户并禁用 Administrator 用户；</li><li>用好各种云同步功能，比如 Git 仓库、浏览器云同步、云盘等。</li></ol><h2 id="实测价格"><a href="#实测价格" class="headerlink" title="实测价格"></a>实测价格</h2><p>我正常使用了一天，晚上停机不收费，消费如下：</p><p><img src="https://img.vvzero.com/blog/build-powerful-remote-desktops-with-aliyun-ECS-at-low-price/176c67e7015fa.png" alt="Snipaste_2020-02-09_18-54-30.png"></p><p><img src="https://img.vvzero.com/blog/build-powerful-remote-desktops-with-aliyun-ECS-at-low-price/140f26bd1d962.png" alt="Snipaste_2020-02-09_18-55-07.png"></p><p>可见，我一天大致消费5元。</p><h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>确实不是很贵，可行性也很高。假如有模型渲染需求，甚至可以绑定个显卡（</p><p>抢占式实例也不是很可怕吧？我的实例目前没被回收。</p><p>另外，有人想跟我合租吗？</p>]]></content>
         <author>
             <name><![CDATA[VVBLOG]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://miaotony.xyz/2021/02/12/CTF_2021HappyChineseNewYear/</id>
-        <title><![CDATA[2021 牛年大吉！又是一年解谜闯关]]></title>
-        <updated>2021-02-16T17:15:58+08:00</updated>
-        <link href="https://miaotony.xyz/2021/02/12/CTF_2021HappyChineseNewYear/"/>
-        <content type="text/html" src="https://miaotony.xyz/2021/02/12/CTF_2021HappyChineseNewYear/"><![CDATA[<h2 id="牛年快乐"><a href="#牛年快乐" class="headerlink"]]></content>
-        <author>
-            <name><![CDATA[MiaoTony]]></name>
         </author>
     </entry>
     
@@ -4106,7 +4106,7 @@ class Test
 <a href="https://www.noisyfox.cn/wp-content/uploads/2016/06/QQ截图20160619145913.png"><img loading="lazy" class="aligncenter size-full wp-image-403" src="https://www.noisyfox.cn/wp-content/uploads/2016/06/QQ截图20160619145913.png" alt="Unmanaged Exports 编译正常" width="662" height="65" /></a><br />
 <div class="sdm_download_item "><div class="sdm_download_item_top"><div class="sdm_download_thumbnail"></div><div class="sdm_download_title">DllExport-Fixed-1.2.7.7z</div></div><div style="clear:both;"></div><div class="sdm_download_description"><p>修正了非英文系统编译错误的Unmanaged Exports 1.2.7</p>
 <h1></h1>
-</div><div class="sdm_download_link"><span class="sdm_download_button"><a href="https://www.noisyfox.io/?smd_process_download=1&download_id=404" class="sdm_download green" title="DllExport-Fixed-1.2.7.7z" target="_blank">立即下载！</a></span><span class="sdm_download_item_count"><span class="sdm_item_count_number">1103</span><span class="sdm_item_count_string"> 下载</span></span></div></div><div class="sdm_clear_float"></div></p>
+</div><div class="sdm_download_link"><span class="sdm_download_button"><a href="https://www.noisyfox.io/?smd_process_download=1&download_id=404" class="sdm_download green" title="DllExport-Fixed-1.2.7.7z" target="_blank">立即下载！</a></span><span class="sdm_download_item_count"><span class="sdm_item_count_number">1104</span><span class="sdm_item_count_string"> 下载</span></span></div></div><div class="sdm_clear_float"></div></p>
 <p><a rel="nofollow" href="https://www.noisyfox.io/unmanaged-exports.html">Unmanaged Exports 修正版 .NET导出非托管函数</a>，首发于<a rel="nofollow" href="https://www.noisyfox.io">狐狸的小小窝</a>。</p>]]></content>
         <author>
             <name><![CDATA[狐狸的小小窝]]></name>
