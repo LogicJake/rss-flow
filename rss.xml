@@ -3,12 +3,440 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2021-03-03T06:14:00+08:00</updated>
+    <updated>2021-03-03T12:16:05+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
     </author>
     
+    
+    <entry>
+        <id>https://blog.creedowl.com/posts/ocaml-heap/</id>
+        <title><![CDATA[Ocaml Heap]]></title>
+        <updated>2021-03-03T07:10:56+08:00</updated>
+        <link href="https://blog.creedowl.com/posts/ocaml-heap/"/>
+        <content type="text/html" src="https://blog.creedowl.com/posts/ocaml-heap/"><![CDATA[<h1 id="简介">简介</h1>
+<p>本次课设我实现的数据结构是<strong>堆（heap)</strong>，堆是一种非常重要的数据结构，分为大顶堆和小顶堆，可以快速地获取其中优先级最高的元素。若是满足以下特性，即可称为堆：“给定堆中任意节点P和C，若P是C的母节点，那么P的值会小于等于（或大于等于）C的值”。若母节点的值恒小于等于子节点的值，此堆称为最小堆（min heap）；反之，若母节点的值恒大于等于子节点的值，此堆称为最大堆（max heap）。所以堆又称作优先队列。</p>
+<h1 id="原理">原理</h1>
+<h2 id="完全二叉树">完全二叉树</h2>
+<p>堆的实现方式通常是完全二叉树，采用数组进行模拟。完全二叉树的特点是较为对称，查找时时间复杂度较为稳定，可以通过数组进行模拟，而不需要实际构建一棵二叉树。</p>
+<p>以数组 <code>[1, 2, 3, 4, 5, 6, 7]</code> 为例，可以构建出如下一棵完全二叉树。</p>
+<p><img src="https://blog-1251984664.cos.ap-shanghai.myqcloud.com/blogUntitled.png" alt="p1"></p>
+<p>对于每个节点都满足值大于父节点，所以这是一个小顶堆。对比数组和二叉树，可以发现：</p>
+<ol>
+<li>对于节点 <code>i</code> ，它的两个子节点在数组中的索引为 <code>2*i</code> 和 <code>2*i+1</code></li>
+<li>两个子节点的大小对于堆的性质并没有影响，这点和二叉搜索树不一样</li>
+</ol>
+<p>其中的核心操作是 <code>shiftUp</code> 和 <code>shiftDown</code></p>
+<p>分析其时间复杂度，有：</p>
+<ul>
+<li>获取堆顶元素：$O(1)$</li>
+<li>插入元素：$O(logn)$</li>
+<li>删除元素：$O(logn)$</li>
+<li>合并堆：$O(n)$</li>
+</ul>
+<p>不过采用完全二叉树并不能方便地进行合并操作，需要转换成对一个堆的插入操作</p>
+<hr>
+<p>但在函数式语言中要如何实现一个堆呢？对于纯函数式语言，是不允许有副作用的。虽然 <code>Ocaml</code> 支持命令式操作，也支持传统的数组，但依然采用数组模拟的话和普通的命令式语言就没有太多区别，而且会产生副作用，这是不推荐的。那么如果用 <code>List</code> 来模拟数组操作呢？</p>
+<p><code>Ocaml</code> 中的 <code>List</code> 是通过链表实现的，这就意味着 <code>List</code> 只能进行顺序访问，无法随机访问，也就无法像上面那样构建出一个虚拟的树形结构，而要全部转换成遍历操作。虽然可以通过计算和记录确定节点的位置，但会导致访问的时间复杂性大大提高。还有别的办法吗？</p>
+<p>既然用数组模拟完全二叉树的方法在函数式语言中有很大的限制，那我们手动模拟一棵二叉树试试。我们可以定义出以下的数据结构：</p>
+<div class="highlight"><pre class="chroma"><code class="language-ocaml" data-lang="ocaml"><span class="k">type</span> <span class="k">&#39;</span><span class="n">a</span> <span class="n">heap</span> <span class="o">=</span> 
+	<span class="o">|</span> <span class="nc">Leaf</span>
+	<span class="o">|</span> <span class="nc">Node</span> <span class="k">of</span> <span class="k">&#39;</span><span class="n">a</span> <span class="o">*</span> <span class="k">&#39;</span><span class="n">a</span> <span class="n">heap</span> <span class="o">*</span> <span class="k">&#39;</span><span class="n">a</span> <span class="n">heap</span>
+</code></pre></div><p>该结构参考了书上的内容，一个节点由自身的值和左右子节点构成，空节点为叶子节点。</p>
+<p>对于插入操作，传统的数组模拟方式将元素插入数组尾部，再调用 <code>shiftUp</code> 操作将元素移动到正确的位置，如图所示：</p>
+<p><img src="https://blog-1251984664.cos.ap-shanghai.myqcloud.com/blog/1614757139001-Untitled%201.png" alt="p2"></p>
+<p>但在树状结构中，我们很难找到最后一个元素的位置，或者说时间复杂度太高，不具备可行性，也就无法采用 <code>shiftUp</code> 的思想。而我们的树结构只保存了根节点的位置，也就意味着只能自顶向下想想办法。</p>
+<p><img src="https://blog-1251984664.cos.ap-shanghai.myqcloud.com/blog/1614757187865-Untitled%202.png" alt="p3"></p>
+<p>首先比较 1 和 4 ，1 比 4 小，应该继续向下，但应该走左边还是右边呢？堆能保持高效性的原因之一就是结构比较对称，即左右子树的深度大致相等。必须要找到一个规则来解决这个问题。</p>
+<p>堆的另一个重要操作是删除，即删除最顶端节点。这时我们发现如果删掉了根节点，我们会得到两个二叉树：</p>
+<p><img src="https://blog-1251984664.cos.ap-shanghai.myqcloud.com/blog/1614757208893-Untitled%203.png" alt="p4"></p>
+<p>在数组模拟的方式中我们将数组的最后一个元素（也就是完全二叉树的最后一个节点）移动到原本根节点的为止，再采用 <code>shiftDown</code> 操作将它移动到正确的位置。但同上面的问题一样，无法快速定位到最后一个节点，因此问题变成了如何合并两个堆。这时再看插入操作，发现也可以当成合并堆解决，即将目标堆和由待插入元素构成的只有一个节点的堆进行合并。可见堆的核心操作都转换成了堆合并，这就需要找到一个可以高效地进行堆合并的方法。</p>
+<h2 id="左偏树">左偏树</h2>
+<p>搜索后发现，虽然大部分算法教程和书中堆都是采用数组模拟完全二叉树，但也有其它数据结构可以实现堆，就是左偏树。查看维基百科中的定义：</p>
+<blockquote>
+<p>左偏树是一种可并堆的实现。左偏树是一棵二叉树，它的节点除了和二叉树的节点一样具有左右子树指针（left, right）外，还有两个属性： 键值和距离（英文文献中称为s-value）。键值用于比较节点的大小。距离的定义如下：
+当且仅当节点 i 的左子树或右子树为空时，节点被称作外节点（实际上保存在二叉树中的节点都是内节点，外节点是逻辑上存在而无需保存。把一颗二叉树补上全部的外节点，则称为extended binary tree）。节点i的距离是节点 i 到它的后代中的最近的外节点所经过的边数。特别的，如果节点 i 本身是外节点，则它的距离为0;而空节点的距离规定为 -1。</p>
+</blockquote>
+<p>光看定义比较复杂，但其实很简单，只需要在上面定义的树中加入一个距离（rank）即可，一个节点距离的值为到最右叶子节点的长度，如图所示：</p>
+<p><img src="https://blog-1251984664.cos.ap-shanghai.myqcloud.com/blog/1614757222212-Untitled%204.png" alt="p5"></p>
+<p>rank 是用来比较左右子树的长度的，在左偏树中，<strong>所有节点的左子树 rank 值一定大于等于右子树</strong>。因此每次进行合并操作时我们选择右子树，重复进行直到叶子节点或正确的位置，最后更新路径上的 rank 值，如果出现右子树的 rank 值大于左子树，则交换左右子树以保证左偏树的定义成立。</p>
+<p>作为左偏树的核心操作，合并（merge）操作的流程如下：</p>
+<ol>
+<li>合并 <code>t1</code> ，<code>t2</code> 两个树 <code>merge t1 t2</code></li>
+<li>比较两个树根节点的值，如果 <code>v1 &lt; v2</code> 则交换两个树（即 <code>merge t2 t1</code> ），这样做的目的是保证左边树的值小于右边，便于操作。实际比较操作是通过函子中的 <code>compare</code> 函数进行，可以根据该函数设置大顶堆或小顶堆</li>
+<li>由于左边树（ <code>t1</code> ）根节点的值小于右边树（ <code>t2</code> ），<code>v1</code> 保持不变作为新的根节点</li>
+<li>由于 <code>t1</code> 的右子树 <code>r</code> 一定是最短的，开始合并 <code>r</code> 和 <code>t2</code> （即 <code>merge r t2</code> ）</li>
+<li>当任一子树是叶子节点时，只需要直接返回另一个子树，并开始向上更新每个节点的 <code>rank</code> 值</li>
+<li>更新完毕后还要比较左右子树的 <code>rank</code> 值以确定是否需要交换左右子树</li>
+</ol>
+<p>看一个合并子树的例子：</p>
+<p><img src="https://blog-1251984664.cos.ap-shanghai.myqcloud.com/blog/1614757235831-Untitled%205.png" alt="p6"></p>
+<p>分析其时间复杂度，有：</p>
+<ul>
+<li>获取堆顶元素：$O(1)$</li>
+<li>插入元素：$O(logn)$</li>
+<li>删除元素：$O(logn)$</li>
+<li>合并堆：$O(logn)$</li>
+</ul>
+<h1 id="代码">代码</h1>
+<h2 id="完全二叉树-1">完全二叉树</h2>
+<p>这部分代码是我一开始研究学习时写的测试代码，比较混乱，也采用了很多命令式语言的思维，比如有大量的副作用，对对象的操作都是在一个对象本身等。这里保留在这来和下面纯函数式的写法做一个对比</p>
+<p><code>binary_heap.ml</code></p>
+<div class="highlight"><pre class="chroma"><code class="language-ocaml" data-lang="ocaml"><span class="c">(* Input signature of the functor *)</span>
+<span class="k">module</span> <span class="k">type</span> <span class="nc">OrderedType</span> <span class="o">=</span> <span class="k">sig</span>
+  <span class="c">(* the type of the heap elements *)</span>
+  <span class="k">type</span> <span class="n">t</span>
+
+  <span class="c">(* compare function used to determine the order of elements *)</span>
+  <span class="k">val</span> <span class="n">compare</span> <span class="o">:</span> <span class="n">t</span> <span class="o">-&gt;</span> <span class="n">t</span> <span class="o">-&gt;</span> <span class="kt">int</span>
+<span class="k">end</span>
+
+<span class="k">module</span> <span class="nc">Make</span> <span class="o">(</span><span class="nc">Ord</span> <span class="o">:</span> <span class="nc">OrderedType</span><span class="o">)</span> <span class="o">=</span> <span class="k">struct</span>
+  <span class="k">type</span> <span class="n">elt</span> <span class="o">=</span> <span class="nn">Ord</span><span class="p">.</span><span class="n">t</span>
+
+  <span class="k">type</span> <span class="n">tree</span> <span class="o">=</span> <span class="o">{</span> <span class="k">mutable</span> <span class="n">elements</span> <span class="o">:</span> <span class="n">elt</span> <span class="kt">array</span><span class="o">;</span> <span class="k">mutable</span> <span class="n">size</span> <span class="o">:</span> <span class="kt">int</span> <span class="o">}</span>
+
+  <span class="k">let</span> <span class="n">create</span> <span class="n">n</span> <span class="n">default</span> <span class="o">=</span> <span class="o">{</span> <span class="n">size</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">elements</span> <span class="o">=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">make</span> <span class="n">n</span> <span class="n">default</span> <span class="o">}</span>
+
+  <span class="k">let</span> <span class="n">insert</span> <span class="n">v</span> <span class="n">t</span> <span class="o">=</span>
+    <span class="k">let</span> <span class="n">d</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">elements</span> <span class="k">in</span>
+    <span class="k">let</span> <span class="k">rec</span> <span class="n">shiftUp</span> <span class="n">i</span> <span class="o">=</span>
+      <span class="k">let</span> <span class="n">fi</span> <span class="o">=</span> <span class="o">(</span><span class="n">i</span> <span class="o">-</span> <span class="n">1</span><span class="o">)</span> <span class="o">/</span> <span class="n">2</span> <span class="k">in</span>
+      <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="n">0</span> <span class="o">&amp;&amp;</span> <span class="nn">Ord</span><span class="p">.</span><span class="n">compare</span> <span class="n">d</span><span class="o">.(</span><span class="n">fi</span><span class="o">)</span> <span class="n">v</span> <span class="o">&gt;</span> <span class="n">0</span> <span class="k">then</span> <span class="o">(</span>
+        <span class="n">d</span><span class="o">.(</span><span class="n">i</span><span class="o">)</span> <span class="o">&lt;-</span> <span class="n">d</span><span class="o">.(</span><span class="n">fi</span><span class="o">);</span>
+        <span class="n">shiftUp</span> <span class="n">fi</span> <span class="o">)</span>
+      <span class="k">else</span> <span class="n">d</span><span class="o">.(</span><span class="n">i</span><span class="o">)</span> <span class="o">&lt;-</span> <span class="n">v</span>
+    <span class="k">in</span>
+    <span class="n">shiftUp</span> <span class="n">t</span><span class="o">.</span><span class="n">size</span><span class="o">;</span>
+    <span class="n">t</span><span class="o">.</span><span class="n">size</span> <span class="o">&lt;-</span> <span class="n">t</span><span class="o">.</span><span class="n">size</span> <span class="o">+</span> <span class="n">1</span>
+
+  <span class="k">let</span> <span class="n">deleteTop</span> <span class="n">t</span> <span class="o">=</span>
+    <span class="k">if</span> <span class="n">t</span><span class="o">.</span><span class="n">size</span> <span class="o">&lt;=</span> <span class="n">0</span> <span class="k">then</span> <span class="n">failwith</span> <span class="s2">&#34;empty&#34;</span>
+    <span class="k">else</span>
+      <span class="k">let</span> <span class="n">n</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">size</span> <span class="o">-</span> <span class="n">1</span> <span class="k">in</span>
+      <span class="n">t</span><span class="o">.</span><span class="n">size</span> <span class="o">&lt;-</span> <span class="n">n</span><span class="o">;</span>
+      <span class="k">let</span> <span class="n">d</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">elements</span> <span class="k">in</span>
+      <span class="k">let</span> <span class="n">x</span> <span class="o">=</span> <span class="n">d</span><span class="o">.(</span><span class="n">n</span><span class="o">)</span> <span class="k">in</span>
+      <span class="k">let</span> <span class="k">rec</span> <span class="n">shiftDown</span> <span class="n">i</span> <span class="o">=</span>
+        <span class="k">let</span> <span class="n">ci</span> <span class="o">=</span> <span class="o">(</span><span class="n">2</span> <span class="o">*</span> <span class="n">i</span><span class="o">)</span> <span class="o">+</span> <span class="n">1</span> <span class="k">in</span>
+        <span class="k">if</span> <span class="n">ci</span> <span class="o">&lt;</span> <span class="n">n</span> <span class="k">then</span>
+          <span class="k">let</span> <span class="n">j</span> <span class="o">=</span>
+            <span class="k">let</span> <span class="n">k</span> <span class="o">=</span> <span class="n">ci</span> <span class="o">+</span> <span class="n">1</span> <span class="k">in</span>
+            <span class="k">if</span> <span class="n">k</span> <span class="o">&lt;</span> <span class="n">n</span> <span class="o">&amp;&amp;</span> <span class="nn">Ord</span><span class="p">.</span><span class="n">compare</span> <span class="n">d</span><span class="o">.(</span><span class="n">k</span><span class="o">)</span> <span class="n">d</span><span class="o">.(</span><span class="n">ci</span><span class="o">)</span> <span class="o">&lt;</span> <span class="n">0</span> <span class="k">then</span> <span class="n">k</span> <span class="k">else</span> <span class="n">ci</span>
+          <span class="k">in</span>
+          <span class="k">if</span> <span class="nn">Ord</span><span class="p">.</span><span class="n">compare</span> <span class="n">d</span><span class="o">.(</span><span class="n">j</span><span class="o">)</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="n">0</span> <span class="k">then</span> <span class="o">(</span>
+            <span class="n">d</span><span class="o">.(</span><span class="n">i</span><span class="o">)</span> <span class="o">&lt;-</span> <span class="n">d</span><span class="o">.(</span><span class="n">j</span><span class="o">);</span>
+            <span class="n">shiftDown</span> <span class="n">j</span> <span class="o">)</span>
+          <span class="k">else</span> <span class="n">d</span><span class="o">.(</span><span class="n">i</span><span class="o">)</span> <span class="o">&lt;-</span> <span class="n">x</span>
+        <span class="k">else</span> <span class="n">d</span><span class="o">.(</span><span class="n">i</span><span class="o">)</span> <span class="o">&lt;-</span> <span class="n">x</span>
+      <span class="k">in</span>
+      <span class="n">shiftDown</span> <span class="n">0</span>
+
+  <span class="k">let</span> <span class="n">getTop</span> <span class="n">t</span> <span class="o">=</span> <span class="k">if</span> <span class="n">t</span><span class="o">.</span><span class="n">size</span> <span class="o">&lt;=</span> <span class="n">0</span> <span class="k">then</span> <span class="n">failwith</span> <span class="s2">&#34;empty&#34;</span> <span class="k">else</span> <span class="n">t</span><span class="o">.</span><span class="n">elements</span><span class="o">.(</span><span class="n">0</span><span class="o">)</span>
+
+  <span class="k">let</span> <span class="k">rec</span> <span class="n">toList</span> <span class="n">t</span> <span class="o">=</span>
+    <span class="k">if</span> <span class="n">t</span><span class="o">.</span><span class="n">size</span> <span class="o">&lt;=</span> <span class="n">0</span> <span class="k">then</span> <span class="bp">[]</span>
+    <span class="k">else</span>
+      <span class="k">let</span> <span class="n">top</span> <span class="o">=</span> <span class="n">getTop</span> <span class="n">t</span> <span class="k">in</span>
+      <span class="n">deleteTop</span> <span class="n">t</span><span class="o">;</span>
+      <span class="n">top</span> <span class="o">::</span> <span class="n">toList</span> <span class="n">t</span>
+
+  <span class="k">let</span> <span class="k">rec</span> <span class="n">fromList</span> <span class="n">n</span> <span class="n">default</span> <span class="o">=</span> <span class="k">function</span>
+    <span class="o">|</span> <span class="bp">[]</span> <span class="o">-&gt;</span> <span class="n">create</span> <span class="n">n</span> <span class="n">default</span>
+    <span class="o">|</span> <span class="n">hd</span> <span class="o">::</span> <span class="n">tl</span> <span class="o">-&gt;</span>
+        <span class="k">let</span> <span class="n">t</span> <span class="o">=</span> <span class="n">fromList</span> <span class="n">n</span> <span class="n">default</span> <span class="n">tl</span> <span class="k">in</span>
+        <span class="n">insert</span> <span class="n">hd</span> <span class="n">t</span><span class="o">;</span>
+        <span class="n">t</span>
+<span class="k">end</span>
+</code></pre></div><p><code>binary_heap.mli</code></p>
+<div class="highlight"><pre class="chroma"><code class="language-ocaml" data-lang="ocaml"><span class="c">(* Input signature of the functor *)</span>
+<span class="k">module</span> <span class="k">type</span> <span class="nc">OrderedType</span> <span class="o">=</span> <span class="k">sig</span>
+  <span class="c">(* the type of the heap elements *)</span>
+  <span class="k">type</span> <span class="n">t</span>
+
+  <span class="c">(* compare function used to determine the order of elements *)</span>
+  <span class="k">val</span> <span class="n">compare</span> <span class="o">:</span> <span class="n">t</span> <span class="o">-&gt;</span> <span class="n">t</span> <span class="o">-&gt;</span> <span class="kt">int</span>
+<span class="k">end</span>
+
+<span class="k">module</span> <span class="nc">Make</span> <span class="o">:</span> <span class="k">functor</span> <span class="o">(</span><span class="nc">Ord</span> <span class="o">:</span> <span class="nc">OrderedType</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="k">sig</span>
+  <span class="k">type</span> <span class="n">elt</span> <span class="o">=</span> <span class="nn">Ord</span><span class="p">.</span><span class="n">t</span>
+
+  <span class="k">type</span> <span class="n">tree</span>
+
+  <span class="c">(* create an empty heap, with only a leaf *)</span>
+  <span class="k">val</span> <span class="n">create</span> <span class="o">:</span> <span class="kt">int</span> <span class="o">-&gt;</span> <span class="n">elt</span> <span class="o">-&gt;</span> <span class="n">tree</span>
+
+  <span class="c">(* insert an element into a heap, just like merge two heap *)</span>
+  <span class="k">val</span> <span class="n">insert</span> <span class="o">:</span> <span class="n">elt</span> <span class="o">-&gt;</span> <span class="n">tree</span> <span class="o">-&gt;</span> <span class="kt">unit</span>
+
+  <span class="c">(* delete the top element of a heap, just merge two children trees *)</span>
+  <span class="k">val</span> <span class="n">deleteTop</span> <span class="o">:</span> <span class="n">tree</span> <span class="o">-&gt;</span> <span class="kt">unit</span>
+
+  <span class="c">(* get the top element of a heap *)</span>
+  <span class="k">val</span> <span class="n">getTop</span> <span class="o">:</span> <span class="n">tree</span> <span class="o">-&gt;</span> <span class="n">elt</span>
+
+  <span class="c">(* generate a list from a heap *)</span>
+  <span class="k">val</span> <span class="n">toList</span> <span class="o">:</span> <span class="n">tree</span> <span class="o">-&gt;</span> <span class="n">elt</span> <span class="kt">list</span>
+
+  <span class="c">(* create a heap from list *)</span>
+  <span class="k">val</span> <span class="n">fromList</span> <span class="o">:</span> <span class="kt">int</span> <span class="o">-&gt;</span> <span class="n">elt</span> <span class="o">-&gt;</span> <span class="n">elt</span> <span class="kt">list</span> <span class="o">-&gt;</span> <span class="n">tree</span>
+<span class="k">end</span>
+</code></pre></div><h2 id="左偏堆">左偏堆</h2>
+<p>这里的左偏堆采用了纯函数式的写法，包括采用联合体构建一棵二叉树，所有操作都无副作用，返回一个新的对象等。和上面命令式的写法相比，也更加简练，通过递归和迭代就实现了复杂的操作逻辑</p>
+<p><code>heap.ml</code></p>
+<div class="highlight"><pre class="chroma"><code class="language-ocaml" data-lang="ocaml"><span class="c">(* Input signature of the functor *)</span>
+<span class="k">module</span> <span class="k">type</span> <span class="nc">OrderedType</span> <span class="o">=</span> <span class="k">sig</span>
+  <span class="c">(* the type of the heap elements *)</span>
+  <span class="k">type</span> <span class="n">t</span>
+
+  <span class="c">(* compare function used to determine the order of elements *)</span>
+  <span class="k">val</span> <span class="n">compare</span> <span class="o">:</span> <span class="n">t</span> <span class="o">-&gt;</span> <span class="n">t</span> <span class="o">-&gt;</span> <span class="kt">int</span>
+<span class="k">end</span>
+
+<span class="k">module</span> <span class="nc">Make</span> <span class="o">(</span><span class="nc">Ord</span> <span class="o">:</span> <span class="nc">OrderedType</span><span class="o">)</span> <span class="o">=</span> <span class="k">struct</span>
+  <span class="k">type</span> <span class="n">elt</span> <span class="o">=</span> <span class="nn">Ord</span><span class="p">.</span><span class="n">t</span>
+
+  <span class="c">(* heaps are represented by leftist tree *)</span>
+  <span class="k">type</span> <span class="n">tree</span> <span class="o">=</span>
+    <span class="c">(* leaf node *)</span>
+    <span class="o">|</span> <span class="nc">Leaf</span>
+    <span class="c">(* left child, value of node, right child, rank of node *)</span>
+    <span class="o">|</span> <span class="nc">Node</span> <span class="k">of</span> <span class="n">tree</span> <span class="o">*</span> <span class="n">elt</span> <span class="o">*</span> <span class="n">tree</span> <span class="o">*</span> <span class="kt">int</span>
+
+  <span class="c">(* create an empty heap, with only a leaf *)</span>
+  <span class="k">let</span> <span class="n">create</span> <span class="bp">()</span> <span class="o">=</span> <span class="nc">Leaf</span>
+
+  <span class="c">(* create a node contains only v *)</span>
+  <span class="k">let</span> <span class="n">singleton</span> <span class="n">v</span> <span class="o">=</span> <span class="nc">Node</span> <span class="o">(</span><span class="nc">Leaf</span><span class="o">,</span> <span class="n">v</span><span class="o">,</span> <span class="nc">Leaf</span><span class="o">,</span> <span class="n">1</span><span class="o">)</span>
+
+  <span class="c">(* get the rank of a node *)</span>
+  <span class="k">let</span> <span class="n">getRank</span> <span class="o">=</span> <span class="k">function</span> <span class="nc">Leaf</span> <span class="o">-&gt;</span> <span class="n">0</span> <span class="o">|</span> <span class="nc">Node</span> <span class="o">(_,</span> <span class="o">_,</span> <span class="o">_,</span> <span class="n">r</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">r</span>
+
+  <span class="c">(* merge to heap, the most important function in leftist heap *)</span>
+  <span class="k">let</span> <span class="k">rec</span> <span class="n">merge</span> <span class="n">t1</span> <span class="n">t2</span> <span class="o">=</span>
+    <span class="k">match</span> <span class="o">(</span><span class="n">t1</span><span class="o">,</span> <span class="n">t2</span><span class="o">)</span> <span class="k">with</span>
+    <span class="o">|</span> <span class="nc">Leaf</span><span class="o">,</span> <span class="n">t</span> <span class="o">|</span> <span class="n">t</span><span class="o">,</span> <span class="nc">Leaf</span> <span class="o">-&gt;</span> <span class="n">t</span>
+    <span class="o">|</span> <span class="nc">Node</span> <span class="o">(</span><span class="n">l</span><span class="o">,</span> <span class="n">v1</span><span class="o">,</span> <span class="n">r</span><span class="o">,</span> <span class="o">_),</span> <span class="nc">Node</span> <span class="o">(_,</span> <span class="n">v2</span><span class="o">,</span> <span class="o">_,</span> <span class="o">_)</span> <span class="o">-&gt;</span>
+        <span class="c">(* switch two heap if the tree on the left have a bigger key *)</span>
+        <span class="k">if</span> <span class="nn">Ord</span><span class="p">.</span><span class="n">compare</span> <span class="n">v1</span> <span class="n">v2</span> <span class="o">&gt;</span> <span class="n">0</span> <span class="k">then</span> <span class="n">merge</span> <span class="n">t2</span> <span class="n">t1</span>
+          <span class="c">(* the order is determined by the compare function *)</span>
+        <span class="k">else</span>
+          <span class="c">(* merge with the right tree *)</span>
+          <span class="k">let</span> <span class="n">merged</span> <span class="o">=</span> <span class="n">merge</span> <span class="n">r</span> <span class="n">t2</span> <span class="k">in</span>
+          <span class="k">let</span> <span class="n">leftRank</span> <span class="o">=</span> <span class="n">getRank</span> <span class="n">l</span> <span class="ow">and</span> <span class="n">rightRank</span> <span class="o">=</span> <span class="n">getRank</span> <span class="n">merged</span> <span class="k">in</span>
+          <span class="c">(* compare the rank of both tree *)</span>
+          <span class="k">if</span> <span class="n">leftRank</span> <span class="o">&gt;=</span> <span class="n">rightRank</span> <span class="k">then</span> <span class="nc">Node</span> <span class="o">(</span><span class="n">l</span><span class="o">,</span> <span class="n">v1</span><span class="o">,</span> <span class="n">merged</span><span class="o">,</span> <span class="n">rightRank</span> <span class="o">+</span> <span class="n">1</span><span class="o">)</span>
+            <span class="c">(* switch left and right since left tree is shorter *)</span>
+          <span class="k">else</span> <span class="nc">Node</span> <span class="o">(</span><span class="n">merged</span><span class="o">,</span> <span class="n">v1</span><span class="o">,</span> <span class="n">l</span><span class="o">,</span> <span class="n">leftRank</span> <span class="o">+</span> <span class="n">1</span><span class="o">)</span>
+
+  <span class="c">(* insert an element into a heap, just like merge two heap *)</span>
+  <span class="k">let</span> <span class="n">insert</span> <span class="n">v</span> <span class="n">t</span> <span class="o">=</span>
+    <span class="k">match</span> <span class="n">t</span> <span class="k">with</span>
+    <span class="o">|</span> <span class="nc">Leaf</span> <span class="o">-&gt;</span> <span class="n">singleton</span> <span class="n">v</span>
+    <span class="o">|</span> <span class="nc">Node</span> <span class="o">(_,</span> <span class="o">_,</span> <span class="o">_,</span> <span class="o">_)</span> <span class="o">-&gt;</span> <span class="n">merge</span> <span class="n">t</span> <span class="o">(</span><span class="n">singleton</span> <span class="n">v</span><span class="o">)</span>
+
+  <span class="c">(* get the top element of a heap *)</span>
+  <span class="k">let</span> <span class="n">getTop</span> <span class="o">=</span> <span class="k">function</span> <span class="nc">Leaf</span> <span class="o">-&gt;</span> <span class="n">failwith</span> <span class="s2">&#34;empty&#34;</span> <span class="o">|</span> <span class="nc">Node</span> <span class="o">(_,</span> <span class="n">v</span><span class="o">,</span> <span class="o">_,</span> <span class="o">_)</span> <span class="o">-&gt;</span> <span class="n">v</span>
+
+  <span class="c">(* delete the top element of a heap, just merge two children trees *)</span>
+  <span class="k">let</span> <span class="n">deleteTop</span> <span class="o">=</span> <span class="k">function</span>
+    <span class="o">|</span> <span class="nc">Leaf</span> <span class="o">-&gt;</span> <span class="n">failwith</span> <span class="s2">&#34;empty&#34;</span>
+    <span class="o">|</span> <span class="nc">Node</span> <span class="o">(</span><span class="n">l</span><span class="o">,</span> <span class="o">_,</span> <span class="n">r</span><span class="o">,</span> <span class="o">_)</span> <span class="o">-&gt;</span> <span class="n">merge</span> <span class="n">l</span> <span class="n">r</span>
+
+  <span class="c">(* generate a list from a heap *)</span>
+  <span class="k">let</span> <span class="k">rec</span> <span class="n">toList</span> <span class="n">t</span> <span class="o">=</span>
+    <span class="k">match</span> <span class="n">t</span> <span class="k">with</span> <span class="nc">Leaf</span> <span class="o">-&gt;</span> <span class="bp">[]</span> <span class="o">|</span> <span class="o">_</span> <span class="o">-&gt;</span> <span class="n">getTop</span> <span class="n">t</span> <span class="o">::</span> <span class="n">toList</span> <span class="o">(</span><span class="n">deleteTop</span> <span class="n">t</span><span class="o">)</span>
+
+  <span class="k">let</span> <span class="k">rec</span> <span class="n">fromList</span> <span class="o">=</span> <span class="k">function</span>
+    <span class="o">|</span> <span class="bp">[]</span> <span class="o">-&gt;</span> <span class="n">create</span> <span class="bp">()</span>
+    <span class="o">|</span> <span class="n">hd</span> <span class="o">::</span> <span class="n">tl</span> <span class="o">-&gt;</span> <span class="n">insert</span> <span class="n">hd</span> <span class="o">(</span><span class="n">fromList</span> <span class="n">tl</span><span class="o">)</span>
+<span class="k">end</span>
+</code></pre></div><p><code>heap.mli</code></p>
+<div class="highlight"><pre class="chroma"><code class="language-ocaml" data-lang="ocaml"><span class="c">(* Input signature of the functor *)</span>
+<span class="k">module</span> <span class="k">type</span> <span class="nc">OrderedType</span> <span class="o">=</span> <span class="k">sig</span>
+  <span class="c">(* the type of the heap elements *)</span>
+  <span class="k">type</span> <span class="n">t</span>
+
+  <span class="c">(* compare function used to determine the order of elements *)</span>
+  <span class="k">val</span> <span class="n">compare</span> <span class="o">:</span> <span class="n">t</span> <span class="o">-&gt;</span> <span class="n">t</span> <span class="o">-&gt;</span> <span class="kt">int</span>
+<span class="k">end</span>
+
+<span class="k">module</span> <span class="nc">Make</span> <span class="o">:</span> <span class="k">functor</span> <span class="o">(</span><span class="nc">Ord</span> <span class="o">:</span> <span class="nc">OrderedType</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="k">sig</span>
+  <span class="k">type</span> <span class="n">elt</span> <span class="o">=</span> <span class="nn">Ord</span><span class="p">.</span><span class="n">t</span>
+
+  <span class="k">type</span> <span class="n">tree</span>
+
+  <span class="c">(* create an empty heap, with only a leaf *)</span>
+  <span class="k">val</span> <span class="n">create</span> <span class="o">:</span> <span class="kt">unit</span> <span class="o">-&gt;</span> <span class="n">tree</span>
+
+  <span class="c">(* merge to heap, the most important function in leftist heap *)</span>
+  <span class="k">val</span> <span class="n">merge</span> <span class="o">:</span> <span class="n">tree</span> <span class="o">-&gt;</span> <span class="n">tree</span> <span class="o">-&gt;</span> <span class="n">tree</span>
+
+  <span class="c">(* insert an element into a heap, just like merge two heap *)</span>
+  <span class="k">val</span> <span class="n">insert</span> <span class="o">:</span> <span class="n">elt</span> <span class="o">-&gt;</span> <span class="n">tree</span> <span class="o">-&gt;</span> <span class="n">tree</span>
+
+  <span class="c">(* get the top element of a heap *)</span>
+  <span class="k">val</span> <span class="n">getTop</span> <span class="o">:</span> <span class="n">tree</span> <span class="o">-&gt;</span> <span class="n">elt</span>
+
+  <span class="c">(* delete the top element of a heap, just merge two children trees *)</span>
+  <span class="k">val</span> <span class="n">deleteTop</span> <span class="o">:</span> <span class="n">tree</span> <span class="o">-&gt;</span> <span class="n">tree</span>
+
+  <span class="c">(* generate a list from a heap *)</span>
+  <span class="k">val</span> <span class="n">toList</span> <span class="o">:</span> <span class="n">tree</span> <span class="o">-&gt;</span> <span class="n">elt</span> <span class="kt">list</span>
+
+  <span class="c">(* create a heap from list *)</span>
+  <span class="k">val</span> <span class="n">fromList</span> <span class="o">:</span> <span class="n">elt</span> <span class="kt">list</span> <span class="o">-&gt;</span> <span class="n">tree</span>
+<span class="k">end</span>
+</code></pre></div><p><code>test.ml</code></p>
+<p>测试文件，对所写的堆向外提供的函数进行测试。创建了一个带 <code>int</code> 类型的函子，采用自定义的排序函数实现大顶堆。还创建了一个 <code>String</code> 类型的函子</p>
+<div class="highlight"><pre class="chroma"><code class="language-ocaml" data-lang="ocaml"><span class="c">(* int 型函子，带比较函数 *)</span>
+<span class="k">module</span> <span class="nc">E</span> <span class="o">=</span> <span class="k">struct</span>
+  <span class="k">type</span> <span class="n">t</span> <span class="o">=</span> <span class="kt">int</span>
+
+  <span class="k">let</span> <span class="n">compare</span> <span class="n">a</span> <span class="n">b</span> <span class="o">=</span> <span class="o">-</span><span class="n">compare</span> <span class="n">a</span> <span class="n">b</span>
+<span class="k">end</span>
+
+<span class="c">(* int 型大顶堆，采用左偏树 *)</span>
+<span class="k">module</span> <span class="nc">H_int</span> <span class="o">=</span> <span class="nn">Heap</span><span class="p">.</span><span class="nc">Make</span> <span class="o">(</span><span class="nc">E</span><span class="o">)</span>
+
+<span class="k">let</span> <span class="n">t</span> <span class="o">=</span> <span class="nn">H_int</span><span class="p">.</span><span class="n">create</span> <span class="bp">()</span>
+
+<span class="c">(* 测试基本的插入、删除等操作 *)</span>
+<span class="k">let</span> <span class="bp">()</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">t</span> <span class="o">=</span>
+    <span class="nn">H_int</span><span class="p">.</span><span class="n">insert</span> <span class="n">3</span> <span class="n">t</span> <span class="o">|&gt;</span> <span class="nn">H_int</span><span class="p">.</span><span class="n">insert</span> <span class="n">5</span> <span class="o">|&gt;</span> <span class="nn">H_int</span><span class="p">.</span><span class="n">insert</span> <span class="n">1</span> <span class="o">|&gt;</span> <span class="nn">H_int</span><span class="p">.</span><span class="n">insert</span> <span class="n">4</span>
+    <span class="o">|&gt;</span> <span class="nn">H_int</span><span class="p">.</span><span class="n">insert</span> <span class="n">2</span>
+  <span class="k">in</span>
+  <span class="k">assert</span> <span class="o">(</span><span class="nn">H_int</span><span class="p">.</span><span class="n">getTop</span> <span class="n">t</span> <span class="o">=</span> <span class="n">5</span><span class="o">);</span>
+  <span class="k">assert</span> <span class="o">(</span><span class="nn">H_int</span><span class="p">.</span><span class="n">deleteTop</span> <span class="n">t</span> <span class="o">|&gt;</span> <span class="nn">H_int</span><span class="p">.</span><span class="n">deleteTop</span> <span class="o">|&gt;</span> <span class="nn">H_int</span><span class="p">.</span><span class="n">getTop</span> <span class="o">=</span> <span class="n">3</span><span class="o">);</span>
+  <span class="nn">List</span><span class="p">.</span><span class="n">iter</span> <span class="o">(</span><span class="nn">Printf</span><span class="p">.</span><span class="n">printf</span> <span class="s2">&#34;%d &#34;</span><span class="o">)</span> <span class="o">(</span><span class="nn">H_int</span><span class="p">.</span><span class="n">toList</span> <span class="n">t</span><span class="o">);</span>
+  <span class="n">print_newline</span> <span class="bp">()</span>
+
+<span class="c">(* 测试从 list 构建和生成 list *)</span>
+<span class="k">let</span> <span class="bp">()</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">l</span> <span class="o">=</span> <span class="nn">H_int</span><span class="p">.</span><span class="n">toList</span> <span class="o">(</span><span class="nn">H_int</span><span class="p">.</span><span class="n">fromList</span> <span class="o">[</span> <span class="n">4</span><span class="o">;</span> <span class="n">2</span><span class="o">;</span> <span class="n">1</span><span class="o">;</span> <span class="n">5</span><span class="o">;</span> <span class="n">6</span><span class="o">;</span> <span class="n">7</span><span class="o">;</span> <span class="n">2</span><span class="o">;</span> <span class="n">0</span> <span class="o">])</span> <span class="k">in</span>
+  <span class="k">assert</span> <span class="o">(</span><span class="n">l</span> <span class="o">=</span> <span class="o">[</span> <span class="n">7</span><span class="o">;</span> <span class="n">6</span><span class="o">;</span> <span class="n">5</span><span class="o">;</span> <span class="n">4</span><span class="o">;</span> <span class="n">2</span><span class="o">;</span> <span class="n">2</span><span class="o">;</span> <span class="n">1</span><span class="o">;</span> <span class="n">0</span> <span class="o">]);</span>
+  <span class="nn">List</span><span class="p">.</span><span class="n">iter</span> <span class="o">(</span><span class="nn">Printf</span><span class="p">.</span><span class="n">printf</span> <span class="s2">&#34;%d &#34;</span><span class="o">)</span> <span class="n">l</span><span class="o">;</span>
+  <span class="n">print_newline</span> <span class="bp">()</span>
+
+<span class="c">(* 测试合并两个堆 *)</span>
+<span class="k">let</span> <span class="bp">()</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">t</span> <span class="o">=</span>
+    <span class="nn">H_int</span><span class="p">.</span><span class="n">merge</span>
+      <span class="o">(</span><span class="nn">H_int</span><span class="p">.</span><span class="n">fromList</span> <span class="o">[</span> <span class="n">1</span><span class="o">;</span> <span class="n">3</span><span class="o">;</span> <span class="n">5</span><span class="o">;</span> <span class="n">7</span><span class="o">;</span> <span class="n">9</span> <span class="o">])</span>
+      <span class="o">(</span><span class="nn">H_int</span><span class="p">.</span><span class="n">fromList</span> <span class="o">[</span> <span class="n">2</span><span class="o">;</span> <span class="n">4</span><span class="o">;</span> <span class="n">6</span><span class="o">;</span> <span class="n">8</span> <span class="o">])</span>
+  <span class="k">in</span>
+  <span class="k">let</span> <span class="n">l</span> <span class="o">=</span> <span class="nn">H_int</span><span class="p">.</span><span class="n">toList</span> <span class="n">t</span> <span class="k">in</span>
+  <span class="k">assert</span> <span class="o">(</span><span class="n">l</span> <span class="o">=</span> <span class="o">[</span> <span class="n">9</span><span class="o">;</span> <span class="n">8</span><span class="o">;</span> <span class="n">7</span><span class="o">;</span> <span class="n">6</span><span class="o">;</span> <span class="n">5</span><span class="o">;</span> <span class="n">4</span><span class="o">;</span> <span class="n">3</span><span class="o">;</span> <span class="n">2</span><span class="o">;</span> <span class="n">1</span> <span class="o">]);</span>
+  <span class="nn">List</span><span class="p">.</span><span class="n">iter</span> <span class="o">(</span><span class="nn">Printf</span><span class="p">.</span><span class="n">printf</span> <span class="s2">&#34;%d &#34;</span><span class="o">)</span> <span class="n">l</span><span class="o">;</span>
+  <span class="n">print_newline</span> <span class="bp">()</span>
+
+<span class="c">(* string 型小顶堆 *)</span>
+<span class="k">module</span> <span class="nc">H_string</span> <span class="o">=</span> <span class="nn">Heap</span><span class="p">.</span><span class="nc">Make</span> <span class="o">(</span><span class="nc">String</span><span class="o">)</span>
+
+<span class="k">let</span> <span class="n">t</span> <span class="o">=</span> <span class="nn">H_string</span><span class="p">.</span><span class="n">create</span> <span class="bp">()</span>
+
+<span class="c">(* 测试基本的插入、删除等操作 *)</span>
+<span class="k">let</span> <span class="bp">()</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">t</span> <span class="o">=</span>
+    <span class="nn">H_string</span><span class="p">.</span><span class="n">insert</span> <span class="s2">&#34;asdf&#34;</span> <span class="n">t</span> <span class="o">|&gt;</span> <span class="nn">H_string</span><span class="p">.</span><span class="n">insert</span> <span class="s2">&#34;qwer&#34;</span> <span class="o">|&gt;</span> <span class="nn">H_string</span><span class="p">.</span><span class="n">insert</span> <span class="s2">&#34;zz&#34;</span>
+  <span class="k">in</span>
+  <span class="k">assert</span> <span class="o">(</span><span class="nn">H_string</span><span class="p">.</span><span class="n">getTop</span> <span class="n">t</span> <span class="o">=</span> <span class="s2">&#34;asdf&#34;</span><span class="o">);</span>
+  <span class="k">assert</span> <span class="o">(</span>
+    <span class="nn">H_string</span><span class="p">.</span><span class="n">toList</span>
+      <span class="o">(</span><span class="nn">H_string</span><span class="p">.</span><span class="n">deleteTop</span> <span class="n">t</span> <span class="o">|&gt;</span> <span class="nn">H_string</span><span class="p">.</span><span class="n">deleteTop</span> <span class="o">|&gt;</span> <span class="nn">H_string</span><span class="p">.</span><span class="n">insert</span> <span class="s2">&#34;bb&#34;</span><span class="o">)</span>
+    <span class="o">=</span> <span class="o">[</span> <span class="s2">&#34;bb&#34;</span><span class="o">;</span> <span class="s2">&#34;zz&#34;</span> <span class="o">]</span> <span class="o">)</span>
+
+<span class="c">(* 测试 string 类型上的操作 *)</span>
+<span class="k">let</span> <span class="bp">()</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">l</span> <span class="o">=</span>
+    <span class="nn">H_string</span><span class="p">.</span><span class="n">toList</span>
+      <span class="o">(</span><span class="nn">H_string</span><span class="p">.</span><span class="n">merge</span>
+         <span class="o">(</span><span class="nn">H_string</span><span class="p">.</span><span class="n">fromList</span> <span class="o">[</span> <span class="s2">&#34;Z&#34;</span><span class="o">;</span> <span class="s2">&#34;Y&#34;</span><span class="o">;</span> <span class="s2">&#34;X&#34;</span> <span class="o">])</span>
+         <span class="o">(</span><span class="nn">H_string</span><span class="p">.</span><span class="n">fromList</span> <span class="o">[</span> <span class="s2">&#34;y&#34;</span><span class="o">;</span> <span class="s2">&#34;z&#34;</span><span class="o">;</span> <span class="s2">&#34;x&#34;</span> <span class="o">]))</span>
+  <span class="k">in</span>
+  <span class="k">assert</span> <span class="o">(</span><span class="n">l</span> <span class="o">=</span> <span class="o">[</span> <span class="s2">&#34;X&#34;</span><span class="o">;</span> <span class="s2">&#34;Y&#34;</span><span class="o">;</span> <span class="s2">&#34;Z&#34;</span><span class="o">;</span> <span class="s2">&#34;x&#34;</span><span class="o">;</span> <span class="s2">&#34;y&#34;</span><span class="o">;</span> <span class="s2">&#34;z&#34;</span> <span class="o">]);</span>
+  <span class="nn">List</span><span class="p">.</span><span class="n">iter</span> <span class="o">(</span><span class="nn">Printf</span><span class="p">.</span><span class="n">printf</span> <span class="s2">&#34;%s &#34;</span><span class="o">)</span> <span class="n">l</span><span class="o">;</span>
+  <span class="n">print_newline</span> <span class="bp">()</span>
+
+<span class="c">(* int 型大顶堆，采用数组模拟完全二叉树 *)</span>
+<span class="k">module</span> <span class="nc">B_H_int</span> <span class="o">=</span> <span class="nn">Binary_heap</span><span class="p">.</span><span class="nc">Make</span> <span class="o">(</span><span class="nc">E</span><span class="o">)</span>
+
+<span class="k">let</span> <span class="n">t</span> <span class="o">=</span> <span class="nn">B_H_int</span><span class="p">.</span><span class="n">create</span> <span class="n">20</span> <span class="n">0</span>
+
+<span class="c">(* 测试基本的插入、删除等操作 *)</span>
+<span class="k">let</span> <span class="bp">()</span> <span class="o">=</span>
+  <span class="nn">B_H_int</span><span class="p">.</span><span class="n">insert</span> <span class="n">1</span> <span class="n">t</span><span class="o">;</span>
+  <span class="nn">B_H_int</span><span class="p">.</span><span class="n">insert</span> <span class="n">3</span> <span class="n">t</span><span class="o">;</span>
+  <span class="nn">B_H_int</span><span class="p">.</span><span class="n">insert</span> <span class="n">2</span> <span class="n">t</span><span class="o">;</span>
+  <span class="nn">B_H_int</span><span class="p">.</span><span class="n">insert</span> <span class="n">4</span> <span class="n">t</span><span class="o">;</span>
+  <span class="k">assert</span> <span class="o">(</span><span class="nn">B_H_int</span><span class="p">.</span><span class="n">getTop</span> <span class="n">t</span> <span class="o">=</span> <span class="n">4</span><span class="o">);</span>
+  <span class="nn">B_H_int</span><span class="p">.</span><span class="n">deleteTop</span> <span class="n">t</span><span class="o">;</span>
+  <span class="k">assert</span> <span class="o">(</span><span class="nn">B_H_int</span><span class="p">.</span><span class="n">getTop</span> <span class="n">t</span> <span class="o">=</span> <span class="n">3</span><span class="o">);</span>
+  <span class="nn">B_H_int</span><span class="p">.</span><span class="n">deleteTop</span> <span class="n">t</span><span class="o">;</span>
+  <span class="k">assert</span> <span class="o">(</span><span class="nn">B_H_int</span><span class="p">.</span><span class="n">getTop</span> <span class="n">t</span> <span class="o">=</span> <span class="n">2</span><span class="o">);</span>
+  <span class="nn">B_H_int</span><span class="p">.</span><span class="n">insert</span> <span class="n">6</span> <span class="n">t</span><span class="o">;</span>
+  <span class="k">assert</span> <span class="o">(</span><span class="nn">B_H_int</span><span class="p">.</span><span class="n">getTop</span> <span class="n">t</span> <span class="o">=</span> <span class="n">6</span><span class="o">);</span>
+  <span class="nn">B_H_int</span><span class="p">.</span><span class="n">deleteTop</span> <span class="n">t</span><span class="o">;</span>
+  <span class="nn">B_H_int</span><span class="p">.</span><span class="n">deleteTop</span> <span class="n">t</span><span class="o">;</span>
+  <span class="k">assert</span> <span class="o">(</span><span class="nn">B_H_int</span><span class="p">.</span><span class="n">getTop</span> <span class="n">t</span> <span class="o">=</span> <span class="n">1</span><span class="o">)</span>
+
+<span class="k">let</span> <span class="n">t</span> <span class="o">=</span> <span class="nn">B_H_int</span><span class="p">.</span><span class="n">create</span> <span class="n">20</span> <span class="n">0</span>
+
+<span class="c">(* 测试生成 list *)</span>
+<span class="k">let</span> <span class="bp">()</span> <span class="o">=</span>
+  <span class="nn">B_H_int</span><span class="p">.</span><span class="n">insert</span> <span class="n">1</span> <span class="n">t</span><span class="o">;</span>
+  <span class="nn">B_H_int</span><span class="p">.</span><span class="n">insert</span> <span class="n">3</span> <span class="n">t</span><span class="o">;</span>
+  <span class="nn">B_H_int</span><span class="p">.</span><span class="n">insert</span> <span class="n">2</span> <span class="n">t</span><span class="o">;</span>
+  <span class="nn">B_H_int</span><span class="p">.</span><span class="n">insert</span> <span class="n">4</span> <span class="n">t</span><span class="o">;</span>
+  <span class="nn">List</span><span class="p">.</span><span class="n">iter</span> <span class="o">(</span><span class="nn">Printf</span><span class="p">.</span><span class="n">printf</span> <span class="s2">&#34;%d &#34;</span><span class="o">)</span> <span class="o">(</span><span class="nn">B_H_int</span><span class="p">.</span><span class="n">toList</span> <span class="n">t</span><span class="o">);</span>
+  <span class="n">print_newline</span> <span class="bp">()</span>
+
+<span class="c">(* 测试从 list 构建 *)</span>
+<span class="k">let</span> <span class="bp">()</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">t</span> <span class="o">=</span> <span class="nn">B_H_int</span><span class="p">.</span><span class="n">fromList</span> <span class="n">20</span> <span class="n">0</span> <span class="o">[</span> <span class="n">1</span><span class="o">;</span> <span class="n">3</span><span class="o">;</span> <span class="n">5</span><span class="o">;</span> <span class="n">7</span><span class="o">;</span> <span class="n">9</span><span class="o">;</span> <span class="n">2</span><span class="o">;</span> <span class="n">4</span><span class="o">;</span> <span class="n">6</span><span class="o">;</span> <span class="n">8</span><span class="o">;</span> <span class="n">0</span> <span class="o">]</span> <span class="k">in</span>
+  <span class="k">assert</span> <span class="o">(</span><span class="nn">B_H_int</span><span class="p">.</span><span class="n">toList</span> <span class="n">t</span> <span class="o">=</span> <span class="o">[</span> <span class="n">9</span><span class="o">;</span> <span class="n">8</span><span class="o">;</span> <span class="n">7</span><span class="o">;</span> <span class="n">6</span><span class="o">;</span> <span class="n">5</span><span class="o">;</span> <span class="n">4</span><span class="o">;</span> <span class="n">3</span><span class="o">;</span> <span class="n">2</span><span class="o">;</span> <span class="n">1</span><span class="o">;</span> <span class="n">0</span> <span class="o">])</span>
+
+<span class="c">(* 测试两种堆实现的结果一致 *)</span>
+<span class="k">let</span> <span class="bp">()</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">t1</span> <span class="o">=</span> <span class="nn">H_int</span><span class="p">.</span><span class="n">fromList</span> <span class="o">[</span> <span class="n">1</span><span class="o">;</span> <span class="n">3</span><span class="o">;</span> <span class="n">5</span><span class="o">;</span> <span class="n">7</span><span class="o">;</span> <span class="n">9</span><span class="o">;</span> <span class="n">2</span><span class="o">;</span> <span class="n">4</span><span class="o">;</span> <span class="n">6</span><span class="o">;</span> <span class="n">8</span><span class="o">;</span> <span class="n">0</span> <span class="o">]</span>
+  <span class="ow">and</span> <span class="n">t2</span> <span class="o">=</span> <span class="nn">B_H_int</span><span class="p">.</span><span class="n">fromList</span> <span class="n">20</span> <span class="n">0</span> <span class="o">[</span> <span class="n">1</span><span class="o">;</span> <span class="n">3</span><span class="o">;</span> <span class="n">5</span><span class="o">;</span> <span class="n">7</span><span class="o">;</span> <span class="n">9</span><span class="o">;</span> <span class="n">2</span><span class="o">;</span> <span class="n">4</span><span class="o">;</span> <span class="n">6</span><span class="o">;</span> <span class="n">8</span><span class="o">;</span> <span class="n">0</span> <span class="o">]</span> <span class="k">in</span>
+  <span class="k">assert</span> <span class="o">(</span><span class="nn">H_int</span><span class="p">.</span><span class="n">toList</span> <span class="n">t1</span> <span class="o">=</span> <span class="nn">B_H_int</span><span class="p">.</span><span class="n">toList</span> <span class="n">t2</span><span class="o">)</span>
+</code></pre></div><p>项目采用 <code>make</code> 进行构建</p>
+<div class="highlight"><pre class="chroma"><code class="language-makefile" data-lang="makefile"><span class="nf">.PHONY</span><span class="o">:</span>	<span class="n">all</span> <span class="n">clean</span> <span class="n">byte</span> <span class="n">native</span> <span class="n">profile</span> <span class="n">debug</span> <span class="n">test</span> <span class="n">run</span>
+
+<span class="nv">OCB_FLAGS</span> <span class="o">=</span> -tag bin_annot
+<span class="nv">OCB</span> <span class="o">=</span> 		ocamlbuild <span class="k">$(</span>OCB_FLAGS<span class="k">)</span>
+
+<span class="nf">all</span><span class="o">:</span> <span class="n">native</span> <span class="n">byte</span>
+
+<span class="nf">clean</span><span class="o">:</span>
+	<span class="k">$(</span>OCB<span class="k">)</span> -clean
+
+<span class="nf">native</span><span class="o">:</span>
+	<span class="k">$(</span>OCB<span class="k">)</span> main.native
+
+<span class="nf">byte</span><span class="o">:</span>
+	<span class="k">$(</span>OCB<span class="k">)</span> main.byte
+
+<span class="nf">profile</span><span class="o">:</span>
+	<span class="k">$(</span>OCB<span class="k">)</span> -tag profile main.native
+
+<span class="nf">debug</span><span class="o">:</span>
+	<span class="k">$(</span>OCB<span class="k">)</span> -tag debug main.byte
+
+<span class="nf">run</span><span class="o">:</span> <span class="n">native</span>
+	./main.native
+</code></pre></div><h1 id="心得体会">心得体会</h1>
+<p>第一次用纯函数式语言写一个算法，和之前上课时在 <code>toplevel</code> 中测试还是有较大的区别，包括如何实现多文件编译，如何配置编译，如何编写模块等都困扰了我很久。最后依靠文档、手册、github上的一些项目等学会了如何构建一个 <code>Ocaml</code> 项目。</p>
+<p>此外，<code>Ocaml</code> 标准库也给了我很大的帮助，里面的标准库如 <code>Set</code> 等都写得很清晰，有很详细的注释，我写的堆的模块结构、函子等都是参考 <code>Set</code> 库的处理方式。</p>
+<p>对于函数式语言，特别是纯函数式的思想我也有了更深刻的理解。一开始我还是以命令式的思维来编写代码，认为不使用 <code>for</code> 、<code>while</code> 语句就是函数式，代码中还是存在很多 <code>mutable</code> 、<code>ref</code> 等内容，即存在副作用，也就导致了函数操作还是对一个“对象”进行操作，而不是每次返回一个新的结果。后来参考各种项目、教程，才发现了纯函数式“无副作用”的核心思想及处理方式。</p>
+<p>我认为，纯函数式语言更贴近数学模型，可以用非常简练的语句写出算法，其核心是递归和迭代，例如我的堆通过短短几十行语句就实现了，通过一些精巧的递归就实现了命令式语言要写大量循环命令才能实现的功能。但这些简洁也带来了一些问题，比如代码抽象程度较高，理解起来较为困难；大量递归对栈上空间造成很大压力，性能降低了的同时也难以进行大量的计算，需要花费很大的力气去消除尾递归（但通常很难实现）；不允许副作用造成时间、空间的浪费；思维在两种思想中的转换较为困难等。但总的来说，函数式语言还是有很好的前景，从近年来越来越多的语言都开始支持函数式的写法（如 <code>lambda</code> 表达式等）可以看出。如 <code>C++</code> 、<code>Python</code> 、<code>Java</code> 等都有函数式的写法，我在平时编写代码的过程中也会用到函数式语句来简化代码。函数式语言和命令式语言在未来可能会越走越近，取长补短，最后融为一体。</p>]]></content>
+        <author>
+            <name><![CDATA[Creedowl’s Blog]]></name>
+        </author>
+    </entry>
     
     <entry>
         <id>https://miaotony.xyz/2021/02/12/CTF_2021HappyChineseNewYear/</id>
@@ -3190,86 +3618,6 @@ logger -t IPv6 <span class="s2">&#34;Add IPv6 default route.&#34;</span>
 <h2 id="参考资料">参考资料</h2>
 <blockquote>
 <p><a href="https://github.com/tuna/ipv6.tsinghua.edu.cn/blob/master/openwrt.md">清华OpenWRT 路由器作为 IPv6 网关的配置</a></p>
-</blockquote>]]></content>
-        <author>
-            <name><![CDATA[Creedowl’s Blog]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://blog.creedowl.com/posts/postgres-handbook/</id>
-        <title><![CDATA[PostgreSQL 简介与常用命令]]></title>
-        <updated>2019-02-03T10:32:39+08:00</updated>
-        <link href="https://blog.creedowl.com/posts/postgres-handbook/"/>
-        <content type="text/html" src="https://blog.creedowl.com/posts/postgres-handbook/"><![CDATA[<h1 id="postgresql-简介与常用命令">PostgreSQL 简介与常用命令</h1>
-<p>PostgreSQL，简称postgres，是继mysql被收购之后极为热门的开源关系型数据库，这篇文章简单记录一些使用过程中的基本用法。</p>
-<h2 id="安装">安装</h2>
-<p>为了保证宿主机环境的纯净，这里使用docker来安装postgres</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">docker run --name postgres -p 5432:5432 -e <span class="nv">POSTGRES_PASSWORD</span><span class="o">=</span>password -d postgres
-</code></pre></div><p>常用环境变量</p>
-<blockquote>
-<p>POSTGRES_USER: 数据库用户，缺省postgres</p>
-<p>POSTGRES_PASSWORD: 数据库密码 ps. 若从localhost连接则默认trust，不需要填写</p>
-<p>POSTGRES_DB: 数据库名，缺省postgres</p>
-</blockquote>
-<p>更多docker相关内容参考<a href="https://hub.docker.com/_/postgres">postgres官方docker镜像页面</a></p>
-<h2 id="常用命令">常用命令</h2>
-<p><strong>连接数据库</strong></p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">psql -U user -d database -h host -p port
-</code></pre></div><p><strong>导入数据</strong></p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">psql database &lt; db.sql
-</code></pre></div><p><strong>控制台命令</strong></p>
-<blockquote>
-<p>\h：查看SQL命令的解释，比如\h select。</p>
-<p>?：查看psql命令列表。</p>
-<p>\l：列出所有数据库。</p>
-<p>\c [database_name]：连接其他数据库。</p>
-<p>\d：列出当前数据库的所有表格。</p>
-<p>\d [table_name]：列出某一张表格的结构。</p>
-<p>\du：列出所有用户。</p>
-<p>\e：打开文本编辑器。</p>
-<p>\conninfo：列出当前数据库和连接的信息。</p>
-</blockquote>
-<p><strong>数据库操作</strong></p>
-<p><em>采用基本sql语法</em></p>
-<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="o">#</span> <span class="err">建表</span>
-<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="k">IF</span> <span class="k">NOT</span> <span class="k">EXISTS</span> <span class="k">user</span> <span class="p">(</span>
-	<span class="n">id</span> <span class="nb">SERIAL</span> <span class="k">PRIMARY</span> <span class="k">KEY</span><span class="p">,</span>
-    <span class="n">name</span> <span class="nb">TEXT</span> <span class="k">NOT</span> <span class="k">NULL</span>
-<span class="p">);</span>
-
-<span class="o">#</span> <span class="err">插入</span>
-<span class="k">INSERT</span> <span class="k">INTO</span> <span class="k">user</span> <span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">);</span>
-
-<span class="o">#</span> <span class="err">选择</span>
-<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="k">user</span><span class="p">;</span>
-
-<span class="o">#</span> <span class="err">更新</span>
-<span class="k">UPDATE</span> <span class="k">user</span> <span class="k">SET</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;qwer&#39;</span> <span class="k">WHERE</span> <span class="n">id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-
-<span class="o">#</span> <span class="err">删除</span>
-<span class="k">DELETE</span> <span class="k">FROM</span> <span class="k">user</span> <span class="k">WHERE</span> <span class="n">id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-
-<span class="o">#</span> <span class="err">添加栏位</span>
-<span class="k">ALTER</span> <span class="k">TABLE</span> <span class="k">user</span> <span class="k">ADD</span> <span class="n">gender</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
-
-<span class="o">#</span> <span class="err">更新表结构</span>
-<span class="k">ALTER</span> <span class="k">TABLE</span> <span class="k">user</span> <span class="k">ALTER</span> <span class="k">COLUMN</span> <span class="n">gender</span> <span class="k">SET</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">;</span>
-
-<span class="o">#</span> <span class="err">字段更名</span>
-<span class="k">ALTER</span> <span class="k">TABLE</span> <span class="k">user</span> <span class="k">RENAME</span> <span class="k">COLUMN</span> <span class="n">name</span> <span class="k">TO</span> <span class="n">username</span><span class="p">;</span>
-
-<span class="o">#</span> <span class="err">删除字段</span>
-<span class="k">ALTER</span> <span class="k">TABLE</span> <span class="k">user</span> <span class="k">DROP</span> <span class="k">COLUMN</span> <span class="n">gender</span><span class="p">;</span>
-
-<span class="o">#</span> <span class="err">表名更改</span>
-<span class="k">ALTER</span> <span class="k">TABLE</span> <span class="k">user</span> <span class="k">RENAME</span> <span class="k">TO</span> <span class="n">users</span><span class="p">;</span>
-
-<span class="o">#</span> <span class="err">删除表格</span>
-<span class="k">DROP</span> <span class="k">TABLE</span> <span class="n">users</span><span class="p">;</span>
-</code></pre></div><h2 id="相关链接">相关链接</h2>
-<blockquote>
-<p><a href="http://www.ruanyifeng.com/blog/2013/12/getting_started_with_postgresql.html">PostgreSQL新手入门</a></p>
 </blockquote>]]></content>
         <author>
             <name><![CDATA[Creedowl’s Blog]]></name>
