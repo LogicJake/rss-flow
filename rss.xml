@@ -3,7 +3,7 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2021-03-04T12:17:00+08:00</updated>
+    <updated>2021-03-04T18:13:31+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
@@ -863,48 +863,116 @@ output(
 <p>即排序字符串表：key-value 对按照 key 排序。</p>
 <p>相比哈希索引，有以下优势：</p>
 <ol start="1.">
+<li style="list-style-type: none;">
+<ol start="1.">
 <li>合并段简单高效，即使在文件比可用内存大的情况下：因为 kv 有序，并发读取+多指针比对即可完成合并。</li>
 <li>查找特定的 key 成本更低：不用在内存中保存所有的索引，内存中可以存储一个稀疏索引（kv 有序，可以做比对，找到相应区间）（注：此处跟二分查找仍有差别，因为 key 在实际中并不时固定长度的），每几千字节，增加一个 key 即可。</li>
 <li>kv 块在被写到磁盘块前，进行合并压缩后，并将该块的开头存储至内存的稀疏索引中：节省磁盘空间，减少 I/O 带宽占用。</li>
-</ol start="1.">
+</ol>
+</li>
+</ol>
 <p>在内存中维护内存表：可使用 红黑树 或 AVL 树，它们有 <strong>按任意顺序插入键并以排序后的顺序读取</strong> 的性质。</p>
 <p>使用 SSTable 的存储引擎大致工作流程：</p>
+<ol start="1.">
+<li style="list-style-type: none;">
+<ol start="1.">
+<li style="list-style-type: none;">
 <ol start="1.">
 <li>写入时，将内容添加到内存的平衡树数据结构中（即内存表）。</li>
 <li>当内存表大于写入阈值（一般为几 MB）后，将其作为 SSTable 写入磁盘（此时写入较高效，因为内存表已经维护了 kv 的顺序）。</li>
 <li>读取时，首先尝试在内存表中寻找 key，然后从新的磁盘段至最老的磁盘段为顺序，逐个检索。</li>
 <li>有一个后台进程，周期性执行段合并和压缩过程，合并多个段文件，降低存储占用，并删除被覆盖/删除的值。</li>
-</ol start="1.">
+</ol>
+</li>
+</ol>
+</li>
+</ol>
 <p>这个流程无法处理在突然宕机的情况下，未写入磁盘的内存表数据丢失的问题。因此，还需要一个额外的写入日志，每次写入操作都直接追加到该日志中。它的唯一目的就是在内存崩溃之后恢复内存表，因此在内存表写入 SSTable 之后，这部分日志就可以丢弃了。</p>
 <p>使用项目：LevelDB、RocksDB、Cassandra、HBase 等。</p>
 <p>性能优化：</p>
+<ol start="1.">
+<li style="list-style-type: none;">
+<ol start="1.">
+<li style="list-style-type: none;">
+<ol start="1.">
+<li style="list-style-type: none;">
 <ul>
 <li>查找 key 不存在，使用布隆过滤器加速。</li>
 <li>合并压缩策略：大小分级 和 分层压缩。</li>
 </ul>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
 <p>由于磁盘是顺序写入的， 因此该法能支持较高的写入吞吐量。</p>
 <p>优点：</p>
+<ol start="1.">
+<li style="list-style-type: none;">
+<ol start="1.">
+<li style="list-style-type: none;">
+<ol start="1.">
+<li style="list-style-type: none;">
 <ul>
 <li>LST-Tree 有较低的写放大，因此能够承载比 B-tree 更高的写入量。</li>
 </ul>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
 <p>缺点：</p>
+<ol start="1.">
+<li style="list-style-type: none;">
+<ol start="1.">
+<li style="list-style-type: none;">
+<ol start="1.">
+<li style="list-style-type: none;">
 <ul>
 <li>压缩过程会影响到读写操作，使得性能不确定。</li>
 <li>压缩过程会与写操作抢占写带宽。</li>
 </ul>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
 <h3>B-tree</h3>
 <p>特点：</p>
+<ol start="1.">
+<li style="list-style-type: none;">
+<ol start="1.">
+<li style="list-style-type: none;">
+<ol start="1.">
+<li style="list-style-type: none;">
 <ol start="1.">
 <li>按 key 排序的 key-value 对（这点与 LSM-Tree 一致）</li>
 <li>将数据库分解成固定大小的块/页（传统上为 4KB）页是读写的最小单元。</li>
 <li>每个页面都使用地址/位置进行标识，通过这些页面引用构造出一个树状页面。</li>
-</ol start="1.">
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
 <p>读取/修改：沿着页引用不断查找到目标 key，获取/修改 value。</p>
 <p>写入：找到范围包含新 key 的页，若该页无额外空间，需要做 <strong>分裂页面</strong> 操作（将其分裂成两个半满的页，同时更新上层索引）。</p>
 <p>具有 n 个键的（平衡的） B-tree 总是有 $O(logn)$ 深度（分支因子为 500 的 4KB 页的四级树存储高达 256 TB）。</p>
 <p>由于 B-tree 直接写入磁盘，因此存在若在写入部分页后发生宕机事件，会导致索引被破坏（产生孤儿页）。因此常见实现中会加入预写日志(WAL, write-ahead log)<sup id="fnref-1015-3"><a href="#fn-1015-3" class="jetpack-footnote">3</a></sup> 来恢复 B-tree 到最近的状态。</p>
 <p>多个线程同时访问 B-tree，需要进行并发控制：使用锁存器（轻量级的锁）【这是啥？】来保护树的数据结构。</p>
 <p>常见优化：</p>
+<ol start="1.">
+<li style="list-style-type: none;">
+<ol start="1.">
+<li style="list-style-type: none;">
+<ol start="1.">
+<li style="list-style-type: none;">
+<ol start="1.">
+<li style="list-style-type: none;">
 <ul>
 <li>写时复制：修改也被写入不同的位置，树的父页新版本被创建出来，并指向新位置（可不用覆盖页和 WAL 来做崩溃恢复）。</li>
 <li>保留 key 的缩略信息：让更多的 key 能被压入到页中（B+ 树）。</li>
@@ -912,20 +980,60 @@ output(
 <li>添加额外引用到树中：如同级兄弟形成同级链表，可以顺序扫描键。</li>
 <li>分形树：减少磁盘寻道。</li>
 </ul>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
 <p>相比于 LSM-Tree 来说，B-tree 读取速度更快。</p>
 <p>缺点：</p>
+<ol start="1.">
+<li style="list-style-type: none;">
+<ol start="1.">
+<li style="list-style-type: none;">
+<ol start="1.">
+<li style="list-style-type: none;">
+<ol start="1.">
+<li style="list-style-type: none;">
 <ul>
 <li>写入过程繁琐，需要维护 WAL 和页面。并且每次修改都以整个页面为单位，写入性能不高。</li>
 </ul>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
 <h3>其他索引</h3>
 <p>索引可以增加查询速度，但是需要额外存储，且所有索引都会额外增加写入开销。</p>
 <h4>二级索引</h4>
 <p>可以基于 key-value 构建，key 不一定唯一。</p>
 <p>构建方法：</p>
 <ol start="1.">
+<li style="list-style-type: none;">
+<ol start="1.">
+<li style="list-style-type: none;">
+<ol start="1.">
+<li style="list-style-type: none;">
+<ol start="1.">
+<li style="list-style-type: none;">
+<ol start="1.">
 <li>索引中的 value 成为匹配行标识符的列表（全文索引中的 position list）。</li>
 <li>追加行标识符使 key 唯一。</li>
-</ol start="1.">
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
 <p>B-tree 和 LSM-Tree 都可以用作二级索引。</p>
 <h4>堆文件</h4>
 <p>索引中的 value 存储的是对其他地方存储的行的<strong>引用</strong>（并不以特定的顺序存储数据），而不是实际行内容。这种方式被称为：堆文件（非聚集索引）。</p>
@@ -935,10 +1043,30 @@ output(
 <p>MySQL 的 InnoDB 存储引擎使用该方式：表主键始终是聚集索引（聚簇索引），二级索引直接引用主键。</p>
 <h4>覆盖索引/包含列的索引</h4>
 <p>是聚集索引与非聚集索引的折中设计，特点为：</p>
+<ol start="1.">
+<li style="list-style-type: none;">
+<ol start="1.">
+<li style="list-style-type: none;">
+<ol start="1.">
+<li style="list-style-type: none;">
+<ol start="1.">
+<li style="list-style-type: none;">
+<ol start="1.">
+<li style="list-style-type: none;">
 <ul>
 <li>索引中保存了一些表的列值。</li>
 <li>支持指通过索引即可回答“简单查询”（索引覆盖了查询）。</li>
 </ul>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
 <h4>多列索引</h4>
 <h5>级联索引</h5>
 <p>级联索引：将一列追加到另一列，将几个字段简单的组成一个 key。</p>
@@ -1020,29 +1148,84 @@ output(
 <h3>列压缩</h3>
 <p>目的：降低磁盘吞吐量。</p>
 <p>数仓中有效的列压缩技术：</p>
+<ol start="1.">
+<li style="list-style-type: none;">
+<ol start="1.">
+<li style="list-style-type: none;">
+<ol start="1.">
+<li style="list-style-type: none;">
+<ol start="1.">
+<li style="list-style-type: none;">
+<ol start="1.">
+<li style="list-style-type: none;">
 <ul>
-<li>位图编码（Bitmap）：列式存储能够得到一个有 n 个不同值的列。我们可以将其转换为 <strong>n 个独立位图</strong> （每个不同的值都有一个位图，每行用一位来代表是否为该值。若该行具有该值，则为 1 ，否则为 0 ）。</p>
-</li>
-<li>
-<p>游程编码（Run-length encoding）：在位图编码中，如果 n 较大，在大部分位图中会存在大量的 0（稀疏位图），我们可以对位图再进行游程编码，</p>
-</li>
+<li>位图编码（Bitmap）：列式存储能够得到一个有 n 个不同值的列。我们可以将其转换为 <strong>n 个独立位图</strong> （每个不同的值都有一个位图，每行用一位来代表是否为该值。若该行具有该值，则为 1 ，否则为 0 ）。</li>
+<li>游程编码（Run-length encoding）：在位图编码中，如果 n 较大，在大部分位图中会存在大量的 0（稀疏位图），我们可以对位图再进行游程编码，</li>
 </ul>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
 <p>位图索引很适合数据仓库的查询，若查找指定的值的行数，只需要按位或累加即可。</p>
-<blockquote><p>
-  Cassandra 和 HBase 中，一行中的所有列仍然与行 key 一起存储，且不会使用列压缩，因此它们并不是面向列，而仍然是面向行的。列族的概念只是从 BigTable 继承而来，并不代表其是列式存储。
-</p></blockquote>
+<blockquote><p>Cassandra 和 HBase 中，一行中的所有列仍然与行 key 一起存储，且不会使用列压缩，因此它们并不是面向列，而仍然是面向行的。列族的概念只是从 BigTable 继承而来，并不代表其是列式存储。</p></blockquote>
 <p>列式存储中性能提升的方式：</p>
+<ol start="1.">
+<li style="list-style-type: none;">
+<ol start="1.">
+<li style="list-style-type: none;">
+<ol start="1.">
+<li style="list-style-type: none;">
+<ol start="1.">
+<li style="list-style-type: none;">
+<ol start="1.">
+<li style="list-style-type: none;">
 <ul>
 <li>提高主存储器带宽到 CPU 缓存带宽的利用率：避免 CPU 分支预测错误和泡沫；使用 SIMD 指令。</li>
 <li>列式存储本身就能有效利用 CPU 周期：能够将大量压缩的列数据放到 CPU L1/L2 缓存中（类似于 GEMM 的性能优化），使用矢量化处理技术来提升性能。</li>
 </ul>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
 <h3>列存储排序顺序</h3>
 <p>按列来存储数据，也需要对整行进行排序。DBA 可以选择具体排序的 key，这样的好处有很多：</p>
+<ol start="1.">
+<li style="list-style-type: none;">
+<ol start="1.">
+<li style="list-style-type: none;">
+<ol start="1.">
+<li style="list-style-type: none;">
+<ol start="1.">
+<li style="list-style-type: none;">
+<ol start="1.">
+<li style="list-style-type: none;">
 <ul>
 <li>key 中相近的 value 会在存储中组合在一起，能够提高特性范围的过滤查询效率。</li>
 <li>排序顺序可以帮助压缩列，如果重复值尽可能能够排列在一起，那么我们就可以用 <a href="#列压缩">列压缩</a> 中所提到的压缩方法，极大降低磁盘空间的占用。</li>
 <li>对第一个 key 排序的压缩效果最强，第二和第三排序 key 比较混乱。</li>
 </ul>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
 <p>面向列存储的排序中，只有包含 value 的列，通常没有指向数据的指针。</p>
 <h3>写入列存储</h3>
 <p>由于存在压缩和排序，写入列存储无法使用如 B-tree 这类能就地更新的方法。幸运的是，前面提及的 LSM-Tree，能够很好的处理这种情况：先存入内存，再刷入磁盘。</p>
@@ -1058,21 +1241,11 @@ output(
 <div class="footnotes">
 <hr />
 <ol>
-<li id="fn-1015-1">
-SSTable 和 内存表 这两个词汇都来自于 Google 的 BigTable 论文。&#160;<a href="#fnref-1015-1">&#8617;</a>
-</li>
-<li id="fn-1015-2">
-Log-Structed Merge-Tree，日志结构合并树。&#160;<a href="#fnref-1015-2">&#8617;</a>
-</li>
-<li id="fn-1015-3">
-aka. Redo-log 重做日志，仅支持追加的文件。每个 B-tree 的修改必须先更新 WAL 再写磁盘页。&#160;<a href="#fnref-1015-3">&#8617;</a>
-</li>
-<li id="fn-1015-4">
-编辑距离为 1 表示已经添加、替换或删除了一个字符。&#160;<a href="#fnref-1015-4">&#8617;</a>
-</li>
-<li id="fn-1015-5">
-物化视图是查询结果的实际副本，会被写入磁盘；虚拟视图只是用于编写查询的快捷方式。&#160;<a href="#fnref-1015-5">&#8617;</a>
-</li>
+<li id="fn-1015-1">SSTable 和 内存表 这两个词汇都来自于 Google 的 BigTable 论文。 <a href="#fnref-1015-1">↩</a></li>
+<li id="fn-1015-2">Log-Structed Merge-Tree，日志结构合并树。 <a href="#fnref-1015-2">↩</a></li>
+<li id="fn-1015-3">aka. Redo-log 重做日志，仅支持追加的文件。每个 B-tree 的修改必须先更新 WAL 再写磁盘页。 <a href="#fnref-1015-3">↩</a></li>
+<li id="fn-1015-4">编辑距离为 1 表示已经添加、替换或删除了一个字符。 <a href="#fnref-1015-4">↩</a></li>
+<li id="fn-1015-5">物化视图是查询结果的实际副本，会被写入磁盘；虚拟视图只是用于编写查询的快捷方式。 <a href="#fnref-1015-5">↩</a></li>
 </ol>
 </div>
 <p>The post <a rel="nofollow" href="https://blog.triplez.cn/ddia-chapter3/">[DDIA] 数据存储与检索</a> appeared first on <a rel="nofollow" href="https://blog.triplez.cn">Blog</a>.</p>]]></content>
