@@ -3,7 +3,7 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2021-03-04T06:13:26+08:00</updated>
+    <updated>2021-03-04T12:17:00+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
@@ -848,8 +848,8 @@ output(
         <updated>2021-02-09T15:18:49+08:00</updated>
         <link href="https://blog.triplez.cn/ddia-chapter3/"/>
         <content type="text/html" src="https://blog.triplez.cn/ddia-chapter3/"><![CDATA[<p>本文内容为笔者阅读 DDIA 第三章：数据存储与检索 的读书笔记。</p>
-<h2><span class="ez-toc-section" id="i">数据结构</span></h2>
-<h3><span class="ez-toc-section" id="i-2">哈希索引</span></h3>
+<h2>数据结构</h2>
+<h3>哈希索引</h3>
 <p>适合内存，不适合磁盘。对于磁盘而言，追加效率更高。而哈希索引需要频繁的随机读取，磁盘效率很低。</p>
 <p>实现中需要考虑的问题：</p>
 <ul>
@@ -859,7 +859,7 @@ output(
 <li>部分写入记录：校验</li>
 <li>并发控制：写入可依赖写入原子性，数据文件段会被不同的线程同时读取（读锁）</li>
 </ul>
-<h3><span class="ez-toc-section" id="SSTable1_LSM-Tree2">SSTable<sup id="fnref-1015-1"><a href="#fn-1015-1" class="jetpack-footnote">1</a></sup> 和 LSM-Tree<sup id="fnref-1015-2"><a href="#fn-1015-2" class="jetpack-footnote">2</a></sup></span></h3>
+<h3>SSTable<sup id="fnref-1015-1"><a href="#fn-1015-1" class="jetpack-footnote">1</a></sup> 和 LSM-Tree<sup id="fnref-1015-2"><a href="#fn-1015-2" class="jetpack-footnote">2</a></sup></h3>
 <p>即排序字符串表：key-value 对按照 key 排序。</p>
 <p>相比哈希索引，有以下优势：</p>
 <ol start="1.">
@@ -892,7 +892,7 @@ output(
 <li>压缩过程会影响到读写操作，使得性能不确定。</li>
 <li>压缩过程会与写操作抢占写带宽。</li>
 </ul>
-<h3><span class="ez-toc-section" id="B-tree">B-tree</span></h3>
+<h3>B-tree</h3>
 <p>特点：</p>
 <ol start="1.">
 <li>按 key 排序的 key-value 对（这点与 LSM-Tree 一致）</li>
@@ -917,9 +917,9 @@ output(
 <ul>
 <li>写入过程繁琐，需要维护 WAL 和页面。并且每次修改都以整个页面为单位，写入性能不高。</li>
 </ul>
-<h3><span class="ez-toc-section" id="i-3">其他索引</span></h3>
+<h3>其他索引</h3>
 <p>索引可以增加查询速度，但是需要额外存储，且所有索引都会额外增加写入开销。</p>
-<h4><span class="ez-toc-section" id="i-4">二级索引</span></h4>
+<h4>二级索引</h4>
 <p>可以基于 key-value 构建，key 不一定唯一。</p>
 <p>构建方法：</p>
 <ol start="1.">
@@ -927,38 +927,38 @@ output(
 <li>追加行标识符使 key 唯一。</li>
 </ol start="1.">
 <p>B-tree 和 LSM-Tree 都可以用作二级索引。</p>
-<h4><span class="ez-toc-section" id="i-5">堆文件</span></h4>
+<h4>堆文件</h4>
 <p>索引中的 value 存储的是对其他地方存储的行的<strong>引用</strong>（并不以特定的顺序存储数据），而不是实际行内容。这种方式被称为：堆文件（非聚集索引）。</p>
 <p>堆文件在更新 value 而不更新 key 的时候非常高效。但若 value 较大，存储目标需要重新创建，则要重新将该索引的所有 value 都更新为新的地址引用（或在旧堆位置保留一个间接指针）。</p>
-<h4><span class="ez-toc-section" id="i-6">聚集/聚簇索引</span></h4>
+<h4>聚集/聚簇索引</h4>
 <p>即：将索引行直接存储到索引中。</p>
 <p>MySQL 的 InnoDB 存储引擎使用该方式：表主键始终是聚集索引（聚簇索引），二级索引直接引用主键。</p>
-<h4><span class="ez-toc-section" id="i-7">覆盖索引/包含列的索引</span></h4>
+<h4>覆盖索引/包含列的索引</h4>
 <p>是聚集索引与非聚集索引的折中设计，特点为：</p>
 <ul>
 <li>索引中保存了一些表的列值。</li>
 <li>支持指通过索引即可回答“简单查询”（索引覆盖了查询）。</li>
 </ul>
-<h4><span class="ez-toc-section" id="i-8">多列索引</span></h4>
-<h5><span class="ez-toc-section" id="i-9">级联索引</span></h5>
+<h4>多列索引</h4>
+<h5>级联索引</h5>
 <p>级联索引：将一列追加到另一列，将几个字段简单的组成一个 key。</p>
 <p>如 (lastname, firstname) 的级联索引：能搜索特定 lastname 数据，能搜索特性 lastname-firstname 数据，但不能搜索特定 firstname 数据。</p>
 <p>适用于地理位置等多维搜索。</p>
-<h5><span class="ez-toc-section" id="R-tree">R-tree</span></h5>
+<h5>R-tree</h5>
 <p>专门的空间索引。</p>
-<h4><span class="ez-toc-section" id="i-10">全文搜索</span></h4>
+<h4>全文搜索</h4>
 <p>通常支持对一个单词的所有同义词进行查询，并忽略单词语法上的变体。</p>
 <p>Lucene 对词典使用类似 SSTable 的结构，因此需要一个小的内存索引。</p>
 <p>这个内存索引在 Lucene 中是 key 的字符序列的有限状态自动机（DFA），类似于字典树。它可以转换为 Levenshtein 自动机【这是什么？】，支持在给定编辑距离<sup id="fnref-1015-4"><a href="#fn-1015-4" class="jetpack-footnote">4</a></sup>内高效搜索单词。</p>
-<h4><span class="ez-toc-section" id="i-11">内存中保存所有内容</span></h4>
+<h4>内存中保存所有内容</h4>
 <p>内存数据库更快的原因是：它们可以避免使用写磁盘的格式对内存数据结构编码的开销（即序列化/反序列化）。</p>
 <p>内存数据库能够提供基于磁盘索引难以实现的数据模型，如 Redis 实现了各种数据结构，都提供了内存数据库的相关接口，且因为数据都保存在内存中，实现比较简单。</p>
 <p>事实上，内存数据库架构能够支撑远高于可用内存的数据集，而不会导致以磁盘为中心架构的开销。</p>
 <p>反缓存方法：当没有足够的内存时，通过将最近最少使用的数据从内存写入磁盘，在未来再次被访问时重新加载到内存中。</p>
 <p>未来 NVM（非易失性存储，non-volatile memory）的普及，会影响到存储引擎的设计。</p>
-<h2><span class="ez-toc-section" id="i-12">事务处理和分析处理</span></h2>
+<h2>事务处理和分析处理</h2>
 <p>事务处理只意味着允许客户端进行低延迟读写和写入，并不一定具有 ACID 属性。</p>
-<h3><span class="ez-toc-section" id="OLTP_OLAP">OLTP 和 OLAP</span></h3>
+<h3>OLTP 和 OLAP</h3>
 <p>在线事务处理 OLTP（OnLine Transaction Processing）：应用通常使用索引中某些键来查找少量记录，根据用户的输入来插入或更新记录。</p>
 <p>在线分析处理 OLAP（OnLine Analytic Processing）：分析查询需要扫描大量记录，并计算汇总统计信息（计数/求和/平均值），并不返回原始数据给用户。</p>
 <p>对比 OLTP 和 OLAP：</p>
@@ -1003,21 +1003,21 @@ output(
 </tr>
 </tbody>
 </table>
-<h3><span class="ez-toc-section" id="i-13">数据仓库</span></h3>
+<h3>数据仓库</h3>
 <p>动机：数据管理员（DBA）通常不愿意让业务分析人员在 OLTP 数据库上直接运行临时分析查询，这些查询通常代价很高，需要扫描大量数据集，可能会损害并发执行事务的性能。</p>
 <p>数据仓库：单独的数据库，包含公司所有 OLTP 系统的只读副本。会从 OLTP 系统中提取数据（周期性数据转储或连续更新流，extract），并转换为分析友好的模式（transform）执行清理后，导入到数据仓库中（load）。这个过程也被称为 ETL（Extract-Transform-Load）。</p>
-<h3><span class="ez-toc-section" id="i-14">星型分析模式</span></h3>
+<h3>星型分析模式</h3>
 <p>该模式的中心是一个“事实表”（fact table）：事实表的每一行表示在特定时间发生的事件，列是事件不同的属性值；有些列可能也会引用其他表的外键，（其他表）称为维度表。</p>
 <p>事实表中每一行都代表一个事件，因此维度通常代表事件的 5W1H（who, what, where, when, how, why）。</p>
 <p><img src="https://triplez-public-1251926021.cos.ap-shanghai.myqcloud.com/picgo%E6%98%9F%E5%9E%8B%E5%88%86%E6%9E%90%E6%A8%A1%E5%BC%8F-2759452.jpg" alt="星型分析模式" /></p>
 <p>事实表通常非常宽，超过 100 列，甚至几百列。维度表也非常宽，可能包括与分析有关的所有元数据。</p>
-<h3><span class="ez-toc-section" id="i-15">雪花型分析模式</span></h3>
+<h3>雪花型分析模式</h3>
 <p>是星型分析模式的变种，在维度中进一步划分子空间，维度表中继续引用维度表。</p>
 <p><img src="https://triplez-public-1251926021.cos.ap-shanghai.myqcloud.com/picgo%E9%9B%AA%E8%8A%B1%E5%9E%8B%E5%88%86%E6%9E%90%E6%A8%A1%E5%BC%8F.jpg" alt="雪花型分析模式" /></p>
 <p>雪花模式更加规范。但对于分析人员而言，星型模式通常是首选，因为其使用更简单。</p>
-<h2><span class="ez-toc-section" id="i-16">列式存储</span></h2>
+<h2>列式存储</h2>
 <p>动机：事实表中的数据规模非常庞大，且我们经常只需要对其中几列的内容做查询计算，因此，我们不需要将目标行中所有的内容都从磁盘读入内存中。基于这个设想，我们可以通过将每一列的所有值存储在一起，这样读取和解析查询中使用的列，相比于行式存储能够节省大量的工作。</p>
-<h3><span class="ez-toc-section" id="i-17">列压缩</span></h3>
+<h3>列压缩</h3>
 <p>目的：降低磁盘吞吐量。</p>
 <p>数仓中有效的列压缩技术：</p>
 <ul>
@@ -1036,7 +1036,7 @@ output(
 <li>提高主存储器带宽到 CPU 缓存带宽的利用率：避免 CPU 分支预测错误和泡沫；使用 SIMD 指令。</li>
 <li>列式存储本身就能有效利用 CPU 周期：能够将大量压缩的列数据放到 CPU L1/L2 缓存中（类似于 GEMM 的性能优化），使用矢量化处理技术来提升性能。</li>
 </ul>
-<h3><span class="ez-toc-section" id="i-18">列存储排序顺序</span></h3>
+<h3>列存储排序顺序</h3>
 <p>按列来存储数据，也需要对整行进行排序。DBA 可以选择具体排序的 key，这样的好处有很多：</p>
 <ul>
 <li>key 中相近的 value 会在存储中组合在一起，能够提高特性范围的过滤查询效率。</li>
@@ -1044,9 +1044,9 @@ output(
 <li>对第一个 key 排序的压缩效果最强，第二和第三排序 key 比较混乱。</li>
 </ul>
 <p>面向列存储的排序中，只有包含 value 的列，通常没有指向数据的指针。</p>
-<h3><span class="ez-toc-section" id="i-19">写入列存储</span></h3>
+<h3>写入列存储</h3>
 <p>由于存在压缩和排序，写入列存储无法使用如 B-tree 这类能就地更新的方法。幸运的是，前面提及的 LSM-Tree，能够很好的处理这种情况：先存入内存，再刷入磁盘。</p>
-<h3><span class="ez-toc-section" id="i-20">聚合</span></h3>
+<h3>聚合</h3>
 <p>物化视图：通常被定义为一个标准（虚拟）视图：一个类似表的对象，内容是一些查询的结果<sup id="fnref-1015-5"><a href="#fn-1015-5" class="jetpack-footnote">5</a></sup>。</p>
 <p>在底层数据发生变化时，物化视图也需要跟着更新（因为它是数据的非规范化副本）。而这个特性会影响到数据写入性能，也是为什么 OLTP 系统不经常用物化视图的原因。若有大量聚合读取，物化视图才更有意义。具体是否需要建立物化视图，如何设置物化视图，都需视实际情况而定。</p>
 <p>一种常见的物化视图的特殊情况：数据立方体 / OLAP 立方体。它是不同维度分组组成的聚合网格。</p>
@@ -1814,7 +1814,7 @@ for grf in pages:
         <title><![CDATA[发布你第一个 Luarocks 包]]></title>
         <updated>2020-12-18T15:41:57+08:00</updated>
         <link href="https://blog.triplez.cn/publish-your-first-luarocks-package/"/>
-        <content type="text/html" src="https://blog.triplez.cn/publish-your-first-luarocks-package/"><![CDATA[<h2><span class="ez-toc-section" id="_rockspec">写一个 rockspec</span></h2>
+        <content type="text/html" src="https://blog.triplez.cn/publish-your-first-luarocks-package/"><![CDATA[<h2>写一个 rockspec</h2>
 <p>首先写好你准备发布的包 <del>当然是自己写好了才要发布啦</del> ，然后我们在项目根目录下写一个 rockspec 文件（用来描述 LuaRocks 包的元信息文件）。</p>
 <pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash">luarocks write_rockspec &lt;package_name&gt; &lt;package_version&gt; &lt;package_location&gt;
 </code></pre>
@@ -1894,13 +1894,13 @@ build = {
 }
 </code></pre>
 <p>其中，<code>modules</code> 代表着文件的安装方式及位置。如在 <code>busted_resty</code> 中，安装方式为 <code>builtin</code> ，因此 LuaRocks 只是将这些指定的文件复制粘贴到某个指定的位置。比如，库中的 <code>src/busted_resty.lua</code> 就会被复制到 LuaRocks 中 Lua 库的根目录。</p>
-<h2><span class="ez-toc-section" id="_rockspec-2">检查 rockspec 语法</span></h2>
+<h2>检查 rockspec 语法</h2>
 <p>写好了 rockspec 后，我们可以来检查下 rockspec 的语法是否正确。当然，使用的是 <code>luarocks lint</code> 命令。</p>
 <pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash">$ luarocks lint busted_resty-0.5.0-1.rockspec
 </code></pre>
 <p>如果按下 <kbd>Enter</kbd> 后什么都没发生，恭喜你，没有消息就是好消息（毕竟是高深莫测的 UNIX 哲学 ）。</p>
 <p>如果有信息输出，那就按照错误提示改吧 。</p>
-<h2><span class="ez-toc-section" id="MAKE">MAKE!</span></h2>
+<h2>MAKE!</h2>
 <p>当我们编写好了 rockspec 后，就可以尝试构建属于我们自己的第一个 LuaRocks 包了！怎么构建呢，当然是用 LuaRocks 中的 <code>make</code> 命令啦！</p>
 <pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash">$ luarocks make
 </code></pre>
@@ -1909,7 +1909,7 @@ build = {
 &gt; require "busted_resty"
 </code></pre>
 <p>如果什么也没有发生，那可就太好了！说明我们的 LuaRocks 包已经被安装到了本地环境上了！</p>
-<h2><span class="ez-toc-section" id="i">打包并上传</span></h2>
+<h2>打包并上传</h2>
 <p>最后，那当然就是最激动人心的环节：将我们的包发布到 LuaRocks 上。</p>
 <p>你可以先打包，验证包是否正确：</p>
 <pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash">$ luarocks pack &lt;rockspec_file&gt;
@@ -1919,9 +1919,9 @@ build = {
 </code></pre>
 <p>执行完打包命令后，你会在目录下看到一个后缀为 <code>.src.rock</code> 的文件。没错，那就是我们的 LuaRocks 包。</p>
 <p>接下来你有两种方式来将我们刚打出来的 LuaRocks 包上传至 LuaRocks 中心仓库，让我们分别介绍它们吧。</p>
-<h3><span class="ez-toc-section" id="_rock">直接在网站上上传 rock</span></h3>
+<h3>直接在网站上上传 rock</h3>
 <p>你可以直接在 <a href="https://luarocks.org/upload">LuaRocks 网站</a>上上传你的 rockspec 描述文件以及 src.rock 包。点击“提交”即可在 LuaRocks 上发布你的 rock 包～</p>
-<h3><span class="ez-toc-section" id="i-2">用命令行上传</span></h3>
+<h3>用命令行上传</h3>
 <p>使用 <code>luarocks upload</code> 即可帮你打包并直接上传至 LuaRocks 中心仓库：</p>
 <pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash">$ luarocks upload [--api-key=&lt;api-key&gt;] &lt;rockspec_file&gt;
 </code></pre>
@@ -1940,14 +1940,14 @@ build = {
         <updated>2020-12-13T15:38:20+08:00</updated>
         <link href="https://blog.triplez.cn/install-lua-and-luarocks-in-macos/"/>
         <content type="text/html" src="https://blog.triplez.cn/install-lua-and-luarocks-in-macos/"><![CDATA[<p>[TOC]</p>
-<h2><span class="ez-toc-section" id="Homebrew">Homebrew</span></h2>
+<h2>Homebrew</h2>
 <p>Lua、LuaJIT 和 Luarocks 都可以直接通过 <code>brew</code> 包管理直接安装，而且可以处理不同版本的 Luarocks，使用的仓库为 <a href="https://github.com/mesca/homebrew-luarocks">mesca/homebrew-luarocks</a> 。</p>
 <pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash">$ brew tap mesca/luarocks
 </code></pre>
 <blockquote><p>
   Lua 5.1, 5.3 都需要在 Homebrew 中添加 <code>mesca/luarocks</code> 仓库。
 </p></blockquote>
-<h3><span class="ez-toc-section" id="Lua_51">Lua 5.1</span></h3>
+<h3>Lua 5.1</h3>
 <pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash"># Lua 5.1
 $ brew install lua51
 $ brew install luarocks51
@@ -1958,7 +1958,7 @@ $ lua5.1
 # 使用 Lua 5.1 的 Luarocks
 $ luarocks-5.1 --version
 </code></pre>
-<h3><span class="ez-toc-section" id="LuaJIT">LuaJIT</span></h3>
+<h3>LuaJIT</h3>
 <pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash"># LuaJIT
 $ brew install luajit
 $ brew install luarocks51 --with-luajit
@@ -1969,7 +1969,7 @@ $ luajit
 # LuaJIT 与 Lua 5.1 共用 Luarocks
 $ luarocks-5.1 --version
 </code></pre>
-<h3><span class="ez-toc-section" id="Lua_53">Lua 5.3</span></h3>
+<h3>Lua 5.3</h3>
 <pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash"># Lua 5.3
 $ brew install lua53
 $ brew install luarocks53
@@ -1980,7 +1980,7 @@ $ lua5.3
 # 使用 Lua 5.3 的 Luarocks
 $ luarocks-5.3 --version
 </code></pre>
-<h3><span class="ez-toc-section" id="Lua_54_Current">Lua 5.4 (Current)</span></h3>
+<h3>Lua 5.4 (Current)</h3>
 <pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash"># Current: 5.4
 $ brew install lua
 $ brew install luarocks
@@ -1991,7 +1991,7 @@ $ lua
 # 使用 Lua 5.4 的 Luarocks
 $ luarocks --version
 </code></pre>
-<h2><span class="ez-toc-section" id="Build_from_Source">Build from Source</span></h2>
+<h2>Build from Source</h2>
 <p>请参照 <a href="https://github.com/luarocks/luarocks/wiki/Installation-instructions-for-Unix">Luarocks 官方安装指南</a> 。或者 <a href="https://openresty.org/en/using-luarocks.html">OpenResty 文档中关于 Luarocks 的内容</a> 。</p>
 <p>The post <a rel="nofollow" href="https://blog.triplez.cn/install-lua-and-luarocks-in-macos/">macOS 上安装 Lua 及 Luarocks</a> appeared first on <a rel="nofollow" href="https://blog.triplez.cn">Blog</a>.</p>]]></content>
         <author>
@@ -2059,25 +2059,25 @@ $ luarocks --version
         <title><![CDATA[macOS 使用笔记]]></title>
         <updated>2020-10-20T13:34:15+08:00</updated>
         <link href="https://blog.triplez.cn/macos-user-guide/"/>
-        <content type="text/html" src="https://blog.triplez.cn/macos-user-guide/"><![CDATA[<h2><span class="ez-toc-section" id="TL_DR">TL; DR</span></h2>
+        <content type="text/html" src="https://blog.triplez.cn/macos-user-guide/"><![CDATA[<h2>TL; DR</h2>
 <p>如果觉得这篇文章太长了，遇到问题直接在 <a href="https://support.apple.com/zh-cn/guide/mac-help/welcome/mac">这里</a> 搜索吧～</p>
-<h2><span class="ez-toc-section" id="i">外设使用</span></h2>
-<h3><span class="ez-toc-section" id="i-2">鼠标翻转</span></h3>
+<h2>外设使用</h2>
+<h3>鼠标翻转</h3>
 <p><a href="https://github.com/pilotmoon/Scroll-Reverser">Scroll-Reverser</a></p>
-<h3><span class="ez-toc-section" id="4K_HiDPI">4K 及以下分辨率屏幕开启 HiDPI</span></h3>
+<h3>4K 及以下分辨率屏幕开启 HiDPI</h3>
 <p>笔者之前买的屏幕是 2K 分辨率的，如果不使用 Apple 的 HiDPI 技术，MacBook 会把这个屏幕当做是电视，投影效果非常的差，文字模糊的不行。使用以下项目的脚本可以在低分辨率屏幕上强制打开 HiDPI 功能，效果卓群，建议折腾一下。</p>
 <p><a href="https://github.com/xzhih/one-key-hidpi/blob/master/README-zh.md">xzhih/one-key-hidpi</a></p>
 <blockquote><p>
   笔者注：运行脚本需要关闭 SIP，步骤可见 <a href="#打开/关闭-macOS-SIP（系统完整性保护）">打开/关闭 macOS SIP（系统完整性保护）</a> 。
 </p></blockquote>
-<h3><span class="ez-toc-section" id="Windows">Windows 键盘按键兼容</span></h3>
+<h3>Windows 键盘按键兼容</h3>
 <p>可在系统设置的 <code>键盘 &gt; 修饰键</code> 中将 Command 和 Option 键调换。</p>
 <p><img src="https://triplez-public-1251926021.cos.ap-shanghai.myqcloud.com/picgoimage-20200920172108802.png" alt="image-20200920172108802" /></p>
-<h2><span class="ez-toc-section" id="i-3">系统相关</span></h2>
-<h3><span class="ez-toc-section" id="i-4">无法打开来自身分不明开发者的应用</span></h3>
+<h2>系统相关</h2>
+<h3>无法打开来自身分不明开发者的应用</h3>
 <p><img src="https://triplez-public-1251926021.cos.ap-shanghai.myqcloud.com/picgomacos-mojave-unidentified-developer-alert-open-dark.jpg" alt="img" /></p>
 <p>按住 <kbd>Control ⌃</kbd> 键并点击应用，在菜单中选择“打开”，弹出的对话框周就会如上有“打开”选项了。</p>
-<h3><span class="ez-toc-section" id="_macOS_SIP">打开/关闭 macOS SIP（系统完整性保护）</span></h3>
+<h3>打开/关闭 macOS SIP（系统完整性保护）</h3>
 <p>重启后按住 <kbd>Command ⌘</kbd> + <kbd>R</kbd> ，直到看到 Apple 标志再松开。在菜单栏中选择“实用工具”，打开“终端”。</p>
 <p>打开 SIP：</p>
 <pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash">csrutil enable
@@ -2086,7 +2086,7 @@ $ luarocks --version
 <pre class="line-numbers prism-highlight" data-start="1"><code class="language-bash">csrutil disable
 </code></pre>
 <p>需要重启生效。</p>
-<h2><span class="ez-toc-section" id="i-5">常用快捷键</span></h2>
+<h2>常用快捷键</h2>
 <table>
 <thead>
 <tr>
@@ -2134,35 +2134,35 @@ $ luarocks --version
 </tbody>
 </table>
 <p>更多快捷键请看 Apple 支持网站中的 <a href="https://support.apple.com/zh-cn/HT201236">Mac 键盘快捷键</a>。</p>
-<h2><span class="ez-toc-section" id="OneNote">OneNote</span></h2>
+<h2>OneNote</h2>
 <p>从 <a href="https://apps.apple.com/cn/app/microsoft-onenote/id784801555?mt=12">AppStore 下载</a> 即可，或者直接点击下方的链接。</p>
 <p><a href="itms-apps://apps.apple.com/cn/app/microsoft-onenote/id784801555?mt=12">Click here to direct download OneNote from AppStore for macOS</a></p>
-<h2><span class="ez-toc-section" id="Clipboard">Clipboard</span></h2>
+<h2>Clipboard</h2>
 <p>剪切板管理应用：<a href="https://github.com/p0deje/Maccy/releases">Maccy</a> 。</p>
 <blockquote><p>
   从 GitHub Release 中下载最新 zip 包解压即可。</p>
 <p>  安装方式：将 <code>maccy.app</code> 拖入 Application 文件夹中。
 </p></blockquote>
-<h2><span class="ez-toc-section" id="Terminal">Terminal</span></h2>
-<h3><span class="ez-toc-section" id="iTerm2">iTerm2</span></h3>
-<h3><span class="ez-toc-section" id="proxychains-ng">proxychains-ng</span></h3>
+<h2>Terminal</h2>
+<h3>iTerm2</h3>
+<h3>proxychains-ng</h3>
 <p>For proxy in Command ⌘ line.</p>
-<h3><span class="ez-toc-section" id="oh-my-zsh">oh-my-zsh</span></h3>
+<h3>oh-my-zsh</h3>
 <p>Great terminal theme and other fancy functions.</p>
-<h3><span class="ez-toc-section" id="zsh_plugins">zsh plugins</span></h3>
+<h3>zsh plugins</h3>
 <p>More in <a href="https://github.com/unixorn/awesome-zsh-plugins#plugins">here</a>.</p>
-<h4><span class="ez-toc-section" id="autosuggestion">autosuggestion</span></h4>
+<h4>autosuggestion</h4>
 <p><a href="https://github.com/zsh-users/zsh-autosuggestions">zsh-users/zsh-autosuggestions</a></p>
-<h4><span class="ez-toc-section" id="syntax-highlighting">syntax-highlighting</span></h4>
+<h4>syntax-highlighting</h4>
 <p><a href="https://github.com/zsh-users/zsh-syntax-highlighting">zsh-users/zsh-syntax-highlighting</a></p>
-<h3><span class="ez-toc-section" id="vimrc">vimrc</span></h3>
+<h3>vimrc</h3>
 <p>The most comfortable configuration for vim.</p>
 <p><a href="https://github.com/amix/vimrc">amix/vimrc</a></p>
-<h2><span class="ez-toc-section" id="Markdown">Markdown</span></h2>
-<h3><span class="ez-toc-section" id="Typora">Typora</span></h3>
-<p><a href="https://typora.io/">Typora -- a markdown editor, markdown reader</a></p>
-<h3><span class="ez-toc-section" id="PicGo">PicGo</span></h3>
-<p><a href="https://github.com/Molunerfinn/PicGo">PicGo - 图片上传新体验</a></p>
+<h2>Markdown</h2>
+<h3>Typora</h3>
+<p><a href="https://typora.io/">Typora &#8212; a markdown editor, markdown reader</a></p>
+<h3>PicGo</h3>
+<p><a href="https://github.com/Molunerfinn/PicGo">PicGo &#8211; 图片上传新体验</a></p>
 <p>在 Typora 中设置 PicGo 上传图片：https://support.typora.io/Upload-Image/#picgoapp-chinese-language-only</p>
 <p>The post <a rel="nofollow" href="https://blog.triplez.cn/macos-user-guide/">macOS 使用笔记</a> appeared first on <a rel="nofollow" href="https://blog.triplez.cn">Blog</a>.</p>]]></content>
         <author>
