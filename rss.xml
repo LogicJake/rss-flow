@@ -3,12 +3,34 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2021-03-08T12:16:41+08:00</updated>
+    <updated>2021-03-08T18:15:09+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
     </author>
     
+    
+    <entry>
+        <id>https://blog.triplez.cn/posts/introducing-my-new-blog-site/</id>
+        <title><![CDATA[博客迁移记 · 从 WordPress 到 Hugo + Cloudflare Workers]]></title>
+        <updated>2021-03-06T14:35:29+08:00</updated>
+        <link href="https://blog.triplez.cn/posts/introducing-my-new-blog-site/"/>
+        <content type="text/html" src="https://blog.triplez.cn/posts/introducing-my-new-blog-site/"><![CDATA[<p>笔者最近完成了将博客从 WordPress 迁移至 Hugo 的工作（部署于 Cloudflare Workers 上）。本文将讲述博客迁移的原因，迁移过程，以及新博客架构。</p>]]></content>
+        <author>
+            <name><![CDATA[TripleZ’s Blog]]></name>
+        </author>
+    </entry>
+    
+    <entry>
+        <id>https://blog.triplez.cn/posts/add-remove-update-git-submodule/</id>
+        <title><![CDATA[添加、删除、更新 Git submodule]]></title>
+        <updated>2021-03-05T15:32:21+08:00</updated>
+        <link href="https://blog.triplez.cn/posts/add-remove-update-git-submodule/"/>
+        <content type="text/html" src="https://blog.triplez.cn/posts/add-remove-update-git-submodule/"><![CDATA[Git submodule 的简单操作]]></content>
+        <author>
+            <name><![CDATA[TripleZ’s Blog]]></name>
+        </author>
+    </entry>
     
     <entry>
         <id>https://miaotony.xyz/2021/03/04/CTF_2021HgameWeek4/</id>
@@ -451,6 +473,17 @@
     </entry>
     
     <entry>
+        <id>https://blog.triplez.cn/posts/ddia-section-2/</id>
+        <title><![CDATA[DDIA · 分布式数据系统]]></title>
+        <updated>2021-03-02T06:26:00+08:00</updated>
+        <link href="https://blog.triplez.cn/posts/ddia-section-2/"/>
+        <content type="text/html" src="https://blog.triplez.cn/posts/ddia-section-2/"><![CDATA[DDIA 第二部分 分布式数据系统导言]]></content>
+        <author>
+            <name><![CDATA[TripleZ’s Blog]]></name>
+        </author>
+    </entry>
+    
+    <entry>
         <id>https://miaotony.xyz/2021/02/12/CTF_2021HappyChineseNewYear/</id>
         <title><![CDATA[2021 牛年大吉！又是一年解谜闯关]]></title>
         <updated>2021-02-28T17:01:33+08:00</updated>
@@ -458,6 +491,17 @@
         <content type="text/html" src="https://miaotony.xyz/2021/02/12/CTF_2021HappyChineseNewYear/"><![CDATA[<h2 id="牛年快乐"><a href="#牛年快乐" class="headerlink"]]></content>
         <author>
             <name><![CDATA[MiaoTony]]></name>
+        </author>
+    </entry>
+    
+    <entry>
+        <id>https://blog.triplez.cn/posts/ddia-chapter-4/</id>
+        <title><![CDATA[DDIA · 数据编码与演化]]></title>
+        <updated>2021-02-28T13:49:37+08:00</updated>
+        <link href="https://blog.triplez.cn/posts/ddia-chapter-4/"/>
+        <content type="text/html" src="https://blog.triplez.cn/posts/ddia-chapter-4/"><![CDATA[DDIA 第四章读书笔记]]></content>
+        <author>
+            <name><![CDATA[TripleZ’s Blog]]></name>
         </author>
     </entry>
     
@@ -1396,6 +1440,17 @@ console.log($count.value)
 &lt;/template&gt;</code></pre><p>跟大佬聊了一下，我的观点主要是这样的：</p><ul><li>我对这提案的看法，和对 Svelte 的看法类似，甚至我都觉得 Evan You 也发现了编译器可能是个未来的优化点。</li><li>至于它破坏了 JS 语义的问题，我觉得与其让 Label 这个语法被忘记，不如赋予它新的意义，因为目前写 JS 已经基本离不开编译器了（例如 TypeScript、JSX、Vue Loader）。</li><li>此外，语言本身就是在变化中的，JS 正是因为以前的语法不好，才有了那么多提案和 Linter。</li><li>在其它行业，Lisp 有 Clojure、Common Lisp、Scheme 这样一堆方言，Java“语系”中的 Groovy、Scala、Kotlin 也差不多能算是方言，我觉得 JS 演变出 React、Vue、Angular、Svelte 几种方言是完全合理的。</li></ul><p>之后，大佬拿出了另外一份 JS 的提案：<a href="https://github.com/rbuckton/proposal-refs">Reference (ref) declarations and expressions</a>，这样确实不会 Break the Web 了，不过看起来有点像 C 中的 <code>int const a = 1</code> 或者 Rust 中的 <code>let mut x = 5</code>，这在我看来也不是坏事。</p><p>当然，语言不可能无限添加 Feature，否则容易长成这样：<a href="https://gist.github.com/Jack-Works/829246dcae9d9d3b874d44bae5ef5e0b#file-2020-js">cRAzY eSnEXt (*all* proposals mixed in)</a>……</p>]]></content>
         <author>
             <name><![CDATA[R·ex / Zeng]]></name>
+        </author>
+    </entry>
+    
+    <entry>
+        <id>https://blog.triplez.cn/posts/java-class-initialization/</id>
+        <title><![CDATA[Java · 类的初始化顺序]]></title>
+        <updated>2021-01-05T16:16:29+08:00</updated>
+        <link href="https://blog.triplez.cn/posts/java-class-initialization/"/>
+        <content type="text/html" src="https://blog.triplez.cn/posts/java-class-initialization/"><![CDATA[对于 Java 类中初始化顺序的详细解读]]></content>
+        <author>
+            <name><![CDATA[TripleZ’s Blog]]></name>
         </author>
     </entry>
     
