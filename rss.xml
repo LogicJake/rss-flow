@@ -3,7 +3,7 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2021-03-12T06:14:30+08:00</updated>
+    <updated>2021-03-12T12:16:55+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
@@ -3440,9 +3440,9 @@ void start_coroutine(struct Coroutine *co) {
 <p>使用本插件的任何脚本前需要先进行插件的初始化。建议在首个 Room 的 Creation Code 内或者某个控制用的 Object 的 Game Start 事件里执行：</p>
 
 
-<pre class="brush: cpp; title: ; notranslate">
+<div class="wp-block-syntaxhighlighter-code "><pre class="brush: cpp; title: ; notranslate">
 NF_WS_Init();
-</pre>
+</pre></div>
 
 
 <p>插件初始化后请勿再次调用该函数。</p>
@@ -3456,10 +3456,10 @@ NF_WS_Init();
 <p>当不再需要更改窗口形状后，可以执行以下函数将插件卸载以释放资源：</p>
 
 
-<pre class="brush: cpp; highlight: [2]; title: ; notranslate">
+<div class="wp-block-syntaxhighlighter-code "><pre class="brush: cpp; highlight: [2]; title: ; notranslate">
 NF_WS_ResetWindow(); // 重置窗口形状为默认，非必要
 NF_WS_Free(); // 释放插件
-</pre>
+</pre></div>
 
 
 <p>在释放插件后如果需要再次使用本插件，需要重新进行插件的初始化。</p>
@@ -3513,12 +3513,12 @@ NF_WS_Free(); // 释放插件
 <p>本插件采用遮罩形式设置窗口形状，支持根据 Sprite 和 Surface（仅限 GMS）设置窗口遮罩。以下核心函数</p>
 
 
-<pre class="brush: cpp; title: ; notranslate">
+<div class="wp-block-syntaxhighlighter-code "><pre class="brush: cpp; title: ; notranslate">
 NF_WS_ShaveWindow(sprite, subimage, x, y);
 NF_WS_ShaveWindowAlpha(sprite, subimage, x, y, alpha);
 NF_WS_ShaveWindowExt(sprite, subimage, x, y, xscale, yscale, alpha);
 NF_WS_ShaveWindowSurfaceExt(surface, x, y, xscale, yscale, alpha); // 仅限 GMS
-</pre>
+</pre></div>
 
 
 <p>与 draw_sprite_* 系列绘制函数有着十分类似的形式，除了不支持 rot 和  <br>colour参数，同时 alpha 参数有不同的意义。可以理解为将给定的 Sprite / Surface 用提供的参数放置于窗口坐标系内作为遮罩（不经过 View Port 等任何变换），同时将窗口没有被遮罩覆盖的区域给“消去”变为透明：</p>
@@ -3540,10 +3540,10 @@ NF_WS_ShaveWindowSurfaceExt(surface, x, y, xscale, yscale, alpha); // 仅限 GMS
 <p>另外，如果使用 Surface 来传入遮罩内容，请注意 Surface 的背景需要用透明色填充：</p>
 
 
-<pre class="brush: cpp; highlight: [2]; title: ; notranslate">
+<div class="wp-block-syntaxhighlighter-code "><pre class="brush: cpp; highlight: [2]; title: ; notranslate">
 surface_set_target(mask_surface);
 draw_clear_alpha(c_white, 0); // Alpha = 0, 使用的颜色无所谓.
-</pre>
+</pre></div>
 
 
 <h4>2.3.3 遮罩对齐</h4>
@@ -3593,12 +3593,12 @@ draw_clear_alpha(c_white, 0); // Alpha = 0, 使用的颜色无所谓.
 <p>多次执行以下任意核心函数来改变窗口形状，则后一次的遮罩将会覆盖前一次的遮罩，<strong>并不会</strong>互相叠加：</p>
 
 
-<pre class="brush: cpp; title: ; notranslate">
+<div class="wp-block-syntaxhighlighter-code "><pre class="brush: cpp; title: ; notranslate">
 NF_WS_ShaveWindow(sprite, subimage, x, y);
 NF_WS_ShaveWindowAlpha(sprite, subimage, x, y, alpha);
 NF_WS_ShaveWindowExt(sprite, subimage, x, y, xscale, yscale, alpha);
 NF_WS_ShaveWindowSurfaceExt(surface, x, y, xscale, yscale, alpha); // 仅限 GMS
-</pre>
+</pre></div>
 
 
 <p>这意味着如果所需的遮罩是由多个元素组合而成的复杂形状，则需要开发者自行准备好已经事先组合好所有元素的<strong>单张</strong> Sprite / Surface 用作实际的遮罩。</p>
