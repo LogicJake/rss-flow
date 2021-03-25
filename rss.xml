@@ -3,12 +3,23 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2021-03-25T12:05:37+08:00</updated>
+    <updated>2021-03-25T18:13:38+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
     </author>
     
+    
+    <entry>
+        <id>https://miaotony.xyz/2021/03/25/Server_DN42/</id>
+        <title><![CDATA[DN42 | 入坑 DN42 实验网络]]></title>
+        <updated>2021-03-25T18:02:43+08:00</updated>
+        <link href="https://miaotony.xyz/2021/03/25/Server_DN42/"/>
+        <content type="text/html" src="https://miaotony.xyz/2021/03/25/Server_DN42/"><![CDATA[最近几天入了DN42的坑，申请了ASN、IP、域名，搭建了VPN通信隧道，配置好BGP路由，完成了和其他网络的Peer。]]></content>
+        <author>
+            <name><![CDATA[MiaoTony]]></name>
+        </author>
+    </entry>
     
     <entry>
         <id>https://blog.triplez.cn/posts/cf-workers-to-pages/</id>
@@ -970,17 +981,6 @@ gu install --jvm llvm-toolchain</pre>
         <content type="text/html" src="https://blog.triplez.cn/posts/ddia-section-2/"><![CDATA[DDIA 第二部分 分布式数据系统导言]]></content>
         <author>
             <name><![CDATA[TripleZ’s Blog]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://miaotony.xyz/2021/02/12/CTF_2021HappyChineseNewYear/</id>
-        <title><![CDATA[2021 牛年大吉！又是一年解谜闯关]]></title>
-        <updated>2021-02-28T17:01:33+08:00</updated>
-        <link href="https://miaotony.xyz/2021/02/12/CTF_2021HappyChineseNewYear/"/>
-        <content type="text/html" src="https://miaotony.xyz/2021/02/12/CTF_2021HappyChineseNewYear/"><![CDATA[新年快乐，牛转乾坤！再来出几个题玩玩吧，meow~]]></content>
-        <author>
-            <name><![CDATA[MiaoTony]]></name>
         </author>
     </entry>
     
