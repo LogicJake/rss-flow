@@ -3,12 +3,23 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2021-03-25T06:05:23+08:00</updated>
+    <updated>2021-03-25T12:05:37+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
     </author>
     
+    
+    <entry>
+        <id>https://blog.triplez.cn/posts/cf-workers-to-pages/</id>
+        <title><![CDATA[博客迁移记 · 从 Cloudflare Workers 到 Cloudflare Pages]]></title>
+        <updated>2021-03-25T06:34:54+08:00</updated>
+        <link href="https://blog.triplez.cn/posts/cf-workers-to-pages/"/>
+        <content type="text/html" src="https://blog.triplez.cn/posts/cf-workers-to-pages/"><![CDATA[堪称完美的博客发布流程]]></content>
+        <author>
+            <name><![CDATA[TripleZ’s Blog]]></name>
+        </author>
+    </entry>
     
     <entry>
         <id>https://blog.zeddyu.info/2020/10/15/Defcon28final/</id>
@@ -170,7 +181,7 @@
         <title><![CDATA[Java · try-catch-finally 异常场景总结]]></title>
         <updated>2021-03-22T12:03:12+08:00</updated>
         <link href="https://blog.triplez.cn/posts/java-try-catch-finally/"/>
-        <content type="text/html" src="https://blog.triplez.cn/posts/java-try-catch-finally/"><![CDATA[在一些特殊情况下，<code>try-catch-finally</code> 代码的顺序变得难以确定。此文为这些可能的特殊情况做了一个简单的整理与总结]]></content>
+        <content type="text/html" src="https://blog.triplez.cn/posts/java-try-catch-finally/"><![CDATA[在一些特殊情况下，<code>try-catch-finally</code> 代码的执行顺序变得难以确定。此文为这些可能的特殊情况做了一个简单的整理与总结]]></content>
         <author>
             <name><![CDATA[TripleZ’s Blog]]></name>
         </author>
@@ -970,17 +981,6 @@ gu install --jvm llvm-toolchain</pre>
         <content type="text/html" src="https://miaotony.xyz/2021/02/12/CTF_2021HappyChineseNewYear/"><![CDATA[新年快乐，牛转乾坤！再来出几个题玩玩吧，meow~]]></content>
         <author>
             <name><![CDATA[MiaoTony]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://blog.triplez.cn/posts/ddia-chapter-4/</id>
-        <title><![CDATA[DDIA · 数据编码与演化]]></title>
-        <updated>2021-02-28T13:49:37+08:00</updated>
-        <link href="https://blog.triplez.cn/posts/ddia-chapter-4/"/>
-        <content type="text/html" src="https://blog.triplez.cn/posts/ddia-chapter-4/"><![CDATA[DDIA 第四章读书笔记]]></content>
-        <author>
-            <name><![CDATA[TripleZ’s Blog]]></name>
         </author>
     </entry>
     
