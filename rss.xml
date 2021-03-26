@@ -3,7 +3,7 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2021-03-26T12:05:52+08:00</updated>
+    <updated>2021-03-26T18:13:33+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
@@ -13,11 +13,22 @@
     <entry>
         <id>https://miaotony.xyz/2021/03/25/Server_DN42/</id>
         <title><![CDATA[DN42 | 入坑 DN42 实验网络]]></title>
-        <updated>2021-03-25T18:02:43+08:00</updated>
+        <updated>2021-03-26T17:58:05+08:00</updated>
         <link href="https://miaotony.xyz/2021/03/25/Server_DN42/"/>
         <content type="text/html" src="https://miaotony.xyz/2021/03/25/Server_DN42/"><![CDATA[最近几天入了DN42的坑，申请了ASN、IP、域名，搭建了VPN通信隧道，配置好BGP路由，完成了和其他网络的Peer。]]></content>
         <author>
             <name><![CDATA[MiaoTony]]></name>
+        </author>
+    </entry>
+    
+    <entry>
+        <id>https://www.suruifu.com/posts/603</id>
+        <title><![CDATA[战战兢兢 如履薄冰]]></title>
+        <updated>2021-03-26T17:46:04+08:00</updated>
+        <link href="https://www.suruifu.com/posts/603"/>
+        <content type="text/html" src="https://www.suruifu.com/posts/603"><![CDATA[]]></content>
+        <author>
+            <name><![CDATA[苏瑞辅的个人网站]]></name>
         </author>
     </entry>
     
@@ -274,31 +285,6 @@
         <content type="text/html" src="https://miaotony.xyz/2021/03/04/CTF_2021HgameWeek4/"><![CDATA[Hgame 2021完结撒花！这篇是第四周的writeup，这周题目好难啊喵呜。]]></content>
         <author>
             <name><![CDATA[MiaoTony]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://www.suruifu.com/posts/577</id>
-        <title><![CDATA[浅谈跨时空交流中的感情传递]]></title>
-        <updated>2021-03-09T08:02:09+08:00</updated>
-        <link href="https://www.suruifu.com/posts/577"/>
-        <content type="text/html" src="https://www.suruifu.com/posts/577"><![CDATA[<h2>1. 是什么</h2>
-<p>所谓跨时空交流中“时”，是单向的。更具体地说，我指的是依赖于微信、邮件等即时通信工具的沟通。</p>
-<p>我总是说我不喜欢微信聊天，有人想要给我聊的话，尤其是第一次见面，我更喜欢说一句，“我们约个时间见面聊一下吧”。之所以这样，我认为主要原因有两点。</p>
-<h2>2. 为什么</h2>
-<p>第一点是，文字的沟通效率低。<br />
-第二点是，文字传导感情的能力有限。一方面文字本身是冰冷的，读起来感觉并冷漠。另一方面，读者也很容易把自己的情绪带入到对文字的阅读中去。</p>
-<h2>3. 怎么做</h2>
-<p>其实也有很多方法来解决。如果是微信聊天的话，可以通过使用表情包传达情绪；如果是使用邮件沟通的话，则要将格式及文字润色，多使用谦辞敬语，以表达自己对收信人的尊重。</p>
-<p>想到这里，我就理解了为什么当年学写书信的时候要讲究一个格式。这看起来是一些多余的工作，但是礼仪本来就是仪式，而仪式本来就是形式，就像是人见面之后有事没事都要寒暄几句，以表达自己的友好。</p>
-<p>“理多人不怪”，那我该怎么做呢？</p>
-<p>写邮件的时候，要把格式处理好。参照书信格式，并与先行邮件礼仪相结合，逐渐形成属于自己的邮件问好寒暄系统。要让读者体会到自己对他的尊重，让读者感受到自己严谨认真的态度。</p>
-<p>写微信的时候，无论是什么朋友，什么客户，都要注意问好。微信不适合长篇大论，若是有复杂内容需要表达，则以书信格式发送PDF文件，尤其要留意其手机阅读体验（把字号调大）。</p>
-<p>一直都在说尊重，认真，谨慎，那怎么表达我不想尊重他呢？</p>
-<p>我的意思是还是要保持尊重，毕竟书信格式可以截图。截图有什么怕的呢？当这段文字再跨越一个时空，曝光到更多读者面前的时候，他的语言环境可能已经完全错位了。若不保持充分尊重，很有可能被人留下把柄。</p>
-<p>真要想骂的话，我想可以打电话骂，见面骂，都是比较好的方法。</p>]]></content>
-        <author>
-            <name><![CDATA[苏瑞辅的个人网站]]></name>
         </author>
     </entry>
     
