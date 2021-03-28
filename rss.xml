@@ -3,7 +3,7 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2021-03-27T18:13:54+08:00</updated>
+    <updated>2021-03-28T00:12:17+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
@@ -13,7 +13,7 @@
     <entry>
         <id>https://miaotony.xyz/2021/03/25/Server_DN42/</id>
         <title><![CDATA[DN42 | 入坑 DN42 实验网络]]></title>
-        <updated>2021-03-27T15:22:51+08:00</updated>
+        <updated>2021-03-27T21:43:33+08:00</updated>
         <link href="https://miaotony.xyz/2021/03/25/Server_DN42/"/>
         <content type="text/html" src="https://miaotony.xyz/2021/03/25/Server_DN42/"><![CDATA[最近几天入了DN42的坑，申请了ASN、IP、域名，搭建了VPN通信隧道，配置好BGP路由，完成了和其他网络的Peer。]]></content>
         <author>
