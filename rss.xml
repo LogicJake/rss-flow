@@ -3,12 +3,67 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2021-04-02T12:05:30+08:00</updated>
+    <updated>2021-04-02T18:14:29+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
     </author>
     
+    
+    <entry>
+        <id>https://bbs.a2os.club/d/2-2021/1</id>
+        <title><![CDATA[2021 年实习、校招信息汇总]]></title>
+        <updated>2021-04-02T16:13:59+08:00</updated>
+        <link href="https://bbs.a2os.club/d/2-2021/1"/>
+        <content type="text/html" src="https://bbs.a2os.club/d/2-2021/1"><![CDATA[<p>本社区核心定位为计算机专业学习讨论，为避免被招聘信息刷屏，提高查看效率，校园招聘、内推相关的信息，请在这个话题跟帖。</p>
+
+<p>在本帖以外发布的招聘信息 <strong>将被隐藏，定期清理</strong>。</p>
+
+<p>大致可参考下方结构组织帖文内容：</p>
+
+<p>公司<br>
+岗位<br>
+岗位要求<br>
+联系方式<br>
+其他信息...<br>
+（支持上传 2MiB 以内附件）</p>
+
+<p>发帖需要注意的：</p>
+
+<p>可用 Markdown 语法优化帖文排版<br>
+帖子内容会被搜索引擎索引，留下联系方式时请注意隐私保护（支持帖子编辑功能）。<br>
+原则上本站只接受 <strong>计算机专业相关</strong> 的岗位😁<br>
+致同学<br>
+由于这是开放注册的社区网站，信息的真实性请自行判断（可参考注册时间、过往发帖记录等）。</p>
+
+<p>有问题及时联系管理员。</p>]]></content>
+        <author>
+            <name><![CDATA[A2OS 开源社区论坛]]></name>
+        </author>
+    </entry>
+    
+    <entry>
+        <id>https://bbs.a2os.club/d/1-a2os-interview-01/1</id>
+        <title><![CDATA[A2OS INTERVIEW 01  聊聊实习那些事儿]]></title>
+        <updated>2021-04-02T16:10:39+08:00</updated>
+        <link href="https://bbs.a2os.club/d/1-a2os-interview-01/1"/>
+        <content type="text/html" src="https://bbs.a2os.club/d/1-a2os-interview-01/1"><![CDATA[<h2>A2OS 访谈——技术实习</h2>
+
+<blockquote class="uncited"><div><p>你大概需要 17 min 读完这篇文章</p></div></blockquote>
+
+
+
+<h3>我们是谁</h3>
+
+<p>这是我们的第一篇访谈，可能还有很多人不了解我们，我们是南京航空航天大学由学生自发组织的开源社区（NUAA Open Source, 简称 A2OS）我们在 Github 有自己的<a href="https://link.zhihu.com/?target=https%3A//github.com/NUAA-Open-Source" rel=" nofollow ugc">仓库</a>，我们致力用代码为南航师生带来更多的便利。</p>
+
+
+
+<p>下面进入这次访谈的正题，A2OS 的第一次访谈，我们以技术实习为主题，邀请了几位同学作为本期的嘉宾，聊聊在准备实习、实习过程都经历了什么。</p>]]></content>
+        <author>
+            <name><![CDATA[A2OS 开源社区论坛]]></name>
+        </author>
+    </entry>
     
     <entry>
         <id>https://blog.triplez.cn/posts/macos-gnu-linux-commands/</id>
