@@ -3,7 +3,7 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2021-04-05T12:06:13+08:00</updated>
+    <updated>2021-04-05T18:14:30+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
@@ -11,9 +11,20 @@
     
     
     <entry>
+        <id>https://miaotony.xyz/2021/04/05/CTF_2021HFCTF_internal_system/</id>
+        <title><![CDATA[CTF | 2021 虎符CTF Web internal_system 复现]]></title>
+        <updated>2021-04-05T15:28:02+08:00</updated>
+        <link href="https://miaotony.xyz/2021/04/05/CTF_2021HFCTF_internal_system/"/>
+        <content type="text/html" src="https://miaotony.xyz/2021/04/05/CTF_2021HFCTF_internal_system/"><![CDATA[前几天的虎符CTF的Web中有一道零解的题目，即internal_system，趁着还有兴趣就来复现一下好了。这题巨大多知识点，确实学到了许多……]]></content>
+        <author>
+            <name><![CDATA[MiaoTony]]></name>
+        </author>
+    </entry>
+    
+    <entry>
         <id>https://miaotony.xyz/2021/04/04/CTF_2021HFCTF/</id>
         <title><![CDATA[CTF | 2021 数字中国创新大赛虎符网络安全赛道 WriteUp]]></title>
-        <updated>2021-04-04T18:03:28+08:00</updated>
+        <updated>2021-04-05T15:07:28+08:00</updated>
         <link href="https://miaotony.xyz/2021/04/04/CTF_2021HFCTF/"/>
         <content type="text/html" src="https://miaotony.xyz/2021/04/04/CTF_2021HFCTF/"><![CDATA[貌似有一段时间没打CTF了，手有点生了。今年的虎符来的有点早，还赶上了清明假期，就来随意看看题好了吧。]]></content>
         <author>
@@ -1043,17 +1054,6 @@ gu install --jvm llvm-toolchain</pre>
 <p>我认为，纯函数式语言更贴近数学模型，可以用非常简练的语句写出算法，其核心是递归和迭代，例如我的堆通过短短几十行语句就实现了，通过一些精巧的递归就实现了命令式语言要写大量循环命令才能实现的功能。但这些简洁也带来了一些问题，比如代码抽象程度较高，理解起来较为困难；大量递归对栈上空间造成很大压力，性能降低了的同时也难以进行大量的计算，需要花费很大的力气去消除尾递归（但通常很难实现）；不允许副作用造成时间、空间的浪费；思维在两种思想中的转换较为困难等。但总的来说，函数式语言还是有很好的前景，从近年来越来越多的语言都开始支持函数式的写法（如 <code>lambda</code> 表达式等）可以看出。如 <code>C++</code> 、<code>Python</code> 、<code>Java</code> 等都有函数式的写法，我在平时编写代码的过程中也会用到函数式语句来简化代码。函数式语言和命令式语言在未来可能会越走越近，取长补短，最后融为一体。</p>]]></content>
         <author>
             <name><![CDATA[Creedowl’s Blog]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://miaotony.xyz/2021/02/23/CTF_2021HgameWeek3/</id>
-        <title><![CDATA[CTF | 2021 Hgame Week3 WriteUp]]></title>
-        <updated>2021-02-23T18:34:09+08:00</updated>
-        <link href="https://miaotony.xyz/2021/02/23/CTF_2021HgameWeek3/"/>
-        <content type="text/html" src="https://miaotony.xyz/2021/02/23/CTF_2021HgameWeek3/"><![CDATA[Hgame第三周好难啊！过年比较忙，这周比较划水，writeup就随手写写吧。]]></content>
-        <author>
-            <name><![CDATA[MiaoTony]]></name>
         </author>
     </entry>
     
