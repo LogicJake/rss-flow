@@ -3,12 +3,23 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2021-04-06T12:05:06+08:00</updated>
+    <updated>2021-04-06T18:15:15+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
     </author>
     
+    
+    <entry>
+        <id>https://blog.triplez.cn/posts/migrate-mendeley-to-zotero/</id>
+        <title><![CDATA[如何从 Mendeley 迁移到 Zotero]]></title>
+        <updated>2021-04-06T14:30:03+08:00</updated>
+        <link href="https://blog.triplez.cn/posts/migrate-mendeley-to-zotero/"/>
+        <content type="text/html" src="https://blog.triplez.cn/posts/migrate-mendeley-to-zotero/"><![CDATA[Mendeley 的手机端已经无法使用，是时候将数据迁移至开源的 Zotero 上了]]></content>
+        <author>
+            <name><![CDATA[TripleZ’s Blog]]></name>
+        </author>
+    </entry>
     
     <entry>
         <id>https://bbs.a2os.club/d/16-cloudflare-workers-cloudflare-pages/1</id>
@@ -776,17 +787,6 @@ gu install --jvm llvm-toolchain</pre>
         <updated>2021-03-06T14:35:29+08:00</updated>
         <link href="https://blog.triplez.cn/posts/introducing-my-new-blog-site/"/>
         <content type="text/html" src="https://blog.triplez.cn/posts/introducing-my-new-blog-site/"><![CDATA[<p>笔者最近完成了将博客从 WordPress 迁移至 Hugo 的工作（部署于 Cloudflare Workers 上）。本文将讲述博客迁移的原因，迁移过程，以及新博客架构。</p>]]></content>
-        <author>
-            <name><![CDATA[TripleZ’s Blog]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://blog.triplez.cn/posts/add-remove-update-git-submodule/</id>
-        <title><![CDATA[添加、删除、更新 Git submodule]]></title>
-        <updated>2021-03-05T15:32:21+08:00</updated>
-        <link href="https://blog.triplez.cn/posts/add-remove-update-git-submodule/"/>
-        <content type="text/html" src="https://blog.triplez.cn/posts/add-remove-update-git-submodule/"><![CDATA[Git submodule 的简单操作]]></content>
         <author>
             <name><![CDATA[TripleZ’s Blog]]></name>
         </author>
