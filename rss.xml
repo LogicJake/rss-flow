@@ -3,12 +3,51 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2021-04-06T00:13:02+08:00</updated>
+    <updated>2021-04-06T06:05:13+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
     </author>
     
+    
+    <entry>
+        <id>https://bbs.a2os.club/d/5-/1</id>
+        <title><![CDATA[高等教育出版社把所有教材都放到线上了]]></title>
+        <updated>2021-04-06T05:59:51+08:00</updated>
+        <link href="https://bbs.a2os.club/d/5-/1"/>
+        <content type="text/html" src="https://bbs.a2os.club/d/5-/1"><![CDATA[<p>高等教育出版社把所有教材都放到了<a href="https://ebook.hep.com.cn/ebooks/index.html#/" rel=" nofollow ugc">线上</a></p>
+<ul><li>免费阅读</li>
+<li>一共 3033 本教材，目录（是个excel文件）在首页右上角可查</li>
+<li>覆盖大学的所有文、理、工、商学科（图 2 左侧）</li>
+<li>支持按书名、作者、ISBN 号搜索</li>
+<li>支持<a href="https://ebook.hep.com.cn/ebooks/h5/index.html#/" rel=" nofollow ugc">手机端</a>使用</li></ul>]]></content>
+        <author>
+            <name><![CDATA[A2OS 开源社区论坛]]></name>
+        </author>
+    </entry>
+    
+    <entry>
+        <id>https://bbs.a2os.club/d/4-/1</id>
+        <title><![CDATA[研究生的生活状态]]></title>
+        <updated>2021-04-06T05:44:00+08:00</updated>
+        <link href="https://bbs.a2os.club/d/4-/1"/>
+        <content type="text/html" src="https://bbs.a2os.club/d/4-/1"><![CDATA[<p>在本校读研究生，做计算机视觉（没错就是卷中卷的方向）。日常摸鱼逛 B 站，看看 <a href="https://space.bilibili.com/562085182" rel=" nofollow ugc">VALSE</a> 里学者的talk，还是不太想读论文。现在论文好多我都还是看不懂QAQ，偶尔看到跟自己方向特别相关的会着重看一下。最近开始对自监督和因果推理的文章感兴趣了，直觉上是一个特别好发（shui）论文的方向🤣</p>]]></content>
+        <author>
+            <name><![CDATA[A2OS 开源社区论坛]]></name>
+        </author>
+    </entry>
+    
+    <entry>
+        <id>https://bbs.a2os.club/d/3-/1</id>
+        <title><![CDATA[工作后的心态]]></title>
+        <updated>2021-04-06T05:00:42+08:00</updated>
+        <link href="https://bbs.a2os.club/d/3-/1"/>
+        <content type="text/html" src="https://bbs.a2os.club/d/3-/1"><![CDATA[<p>其实入职之前的心态跟入职之后几个月，差距是很大的。<br>
+所以有试用期。</p>]]></content>
+        <author>
+            <name><![CDATA[A2OS 开源社区论坛]]></name>
+        </author>
+    </entry>
     
     <entry>
         <id>https://miaotony.xyz/2021/04/05/CTF_2021HFCTF_internal_system/</id>
