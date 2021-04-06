@@ -3,7 +3,7 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2021-04-06T06:05:13+08:00</updated>
+    <updated>2021-04-06T12:05:06+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
@@ -11,39 +11,218 @@
     
     
     <entry>
-        <id>https://bbs.a2os.club/d/5-/1</id>
-        <title><![CDATA[高等教育出版社把所有教材都放到线上了]]></title>
-        <updated>2021-04-06T05:59:51+08:00</updated>
-        <link href="https://bbs.a2os.club/d/5-/1"/>
-        <content type="text/html" src="https://bbs.a2os.club/d/5-/1"><![CDATA[<p>高等教育出版社把所有教材都放到了<a href="https://ebook.hep.com.cn/ebooks/index.html#/" rel=" nofollow ugc">线上</a></p>
-<ul><li>免费阅读</li>
-<li>一共 3033 本教材，目录（是个excel文件）在首页右上角可查</li>
-<li>覆盖大学的所有文、理、工、商学科（图 2 左侧）</li>
-<li>支持按书名、作者、ISBN 号搜索</li>
-<li>支持<a href="https://ebook.hep.com.cn/ebooks/h5/index.html#/" rel=" nofollow ugc">手机端</a>使用</li></ul>]]></content>
+        <id>https://bbs.a2os.club/d/16-cloudflare-workers-cloudflare-pages/1</id>
+        <title><![CDATA[博客迁移记 · 从 Cloudflare Workers 到 Cloudflare Pages]]></title>
+        <updated>2021-04-06T11:54:13+08:00</updated>
+        <link href="https://bbs.a2os.club/d/16-cloudflare-workers-cloudflare-pages/1"/>
+        <content type="text/html" src="https://bbs.a2os.club/d/16-cloudflare-workers-cloudflare-pages/1"><![CDATA[<p><a href="https://blog.triplez.cn/posts/cf-workers-to-pages/" rel=" nofollow ugc">https://blog.triplez.cn/posts/cf-workers-to-pages/</a></p>
+
+<p>借用 BBS 当个谈笑风生区~</p>]]></content>
         <author>
             <name><![CDATA[A2OS 开源社区论坛]]></name>
         </author>
     </entry>
     
     <entry>
-        <id>https://bbs.a2os.club/d/4-/1</id>
-        <title><![CDATA[研究生的生活状态]]></title>
-        <updated>2021-04-06T05:44:00+08:00</updated>
-        <link href="https://bbs.a2os.club/d/4-/1"/>
-        <content type="text/html" src="https://bbs.a2os.club/d/4-/1"><![CDATA[<p>在本校读研究生，做计算机视觉（没错就是卷中卷的方向）。日常摸鱼逛 B 站，看看 <a href="https://space.bilibili.com/562085182" rel=" nofollow ugc">VALSE</a> 里学者的talk，还是不太想读论文。现在论文好多我都还是看不懂QAQ，偶尔看到跟自己方向特别相关的会着重看一下。最近开始对自监督和因果推理的文章感兴趣了，直觉上是一个特别好发（shui）论文的方向🤣</p>]]></content>
+        <id>https://bbs.a2os.club/d/14-/1</id>
+        <title><![CDATA[推荐广告算法方向实习面经]]></title>
+        <updated>2021-04-06T08:14:10+08:00</updated>
+        <link href="https://bbs.a2os.club/d/14-/1"/>
+        <content type="text/html" src="https://bbs.a2os.club/d/14-/1"><![CDATA[<h1>卡牛科技</h1>
+<p>面试流程非常快，基本一天一个流程。面试官和 HR 也很好，主要围绕项目做一些扩展。公司主要算法业务为广告推荐，最近新引入了电商，做商品推荐。实习生可以住公司统一安排的二人间公寓。</p>
+
+<h2>一面</h2>
+<ol style="list-style-type:decimal"><li>介绍比赛项目，前排用的什么方案</li>
+<li>机器学习方法和深度学习方法的应用场景</li>
+<li>为什么使用 lightgbm 模型，优缺点</li>
+<li>简述 word2vec 的技巧</li>
+<li>transformer在序列模型中大放异彩，你认为他和传统的rnn模型相比强在哪里？</li>
+<li>工程实践问题，项目中类别分布不平衡怎么办，负样本多怎么办</li>
+<li>如果使用了下采样破坏了真实分布，如何在上线之后将预测的概率拉回真实的分布</li></ol>
+
+<h2>二面</h2>
+<ol style="list-style-type:decimal"><li>介绍比赛流程</li>
+<li>对冷门商品的解决方法</li>
+<li>如何保证召回的多样性</li>
+<li>如何推荐新上架商品</li>
+<li>模型推荐购买过的商品怎么处理</li>
+<li>lightgbm 与 xgboost 区别</li>
+<li>广告反欺诈中如果给 GPS 信息怎么处理</li></ol>
+
+<h1>蚂蚁金服—支付宝—广告算法</h1>
+<p>阿里好多部门在过完年之后就开始在各大群里发 jd，声势十分浩大。群里有人发了支付宝部门的 jd，说是有学长直推，而且方向和我很匹配，就去联系了一下学长，学长很 nice，帮我改简历，提了很多建议。阿里支持预先面，也是我第一次大厂面试，总共两轮技术面，本来有的交叉面被取消了。</p>
+
+<h2>一面</h2>
+<ol style="list-style-type:decimal"><li>映象比较深刻的比赛</li>
+<li>在 kdd cup 竞赛中负责内容</li>
+<li>介绍改进的itemcf</li>
+<li>用户 embedding 和商品 embedding 不在一个特征空间，怎么计算相似性</li>
+<li>有没有考虑把用户和商品的关系建为异构图</li>
+<li>后处理如何打压热门商品</li>
+<li>介绍 kdd cup 第一名的方案</li>
+<li>介绍竞赛广告反欺诈的比赛</li></ol>
+   <br>
+<h2>二面</h2>
+<p>二面应该是个领导，约的会议室快到时间了，所以问的比较简单，了解了一下竞赛项目和到岗时间就没了。</p>
+
+<h1>字节跳动—商业变现—广告算法</h1>
+<p>本来想把字节放在后面投的，所以只在系统里填了简历，没有投岗位，但 HR 加微信问我要不要试试他们部门，所以就阴差阳错开始了，总共三轮技术面。</p>
+<h2>一面</h2>
+<p>算法题：leetcode 排序矩阵查找，leetcode 102 二叉树的层序遍历</p>
+<ol style="list-style-type:decimal"><li>介绍一个你认为做的最好的比赛</li>
+<li>ANN用的什么工具，介绍一下原理</li>
+<li>为什么选择Annoy</li>
+<li>还知道其他ANN算法吗？介绍了一下局部敏感hash</li>
+<li>做用户商品交互特征的时候，你知道业界是怎么做的？扯了一下DIN模型的和目标商品的attention做法</li>
+<li>lightgbm和xgboost的区别</li>
+<li>排序阶段你知道业界是怎么做的？说了一下点击率模型：deepfm，nfm，wide &amp; deep，dcn，deepcrossing</li>
+<li>介绍一下word2vec</li>
+<li>介绍一下transformer</li>
+<li>bert的两种预训练方式</li>
+<li>为什么要用mask？说了padding mask和sequence mask</li>
+<li>为什么要sequence mask？防止信息穿越</li></ol>
+
+<h2>二面</h2>
+<p>算法题：求从左上角到右下角的最小开销。给定一个二维数组arr<i>[j]，数组中每个点表示经过该点的开销，求从左上角为起点，右下角为终点的最小开销，在每个点时只能往右或者往下走，同时中途可能会有障碍，即有些点不能走，obs<i>[j]=1时表示(i, j)不能走。dp和dp状态压缩。</i></i></p>
+<ol style="list-style-type:decimal"><li><i><i>介绍一个比赛</i></i></li>
+<li>ANN用的什么工具，介绍一下原理</li>
+<li>如何提高冷门商品的推荐效果的</li>
+<li>了不了解大数据框架</li>
+<li>说一下你熟悉的linux命令</li>
+<li>一个文件每行一个数字，用命令统计所有数的平均值和数字个数</li>
+<li>逻辑回归损失函数和求导</li>
+<li>介绍一下你了解的优化器和各自的优缺点</li>
+<li>Adam和Adagrad的区别</li></ol>
+
+<h2>三面</h2>
+<p>算法题：有一个长度为n的数组，求一个数k，k的取值区间为[1, n-1]，使得数组的前k个数和后n-k个数的方差和最小。要求化简方差公式，达到计算子序列方差的时间复杂度为O(n)。解出来后又要求空间复杂度为常数级别。</p>
+
+<ol style="list-style-type:decimal"><li>写逻辑回归的logloss损失函数</li>
+<li>逻辑回归损失函数可以用mse吗（从梯度角度）</li>
+<li>逻辑回归建模，如果只有9个正样本，一个负样本，那么有一列特征，这个特征对于的权重是正还是负  </li>
+<li>介绍认为做的最好的项目</li>
+<li>项目中如何缓解曝光偏差的</li>
+<li>Embedding ANN召回用的什么工具</li></ol>
+
+<h1>快手-社区科学部-推荐算法</h1>
+<p>快手是先统一面试，技术面结束后，HR 联系才知道具体的小组。快手的面试风格感觉和字节很像，先做两道算法题。一面先做题，第二题卡了好久才做完，所以剩下的时间不多，面试官也没多问，就简单了解了一下竞赛项目。二面也是先做题，基础问的不多，也问到了“逻辑回归损失函数可以用mse吗”，大部分时间都在和我讨论 kdd cup 的项目流程是否合理和为什么要这么做。快手总共两轮技术面，隔了大概两周才有 HR 沟通后续。</p>
+
+<h1>腾讯-应用宝-推荐算法</h1>
+<p>投的腾讯微视，被应用宝捞了。</p>
+<h2>一面</h2>
+<ol style="list-style-type:decimal"><li>介绍一个最有把握的比赛</li>
+<li>介绍比赛中itemcf具体做法</li>
+<li>在itemcf中如何引入时间间隔信息和位置间隔信息</li>
+<li>基于商品属性embedding的召回这么做的</li>
+<li>Annoy的原理</li>
+<li>基于w2v的ANN怎么做的</li>
+<li>w2v的原理</li>
+<li>w2v的loss函数</li>
+<li>loss函数还有哪些</li>
+<li>如何解决冷启动问题</li>
+<li>如何评价召回的效果</li>
+<li>如何把召回的信息引入到排序</li>
+<li>GBDT，xgboost，lightgbm改进的过程</li>
+<li>简单推导xgboost</li>
+<li>构建一棵树分裂特征怎么选择</li>
+<li>计算分裂增益的方法有哪些</li>
+<li>LSTM的门机制</li>
+<li>LSTM相较于RNN的优势</li>
+<li>transformer的机制</li>
+<li>推荐里面深度模型的了解</li>
+<li>NN怎么达到泛化性</li>
+<li>如何保证的稀疏性</li>
+<li>L1正则为什么可以达到模型的稀疏性</li></ol>
+
+<h2>二面</h2>
+<ol style="list-style-type:decimal"><li>比赛分工</li>
+<li>embedding存在之前没有出现过id怎么办</li>
+<li>w2v的样本怎么构造</li>
+<li>有没有过滤低频id</li>
+<li>cbow 与 skip-gram 的区别和优缺点</li>
+<li>多任务学习有哪些结构</li>
+<li>多个召回怎么合并的</li>
+<li>多个召回分数之间是可比的吗</li>
+<li>各个召回的权重是怎么选取的</li>
+<li>推荐系统里面是如何考虑冷门商品</li>
+<li>新增一路召回，在排序阶段需要做什么改进</li>
+<li>树模型对离散特征怎么处理的</li>
+<li>树模型怎么决定一个叶子结点是否要分裂</li>
+<li>xgboost正则化项和什么有关</li></ol>
+
+<h2>三面</h2>
+<p>做了三道算法题：leetcode 53.最大子序和，leetcode 75.颜色分类，leetcode 442.数组中重复的数据</p>
+
+<h2>四面</h2>
+<ol style="list-style-type:decimal"><li>介绍项目</li>
+<li>算法题：剑指 Offer 60.n个骰子的点数</li></ol>
+
+<h1>百度</h1>
+<p>应该是百度的实习专场，三轮技术连着面。</p>
+<h2>一面</h2>
+<p>算法题：leetcode 70.爬楼梯</p>
+<ol style="list-style-type:decimal"><li>介绍竞赛项目</li>
+<li>竞赛数据规模</li>
+<li>ANN中用户的embedding怎么得到的</li>
+<li>w2v的召回具体怎么做的</li>
+<li>ANN的工具用的啥</li>
+<li>基于深度的召回怎么做的</li>
+<li>排序阶段的特征有哪些</li>
+<li>后打压怎么做的</li></ol>
+
+<h2>二面</h2>
+<p>算法题：假设现在有很多海岛，有些海岛之间有桥连接，你已知海岛连接情况。 ① 我现在想从到 A岛 去 B岛，问是否能通过陆路到达（过桥） ②如果可以，最少需要过几次桥 ③输出一条最短的路径 （P.S. 最好可以写一个非递归的形式）</p>
+<ol style="list-style-type:decimal"><li>介绍竞赛</li>
+<li>评估标准是啥</li>
+<li>哪些特征比较有用</li>
+<li>多路召回的分数为什么要相加</li>
+<li>有没有分析 bad case</li>
+<li>优化思路</li>
+<li>讲一下推荐的方法</li>
+<li>一个全连接层有多少参数</li>
+<li>介绍 attention</li></ol>
+    <br>
+<h2>三面（手百推荐部门）</h2>
+<ol style="list-style-type:decimal"><li>介绍研究方向</li>
+<li>论文中 embedding 效果的评价方法和指标</li>
+<li>为什么选择数据挖掘这个方向</li>
+<li>对于实习的目标</li>
+<li>反问部门业务和技术栈</li></ol>]]></content>
         <author>
             <name><![CDATA[A2OS 开源社区论坛]]></name>
         </author>
     </entry>
     
     <entry>
-        <id>https://bbs.a2os.club/d/3-/1</id>
-        <title><![CDATA[工作后的心态]]></title>
-        <updated>2021-04-06T05:00:42+08:00</updated>
-        <link href="https://bbs.a2os.club/d/3-/1"/>
-        <content type="text/html" src="https://bbs.a2os.club/d/3-/1"><![CDATA[<p>其实入职之前的心态跟入职之后几个月，差距是很大的。<br>
-所以有试用期。</p>]]></content>
+        <id>https://bbs.a2os.club/d/8-push/1</id>
+        <title><![CDATA[论坛有通知网页 push 的功能嘛]]></title>
+        <updated>2021-04-06T07:35:33+08:00</updated>
+        <link href="https://bbs.a2os.club/d/8-push/1"/>
+        <content type="text/html" src="https://bbs.a2os.club/d/8-push/1"><![CDATA[<p>比如 <a href="https://www.webpushr.com/" rel=" nofollow ugc">webpushr </a>提供的这种。</p>]]></content>
+        <author>
+            <name><![CDATA[A2OS 开源社区论坛]]></name>
+        </author>
+    </entry>
+    
+    <entry>
+        <id>https://bbs.a2os.club/d/7-/1</id>
+        <title><![CDATA[如何阅读论文？]]></title>
+        <updated>2021-04-06T07:33:34+08:00</updated>
+        <link href="https://bbs.a2os.club/d/7-/1"/>
+        <content type="text/html" src="https://bbs.a2os.club/d/7-/1"><![CDATA[<p>虽然大家关注的领域不同，但肯定都会读不少论文。大家都是如何阅读论文的？是每篇都精读？还是看个摘要泛泛而过？</p>
+
+<p>希望大家分享一下自己阅读论文的心得。</p>]]></content>
+        <author>
+            <name><![CDATA[A2OS 开源社区论坛]]></name>
+        </author>
+    </entry>
+    
+    <entry>
+        <id>https://bbs.a2os.club/d/6-/1</id>
+        <title><![CDATA[话说毕业季跳蚤市场能代购吗]]></title>
+        <updated>2021-04-06T06:40:15+08:00</updated>
+        <link href="https://bbs.a2os.club/d/6-/1"/>
+        <content type="text/html" src="https://bbs.a2os.club/d/6-/1"><![CDATA[<p>我觉得这是真需求</p>]]></content>
         <author>
             <name><![CDATA[A2OS 开源社区论坛]]></name>
         </author>
@@ -92,61 +271,6 @@
         <content type="text/html" src="https://miaotony.xyz/2021/03/09/CTF_2021Ant-D3CTF/"><![CDATA[前几天打了个AntCTF x D^3CTF，题目还是挺有难度的，喵喵只会签到问卷和虚拟机了，这就爬走。]]></content>
         <author>
             <name><![CDATA[MiaoTony]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://bbs.a2os.club/d/2-2021/1</id>
-        <title><![CDATA[2021 年实习、校招信息汇总]]></title>
-        <updated>2021-04-02T16:13:59+08:00</updated>
-        <link href="https://bbs.a2os.club/d/2-2021/1"/>
-        <content type="text/html" src="https://bbs.a2os.club/d/2-2021/1"><![CDATA[<p>本社区核心定位为计算机专业学习讨论，为避免被招聘信息刷屏，提高查看效率，校园招聘、内推相关的信息，请在这个话题跟帖。</p>
-
-<p>在本帖以外发布的招聘信息 <strong>将被隐藏，定期清理</strong>。</p>
-
-<p>大致可参考下方结构组织帖文内容：</p>
-
-<p>公司<br>
-岗位<br>
-岗位要求<br>
-联系方式<br>
-其他信息...<br>
-（支持上传 2MiB 以内附件）</p>
-
-<p>发帖需要注意的：</p>
-
-<p>可用 Markdown 语法优化帖文排版<br>
-帖子内容会被搜索引擎索引，留下联系方式时请注意隐私保护（支持帖子编辑功能）。<br>
-原则上本站只接受 <strong>计算机专业相关</strong> 的岗位😁<br>
-致同学<br>
-由于这是开放注册的社区网站，信息的真实性请自行判断（可参考注册时间、过往发帖记录等）。</p>
-
-<p>有问题及时联系管理员。</p>]]></content>
-        <author>
-            <name><![CDATA[A2OS 开源社区论坛]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://bbs.a2os.club/d/1-a2os-interview-01/1</id>
-        <title><![CDATA[A2OS INTERVIEW 01  聊聊实习那些事儿]]></title>
-        <updated>2021-04-02T16:10:39+08:00</updated>
-        <link href="https://bbs.a2os.club/d/1-a2os-interview-01/1"/>
-        <content type="text/html" src="https://bbs.a2os.club/d/1-a2os-interview-01/1"><![CDATA[<h2>A2OS 访谈——技术实习</h2>
-
-<blockquote class="uncited"><div><p>你大概需要 17 min 读完这篇文章</p></div></blockquote>
-
-
-
-<h3>我们是谁</h3>
-
-<p>这是我们的第一篇访谈，可能还有很多人不了解我们，我们是南京航空航天大学由学生自发组织的开源社区（NUAA Open Source, 简称 A2OS）我们在 Github 有自己的<a href="https://link.zhihu.com/?target=https%3A//github.com/NUAA-Open-Source" rel=" nofollow ugc">仓库</a>，我们致力用代码为南航师生带来更多的便利。</p>
-
-
-
-<p>下面进入这次访谈的正题，A2OS 的第一次访谈，我们以技术实习为主题，邀请了几位同学作为本期的嘉宾，聊聊在准备实习、实习过程都经历了什么。</p>]]></content>
-        <author>
-            <name><![CDATA[A2OS 开源社区论坛]]></name>
         </author>
     </entry>
     
