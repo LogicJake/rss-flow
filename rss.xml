@@ -3,12 +3,24 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2021-04-07T00:12:24+08:00</updated>
+    <updated>2021-04-07T06:05:24+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
     </author>
     
+    
+    <entry>
+        <id>https://bbs.a2os.club/d/17-/1</id>
+        <title><![CDATA[食堂吃饭有感]]></title>
+        <updated>2021-04-07T04:10:34+08:00</updated>
+        <link href="https://bbs.a2os.club/d/17-/1"/>
+        <content type="text/html" src="https://bbs.a2os.club/d/17-/1"><![CDATA[<p>还是南航的食堂好啊，吃得香，便宜。<br>
+现在在外面，一顿抵得上以前两顿</p>]]></content>
+        <author>
+            <name><![CDATA[A2OS 开源社区论坛]]></name>
+        </author>
+    </entry>
     
     <entry>
         <id>https://blog.triplez.cn/posts/migrate-mendeley-to-zotero/</id>
@@ -223,17 +235,6 @@
         <content type="text/html" src="https://bbs.a2os.club/d/7-/1"><![CDATA[<p>虽然大家关注的领域不同，但肯定都会读不少论文。大家都是如何阅读论文的？是每篇都精读？还是看个摘要泛泛而过？</p>
 
 <p>希望大家分享一下自己阅读论文的心得。</p>]]></content>
-        <author>
-            <name><![CDATA[A2OS 开源社区论坛]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://bbs.a2os.club/d/6-/1</id>
-        <title><![CDATA[话说毕业季跳蚤市场能代购吗]]></title>
-        <updated>2021-04-06T06:40:15+08:00</updated>
-        <link href="https://bbs.a2os.club/d/6-/1"/>
-        <content type="text/html" src="https://bbs.a2os.club/d/6-/1"><![CDATA[<p>我觉得这是真需求</p>]]></content>
         <author>
             <name><![CDATA[A2OS 开源社区论坛]]></name>
         </author>
