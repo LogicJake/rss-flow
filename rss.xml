@@ -3,12 +3,23 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2021-04-11T06:05:08+08:00</updated>
+    <updated>2021-04-11T12:05:23+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
     </author>
     
+    
+    <entry>
+        <id>https://blog.triplez.cn/posts/welcome-macat/</id>
+        <title><![CDATA[欢迎 Macat ！]]></title>
+        <updated>2021-04-11T10:24:01+08:00</updated>
+        <link href="https://blog.triplez.cn/posts/welcome-macat/"/>
+        <content type="text/html" src="https://blog.triplez.cn/posts/welcome-macat/"><![CDATA[Welcome Macat!]]></content>
+        <author>
+            <name><![CDATA[TripleZ’s Blog]]></name>
+        </author>
+    </entry>
     
     <entry>
         <id>https://bbs.a2os.club/d/17-/1</id>
@@ -779,17 +790,6 @@ gu install --jvm llvm-toolchain</pre>
 <p><a rel="nofollow" href="https://www.noisyfox.io/substratevm-on-ios.html">SubstrateVM on iOS</a>，首发于<a rel="nofollow" href="https://www.noisyfox.io">狐狸的小小窝</a>。</p>]]></content>
         <author>
             <name><![CDATA[狐狸的小小窝]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://blog.triplez.cn/posts/introducing-my-new-blog-site/</id>
-        <title><![CDATA[博客迁移记 · 从 WordPress 到 Hugo + Cloudflare Workers]]></title>
-        <updated>2021-03-06T14:35:29+08:00</updated>
-        <link href="https://blog.triplez.cn/posts/introducing-my-new-blog-site/"/>
-        <content type="text/html" src="https://blog.triplez.cn/posts/introducing-my-new-blog-site/"><![CDATA[<p>笔者最近完成了将博客从 WordPress 迁移至 Hugo 的工作（部署于 Cloudflare Workers 上）。本文将讲述博客迁移的原因，迁移过程，以及新博客架构。</p>]]></content>
-        <author>
-            <name><![CDATA[TripleZ’s Blog]]></name>
         </author>
     </entry>
     
