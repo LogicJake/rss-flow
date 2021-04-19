@@ -3,7 +3,7 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2021-04-19T12:06:05+08:00</updated>
+    <updated>2021-04-19T18:11:31+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
@@ -11,22 +11,22 @@
     
     
     <entry>
-        <id>https://miaotony.xyz/2021/03/25/Server_DN42/</id>
-        <title><![CDATA[DN42 | 入坑 DN42 实验网络]]></title>
-        <updated>2021-04-17T17:45:33+08:00</updated>
-        <link href="https://miaotony.xyz/2021/03/25/Server_DN42/"/>
-        <content type="text/html" src="https://miaotony.xyz/2021/03/25/Server_DN42/"><![CDATA[最近几天入了DN42的坑，申请了ASN、IP、域名，搭建了VPN通信隧道，配置好BGP路由，完成了和其他网络的Peer。]]></content>
+        <id>https://miaotony.xyz/2021/04/15/CTF_2021MRCTF/</id>
+        <title><![CDATA[CTF | 2021 MRCTF WriteUp]]></title>
+        <updated>2021-04-19T13:30:17+08:00</updated>
+        <link href="https://miaotony.xyz/2021/04/15/CTF_2021MRCTF/"/>
+        <content type="text/html" src="https://miaotony.xyz/2021/04/15/CTF_2021MRCTF/"><![CDATA[前几天看北邮天璇Merak战队整了个招新赛，喵喵也来随便玩玩好了！题目还是比较顶的，巨大多“签到”题目，然而喵喵并不能check in...]]></content>
         <author>
             <name><![CDATA[MiaoTony]]></name>
         </author>
     </entry>
     
     <entry>
-        <id>https://miaotony.xyz/2021/04/15/CTF_2021MRCTF/</id>
-        <title><![CDATA[CTF | 2021 MRCTF WriteUp]]></title>
-        <updated>2021-04-17T17:33:54+08:00</updated>
-        <link href="https://miaotony.xyz/2021/04/15/CTF_2021MRCTF/"/>
-        <content type="text/html" src="https://miaotony.xyz/2021/04/15/CTF_2021MRCTF/"><![CDATA[前几天看北邮天璇Merak战队整了个招新赛，喵喵也来随便玩玩好了！题目还是比较顶的，巨大多“签到”题目，然而喵喵并不能check in...]]></content>
+        <id>https://miaotony.xyz/2021/03/25/Server_DN42/</id>
+        <title><![CDATA[DN42 | 入坑 DN42 实验网络]]></title>
+        <updated>2021-04-17T17:45:33+08:00</updated>
+        <link href="https://miaotony.xyz/2021/03/25/Server_DN42/"/>
+        <content type="text/html" src="https://miaotony.xyz/2021/03/25/Server_DN42/"><![CDATA[最近几天入了DN42的坑，申请了ASN、IP、域名，搭建了VPN通信隧道，配置好BGP路由，完成了和其他网络的Peer。]]></content>
         <author>
             <name><![CDATA[MiaoTony]]></name>
         </author>
