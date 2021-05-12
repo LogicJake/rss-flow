@@ -3,12 +3,27 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2021-05-12T12:21:40+08:00</updated>
+    <updated>2021-05-12T18:29:27+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
     </author>
     
+    
+    <entry>
+        <id>https://www.suruifu.com/posts/621</id>
+        <title><![CDATA[硬件只谈概率，软件才有是非]]></title>
+        <updated>2021-05-12T13:28:44+08:00</updated>
+        <link href="https://www.suruifu.com/posts/621"/>
+        <content type="text/html" src="https://www.suruifu.com/posts/621"><![CDATA[<p>最近做了一点硬件开发工作。</p>
+<p>要想控制一个东西，首先要测得准。测控测控，测是控的基础和基石。</p>
+<p>对应在编程工作中，要想控制一个模块，首先要有接口获取到模块的相关状态。</p>
+<p>但是如果当测量本身都会破坏模块工作状态的时候，就变成了不可测量模块的控制。这个时候所有问题都是概率性的。不能以绝对的是非眼光来看待。</p>
+<p>那为什么我们电脑显示器这么稳定呢？我想一方面是测试做得够，掌握了一点这种概率性的规律（电子云图）。另一方面是性能很高，冗余量很大。</p>]]></content>
+        <author>
+            <name><![CDATA[苏瑞辅的个人网站]]></name>
+        </author>
+    </entry>
     
     <entry>
         <id>https://cosmosning.github.io/2020/12/06/review-of-logseq/</id>
@@ -614,27 +629,6 @@
         <content type="text/html" src="https://blog.triplez.cn/posts/java-try-catch-finally/"><![CDATA[在一些特殊情况下，<code>try-catch-finally</code> 代码的执行顺序变得难以确定。此文为这些可能的特殊情况做了一个简单的整理与总结]]></content>
         <author>
             <name><![CDATA[TripleZ’s Blog]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://www.suruifu.com/posts/594</id>
-        <title><![CDATA[一座凶宅，你敢买吗？]]></title>
-        <updated>2021-03-22T09:11:25+08:00</updated>
-        <link href="https://www.suruifu.com/posts/594"/>
-        <content type="text/html" src="https://www.suruifu.com/posts/594"><![CDATA[<p>第一代主人年纪轻轻就意外死亡，第二代主人没住几年惨遭分尸。</p>
-<p>这样一个宅子，市价本来是1000万的，现在因为是凶宅，只卖300万。你敢买吗？</p>
-<p>我是一个马克思主义者，我不相信鬼神的存在。但是如果我面对这样的情况，我的答案是我不敢买。</p>
-<p>我的这种说法矛盾吗？的确有一点矛盾，这个问题也是我之前无法面对的。现在我想清楚了。</p>
-<p>马克思说，人是一切社会关系的总和。人不止是一个生理性地存在，更是一种社会性的存在。生理上的人是一个动物，一个会制造工具并使用工具进行劳动的高级动物。那社会性的人则是一个集合，集合的元素是社会关系，我与其他社会对象之间的社会关系，可以简单理解成我与其他人的社会关系。</p>
-<p>举个例子，苏瑞辅是谁呢？社会性的苏瑞辅是苏瑞辅与南京瑞辅科技有限公司的关系，苏瑞辅与冯锦瑾的关系，苏瑞辅与单庄园的关系，等所有苏瑞辅与社会元素的社会关系。</p>
-<p>我可以不相信鬼神，不相信凶宅，但是我的社会关系中可能有60%的人相信鬼神的存在，相信凶宅之凶。</p>
-<p>如此，当我住在这个凶宅里面的时候，凶宅就真的凶了。</p>
-<p>为什么这么说呢？比如说我的客户吧，原来我有100个客户，我勉强能够维持开支，现在有60个人相信凶宅，主动疏远我，于是我只有40个客户，混不下去了，饿死了。</p>
-<p>再比如说，我原来有1个潜在女友，现在有0.6个相信凶宅，现在只剩下0.4个了，四舍五入等于没有。我也没有女朋友了，感情也受挫了。</p>
-<p>在各个角度，各个领域，都会有相同的效果。人并不是孤立存在的，人是社会性的。我们追求独立的同时，也要领会我们社会关系中的价值观均值。</p>]]></content>
-        <author>
-            <name><![CDATA[苏瑞辅的个人网站]]></name>
         </author>
     </entry>
     
