@@ -3,12 +3,67 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2021-05-15T06:18:19+08:00</updated>
+    <updated>2021-05-15T12:20:32+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
     </author>
     
+    
+    <entry>
+        <id>https://blog.vvzero.com/2021/02/14/we-are-engaged/</id>
+        <title><![CDATA[我们订婚了 We are engaged!]]></title>
+        <updated>2021-05-15T06:32:01+08:00</updated>
+        <link href="https://blog.vvzero.com/2021/02/14/we-are-engaged/"/>
+        <content type="text/html" src="https://blog.vvzero.com/2021/02/14/we-are-engaged/"><![CDATA[<blockquote><p>本文讨论地址 <a href="https://bbs.blog.vvzero.com/d/2-blog">https://bbs.blog.vvzero.com/d/2-blog</a></p></blockquote><p>2021年2月14日，情人节，农历正月初三，玲玲与瑾瑾喜订良缘。</p><p>互联网是有记忆的，在此，我就以计算机为担保，依网络见证！</p>]]></content>
+        <author>
+            <name><![CDATA[VVBLOG]]></name>
+        </author>
+    </entry>
+    
+    <entry>
+        <id>https://blog.vvzero.com/2020/04/28/use-virtual-machine-to-bypass-windows-samba-port-limit/</id>
+        <title><![CDATA[使用虚拟机绕过 Windows Samba 客户端端口限制]]></title>
+        <updated>2021-05-15T06:31:57+08:00</updated>
+        <link href="https://blog.vvzero.com/2020/04/28/use-virtual-machine-to-bypass-windows-samba-port-limit/"/>
+        <content type="text/html" src="https://blog.vvzero.com/2020/04/28/use-virtual-machine-to-bypass-windows-samba-port-limit/"><![CDATA[<blockquote><p>本文讨论地址 <a href="https://bbs.blog.vvzero.com/d/2-blog">https://bbs.blog.vvzero.com/d/2-blog</a></p></blockquote><h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>迫于不能浪费宿舍联通宽带的公网 IP，我用树莓派搭建了一个 NAS，使用 Samba 提供访问。但是，由于运营商限制，入站和出站的 139、445 端口都被封禁（对！你不能访问其他机器的 445 端口！），这样做只能让同一个局域网的服务访问。我尝试修改了端口号，把本地的 445 端口映射到公网的其它端口，算是可以给大部分 Samba 客户端使用了（比如安卓手机）。但是，Windows 的 Samba 客户端，并不支持设置端口号（如果在文件管理器地址栏输入 <code>\\a.b.c.d:xxx</code> 将会被认为是 WebDAV 协议）。</p><p>网上某些教程说，在 Windows 本地设置端口转发，把访问本机 445 端口的流量转发至你的 Samba 服务器端口。但是，这样做需要关闭 Windows 自己的 Samba 服务器，会导致网络共享、网络打印机等很多功能无法使用，导致莫名其妙的问题，所以不推荐。</p><p>但是可以换个思路。</p><h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>既然不能使用本机（127.0.0.1）做转发，那么为什么不使用本地网络中其他的机器进行数据转发呢？一开始我想在本地网络中加一个树莓派之类的小主机，但觉得这样太累赘了。虚拟机也是独立的机器，我觉得一样有效。</p><p>所以，只要在虚拟机里面装一个反向代理应用（Nginx），把发往虚拟机 445 端口的流量转发到 Samba 服务器，然后使用 Windows Samba 客户端访问这个虚拟机，就等于访问 Samba 服务器。</p><h2 id="实践"><a href="#实践" class="headerlink" title="实践"></a>实践</h2><p>这里，我使用了 Windows Hyper V，创建了 Ubuntu 20.04 Server 虚拟机（直接下载官方 ISO），然后使用默认交换机作为虚拟机的网络。</p><img src="https://img.vvzero.com/blog/ih/2020/04/28/2416a9e0b66ec.png" alt="Snipaste_2020-04-28_14-07-57.png" style="zoom:33%;" /><p>启动后，安装系统，然后除了更新镜像源、安装 Nginx，什么都不用做。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo apt install nginx</span><br></pre></td></tr></table></figure><p>装好 Nginx 后，修改配置文件：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim &#x2F;etc&#x2F;nginx&#x2F;nginx.conf</span><br></pre></td></tr></table></figure><p>添加一个 stream 模块，大致像下面：</p><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">http</span> &#123;</span><br><span class="line">    ......</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="section">stream</span> &#123;</span><br><span class="line">    <span class="section">server</span> &#123;</span><br><span class="line">        <span class="attribute">listen</span> <span class="number">445</span>;</span><br><span class="line">        </span><br><span class="line">        // 你的 NAS 地址</span><br><span class="line">        <span class="attribute">proxy_pass</span> mynas.example.com:<span class="number">12345</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>然后重启 Nginx：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo nginx -s reload</span><br></pre></td></tr></table></figure><p>转发的模块就做好了。</p><p>然后，再在 Windows 中打开 <code>\\&lt;虚拟机的ip&gt;\&lt;samba 路径（可选）&gt;</code> 就完成了。虚拟机 ip 可以在虚拟机里面用 ifconfig 命令查看。</p><h2 id="后续"><a href="#后续" class="headerlink" title="后续"></a>后续</h2><p>也许可以用 docker 实现，但我还没想好怎么搞。</p>]]></content>
+        <author>
+            <name><![CDATA[VVBLOG]]></name>
+        </author>
+    </entry>
+    
+    <entry>
+        <id>https://blog.vvzero.com/2020/11/18/May-be-I-know-why-use-complement/</id>
+        <title><![CDATA[我终于知道了补码的意义]]></title>
+        <updated>2021-05-15T06:30:24+08:00</updated>
+        <link href="https://blog.vvzero.com/2020/11/18/May-be-I-know-why-use-complement/"/>
+        <content type="text/html" src="https://blog.vvzero.com/2020/11/18/May-be-I-know-why-use-complement/"><![CDATA[<blockquote><p>本文讨论地址 <a href="https://bbs.blog.vvzero.com/d/2-blog">https://bbs.blog.vvzero.com/d/2-blog</a></p></blockquote><blockquote><p>本文供初学者学习，供大佬批判。</p></blockquote><h2 id="补码背景"><a href="#补码背景" class="headerlink" title="补码背景"></a>补码背景</h2><p>很久很久以前，当我参加 NOIP（信息学奥林匹克竞赛）的时候，老师是这么讲补码的：</p><blockquote><p>int 型数据的最高位是符号位，符号位为 0 就代表这是正数，为 1 就是负数。但是，+0 和 -0 理应是同一个数，但在二进制中却表示成了两个不同的数（以 8 位为例，二进制表示）： 00000000 和 10000000。所以，我们引入了补码，补码就是，对负数而言，符号位不变，其他位取反，然后再加 1。于是， -0 的补码就是 10000000 -&gt; 11111111 -&gt; 00000000 与 +0 一致了。</p></blockquote><h2 id="补码的意义"><a href="#补码的意义" class="headerlink" title="补码的意义"></a>补码的意义</h2><p>其实当时我就该意识到，仅仅为了 0 这一个数便创建了“补码”这个概念，未免太浪费了。我最近看了 <em>CS: APP</em> 这本书，才进一步理解了补码。</p><p>补码，就是为有符号整数而创建的概念。对于无符号整数，是不存在“补码”的概念的。我们先看一个无符号数 00100101，它是怎么转换成十进制的？加权求和，<code>0×2^7+0×2^6+1×2^5+0×2^4+0×2^3+1×2^2+0×2^1+1×2^0=37</code>；无符号数 10000011，<code>1×2^7+0×2^6+0×2^5+0×2^4+0×2^3+0×2^2+1×2^1+1×2^0=131</code>。</p><p>对于有符号数呢？假如我们不用补码，那么有符号数 10000011，就是 <code>-(0×2^6+0×2^5+0×2^4+0×2^3+0×2^2+1×2^1+1×2^0)=-3</code>。人这么算起来是挺舒服，但是计算机会很难受，凭什么我最高位的权值没了？只能做符号？</p><p>然后我们试试补码。10000011 的补码是 11111101，如何用补码求它的十进制呢？其实这跟无符号数是一样的，只不过，最高位的权值，不是 2^7，而是 -2^7。求值：<code>1×(-2^7)+1×2^6+1×2^5+1×2^4+1×2^3+1×2^2+0×2^1+1×2^0=-3</code>，是不是很神奇？</p><p>对于正数而言，就更简单了，与无符号数一致。</p><h2 id="补码再探"><a href="#补码再探" class="headerlink" title="补码再探"></a>补码再探</h2><p>计算机只能做加法（不是），所以，我们看看用补码做加法，有什么好处。</p><p>先计算 -13+10 吧，很简单的二进制竖式加法：</p><table><thead><tr><th>7</th><th>6</th><th>5</th><th>4</th><th>3</th><th>2</th><th>1</th><th>0</th></tr></thead><tbody><tr><td>1</td><td>1</td><td>1</td><td>1</td><td>0</td><td>0</td><td>1</td><td>1</td></tr><tr><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>1</td><td>0</td></tr><tr><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>0</td><td>1</td></tr></tbody></table><p>11111101 即为 -3 的补码。</p><p>再算一个，-8+9：</p><table><thead><tr><th>7</th><th>6</th><th>5</th><th>4</th><th>3</th><th>2</th><th>1</th><th>0</th></tr></thead><tbody><tr><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>0</td><td>0</td><td>0</td></tr><tr><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td>1</td></tr><tr><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td></tr></tbody></table><p>神奇吗？最高位的 0 不见了，变成正数 1 了。</p><h2 id="补码小结"><a href="#补码小结" class="headerlink" title="补码小结"></a>补码小结</h2><p>补码，就是计算机内部有符号数的存储方式，我们不要认为补码是由原码“转换”而来的，补码本来就代表了实际的数字，11111101 == -3，就这样。</p>]]></content>
+        <author>
+            <name><![CDATA[VVBLOG]]></name>
+        </author>
+    </entry>
+    
+    <entry>
+        <id>https://blog.vvzero.com/2021/01/24/Become-a-CA-and-generate-self-signed-certificate/</id>
+        <title><![CDATA[如何成为 CA，并签发自己的证书]]></title>
+        <updated>2021-05-15T06:28:00+08:00</updated>
+        <link href="https://blog.vvzero.com/2021/01/24/Become-a-CA-and-generate-self-signed-certificate/"/>
+        <content type="text/html" src="https://blog.vvzero.com/2021/01/24/Become-a-CA-and-generate-self-signed-certificate/"><![CDATA[<blockquote><p>本文讨论地址 <a href="https://bbs.blog.vvzero.com/d/2-blog">https://bbs.blog.vvzero.com/d/2-blog</a></p></blockquote><blockquote><p>要读懂此文章，你需要了解对称加密、非对称加密的基本概念，并了解证书签发的基本流程。</p></blockquote><h2 id="工具准备"><a href="#工具准备" class="headerlink" title="工具准备"></a>工具准备</h2><ol><li>一台 Linux 主机</li><li>openssl</li></ol><h2 id="创建-CA-的私钥"><a href="#创建-CA-的私钥" class="headerlink" title="创建 CA 的私钥"></a>创建 CA 的私钥</h2><p>很容易理解，CA 也有自己的公钥和私钥。</p><p><code>openssl genrsa -des3 -out CAPrivate.key 2048</code></p><p>这个命令会生成一个私钥 <code>CAPrivate.key</code>，并且必须要填写私钥的密码。可以将 2048 改成 4096。不要奇怪这里只有一个私钥，其实公钥也保存在这个文件里了。</p><h2 id="创建根证书"><a href="#创建根证书" class="headerlink" title="创建根证书"></a>创建根证书</h2><p><code>openssl req -x509 -new -nodes -key CAPrivate.key -sha256 -days 365 -out CAPrivate.pem</code></p><p>根证书，顾名思义，肯定是自签发的。这个证书待会需要安装到你的终端设备里面，不然靠这个根证书签发的其他证书不会被信任。</p><p>这个命令里面需要填写很多信息，按照实际填写就好。</p><p>至此，作为一个简单的 CA，所有的文件都已经齐全了。</p><h2 id="创建待签发证书的私钥"><a href="#创建待签发证书的私钥" class="headerlink" title="创建待签发证书的私钥"></a>创建待签发证书的私钥</h2><p>这个私钥与 CA 无关，是待签发的下一级证书。这一步和下一步可以在另一台机器上完成，然后把文件传给保存 CA 信息的机器就好。</p><p><code>openssl genrsa -out MyPrivate.key 2048</code></p><p>同样，可以把 2048 改成 4096。</p><h2 id="创建-CSR"><a href="#创建-CSR" class="headerlink" title="创建 CSR"></a>创建 CSR</h2><p>可以理解为一个待发送给 CA、为你签发证书的一个请求。</p><p><code>openssl req -new -key MyPrivate.key -out MyRequest.csr</code></p><p>同样，这里需要填写很多信息，需要注意的是 <code>Common Name</code> 这个项目，如果你的证书是给 https 用的，这里就填你的域名。</p><h2 id="使用-CA-的私钥签发证书"><a href="#使用-CA-的私钥签发证书" class="headerlink" title="使用 CA 的私钥签发证书"></a>使用 CA 的私钥签发证书</h2><p><code>openssl x509 -req -in MyRequest.csr -CA CAPrivate.pem -CAkey CAPrivate.key -CAcreateserial -out X509Certificate.crt -days 365 -sha256</code></p><h2 id="试一试刚刚签发的证书"><a href="#试一试刚刚签发的证书" class="headerlink" title="试一试刚刚签发的证书"></a>试一试刚刚签发的证书</h2><ol><li>在待测试终端设备上安装 CA 的根证书 <code>CAPricate.pem</code>，比如 Windows、Android，某些浏览器必须单独安装证书。</li><li>把 <code>MyPrivate.key</code> 和 <code>X509Certificate.crt</code> 作为 HTTPS 服务（比如 Nginx）的私钥和证书，写好配置文件。</li><li>在浏览器里面试试看，应该可以显示小锁，且没有安全警告。</li></ol>]]></content>
+        <author>
+            <name><![CDATA[VVBLOG]]></name>
+        </author>
+    </entry>
+    
+    <entry>
+        <id>https://blog.vvzero.com/2021/04/16/A-little-pitty-for-PlatformIO/</id>
+        <title><![CDATA[对 PlatformIO 有点失望]]></title>
+        <updated>2021-05-15T06:23:28+08:00</updated>
+        <link href="https://blog.vvzero.com/2021/04/16/A-little-pitty-for-PlatformIO/"/>
+        <content type="text/html" src="https://blog.vvzero.com/2021/04/16/A-little-pitty-for-PlatformIO/"><![CDATA[<blockquote><p>本文讨论地址 <a href="https://bbs.blog.vvzero.com/d/10-dis-platformio">https://bbs.blog.vvzero.com/d/10-dis-platformio</a></p></blockquote><blockquote><p>PlatformIO 目前只是玩具，单片机开发还得用 Keil</p></blockquote><p>好久不碰单片机，现在想搞个项目，选型 STM32xxxxxx，想找一套“现代化”的 IDE，于是找到了 PlatformIO。</p><p>刚开始很新奇很激动，VSCode 开发环境很友好，各种单片机型号、库很丰富，而且 STM32 可以直接用 Arduino 开发，各种一键式部署。最主要的是商用免费，差点就选用了。</p><p>但是问题很快就出现了，Arduino 框架对于底层的封装太完美，我甚至不能方便地修改 SPI 或者 I2C 的引脚，而且 GPIO 读写速度也相较使用 CMSIS 慢很多，STM32duino 虽然仍然在发展，但是，我认为还处在“玩具”的阶段。</p><p>如果抛弃 Arduino 框架，去使用 CMSIS ，那也太不方便了，而且 STM32 标准库在 PlatformIO 里面目前居然只支持很少几款芯片（F10x 系列全系不支持）。如果我要用 FreeRTOS，FreeRTOS 官方目前也没有适配 PlatformIO。</p><p>最终还是回到 Keil，花钱的才是最好的。</p>]]></content>
+        <author>
+            <name><![CDATA[VVBLOG]]></name>
+        </author>
+    </entry>
     
     <entry>
         <id>https://blog.zeddyu.info/2021/04/20/tls-poison/</id>
@@ -220,17 +275,6 @@
         <content type="text/html" src="https://miaotony.xyz/2021/03/25/Server_DN42/"><![CDATA[最近几天入了DN42的坑，申请了ASN、IP、域名，搭建了VPN通信隧道，配置好BGP路由，完成了和其他网络的Peer。]]></content>
         <author>
             <name><![CDATA[MiaoTony]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://blog.vvzero.com/2021/04/16/A-little-pitty-for-PlatformIO/</id>
-        <title><![CDATA[对 PlatformIO 有点失望]]></title>
-        <updated>2021-04-16T12:55:51+08:00</updated>
-        <link href="https://blog.vvzero.com/2021/04/16/A-little-pitty-for-PlatformIO/"/>
-        <content type="text/html" src="https://blog.vvzero.com/2021/04/16/A-little-pitty-for-PlatformIO/"><![CDATA[<blockquote><p>PlatformIO 目前只是玩具，单片机开发还得用 Keil</p></blockquote><p>好久不碰单片机，现在想搞个项目，选型 STM32xxxxxx，想找一套“现代化”的 IDE，于是找到了 PlatformIO。</p><p>刚开始很新奇很激动，VSCode 开发环境很友好，各种单片机型号、库很丰富，而且 STM32 可以直接用 Arduino 开发，各种一键式部署。最主要的是商用免费，差点就选用了。</p><p>但是问题很快就出现了，Arduino 框架对于底层的封装太完美，我甚至不能方便地修改 SPI 或者 I2C 的引脚，而且 GPIO 读写速度也相较使用 CMSIS 慢很多，STM32duino 虽然仍然在发展，但是，我认为还处在“玩具”的阶段。</p><p>如果抛弃 Arduino 框架，去使用 CMSIS ，那也太不方便了，而且 STM32 标准库在 PlatformIO 里面目前居然只支持很少几款芯片（F10x 系列全系不支持）。如果我要用 FreeRTOS，FreeRTOS 官方目前也没有适配 PlatformIO。</p><p>最终还是回到 Keil，花钱的才是最好的。</p>]]></content>
-        <author>
-            <name><![CDATA[VVBLOG]]></name>
         </author>
     </entry>
     
@@ -540,17 +584,6 @@
         <content type="text/html" src="https://blog.triplez.cn/posts/macos-gnu-linux-commands/"><![CDATA[macOS 上大部分命令都为 BSD 提供的命令，部分与 GNU Linux 的命令有稍许不同。这在开发的时候经常给我们带来一些额外的麻烦]]></content>
         <author>
             <name><![CDATA[TripleZ’s Blog]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://blog.vvzero.com/2021/01/24/Become-a-CA-and-generate-self-signed-certificate/</id>
-        <title><![CDATA[如何成为 CA，并签发自己的证书]]></title>
-        <updated>2021-03-31T14:12:11+08:00</updated>
-        <link href="https://blog.vvzero.com/2021/01/24/Become-a-CA-and-generate-self-signed-certificate/"/>
-        <content type="text/html" src="https://blog.vvzero.com/2021/01/24/Become-a-CA-and-generate-self-signed-certificate/"><![CDATA[<blockquote><p>要读懂此文章，你需要了解对称加密、非对称加密的基本概念，并了解证书签发的基本流程。</p></blockquote><h2 id="工具准备"><a href="#工具准备" class="headerlink" title="工具准备"></a>工具准备</h2><ol><li>一台 Linux 主机</li><li>openssl</li></ol><h2 id="创建-CA-的私钥"><a href="#创建-CA-的私钥" class="headerlink" title="创建 CA 的私钥"></a>创建 CA 的私钥</h2><p>很容易理解，CA 也有自己的公钥和私钥。</p><p><code>openssl genrsa -des3 -out CAPrivate.key 2048</code></p><p>这个命令会生成一个私钥 <code>CAPrivate.key</code>，并且必须要填写私钥的密码。可以将 2048 改成 4096。不要奇怪这里只有一个私钥，其实公钥也保存在这个文件里了。</p><h2 id="创建根证书"><a href="#创建根证书" class="headerlink" title="创建根证书"></a>创建根证书</h2><p><code>openssl req -x509 -new -nodes -key CAPrivate.key -sha256 -days 365 -out CAPrivate.pem</code></p><p>根证书，顾名思义，肯定是自签发的。这个证书待会需要安装到你的终端设备里面，不然靠这个根证书签发的其他证书不会被信任。</p><p>这个命令里面需要填写很多信息，按照实际填写就好。</p><p>至此，作为一个简单的 CA，所有的文件都已经齐全了。</p><h2 id="创建待签发证书的私钥"><a href="#创建待签发证书的私钥" class="headerlink" title="创建待签发证书的私钥"></a>创建待签发证书的私钥</h2><p>这个私钥与 CA 无关，是待签发的下一级证书。这一步和下一步可以在另一台机器上完成，然后把文件传给保存 CA 信息的机器就好。</p><p><code>openssl genrsa -out MyPrivate.key 2048</code></p><p>同样，可以把 2048 改成 4096。</p><h2 id="创建-CSR"><a href="#创建-CSR" class="headerlink" title="创建 CSR"></a>创建 CSR</h2><p>可以理解为一个待发送给 CA、为你签发证书的一个请求。</p><p><code>openssl req -new -key MyPrivate.key -out MyRequest.csr</code></p><p>同样，这里需要填写很多信息，需要注意的是 <code>Common Name</code> 这个项目，如果你的证书是给 https 用的，这里就填你的域名。</p><h2 id="使用-CA-的私钥签发证书"><a href="#使用-CA-的私钥签发证书" class="headerlink" title="使用 CA 的私钥签发证书"></a>使用 CA 的私钥签发证书</h2><p><code>openssl x509 -req -in MyRequest.csr -CA CAPrivate.pem -CAkey CAPrivate.key -CAcreateserial -out X509Certificate.crt -days 365 -sha256</code></p><h2 id="试一试刚刚签发的证书"><a href="#试一试刚刚签发的证书" class="headerlink" title="试一试刚刚签发的证书"></a>试一试刚刚签发的证书</h2><ol><li>在待测试终端设备上安装 CA 的根证书 <code>CAPricate.pem</code>，比如 Windows、Android，某些浏览器必须单独安装证书。</li><li>把 <code>MyPrivate.key</code> 和 <code>X509Certificate.crt</code> 作为 HTTPS 服务（比如 Nginx）的私钥和证书，写好配置文件。</li><li>在浏览器里面试试看，应该可以显示小锁，且没有安全警告。</li></ol>]]></content>
-        <author>
-            <name><![CDATA[VVBLOG]]></name>
         </author>
     </entry>
     
@@ -1300,39 +1333,6 @@ gu install --jvm llvm-toolchain</pre>
         <content type="text/html" src="https://blog.stdioa.com/2021/02/alpine-time-call/"><![CDATA[<p>水一篇文章，主要用来告诫自己认真看文档。🌚</p>]]></content>
         <author>
             <name><![CDATA[Stdio’s Blog]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://blog.vvzero.com/2021/02/14/we-are-engaged/</id>
-        <title><![CDATA[我们订婚了 We are engaged!]]></title>
-        <updated>2021-02-17T12:52:41+08:00</updated>
-        <link href="https://blog.vvzero.com/2021/02/14/we-are-engaged/"/>
-        <content type="text/html" src="https://blog.vvzero.com/2021/02/14/we-are-engaged/"><![CDATA[<p>2021年2月14日，情人节，农历正月初三，玲玲与瑾瑾喜订良缘。</p><p>互联网是有记忆的，在此，我就以计算机为担保，依网络见证！</p>]]></content>
-        <author>
-            <name><![CDATA[VVBLOG]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://blog.vvzero.com/2020/11/18/May-be-I-know-why-use-complement/</id>
-        <title><![CDATA[我终于知道了补码的意义]]></title>
-        <updated>2021-02-17T12:52:41+08:00</updated>
-        <link href="https://blog.vvzero.com/2020/11/18/May-be-I-know-why-use-complement/"/>
-        <content type="text/html" src="https://blog.vvzero.com/2020/11/18/May-be-I-know-why-use-complement/"><![CDATA[<blockquote><p>本文供初学者学习，供大佬批判。</p></blockquote><h2 id="补码背景"><a href="#补码背景" class="headerlink" title="补码背景"></a>补码背景</h2><p>很久很久以前，当我参加 NOIP（信息学奥林匹克竞赛）的时候，老师是这么讲补码的：</p><blockquote><p>int 型数据的最高位是符号位，符号位为 0 就代表这是正数，为 1 就是负数。但是，+0 和 -0 理应是同一个数，但在二进制中却表示成了两个不同的数（以 8 位为例，二进制表示）： 00000000 和 10000000。所以，我们引入了补码，补码就是，对负数而言，符号位不变，其他位取反，然后再加 1。于是， -0 的补码就是 10000000 -&gt; 11111111 -&gt; 00000000 与 +0 一致了。</p></blockquote><h2 id="补码的意义"><a href="#补码的意义" class="headerlink" title="补码的意义"></a>补码的意义</h2><p>其实当时我就该意识到，仅仅为了 0 这一个数便创建了“补码”这个概念，未免太浪费了。我最近看了 <em>CS: APP</em> 这本书，才进一步理解了补码。</p><p>补码，就是为有符号整数而创建的概念。对于无符号整数，是不存在“补码”的概念的。我们先看一个无符号数 00100101，它是怎么转换成十进制的？加权求和，<code>0×2^7+0×2^6+1×2^5+0×2^4+0×2^3+1×2^2+0×2^1+1×2^0=37</code>；无符号数 10000011，<code>1×2^7+0×2^6+0×2^5+0×2^4+0×2^3+0×2^2+1×2^1+1×2^0=131</code>。</p><p>对于有符号数呢？假如我们不用补码，那么有符号数 10000011，就是 <code>-(0×2^6+0×2^5+0×2^4+0×2^3+0×2^2+1×2^1+1×2^0)=-3</code>。人这么算起来是挺舒服，但是计算机会很难受，凭什么我最高位的权值没了？只能做符号？</p><p>然后我们试试补码。10000011 的补码是 11111101，如何用补码求它的十进制呢？其实这跟无符号数是一样的，只不过，最高位的权值，不是 2^7，而是 -2^7。求值：<code>1×(-2^7)+1×2^6+1×2^5+1×2^4+1×2^3+1×2^2+0×2^1+1×2^0=-3</code>，是不是很神奇？</p><p>对于正数而言，就更简单了，与无符号数一致。</p><h2 id="补码再探"><a href="#补码再探" class="headerlink" title="补码再探"></a>补码再探</h2><p>计算机只能做加法（不是），所以，我们看看用补码做加法，有什么好处。</p><p>先计算 -13+10 吧，很简单的二进制竖式加法：</p><table><thead><tr><th>7</th><th>6</th><th>5</th><th>4</th><th>3</th><th>2</th><th>1</th><th>0</th></tr></thead><tbody><tr><td>1</td><td>1</td><td>1</td><td>1</td><td>0</td><td>0</td><td>1</td><td>1</td></tr><tr><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>1</td><td>0</td></tr><tr><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>0</td><td>1</td></tr></tbody></table><p>11111101 即为 -3 的补码。</p><p>再算一个，-8+9：</p><table><thead><tr><th>7</th><th>6</th><th>5</th><th>4</th><th>3</th><th>2</th><th>1</th><th>0</th></tr></thead><tbody><tr><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>0</td><td>0</td><td>0</td></tr><tr><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td>1</td></tr><tr><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td></tr></tbody></table><p>神奇吗？最高位的 0 不见了，变成正数 1 了。</p><h2 id="补码小结"><a href="#补码小结" class="headerlink" title="补码小结"></a>补码小结</h2><p>补码，就是计算机内部有符号数的存储方式，我们不要认为补码是由原码“转换”而来的，补码本来就代表了实际的数字，11111101 == -3，就这样。</p>]]></content>
-        <author>
-            <name><![CDATA[VVBLOG]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://blog.vvzero.com/2020/04/28/use-virtual-machine-to-bypass-windows-samba-port-limit/</id>
-        <title><![CDATA[使用虚拟机绕过 Windows Samba 客户端端口限制]]></title>
-        <updated>2021-02-17T12:52:41+08:00</updated>
-        <link href="https://blog.vvzero.com/2020/04/28/use-virtual-machine-to-bypass-windows-samba-port-limit/"/>
-        <content type="text/html" src="https://blog.vvzero.com/2020/04/28/use-virtual-machine-to-bypass-windows-samba-port-limit/"><![CDATA[<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>迫于不能浪费宿舍联通宽带的公网 IP，我用树莓派搭建了一个 NAS，使用 Samba 提供访问。但是，由于运营商限制，入站和出站的 139、445 端口都被封禁（对！你不能访问其他机器的 445 端口！），这样做只能让同一个局域网的服务访问。我尝试修改了端口号，把本地的 445 端口映射到公网的其它端口，算是可以给大部分 Samba 客户端使用了（比如安卓手机）。但是，Windows 的 Samba 客户端，并不支持设置端口号（如果在文件管理器地址栏输入 <code>\\a.b.c.d:xxx</code> 将会被认为是 WebDAV 协议）。</p><p>网上某些教程说，在 Windows 本地设置端口转发，把访问本机 445 端口的流量转发至你的 Samba 服务器端口。但是，这样做需要关闭 Windows 自己的 Samba 服务器，会导致网络共享、网络打印机等很多功能无法使用，导致莫名其妙的问题，所以不推荐。</p><p>但是可以换个思路。</p><h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>既然不能使用本机（127.0.0.1）做转发，那么为什么不使用本地网络中其他的机器进行数据转发呢？一开始我想在本地网络中加一个树莓派之类的小主机，但觉得这样太累赘了。虚拟机也是独立的机器，我觉得一样有效。</p><p>所以，只要在虚拟机里面装一个反向代理应用（Nginx），把发往虚拟机 445 端口的流量转发到 Samba 服务器，然后使用 Windows Samba 客户端访问这个虚拟机，就等于访问 Samba 服务器。</p><h2 id="实践"><a href="#实践" class="headerlink" title="实践"></a>实践</h2><p>这里，我使用了 Windows Hyper V，创建了 Ubuntu 20.04 Server 虚拟机（直接下载官方 ISO），然后使用默认交换机作为虚拟机的网络。</p><img src="https://img.vvzero.com/blog/ih/2020/04/28/2416a9e0b66ec.png" alt="Snipaste_2020-04-28_14-07-57.png" style="zoom:33%;" /><p>启动后，安装系统，然后除了更新镜像源、安装 Nginx，什么都不用做。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo apt install nginx</span><br></pre></td></tr></table></figure><p>装好 Nginx 后，修改配置文件：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim &#x2F;etc&#x2F;nginx&#x2F;nginx.conf</span><br></pre></td></tr></table></figure><p>添加一个 stream 模块，大致像下面：</p><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">http</span> &#123;</span><br><span class="line">    ......</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="section">stream</span> &#123;</span><br><span class="line">    <span class="section">server</span> &#123;</span><br><span class="line">        <span class="attribute">listen</span> <span class="number">445</span>;</span><br><span class="line">        </span><br><span class="line">        // 你的 NAS 地址</span><br><span class="line">        <span class="attribute">proxy_pass</span> mynas.example.com:<span class="number">12345</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>然后重启 Nginx：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo nginx -s reload</span><br></pre></td></tr></table></figure><p>转发的模块就做好了。</p><p>然后，再在 Windows 中打开 <code>\\&lt;虚拟机的ip&gt;\&lt;samba 路径（可选）&gt;</code> 就完成了。虚拟机 ip 可以在虚拟机里面用 ifconfig 命令查看。</p><h2 id="后续"><a href="#后续" class="headerlink" title="后续"></a>后续</h2><p>也许可以用 docker 实现，但我还没想好怎么搞。</p>]]></content>
-        <author>
-            <name><![CDATA[VVBLOG]]></name>
         </author>
     </entry>
     
