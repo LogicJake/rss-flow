@@ -3,12 +3,111 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2021-05-17T12:22:14+08:00</updated>
+    <updated>2021-05-17T18:30:02+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
     </author>
     
+    
+    <entry>
+        <id>https://www.noisyfox.io/natj-memory-management.html</id>
+        <title><![CDATA[A Brief Explanation of Memory Management in NatJ]]></title>
+        <updated>2021-05-17T14:15:50+08:00</updated>
+        <link href="https://www.noisyfox.io/natj-memory-management.html"/>
+        <content type="text/html" src="https://www.noisyfox.io/natj-memory-management.html"><![CDATA[<p><a href="https://github.com/multi-os-engine/moe-natj" target="_blank" rel="noreferrer noopener">NatJ</a> is the Java library used by MOE for interoperating with native APIs, such as creating Java bindings of Objective-C classes and calling C APIs directly in Java without the need of writing wrappers in JNI by your own. One critical problem NatJ needs to handle is the difference in the way Java and native APIs manage memory: Java uses GC, while Objective-C uses ARC, and C requires manual memory management by calling <code>free()</code> explicitly.</p>
+
+
+
+<h2>C</h2>
+
+
+
+<p>When interoperating with C APIs, the rules are simple:</p>
+
+
+
+<ul><li>When the native object (anything you allocate with <code>malloc</code> etc.) has the same lifecycle as the corresponding Java representative object (<code><a href="https://github.com/multi-os-engine/moe-natj/blob/3ebc36fa4da160bf93b018686ee3ca5076ad61ee/src/main/java/org/moe/natj/general/Pointer.java" target="_blank" rel="noreferrer noopener">org.moe.natj.general.Pointer</a></code>), i.e., the native object is OWNED by your Java code, then as soon as the <code>Pointer</code> instance is GC-ed, the native memory will be <code>free()</code>-ed automatically (by the <code><a href="https://github.com/multi-os-engine/moe-natj/blob/3ebc36fa4da160bf93b018686ee3ca5076ad61ee/src/main/java/org/moe/natj/c/CRuntime.java#L120-L130" target="_blank" rel="noreferrer noopener">CRuntime.strongReleaser</a></code>).</li><li>When the native object is not owned by the Java side, then NatJ won&#8217;t do anything for you. You need to free it by yourself when appropriate.</li></ul>
+
+
+
+<p>These two rules correspond to the <code>owned</code> parameter of the <a href="https://github.com/multi-os-engine/moe-natj/blob/3ebc36fa4da160bf93b018686ee3ca5076ad61ee/src/main/java/org/moe/natj/c/CRuntime.java#L143-L145" target="_blank" rel="noreferrer noopener"><code>CRuntime.createStrongPointer</code> method</a>.</p>
+
+
+
+<h2>Objective-C</h2>
+
+
+
+<p>Objective-C uses ARC. Every OC object has a reference counter. The object will be deallocated as soon as the reference counter reaches 0. This creates several restrictions when using OC objects in Java world (and vice versa):</p>
+
+
+
+<ol id="objc-restriction"><li>When a Java instance is passed to native side by mapping to an OC object (i.e., a Java object of the <a href="https://github.com/multi-os-engine/moe-natj/blob/3ebc36fa4da160bf93b018686ee3ca5076ad61ee/src/main/java/org/moe/natj/objc/ObjCObject.java#L31-L33" target="_blank" rel="noreferrer noopener">hybrid or inherited mode</a>), and that OC object is retained on the native side (e.g. the <code>retain</code> function is called on this object), the Java GC should not attempt to free that object.</li><li>When a Java representative object is still used by the Java code (i.e., the object has not been finalized by GC thread), the corresponding native object should not be deallocated by ARC (i.e., the reference count should not reach 0).</li></ol>
+
+
+
+<p>NatJ has two major different types of relationships between Java object and OC object, which can be found <a href="https://github.com/multi-os-engine/moe-natj/blob/3ebc36fa4da160bf93b018686ee3ca5076ad61ee/src/main/java/org/moe/natj/objc/ObjCObject.java#L29-L38" target="_blank" rel="noreferrer noopener">here</a>, based on whether the Java object stores any extra state:</p>
+
+
+
+<ol><li>A <strong>Binding</strong> class, which simply represents an existing Objective-C object, with ALL of the states store in the OC object, and ALL methods are implemented on the native side;</li><li>A class which stores part of (or all) the states in Java object, and/or implement part of (or all) the methods in Java, which then can be divided further into two types:<ul><li>An <strong>Inherited</strong> class, which ALL states are stored in the Java object, and ALL methods are implemented in Java;</li><li>A <strong>Hybrid</strong> class, which sits in between.</li></ul></li></ol>
+
+
+
+<h3>Binding Class</h3>
+
+
+
+<p>The reason of categorizing them into 2 major types is whether they are affected by the <a href="#objc-restriction">restriction 1</a>.</p>
+
+
+
+<p>When the states are stored purely on the native side, there is no need of keeping a permanent 1-to-1 mapping between the native object and the Java object. and the life span of the Java object can also be shorter than the native object. In other word, you can have multiple Java objects that point to the same native object, and those Java bindings can be GC-ed at anytime BEFORE the native object is deallocated.</p>
+
+
+
+<p>For these reasons, a Binding class works similar to ARC: when a binding object is created, the corresponding native object will be <a href="https://github.com/multi-os-engine/moe-natj/blob/3ebc36fa4da160bf93b018686ee3ca5076ad61ee/src/main/java/org/moe/natj/objc/map/ObjCObjectMapper.java#L104" target="_blank" rel="noreferrer noopener">retained</a> (i.e., reference count + 1), and when the binding object is finalized by GC, the corresponding native object will be <a href="https://github.com/multi-os-engine/moe-natj/blob/3ebc36fa4da160bf93b018686ee3ca5076ad61ee/src/main/java/org/moe/natj/objc/map/ObjCObjectMapper.java#L83" target="_blank" rel="noreferrer noopener">released</a>, thus guarantees the <a href="#objc-restriction">restriction 2</a>.</p>
+
+
+
+<h3>Inherited &amp; Hybrid Class</h3>
+
+
+
+<p>On the other hand, for an inherited/hybrid class, it&#8217;s important to make sure the Java object has the same lifetime as the native object.</p>
+
+
+
+<p>To meet restriction 1, NatJ needs a way of telling if the native object is held (retained) by any native code. Normally when an OC object is now held by anything, it&#8217;s reference count will be 0 and that&#8217;s when this object is deallocated. </p>
+
+
+
+<p>However this violates restriction 2 as the corresponding Java object has not been freed by GC yet. NatJ does a clever trick: when the OC object is created, NatJ <a href="https://github.com/multi-os-engine/moe-natj/blob/3ebc36fa4da160bf93b018686ee3ca5076ad61ee/src/main/native/natj/ObjCImplementations.mm#L112" target="_blank" rel="noreferrer noopener">immediately calls <code>retain</code> on it</a>, then use this object normally. Now whenever the reference count reaches 1 instead of 0, we know this object is not held by anything, other than the initial <code>retain</code> by NatJ. And when the Java object is finalized, NatJ will call the final <code>release</code> on that to free it.</p>
+
+
+
+<p>The problem now is: how to stop the Java object been freed by GC when the reference count is greater than 1, and how to allow it when the reference count reaches 1. The answer is simple: when the reference count <a href="https://github.com/multi-os-engine/moe-natj/blob/3ebc36fa4da160bf93b018686ee3ca5076ad61ee/src/main/native/natj/ObjCImplementations.mm#L167-L170" target="_blank" rel="noreferrer noopener">is greater than 1</a>, the corresponding Java object will be <a href="https://github.com/multi-os-engine/moe-natj/blob/3ebc36fa4da160bf93b018686ee3ca5076ad61ee/src/main/native/natj/ObjCImplementations.mm#L167-L170" target="_blank" rel="noreferrer noopener">stored in a global static map</a> (the <a href="https://github.com/multi-os-engine/moe-natj/blob/3ebc36fa4da160bf93b018686ee3ca5076ad61ee/src/main/java/org/moe/natj/general/NatJ.java#L555" target="_blank" rel="noreferrer noopener">strong reference map</a>), so it will never be released by GC; when the reference count <a href="https://github.com/multi-os-engine/moe-natj/blob/3ebc36fa4da160bf93b018686ee3ca5076ad61ee/src/main/native/natj/ObjCImplementations.mm#L204-L208" target="_blank" rel="noreferrer noopener">reaches 1</a>, the Java object is <a href="https://github.com/multi-os-engine/moe-natj/blob/3ebc36fa4da160bf93b018686ee3ca5076ad61ee/src/main/native/natj/ObjCInstanceContainer.mm#L335-L337" target="_blank" rel="noreferrer noopener">removed from that map</a> (and added into another map with WeakReference, the <a href="https://github.com/multi-os-engine/moe-natj/blob/3ebc36fa4da160bf93b018686ee3ca5076ad61ee/src/main/java/org/moe/natj/general/NatJ.java#L604-L605" target="_blank" rel="noreferrer noopener">weak reference map</a>), thus allows GC to do its work.</p>
+
+
+
+<p></p>
+<p><a rel="nofollow" href="https://www.noisyfox.io/natj-memory-management.html">A Brief Explanation of Memory Management in NatJ</a>，首发于<a rel="nofollow" href="https://www.noisyfox.io">狐狸的小小窝</a>。</p>]]></content>
+        <author>
+            <name><![CDATA[狐狸的小小窝]]></name>
+        </author>
+    </entry>
+    
+    <entry>
+        <id>https://miaotony.xyz/2021/05/17/CTF_2021NUAACTF_EasyXSS/</id>
+        <title><![CDATA[CTF | 2021 NUAACTF Easy_XSS 复现]]></title>
+        <updated>2021-05-17T13:27:50+08:00</updated>
+        <link href="https://miaotony.xyz/2021/05/17/CTF_2021NUAACTF_EasyXSS/"/>
+        <content type="text/html" src="https://miaotony.xyz/2021/05/17/CTF_2021NUAACTF_EasyXSS/"><![CDATA[在NUAACTF 2021中，有一道XSS相关的题目，主要涉及XSS绕过、PHP代码审计、文件上传绕过，难度其实还好。最近摸鱼，就来复现一下吧。]]></content>
+        <author>
+            <name><![CDATA[MiaoTony]]></name>
+        </author>
+    </entry>
     
     <entry>
         <id>https://blog.vvzero.com/2021/02/14/we-are-engaged/</id>
@@ -262,17 +361,6 @@
         <updated>2021-04-19T13:30:17+08:00</updated>
         <link href="https://miaotony.xyz/2021/04/15/CTF_2021MRCTF/"/>
         <content type="text/html" src="https://miaotony.xyz/2021/04/15/CTF_2021MRCTF/"><![CDATA[前几天看北邮天璇Merak战队整了个招新赛，喵喵也来随便玩玩好了！题目还是比较顶的，巨大多“签到”题目，然而喵喵并不能check in...]]></content>
-        <author>
-            <name><![CDATA[MiaoTony]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://miaotony.xyz/2021/03/25/Server_DN42/</id>
-        <title><![CDATA[DN42 | 入坑 DN42 实验网络]]></title>
-        <updated>2021-04-17T17:45:33+08:00</updated>
-        <link href="https://miaotony.xyz/2021/03/25/Server_DN42/"/>
-        <content type="text/html" src="https://miaotony.xyz/2021/03/25/Server_DN42/"><![CDATA[最近几天入了DN42的坑，申请了ASN、IP、域名，搭建了VPN通信隧道，配置好BGP路由，完成了和其他网络的Peer。]]></content>
         <author>
             <name><![CDATA[MiaoTony]]></name>
         </author>
@@ -2891,188 +2979,6 @@ maxsize 100M # 重要！活动日志的最大尺寸，超过该尺寸则强制�
 <h1>总结</h1>
 <p>不限制日志体积真是坑啊！</p>
 <p><a rel="nofollow" href="https://www.noisyfox.io/logrotate.html">Logrotate 日志滚动 解决日志占用空间过大</a>，首发于<a rel="nofollow" href="https://www.noisyfox.io">狐狸的小小窝</a>。</p>]]></content>
-        <author>
-            <name><![CDATA[狐狸的小小窝]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://www.noisyfox.io/cecpq1-nginx-boringssl.html</id>
-        <title><![CDATA[Use CECPQ1 On Your Website with Nginx & BoringSSL]]></title>
-        <updated>2016-09-13T06:38:13+08:00</updated>
-        <link href="https://www.noisyfox.io/cecpq1-nginx-boringssl.html"/>
-        <content type="text/html" src="https://www.noisyfox.io/cecpq1-nginx-boringssl.html"><![CDATA[<h2>Deprecated / 已弃用</h2>
-<p>In 2016, the experimental use in Chrome ended and it was planned to disable CECPQ1 in a later Chrome update.</p>
-<p>CECPQ1的实验已经结束，目前的chrome stable已经移除了对其的支持。</p>
-<hr />
-<h2>What is CECPQ1</h2>
-<p>CECPQ1 是谷歌提出的一种“<a href="https://en.wikipedia.org/wiki/Post-quantum_cryptography" target="_blank" rel="noopener noreferrer">后量子时代</a>”的密钥交换算法。</p>
-<p>所谓的后量子时代算法，大意是说该算法难以被将来可能出现的量子计算机轻易破解。<br />
-而目前常用的非对称加密/密钥交换算法的安全性大多依赖于大数分解以及逆推椭圆曲线的难度。而这些问题可能对于量子计算机来说可以轻松解决。故而需要一种新的加密原理来对抗量子计算机的威胁。</p>
-<p>当然将来能不能制造出大型的量子计算机并破解现有的加密算法依旧是个未知数。<a href="https://community.letsencrypt.org/t/google-is-experimenting-with-post-quantum-crypto-for-tls/17720" target="_blank" rel="noopener noreferrer">不过谷歌在前段时间开始已经在自己的 chrome 以及服务器上启用了该密钥交换算法</a>，使用 Chrome 54+ 访问谷歌的服务，可以看到类似下图的结果：<br />
-<a href="https://www.noisyfox.cn/wp-content/uploads/2016/09/QQ截图20160913150853.png"><img loading="lazy" class="aligncenter size-full wp-image-416" src="https://www.noisyfox.cn/wp-content/uploads/2016/09/QQ截图20160913150853.png" alt="CECPQ1 on Google" width="642" height="401" /></a></p>
-<p>其中的“CECPQ1_ECDSA”即表明了其采用了 CECPQ1 密钥交换 + ECDSA 签名算法。</p>
-<p>当然纯粹是好玩，我也装修了一下我的小窝，让它也支持了这种厉害的算法~<br />
-<a href="https://www.noisyfox.cn/wp-content/uploads/2016/09/QQ截图20160913151547.png"><img loading="lazy" class="aligncenter size-full wp-image-418" src="https://www.noisyfox.cn/wp-content/uploads/2016/09/QQ截图20160913151547.png" alt="CECPQ1 on Noisyfox" width="642" height="401" /></a></p>
-<p>不过由于我的证书是 RSA 签名的，故图中采用的是“CECPQ1_RSA”而不是 ECDSA。</p>
-<p>如果你也想让自己的网站支持这种算法，那么就跟着狐狸我一步一步来配置你的网站吧~</p>
-<hr />
-<h2>教程环境</h2>
-<ul>
-<li>Ubuntu 14.04.4 LTS</li>
-<li>nginx-1.10.1</li>
-<li>BoringSSL</li>
-</ul>
-<p>由于目前仅有 BoringSSL 支持 CECPQ1 算法，故我们需要自行采用 BoringSSL 来编译 nginx。</p>
-<p>对于 Debian 用户，以及 Ubuntu 14.04 之前的用户，可以采用<a href="https://github.com/ajhaydock/BoringNginx" target="_blank" rel="noopener noreferrer">BoringNginx</a>项目来一键编译、安装。</p>
-<p>对于 Ubuntu 14.04 及以后的用户，由于 Ubuntu 采用了 Systemd 替换了 upstart，故 BoringNginx 脚本会出问题。同时 BoringNginx 要求脚本必须在非 root 用户下执行，这对于大部分习惯用 root 用户来配置服务器的用户来说十分不便，故需采用手动编译、安装。</p>
-<hr />
-<h2>编译 BoringSSL &amp; Nginx</h2>
-<p><em>注：该部分教程参考了 Jerry Qu 《<a href="https://imququ.com/post/optimize-ssl-ciphers-with-boringssl.html" target="_blank" rel="noopener noreferrer">使用 BoringSSL 优化 HTTPS 加密算法选择</a>》一文，在此表示感谢。</em></p>
-<p>首先建立一个文件夹，并下载 Nginx 和 BoringSSL 源码。</p>
-<p>Nginx 从 1.7.4 开始支持 BoringSSL，这里我使用的是最新的稳定版 Nginx：</p>
-<pre class="brush: bash; title: ; notranslate">
-mkdir nginx &amp;&amp; cd nginx
-wget http://nginx.org/download/nginx-1.10.1.tar.gz
-tar xzf nginx-1.10.1.tar.gz
-
-git clone https://boringssl.googlesource.com/boringssl
-</pre>
-<p>现在你的 nginx 文件夹里应该会有这两个子目录：</p>
-<pre class="brush: bash; title: ; notranslate">
-boringssl/
-nginx-1.10.1/
-</pre>
-<p>接下来还需要做一些准备工作：</p>
-<pre class="brush: bash; title: ; notranslate">
-# 安装编译 BoringSSL 所需的 Golang 和 cmake
-sudo apt-get install golang cmake
-
-# 安装编译 Nginx 所需的工具和依赖库
-sudo apt-get install build-essential libpcre3 libpcre3-dev zlib1g-dev
-
-# 忽略编译过程中的 Warning（不加这个，编到一半会因为 Warning 太多无法继续）
-export CFLAGS=&quot;-Wno-error&quot;
-</pre>
-<p>随后编译 BoringSSL：</p>
-<pre class="brush: bash; title: ; notranslate">
-# 进入 BoringSSL 源码根目录
-cd boringssl
-
-# 创建 build 目录并编译，完成后回到 BoringSSL 源码根目录
-mkdir build &amp;&amp; cd build &amp;&amp; cmake ../ &amp;&amp; make &amp;&amp; cd ../
-
-# 创建 .openssl 目录，并将库文件和编译后的文件放进去
-mkdir -p .openssl/lib &amp;&amp; cd .openssl &amp;&amp; ln -s ../include . &amp;&amp; cd ../
-cp build/crypto/libcrypto.a build/ssl/libssl.a .openssl/lib
-
-cd ../
-</pre>
-<p>然后就可以用 BoringSSL 来编译 Nginx 了：</p>
-<pre class="brush: bash; title: ; notranslate">
-# 进入 Nginx 源码根目录
-cd nginx-1.10.1
-
-# 指定使用 BoringSSL 作为 SSL 库
-# 这里的参数比原文要多了许多，是为了兼容采用 apt 安装的 Nginx 的配置
-./configure --with-openssl=../boringssl \
---prefix=/usr/share/nginx \
---sbin-path=/usr/sbin/nginx \
---conf-path=/etc/nginx/nginx.conf \
---error-log-path=/var/log/nginx/error.log \
---http-log-path=/var/log/nginx/access.log \
---pid-path=/run/nginx.pid \
---lock-path=/run/lock/subsys/nginx \
---user=www-data \
---group=www-data \
---with-threads \
---with-file-aio \
---with-ipv6 \
---with-http_ssl_module \
---with-http_v2_module \
---with-http_realip_module \
---with-http_gunzip_module \
---with-http_gzip_static_module \
---with-http_slice_module \
---with-http_stub_status_module \
---without-select_module \
---without-poll_module \
---without-mail_pop3_module \
---without-mail_imap_module \
---without-mail_smtp_module
-
-# 修改时间，避免 Nginx 再次编译 BoringSSL
-touch ../boringssl/.openssl/include/openssl/ssl.h
-</pre>
-<p>然后就可以开始编译 Nginx 了， 直接执行：</p>
-<pre class="brush: bash; title: ; notranslate">
-make
-</pre>
-<p>一切正常的话，即可在 objs 目录里找到编译好的 Nginx。<br />
-执行：</p>
-<pre class="brush: bash; title: ; notranslate">
-cd objs
-./nginx -V
-</pre>
-<p>应该可以看到类似这样的输出：</p>
-<pre class="brush: bash; title: ; notranslate">
-nginx version: nginx/1.10.1
-built with OpenSSL 1.0.2 (compatible; BoringSSL) (running with BoringSSL)
-TLS SNI support enabled
-configure arguments: --with-openssl=../boringssl --prefix=/usr/share/nginx --sbin-path=/usr/sbin/nginx --conf-path=/etc/nginx/nginx.conf --error-log-path=/var/log/nginx/error.log --http-log-path=/var/log/nginx/access.log --pid-path=/run/nginx.pid --lock-path=/run/lock/subsys/nginx --user=www-data --group=www-data --with-threads --with-file-aio --with-ipv6 --with-http_ssl_module --with-http_v2_module --with-http_realip_module --with-http_gunzip_module --with-http_gzip_static_module --with-http_slice_module --with-http_stub_status_module --without-select_module --without-poll_module --without-mail_pop3_module --without-mail_imap_module --without-mail_smtp_module
-</pre>
-<p>表明编译成功了。下面我们要将该 Nginx 安装至系统中。</p>
-<hr />
-<h2>安装 Nginx with BoringSSL</h2>
-<p>由于配置服务需要一些额外的知识，因此为了简单起见，我采用了 <em>使用 apt 安装原版 Nginx 然后替换可执行文件</em> 的方式来简化安装和服务的配置。这也是为什么在上文中我建议使用和 apt 安装的 Nginx 相仿的配置来编译自己的 Nginx。</p>
-<p>首先用 apt 来安装原版 Nginx：</p>
-<pre class="brush: bash; title: ; notranslate">
-# 从 Ubuntu 16.04 开始系统自带源的 nginx 就是1.10 版本的
-apt-get install nginx
-</pre>
-<p>或者</p>
-<pre class="brush: bash; title: ; notranslate">
-# 先添加 Nginx 官方软件源
-add-apt-repository ppa:nginx/stable
-apt-get update
-apt-get install nginx
-</pre>
-<p>然后替换原版 Nginx 为我们自己编译的版本：</p>
-<pre class="brush: bash; title: ; notranslate">
-# 先停止 Nginx 服务
-service nginx stop
-
-# 备份原版可执行文件
-cp /usr/sbin/nginx  ./nginx.bak
-
-# 替换 Nginx 可执行文件
-cp nginx /usr/sbin/nginx
-
-# 删除 Nginx 默认的 modules， 否则可能启动时报二进制不兼容的错误
-rm /etc/nginx/modules-enabled/*
-</pre>
-<p>这样一来，就成功的将系统中的 Nginx 替换为我们自己编译的版本，同时又保留了原版的服务控制方式，非常方便。</p>
-<hr />
-<h2>配置 Cipher Suite</h2>
-<p>在这里假定你已经知道如何配置 Nginx + SSL 了，如果不会，请百度或者谷歌一下。</p>
-<p>为了启用 CECPQ1 算法，需要配置正确的 Cipher Suit：</p>
-<pre class="brush: plain; title: ; notranslate">
-ssl_ciphers &quot;[CECPQ1-ECDSA-AES256-GCM-SHA384|CECPQ1-ECDSA-CHACHA20-POLY1305-SHA256]:[CECPQ1-RSA-AES256-GCM-SHA384|CECPQ1-RSA-CHACHA20-POLY1305-SHA256]:[ECDHE-ECDSA-AES128-GCM-SHA256|ECDHE-ECDSA-CHACHA20-POLY1305-SHA256]:[ECDHE-RSA-AES128-GCM-SHA256|ECDHE-RSA-CHACHA20-POLY1305-SHA256]:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES128-SHA:ECDHE-ECDSA-AES256-SHA:ECDHE-RSA-AES256-SHA:RSA-AES128-GCM-SHA256:RSA-AES256-GCM-SHA384:RSA-AES128-SHA:RSA-AES256-SHA:RSA-3DES-EDE-SHA&quot;;
-ssl_prefer_server_ciphers on;
-</pre>
-<p>其中最先出现的几个以“CECPQ1”开头的算法就是本文提到的算法。<br />
-关于该 Cipher Suite 的格式和意思，也请参考《<a href="https://imququ.com/post/optimize-ssl-ciphers-with-boringssl.html" target="_blank" rel="noopener noreferrer">使用 BoringSSL 优化 HTTPS 加密算法选择</a>》一文。</p>
-<p>同时我们编译出的 Nginx 是支持 HTTP/2 以及 ALPN 的，在你的配置里写上：</p>
-<pre class="brush: plain; title: ; notranslate">
-listen 443 ssl http2;
-</pre>
-<p>即可启用最新最炫酷的 h2 啦！<br />
-（当然谷歌又弄了个 QUIC 协议，目前不太容易在 Nginx 上实现，残念。）</p>
-<hr />
-<h2> 结束</h2>
-<p>这篇教程到这里就结束啦~如果各位读者老爷发现有什么错误或不当之处，还请回复指正~</p>
-<p>也欢迎各位共同探讨相关技术~</p>
-<p><a rel="nofollow" href="https://www.noisyfox.io/cecpq1-nginx-boringssl.html">Use CECPQ1 On Your Website with Nginx &#038; BoringSSL</a>，首发于<a rel="nofollow" href="https://www.noisyfox.io">狐狸的小小窝</a>。</p>]]></content>
         <author>
             <name><![CDATA[狐狸的小小窝]]></name>
         </author>
