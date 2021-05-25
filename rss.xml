@@ -3,12 +3,23 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2021-05-25T12:23:49+08:00</updated>
+    <updated>2021-05-25T18:41:40+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
     </author>
     
+    
+    <entry>
+        <id>https://miaotony.xyz/2021/05/25/CTF_2021CISCN_preliminary/</id>
+        <title><![CDATA[CTF | 2021 CISCN初赛 Misc WriteUp]]></title>
+        <updated>2021-05-25T16:09:35+08:00</updated>
+        <link href="https://miaotony.xyz/2021/05/25/CTF_2021CISCN_preliminary/"/>
+        <content type="text/html" src="https://miaotony.xyz/2021/05/25/CTF_2021CISCN_preliminary/"><![CDATA[又是一年一度的国赛，连续打24h太难受啦！这里把几道misc题目写一写好了。]]></content>
+        <author>
+            <name><![CDATA[MiaoTony]]></name>
+        </author>
+    </entry>
     
     <entry>
         <id>https://miaotony.xyz/2021/05/24/CTF_2021RedHat/</id>
@@ -637,17 +648,6 @@
 <p>希望大家分享一下自己阅读论文的心得。</p>]]></content>
         <author>
             <name><![CDATA[A2OS 开源社区论坛]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://miaotony.xyz/2021/04/05/CTF_2021HFCTF_internal_system/</id>
-        <title><![CDATA[CTF | 2021 虎符CTF Web internal_system 复现]]></title>
-        <updated>2021-04-05T15:28:02+08:00</updated>
-        <link href="https://miaotony.xyz/2021/04/05/CTF_2021HFCTF_internal_system/"/>
-        <content type="text/html" src="https://miaotony.xyz/2021/04/05/CTF_2021HFCTF_internal_system/"><![CDATA[前几天的虎符CTF的Web中有一道零解的题目，即internal_system，趁着还有兴趣就来复现一下好了。这题巨大多知识点，确实学到了许多……]]></content>
-        <author>
-            <name><![CDATA[MiaoTony]]></name>
         </author>
     </entry>
     
