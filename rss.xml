@@ -3,7 +3,7 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2021-06-05T12:43:08+08:00</updated>
+    <updated>2021-06-05T18:54:32+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
@@ -411,17 +411,6 @@
     </entry>
     
     <entry>
-        <id>https://blog.triplez.cn/posts/welcome-macat/</id>
-        <title><![CDATA[欢迎 Macat ！]]></title>
-        <updated>2021-04-11T10:24:01+08:00</updated>
-        <link href="https://blog.triplez.cn/posts/welcome-macat/"/>
-        <content type="text/html" src="https://blog.triplez.cn/posts/welcome-macat/"><![CDATA[Welcome Macat!]]></content>
-        <author>
-            <name><![CDATA[TripleZ’s Blog]]></name>
-        </author>
-    </entry>
-    
-    <entry>
         <id>https://bbs.a2os.club/d/17-/1</id>
         <title><![CDATA[食堂吃饭有感]]></title>
         <updated>2021-04-07T04:10:34+08:00</updated>
@@ -430,17 +419,6 @@
 现在在外面，一顿抵得上以前两顿</p>]]></content>
         <author>
             <name><![CDATA[A2OS 开源社区论坛]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://blog.triplez.cn/posts/migrate-mendeley-to-zotero/</id>
-        <title><![CDATA[如何从 Mendeley 迁移到 Zotero]]></title>
-        <updated>2021-04-06T14:30:03+08:00</updated>
-        <link href="https://blog.triplez.cn/posts/migrate-mendeley-to-zotero/"/>
-        <content type="text/html" src="https://blog.triplez.cn/posts/migrate-mendeley-to-zotero/"><![CDATA[Mendeley 的手机端已经无法使用，是时候将数据迁移至开源的 Zotero 上了]]></content>
-        <author>
-            <name><![CDATA[TripleZ’s Blog]]></name>
         </author>
     </entry>
     
@@ -665,17 +643,6 @@
     </entry>
     
     <entry>
-        <id>https://blog.triplez.cn/posts/macos-gnu-linux-commands/</id>
-        <title><![CDATA[macOS 上安装 GNU/Linux 的命令]]></title>
-        <updated>2021-03-31T14:51:23+08:00</updated>
-        <link href="https://blog.triplez.cn/posts/macos-gnu-linux-commands/"/>
-        <content type="text/html" src="https://blog.triplez.cn/posts/macos-gnu-linux-commands/"><![CDATA[macOS 上大部分命令都为 BSD 提供的命令，部分与 GNU Linux 的命令有稍许不同。这在开发的时候经常给我们带来一些额外的麻烦]]></content>
-        <author>
-            <name><![CDATA[TripleZ’s Blog]]></name>
-        </author>
-    </entry>
-    
-    <entry>
         <id>https://www.suruifu.com/posts/603</id>
         <title><![CDATA[战战兢兢 如履薄冰]]></title>
         <updated>2021-03-26T17:46:04+08:00</updated>
@@ -683,17 +650,6 @@
         <content type="text/html" src="https://www.suruifu.com/posts/603"><![CDATA[]]></content>
         <author>
             <name><![CDATA[苏瑞辅的个人网站]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://blog.triplez.cn/posts/cf-workers-to-pages/</id>
-        <title><![CDATA[博客迁移记 · 从 Cloudflare Workers 到 Cloudflare Pages]]></title>
-        <updated>2021-03-25T06:34:54+08:00</updated>
-        <link href="https://blog.triplez.cn/posts/cf-workers-to-pages/"/>
-        <content type="text/html" src="https://blog.triplez.cn/posts/cf-workers-to-pages/"><![CDATA[堪称完美的博客发布流程]]></content>
-        <author>
-            <name><![CDATA[TripleZ’s Blog]]></name>
         </author>
     </entry>
     
@@ -739,17 +695,6 @@
 <p>苏瑞辅 2021-03-02 自勉</p>]]></content>
         <author>
             <name><![CDATA[苏瑞辅的个人网站]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://blog.triplez.cn/posts/java-try-catch-finally/</id>
-        <title><![CDATA[Java · try-catch-finally 异常场景总结]]></title>
-        <updated>2021-03-22T12:03:12+08:00</updated>
-        <link href="https://blog.triplez.cn/posts/java-try-catch-finally/"/>
-        <content type="text/html" src="https://blog.triplez.cn/posts/java-try-catch-finally/"><![CDATA[在一些特殊情况下，<code>try-catch-finally</code> 代码的执行顺序变得难以确定。此文为这些可能的特殊情况做了一个简单的整理与总结]]></content>
-        <author>
-            <name><![CDATA[TripleZ’s Blog]]></name>
         </author>
     </entry>
     
