@@ -3,12 +3,40 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2021-06-06T12:43:05+08:00</updated>
+    <updated>2021-06-06T18:55:43+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
     </author>
     
+    
+    <entry>
+        <id>https://www.suruifu.com/posts/632</id>
+        <title><![CDATA[【搞音乐】我也来搞音乐]]></title>
+        <updated>2021-06-06T13:13:05+08:00</updated>
+        <link href="https://www.suruifu.com/posts/632"/>
+        <content type="text/html" src="https://www.suruifu.com/posts/632"><![CDATA[<p>最近工作也很忙，怎么想起来研究一下音乐了呢？</p>
+<p>其一，因为可以忙里偷闲。同样是玩，我更想研究一点不一样的。</p>
+<p>其二，我发现学科之间是存在关联性的，看点别的反而能给自己的工作带来新的启迪。正所谓“他山之石，可以攻玉”。</p>
+<p>其三，我发现音乐是很高级的东西，我也想有所了解。</p>
+<p>其四，最近工作中认识了一位音乐家。</p>
+<p>我现在也没有钢琴，也没有电子琴，也没有任何乐器，也没有接触过音乐，也没有接触过任何乐器。当然，除了之前在前女友家摸过一次钢琴。</p>
+<p>我也不想变得多强，我想能看懂五线谱，能用钢琴弹出来我就心满意足了。不需要多厉害。</p>
+<p>但是我现在什么也没有，我本来想去练琴房研究一下，但是人家说提前预约，所以今天就没有玩成功。但是心里面还是放不下，所以找到了一个网页，这个网页只要会敲键盘就可以发出声音。但是操作起来比较麻烦，一个音阶的还好说，跨音阶的脑子就转不过来。因为你要做一个复杂的键位和电脑键盘的映射。</p>
+<p>我简单试了三个音乐片段，分别是小星星，打靶归来，国际歌。小星星是最简单的，打靶归来，略复杂一点，国际歌就很高级了。这里所说的高级和低级就说的是国际歌涉及到多个音阶之间的跳跃，对我这个初学者来说，用电脑键盘就很麻烦了。</p>
+<p>我把视频上传到了Bilibili，和大家交流学习。</p>
+<p>https://space.bilibili.com/76786111</p>
+<p>顺便说明呀，其实我连简谱的音高都分别不出来，我只是对电脑键盘很熟悉罢了。如果只涉及到一个1234567，没有高音和低音，我用电脑简单可以很轻松地按出来。</p>
+<p>后面我想，我要么弄个电子琴（500块左右吧），要么就去练琴房办个卡（10块钱一个小时）。据说这个行当里面也是存在鄙视链的，说是钢琴比较高级，电子琴比较垃圾。我觉得其实无所谓，这可能就跟编程语言里面互相争哪个语言更好的问题一样，没有什么意义。我认为编程语言没有什么好坏，只要知算法，懂数据结构，这些只是工具。对于钢琴，我猜呀，只要认识乐谱，能够把握节奏，也都能做好，只不过切换的时候需要一个适应的时间罢了。</p>
+<p>另外呢，我也不认识简谱里面的两个连一起下面加个下划线那样的，如果说，三个，两个加个下划线，三个再加个下划线就有点让人不知道该怎么操作了。比如说下面这个。</p>
+<p>图片</p>
+<p><img src="https://s.suruifu.com/www/2021/06/640.png" alt="" /></p>
+<p>谢谢大家，祝大家工作顺利，生活愉快！</p>
+<p>我去搬砖了，大家下期见！</p>]]></content>
+        <author>
+            <name><![CDATA[苏瑞辅的个人网站]]></name>
+        </author>
+    </entry>
     
     <entry>
         <id>https://blog.zeddyu.info/2021/05/19/tls-ctf/</id>
@@ -676,25 +704,6 @@
 </code></pre><p>&#x8FD9;&#x4E09;&#x4E2A; receive &#x65B9;&#x6CD5;&#x7528;&#x4E8E;&#x5F53; publisher &#x72B6;&#x6001;&#x53D8;&#x5316;&#x65F6;&#xFF0C;&#x63A5;&#x6536;&#x53D8;&#x5316;&#x503C;&#x3002;</p><figure class="kg-card kg-image-card"><img src="https://res.craft.do/user/full/cd5767b5-001d-b2bb-2322-53e695067937/doc/C98F9419-83EC-4423-A17E-356E0BA0CB61/4A246AF0-3649-4B41-A618-F85D0C0D4F0C_2" class="kg-image" alt="Combine &#x521D;&#x63A2;" loading="lazy"></figure><p>&#x53EF;&#x4EE5;&#x770B;&#x51FA;&#xFF0C;&#x4E09;&#x79CD;&#x7C7B;&#x578B;&#x7684; receive &#x5206;&#x522B;&#x63A5;&#x6536;&#xFF1A;</p><ul><li>Subscription&#xFF1A;Subscriber &#x6210;&#x529F;&#x8BA2;&#x9605;&#x65F6;&#x6536;&#x5230;&#x7684;&#x6D88;&#x606F;</li><li>Value&#xFF1A;&#x771F;&#x5B9E;&#x7684;&#x6570;&#x636E;</li><li>Completion&#xFF1A;&#x6570;&#x636E;&#x6D41;&#x7EC8;&#x6B62;&#x65F6;&#x7684;&#x6D88;&#x606F;</li></ul><h3 id="operator">Operator</h3><p>&#x64CD;&#x4F5C;&#x7B26;&#x662F; Combine &#x4E2D;&#x4E09;&#x5927;&#x91CD;&#x8981;&#x6982;&#x5FF5;&#x7684;&#x6700;&#x540E;&#x4E00;&#x4E2A;&#xFF0C;&#x901A;&#x8FC7;&#x5404;&#x79CD;&#x64CD;&#x4F5C;&#x7B26;&#xFF0C;&#x53EF;&#x4EE5;&#x5BF9;&#x539F;&#x59CB;&#x6570;&#x636E;&#x6D41;&#x8FDB;&#x884C;&#x5404;&#x79CD;&#x64CD;&#x4F5C;&#xFF0C;&#x53D8;&#x6210;&#x6700;&#x7EC8;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x7684;&#x6837;&#x5B50;&#x3002;&#x6BD4;&#x8F83;&#x5E38;&#x89C1;&#x7684;&#x64CD;&#x4F5C;&#x7B26;&#x6709; map&#x3001;filter &#x7B49;&#x7B49;</p><h2 id="%E5%8F%82%E8%80%83">&#x53C2;&#x8003;</h2><ol><li><a href="https://developer.apple.com/documentation/combine/receiving-and-handling-events-with-combine">Apple Developer Documentation</a></li><li><a href="https://developer.apple.com/videos/play/wwdc2019/722/">Introducing Combine - WWDC 2019 - Videos - Apple Developer</a></li><li><a href="https://www.icodesign.me/posts/swift-combine/">Swift Combine &#x5165;&#x95E8;&#x5BFC;&#x8BFB;</a></li><li><a href="https://gist.github.com/staltz/868e7e9bc2a7b8c1f754">The introduction to Reactive Programming you&apos;ve been missing</a></li></ol>]]></content>
         <author>
             <name><![CDATA[NINJIACODER忍者小屋]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://www.suruifu.com/posts/597</id>
-        <title><![CDATA[怎样孝顺父母呢？]]></title>
-        <updated>2021-03-22T13:19:10+08:00</updated>
-        <link href="https://www.suruifu.com/posts/597"/>
-        <content type="text/html" src="https://www.suruifu.com/posts/597"><![CDATA[<p>唯一无条件对我好的便是我的父母。</p>
-<p>怎么孝敬父母呢？或许有人说多回家看看，或许有人说给爸妈多买点东西。我觉得这些说法都对，但是并没有认识到问题的本质。</p>
-<p>我觉得要想孝敬父母，首先要真正不和父母要钱。这种真正并不是一时的，还有未来很长一段时间的预期。也就是说现在不要钱，明年也不要钱，但是到了买房的时候突然要上一大笔，那也没有真正不和父母要钱。其实在这种情况下，你知道，父母也知道，未来买房的时候你会要上一大笔。只不过父母替你放了一段时间而已。</p>
-<p>那你就拍着大腿说，我牛逼，我就是不跟父母要钱，永远不要。但是当到了那一个时刻，你缺钱，父母有钱的时候，这个永远不要钱就又一次被打破了。</p>
-<p>父母总是无条件支持孩子的，父母潜意识中也在一直攒着钱，就是防止有一天，或者说盼着有一天可以给孩子解一个燃眉之需。</p>
-<p>这近乎是一种对父母的剥削，而其操纵者是这种潜意识中的共识。如何让父母放弃这种潜意识呢？我想这个问题可以等价为让父母知道自己艰苦努力攒钱是没有用的就行了。那什么叫没有用的呢，我想只要你挣的钱远远高出父母挣的钱，他们自然也就不白费这个力气了。</p>
-<p>我呢，针对这个问题，提出一个标准，就叫做<strong>苏瑞辅新时代孝敬标准</strong>吧。当然我现在也没有做到，只是说这是我提出来的。</p>
-<p>只有你的月收入高于父母月收入之和十倍的时候，才可以让父母放弃为你攒钱，才真正摆脱了伪孝，才真正停止了对父母无尽的剥削。</p>
-<p>苏瑞辅 2021-03-02 自勉</p>]]></content>
-        <author>
-            <name><![CDATA[苏瑞辅的个人网站]]></name>
         </author>
     </entry>
     
