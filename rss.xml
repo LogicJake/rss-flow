@@ -3,12 +3,23 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2021-06-07T12:51:44+08:00</updated>
+    <updated>2021-06-07T19:45:09+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
     </author>
     
+    
+    <entry>
+        <id>http://blog.qrzbing.cn/post/2021-ciscn-little-evil/</id>
+        <title><![CDATA[CISCN 2021 Little Evil]]></title>
+        <updated>2021-06-07T12:25:50+08:00</updated>
+        <link href="http://blog.qrzbing.cn/post/2021-ciscn-little-evil/"/>
+        <content type="text/html" src="http://blog.qrzbing.cn/post/2021-ciscn-little-evil/"><![CDATA[<p>对 KLEE 的学习，一些小小的自动化操作。</p>]]></content>
+        <author>
+            <name><![CDATA[QRZ’s Blog]]></name>
+        </author>
+    </entry>
     
     <entry>
         <id>https://www.suruifu.com/posts/632</id>
@@ -237,6 +248,17 @@
     </entry>
     
     <entry>
+        <id>http://blog.qrzbing.cn/post/2021-ciscn/</id>
+        <title><![CDATA[CISCN 2021]]></title>
+        <updated>2021-05-16T07:57:01+08:00</updated>
+        <link href="http://blog.qrzbing.cn/post/2021-ciscn/"/>
+        <content type="text/html" src="http://blog.qrzbing.cn/post/2021-ciscn/"><![CDATA[<p>摸了一小会鱼。</p>]]></content>
+        <author>
+            <name><![CDATA[QRZ’s Blog]]></name>
+        </author>
+    </entry>
+    
+    <entry>
         <id>https://blog.vvzero.com/2021/02/14/we-are-engaged/</id>
         <title><![CDATA[我们订婚了 We are engaged!]]></title>
         <updated>2021-05-15T06:32:01+08:00</updated>
@@ -358,6 +380,17 @@
 <p>那为什么我们电脑显示器这么稳定呢？我想一方面是测试做得够，掌握了一点这种概率性的规律（电子云图）。另一方面是性能很高，冗余量很大。</p>]]></content>
         <author>
             <name><![CDATA[苏瑞辅的个人网站]]></name>
+        </author>
+    </entry>
+    
+    <entry>
+        <id>http://blog.qrzbing.cn/about/</id>
+        <title><![CDATA[About]]></title>
+        <updated>2021-05-02T07:33:00+08:00</updated>
+        <link href="http://blog.qrzbing.cn/about/"/>
+        <content type="text/html" src="http://blog.qrzbing.cn/about/"><![CDATA[关于我 一条咸鱼，努力提升自己中 目前方向：系统安全，研究逆向、Fuzzing。Rust 学习中。 爱好：业余无线电，游泳。 Call Sign: BG2EQV history 2021-05-02: 更换主题为 hugo-theme-even 2021-03-30:]]></content>
+        <author>
+            <name><![CDATA[QRZ’s Blog]]></name>
         </author>
     </entry>
     
@@ -1489,6 +1522,17 @@ gu install --jvm llvm-toolchain</pre>
     </entry>
     
     <entry>
+        <id>http://blog.qrzbing.cn/post/data-infector/</id>
+        <title><![CDATA[data 段代码注入]]></title>
+        <updated>2020-04-18T21:29:16+08:00</updated>
+        <link href="http://blog.qrzbing.cn/post/data-infector/"/>
+        <content type="text/html" src="http://blog.qrzbing.cn/post/data-infector/"><![CDATA[<p>我们可以通过向 data 段劫持代码并将程序的运行流劫持到这里实现我们希望的功能（包括执行恶意代码、软件保护等）。这一过程中可能是最复杂也是最重要的部分就是怎样将新增的代码注入到 data 段中了。</p>]]></content>
+        <author>
+            <name><![CDATA[QRZ’s Blog]]></name>
+        </author>
+    </entry>
+    
+    <entry>
         <id>https://blog.creedowl.com/posts/gpg/</id>
         <title><![CDATA[GPG使用笔记]]></title>
         <updated>2020-04-02T06:47:31+08:00</updated>
@@ -1763,6 +1807,17 @@ pinentry-mode loopback
 <p>这一年来也计划整理个人笔记软件，在尝试了数个软件后，有印象笔记，为知笔记，有道云笔记，onenote及一堆开源笔记应用，都不太满足我的需求。最后发现了notion这个东西贼香（主要对学生免费了），最后就选择了它。不过这也导致我手上一堆笔记分散在各处，打算后面整理清楚<del>水</del>几篇blog出来。</p>]]></content>
         <author>
             <name><![CDATA[Creedowl’s Blog]]></name>
+        </author>
+    </entry>
+    
+    <entry>
+        <id>http://blog.qrzbing.cn/post/from-0-to-travis/</id>
+        <title><![CDATA[使用 Travis CI 自动部署 Hexo 博客]]></title>
+        <updated>2019-10-01T20:28:15+08:00</updated>
+        <link href="http://blog.qrzbing.cn/post/from-0-to-travis/"/>
+        <content type="text/html" src="http://blog.qrzbing.cn/post/from-0-to-travis/"><![CDATA[<p>最近一直在 Manjaro 和 Windows 之间切换，现在学习都已经在 Manjaro 上进行了，但是博客还在 Windows 上。虽然迁移过来并不难，但还是太麻烦了。另外写博客还要开电脑，的确有点麻烦。作为一个懒人当然是动动手自动推送最好，我就想到了用 <a href="https://travis-ci.org/">Travis CI</a> 来自动部署博客。</p>]]></content>
+        <author>
+            <name><![CDATA[QRZ’s Blog]]></name>
         </author>
     </entry>
     
