@@ -3,7 +3,7 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2021-06-08T01:01:58+08:00</updated>
+    <updated>2021-06-08T06:28:59+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
@@ -472,6 +472,17 @@
     </entry>
     
     <entry>
+        <id>https://blog.triplez.cn/posts/welcome-macat/</id>
+        <title><![CDATA[欢迎 Macat ！]]></title>
+        <updated>2021-04-11T10:24:01+08:00</updated>
+        <link href="https://blog.triplez.cn/posts/welcome-macat/"/>
+        <content type="text/html" src="https://blog.triplez.cn/posts/welcome-macat/"><![CDATA[Welcome Macat!]]></content>
+        <author>
+            <name><![CDATA[TripleZ’s Blog]]></name>
+        </author>
+    </entry>
+    
+    <entry>
         <id>https://bbs.a2os.club/d/17-/1</id>
         <title><![CDATA[食堂吃饭有感]]></title>
         <updated>2021-04-07T04:10:34+08:00</updated>
@@ -480,6 +491,17 @@
 现在在外面，一顿抵得上以前两顿</p>]]></content>
         <author>
             <name><![CDATA[A2OS 开源社区论坛]]></name>
+        </author>
+    </entry>
+    
+    <entry>
+        <id>https://blog.triplez.cn/posts/migrate-mendeley-to-zotero/</id>
+        <title><![CDATA[如何从 Mendeley 迁移到 Zotero]]></title>
+        <updated>2021-04-06T14:30:03+08:00</updated>
+        <link href="https://blog.triplez.cn/posts/migrate-mendeley-to-zotero/"/>
+        <content type="text/html" src="https://blog.triplez.cn/posts/migrate-mendeley-to-zotero/"><![CDATA[Mendeley 的手机端已经无法使用，是时候将数据迁移至开源的 Zotero 上了]]></content>
+        <author>
+            <name><![CDATA[TripleZ’s Blog]]></name>
         </author>
     </entry>
     
@@ -704,6 +726,17 @@
     </entry>
     
     <entry>
+        <id>https://blog.triplez.cn/posts/macos-gnu-linux-commands/</id>
+        <title><![CDATA[macOS 上安装 GNU/Linux 的命令]]></title>
+        <updated>2021-03-31T14:51:23+08:00</updated>
+        <link href="https://blog.triplez.cn/posts/macos-gnu-linux-commands/"/>
+        <content type="text/html" src="https://blog.triplez.cn/posts/macos-gnu-linux-commands/"><![CDATA[macOS 上大部分命令都为 BSD 提供的命令，部分与 GNU Linux 的命令有稍许不同。这在开发的时候经常给我们带来一些额外的麻烦]]></content>
+        <author>
+            <name><![CDATA[TripleZ’s Blog]]></name>
+        </author>
+    </entry>
+    
+    <entry>
         <id>https://www.suruifu.com/posts/603</id>
         <title><![CDATA[战战兢兢 如履薄冰]]></title>
         <updated>2021-03-26T17:46:04+08:00</updated>
@@ -711,6 +744,17 @@
         <content type="text/html" src="https://www.suruifu.com/posts/603"><![CDATA[]]></content>
         <author>
             <name><![CDATA[苏瑞辅的个人网站]]></name>
+        </author>
+    </entry>
+    
+    <entry>
+        <id>https://blog.triplez.cn/posts/cf-workers-to-pages/</id>
+        <title><![CDATA[博客迁移记 · 从 Cloudflare Workers 到 Cloudflare Pages]]></title>
+        <updated>2021-03-25T06:34:54+08:00</updated>
+        <link href="https://blog.triplez.cn/posts/cf-workers-to-pages/"/>
+        <content type="text/html" src="https://blog.triplez.cn/posts/cf-workers-to-pages/"><![CDATA[堪称完美的博客发布流程]]></content>
+        <author>
+            <name><![CDATA[TripleZ’s Blog]]></name>
         </author>
     </entry>
     
@@ -737,6 +781,17 @@
 </code></pre><p>&#x8FD9;&#x4E09;&#x4E2A; receive &#x65B9;&#x6CD5;&#x7528;&#x4E8E;&#x5F53; publisher &#x72B6;&#x6001;&#x53D8;&#x5316;&#x65F6;&#xFF0C;&#x63A5;&#x6536;&#x53D8;&#x5316;&#x503C;&#x3002;</p><figure class="kg-card kg-image-card"><img src="https://res.craft.do/user/full/cd5767b5-001d-b2bb-2322-53e695067937/doc/C98F9419-83EC-4423-A17E-356E0BA0CB61/4A246AF0-3649-4B41-A618-F85D0C0D4F0C_2" class="kg-image" alt="Combine &#x521D;&#x63A2;" loading="lazy"></figure><p>&#x53EF;&#x4EE5;&#x770B;&#x51FA;&#xFF0C;&#x4E09;&#x79CD;&#x7C7B;&#x578B;&#x7684; receive &#x5206;&#x522B;&#x63A5;&#x6536;&#xFF1A;</p><ul><li>Subscription&#xFF1A;Subscriber &#x6210;&#x529F;&#x8BA2;&#x9605;&#x65F6;&#x6536;&#x5230;&#x7684;&#x6D88;&#x606F;</li><li>Value&#xFF1A;&#x771F;&#x5B9E;&#x7684;&#x6570;&#x636E;</li><li>Completion&#xFF1A;&#x6570;&#x636E;&#x6D41;&#x7EC8;&#x6B62;&#x65F6;&#x7684;&#x6D88;&#x606F;</li></ul><h3 id="operator">Operator</h3><p>&#x64CD;&#x4F5C;&#x7B26;&#x662F; Combine &#x4E2D;&#x4E09;&#x5927;&#x91CD;&#x8981;&#x6982;&#x5FF5;&#x7684;&#x6700;&#x540E;&#x4E00;&#x4E2A;&#xFF0C;&#x901A;&#x8FC7;&#x5404;&#x79CD;&#x64CD;&#x4F5C;&#x7B26;&#xFF0C;&#x53EF;&#x4EE5;&#x5BF9;&#x539F;&#x59CB;&#x6570;&#x636E;&#x6D41;&#x8FDB;&#x884C;&#x5404;&#x79CD;&#x64CD;&#x4F5C;&#xFF0C;&#x53D8;&#x6210;&#x6700;&#x7EC8;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x7684;&#x6837;&#x5B50;&#x3002;&#x6BD4;&#x8F83;&#x5E38;&#x89C1;&#x7684;&#x64CD;&#x4F5C;&#x7B26;&#x6709; map&#x3001;filter &#x7B49;&#x7B49;</p><h2 id="%E5%8F%82%E8%80%83">&#x53C2;&#x8003;</h2><ol><li><a href="https://developer.apple.com/documentation/combine/receiving-and-handling-events-with-combine">Apple Developer Documentation</a></li><li><a href="https://developer.apple.com/videos/play/wwdc2019/722/">Introducing Combine - WWDC 2019 - Videos - Apple Developer</a></li><li><a href="https://www.icodesign.me/posts/swift-combine/">Swift Combine &#x5165;&#x95E8;&#x5BFC;&#x8BFB;</a></li><li><a href="https://gist.github.com/staltz/868e7e9bc2a7b8c1f754">The introduction to Reactive Programming you&apos;ve been missing</a></li></ol>]]></content>
         <author>
             <name><![CDATA[NINJIACODER忍者小屋]]></name>
+        </author>
+    </entry>
+    
+    <entry>
+        <id>https://blog.triplez.cn/posts/java-try-catch-finally/</id>
+        <title><![CDATA[Java · try-catch-finally 异常场景总结]]></title>
+        <updated>2021-03-22T12:03:12+08:00</updated>
+        <link href="https://blog.triplez.cn/posts/java-try-catch-finally/"/>
+        <content type="text/html" src="https://blog.triplez.cn/posts/java-try-catch-finally/"><![CDATA[在一些特殊情况下，<code>try-catch-finally</code> 代码的执行顺序变得难以确定。此文为这些可能的特殊情况做了一个简单的整理与总结]]></content>
+        <author>
+            <name><![CDATA[TripleZ’s Blog]]></name>
         </author>
     </entry>
     
