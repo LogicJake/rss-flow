@@ -3,12 +3,23 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2021-06-18T12:18:03+08:00</updated>
+    <updated>2021-06-18T18:14:55+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
     </author>
     
+    
+    <entry>
+        <id>https://miaotony.xyz/2021/06/18/CTF_2021NewsCTF0601/</id>
+        <title><![CDATA[CTF | 2021 NewsCTF 6.1萌新赛 WriteUp]]></title>
+        <updated>2021-06-18T15:27:32+08:00</updated>
+        <link href="https://miaotony.xyz/2021/06/18/CTF_2021NewsCTF0601/"/>
+        <content type="text/html" src="https://miaotony.xyz/2021/06/18/CTF_2021NewsCTF0601/"><![CDATA[六一那几天有个小比赛，不过比较忙就简单看了几个题，随意写写好了。]]></content>
+        <author>
+            <name><![CDATA[MiaoTony]]></name>
+        </author>
+    </entry>
     
     <entry>
         <id>https://blog.zeddyu.info/2021/05/19/tls-ctf/</id>
@@ -121,17 +132,6 @@
         <updated>2021-05-31T10:46:22+08:00</updated>
         <link href="https://miaotony.xyz/2021/05/30/CTF_2021DASCTF_May/"/>
         <content type="text/html" src="https://miaotony.xyz/2021/05/30/CTF_2021DASCTF_May/"><![CDATA[这周末比赛好多啊，DASCTF May这次比较基础，于是看其他比赛题目之余摸鱼做了做misc题。]]></content>
-        <author>
-            <name><![CDATA[MiaoTony]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://miaotony.xyz/2021/05/24/CTF_2021RedHat/</id>
-        <title><![CDATA[CTF | 2021 红帽杯 WriteUp]]></title>
-        <updated>2021-05-29T08:49:56+08:00</updated>
-        <link href="https://miaotony.xyz/2021/05/24/CTF_2021RedHat/"/>
-        <content type="text/html" src="https://miaotony.xyz/2021/05/24/CTF_2021RedHat/"><![CDATA[前段时间打了个红帽杯，不过这段时间比较忙一直没空整理。趁着今天摸鱼，就来复现几道题好了。]]></content>
         <author>
             <name><![CDATA[MiaoTony]]></name>
         </author>
