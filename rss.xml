@@ -3,12 +3,23 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2021-06-21T06:15:33+08:00</updated>
+    <updated>2021-06-21T12:18:48+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
     </author>
     
+    
+    <entry>
+        <id>https://miaotony.xyz/2021/06/20/Penetration_2021DozerCTF/</id>
+        <title><![CDATA[Penetration | 2021 DozerCTF 域渗透 Workthrough]]></title>
+        <updated>2021-06-21T09:28:23+08:00</updated>
+        <link href="https://miaotony.xyz/2021/06/20/Penetration_2021DozerCTF/"/>
+        <content type="text/html" src="https://miaotony.xyz/2021/06/20/Penetration_2021DozerCTF/"><![CDATA[五月底的DozerCTF中有个域渗透的题目，还是挺有意思的，趁这个机会就来学一下相关的知识，来练练手。]]></content>
+        <author>
+            <name><![CDATA[MiaoTony]]></name>
+        </author>
+    </entry>
     
     <entry>
         <id>https://blog.triplez.cn/posts/bills-export-methods/</id>
@@ -154,17 +165,6 @@
         <updated>2021-05-26T13:00:26+08:00</updated>
         <link href="https://miaotony.xyz/2021/05/26/CTF_2021MeiTuan/"/>
         <content type="text/html" src="https://miaotony.xyz/2021/05/26/CTF_2021MeiTuan/"><![CDATA[周末有个美团网络安全高校挑战赛（MTCTF），晚上吃完饭来看了一眼，做了俩misc题玩玩。]]></content>
-        <author>
-            <name><![CDATA[MiaoTony]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://miaotony.xyz/2021/05/25/CTF_2021CISCN_preliminary/</id>
-        <title><![CDATA[CTF | 2021 CISCN初赛 Misc WriteUp]]></title>
-        <updated>2021-05-25T16:09:35+08:00</updated>
-        <link href="https://miaotony.xyz/2021/05/25/CTF_2021CISCN_preliminary/"/>
-        <content type="text/html" src="https://miaotony.xyz/2021/05/25/CTF_2021CISCN_preliminary/"><![CDATA[又是一年一度的国赛，连续打24h太难受啦！这里把几道misc题目写一写好了。]]></content>
         <author>
             <name><![CDATA[MiaoTony]]></name>
         </author>
