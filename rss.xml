@@ -3,12 +3,23 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2021-06-27T00:44:43+08:00</updated>
+    <updated>2021-06-27T06:15:54+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
     </author>
     
+    
+    <entry>
+        <id>https://blog.triplez.cn/posts/monthly-bookkeeping-workflow/</id>
+        <title><![CDATA[月度记账工作流]]></title>
+        <updated>2021-06-27T04:57:49+08:00</updated>
+        <link href="https://blog.triplez.cn/posts/monthly-bookkeeping-workflow/"/>
+        <content type="text/html" src="https://blog.triplez.cn/posts/monthly-bookkeeping-workflow/"><![CDATA[个人记账工作流记录]]></content>
+        <author>
+            <name><![CDATA[TripleZ’s Blog]]></name>
+        </author>
+    </entry>
     
     <entry>
         <id>https://miaotony.xyz/2021/06/20/Penetration_2021DozerCTF/</id>
@@ -755,17 +766,6 @@
         <content type="text/html" src="https://www.suruifu.com/posts/603"><![CDATA[]]></content>
         <author>
             <name><![CDATA[苏瑞辅的个人网站]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://blog.triplez.cn/posts/cf-workers-to-pages/</id>
-        <title><![CDATA[博客迁移记 · 从 Cloudflare Workers 到 Cloudflare Pages]]></title>
-        <updated>2021-03-25T06:34:54+08:00</updated>
-        <link href="https://blog.triplez.cn/posts/cf-workers-to-pages/"/>
-        <content type="text/html" src="https://blog.triplez.cn/posts/cf-workers-to-pages/"><![CDATA[堪称完美的博客发布流程]]></content>
-        <author>
-            <name><![CDATA[TripleZ’s Blog]]></name>
         </author>
     </entry>
     
