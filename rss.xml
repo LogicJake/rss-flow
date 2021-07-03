@@ -3,12 +3,45 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2021-07-03T06:15:32+08:00</updated>
+    <updated>2021-07-03T12:18:06+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
     </author>
     
+    
+    <entry>
+        <id>https://www.suruifu.com/posts/640</id>
+        <title><![CDATA[如何使用OneNote发布博客]]></title>
+        <updated>2021-06-28T18:21:36+08:00</updated>
+        <link href="https://www.suruifu.com/posts/640"/>
+        <content type="text/html" src="https://www.suruifu.com/posts/640"><![CDATA[<ol style="margin-left: 63pt">
+<li><span style="font-family:微软雅黑">点击文件，发送，发送到博客<br />
+</span></li>
+</ol>
+<p><img src="https://s.suruifu.com/www/2021/06/062821_1821_OneNote1.png" alt=""/>
+    </p>
+<ol style="margin-left: 63pt">
+<li><span style="font-family:微软雅黑">选择博客提供商，比如说Wordpress<br />
+</span></li>
+<li><span style="font-family:微软雅黑">填写账号用户名，密码<br />
+</span></li>
+<li><span style="font-family:微软雅黑">图片使用博客系统<br />
+</span></li>
+</ol>
+<p> <br />
+ </p>
+<p><span style="font-family:微软雅黑">整个过程使用体验<strong>很好</strong>！<br />
+</span></p>
+<p><span style="font-family:微软雅黑">备注：这篇博客就是使用OneNote发布的<br />
+</span></p>
+<p><em><span style="font-family:微软雅黑">备注</span>2<span style="font-family:微软雅黑">： 我使用的是Office 365，换句话说我没有使用UWP版本的OneNote！</span></em></p>
+<p>
+<b>这是后面加的。我发现图片没有被正确添加，可能是因为我使用了oss的插件。这个可能还是需要调一下。</b></p>]]></content>
+        <author>
+            <name><![CDATA[苏瑞辅的个人网站]]></name>
+        </author>
+    </entry>
     
     <entry>
         <id>https://blog.triplez.cn/posts/monthly-bookkeeping-workflow/</id>
@@ -117,6 +150,34 @@
         <content type="text/html" src="http://blog.qrzbing.cn/post/2021-ciscn-little-evil/"><![CDATA[<p>对 KLEE 的学习，一些小小的自动化操作。</p>]]></content>
         <author>
             <name><![CDATA[QRZ’s Blog]]></name>
+        </author>
+    </entry>
+    
+    <entry>
+        <id>https://www.suruifu.com/posts/632</id>
+        <title><![CDATA[【搞音乐】我也来搞音乐]]></title>
+        <updated>2021-06-06T13:13:05+08:00</updated>
+        <link href="https://www.suruifu.com/posts/632"/>
+        <content type="text/html" src="https://www.suruifu.com/posts/632"><![CDATA[<p>最近工作也很忙，怎么想起来研究一下音乐了呢？</p>
+<p>其一，因为可以忙里偷闲。同样是玩，我更想研究一点不一样的。</p>
+<p>其二，我发现学科之间是存在关联性的，看点别的反而能给自己的工作带来新的启迪。正所谓“他山之石，可以攻玉”。</p>
+<p>其三，我发现音乐是很高级的东西，我也想有所了解。</p>
+<p>其四，最近工作中认识了一位音乐家。</p>
+<p>我现在也没有钢琴，也没有电子琴，也没有任何乐器，也没有接触过音乐，也没有接触过任何乐器。当然，除了之前在前女友家摸过一次钢琴。</p>
+<p>我也不想变得多强，我想能看懂五线谱，能用钢琴弹出来我就心满意足了。不需要多厉害。</p>
+<p>但是我现在什么也没有，我本来想去练琴房研究一下，但是人家说提前预约，所以今天就没有玩成功。但是心里面还是放不下，所以找到了一个网页，这个网页只要会敲键盘就可以发出声音。但是操作起来比较麻烦，一个音阶的还好说，跨音阶的脑子就转不过来。因为你要做一个复杂的键位和电脑键盘的映射。</p>
+<p>我简单试了三个音乐片段，分别是小星星，打靶归来，国际歌。小星星是最简单的，打靶归来，略复杂一点，国际歌就很高级了。这里所说的高级和低级就说的是国际歌涉及到多个音阶之间的跳跃，对我这个初学者来说，用电脑键盘就很麻烦了。</p>
+<p>我把视频上传到了Bilibili，和大家交流学习。</p>
+<p>https://space.bilibili.com/76786111</p>
+<p>顺便说明呀，其实我连简谱的音高都分别不出来，我只是对电脑键盘很熟悉罢了。如果只涉及到一个1234567，没有高音和低音，我用电脑简单可以很轻松地按出来。</p>
+<p>后面我想，我要么弄个电子琴（500块左右吧），要么就去练琴房办个卡（10块钱一个小时）。据说这个行当里面也是存在鄙视链的，说是钢琴比较高级，电子琴比较垃圾。我觉得其实无所谓，这可能就跟编程语言里面互相争哪个语言更好的问题一样，没有什么意义。我认为编程语言没有什么好坏，只要知算法，懂数据结构，这些只是工具。对于钢琴，我猜呀，只要认识乐谱，能够把握节奏，也都能做好，只不过切换的时候需要一个适应的时间罢了。</p>
+<p>另外呢，我也不认识简谱里面的两个连一起下面加个下划线那样的，如果说，三个，两个加个下划线，三个再加个下划线就有点让人不知道该怎么操作了。比如说下面这个。</p>
+<p>图片</p>
+<p><img src="https://s.suruifu.com/www/2021/06/640.png" alt="" /></p>
+<p>谢谢大家，祝大家工作顺利，生活愉快！</p>
+<p>我去搬砖了，大家下期见！</p>]]></content>
+        <author>
+            <name><![CDATA[苏瑞辅的个人网站]]></name>
         </author>
     </entry>
     
@@ -363,6 +424,21 @@
     </entry>
     
     <entry>
+        <id>https://www.suruifu.com/posts/621</id>
+        <title><![CDATA[硬件只谈概率，软件才有是非]]></title>
+        <updated>2021-05-12T13:28:44+08:00</updated>
+        <link href="https://www.suruifu.com/posts/621"/>
+        <content type="text/html" src="https://www.suruifu.com/posts/621"><![CDATA[<p>最近做了一点硬件开发工作。</p>
+<p>要想控制一个东西，首先要测得准。测控测控，测是控的基础和基石。</p>
+<p>对应在编程工作中，要想控制一个模块，首先要有接口获取到模块的相关状态。</p>
+<p>但是如果当测量本身都会破坏模块工作状态的时候，就变成了不可测量模块的控制。这个时候所有问题都是概率性的。不能以绝对的是非眼光来看待。</p>
+<p>那为什么我们电脑显示器这么稳定呢？我想一方面是测试做得够，掌握了一点这种概率性的规律（电子云图）。另一方面是性能很高，冗余量很大。</p>]]></content>
+        <author>
+            <name><![CDATA[苏瑞辅的个人网站]]></name>
+        </author>
+    </entry>
+    
+    <entry>
         <id>http://blog.qrzbing.cn/about/</id>
         <title><![CDATA[About]]></title>
         <updated>2021-05-02T07:33:00+08:00</updated>
@@ -425,6 +501,17 @@
         <content type="text/html" src="https://www.logicjake.xyz/2021/01/08/%E9%9B%B6%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8%E9%87%91%E8%9E%8D%E9%A3%8E%E6%8E%A7-%E8%B4%B7%E6%AC%BE%E8%BF%9D%E7%BA%A6%E9%A2%84%E6%B5%8B-%E8%B5%9B%E5%90%8E%E6%80%BB%E7%BB%93/"><![CDATA[<p>最终成绩：11 / 4780<br>比赛地址：<a href="https://tianchi.aliyun.com/competition/entrance/531830/introduction" target="_blank" rel="noopener">https://tianchi.aliyun.com/competition/entrance/531830/introduction</a><br>开源地址：<a href="https://github.com/LogicJake/tianchi-loan-default-prediction-top11" target="_blank" rel="noopener">https://github.com/LogicJake/tianchi-loan-default-prediction-top11</a></p><p>这个比赛属于天池办的一系列入门赛的其一，没奖金只有一些小奖品，所以竞争很小。总的来说该方案没有什么耀眼的操作，就是简单的数据处理，暴力特征工程和模型融合，单纯看好久没更博文了，发上来凑个数。</p><h1 id="赛题背景"><a href="#赛题背景" class="headerlink" title="赛题背景"></a>赛题背景</h1><p>赛题以金融风控中的个人信贷为背景，要求选手根据贷款申请人的数据信息预测其是否有违约的可能，以此判断是否通过此项贷款，这是一个典型的分类问题。</p><h1 id="数据介绍"><a href="#数据介绍" class="headerlink" title="数据介绍"></a>数据介绍</h1><p>赛题以预测用户贷款是否违约为任务，数据集报名后可见并可下载，该数据来自某信贷平台的贷款记录，总数据量超过120w，包含47列变量信息，其中15列为匿名变量。为了保证比赛的公平性，将会从中抽取80万条作为训练集，20万条作为测试集A，20万条作为测试集B，同时会对employmentTitle、purpose、postCode和title等信息进行脱敏。  </p><table><thead><tr><th align="center">Field</th><th align="center">Description</th></tr></thead><tbody><tr><td align="center">id</td><td align="center">为贷款清单分配的唯一信用证标识</td></tr><tr><td align="center">loanAmnt</td><td align="center">贷款金额</td></tr><tr><td align="center">term</td><td align="center">贷款期限（year）</td></tr><tr><td align="center">interestRate</td><td align="center">贷款利率</td></tr><tr><td align="center">installment</td><td align="center">分期付款金额</td></tr><tr><td align="center">grade</td><td align="center">贷款等级</td></tr><tr><td align="center">subGrade</td><td align="center">贷款等级之子级</td></tr><tr><td align="center">employmentTitle</td><td align="center">就业职称</td></tr><tr><td align="center">employmentLength</td><td align="center">就业年限（年）</td></tr><tr><td align="center">homeOwnership</td><td align="center">借款人在登记时提供的房屋所有权状况</td></tr><tr><td align="center">annualIncome</td><td align="center">年收入</td></tr><tr><td align="center">verificationStatus</td><td align="center">验证状态</td></tr><tr><td align="center">issueDate</td><td align="center">贷款发放的月份</td></tr><tr><td align="center">purpose</td><td align="center">借款人在贷款申请时的贷款用途类别</td></tr><tr><td align="center">postCode</td><td align="center">借款人在贷款申请中提供的邮政编码的前3位数字</td></tr><tr><td align="center">regionCode</td><td align="center">地区编码</td></tr><tr><td align="center">dti</td><td align="center">债务收入比</td></tr><tr><td align="center">delinquency_2years</td><td align="center">借款人过去2年信用档案中逾期30天以上的违约事件数</td></tr><tr><td align="center">ficoRangeLow</td><td align="center">借款人在贷款发放时的fico所属的下限范围</td></tr><tr><td align="center">ficoRangeHigh</td><td align="center">借款人在贷款发放时的fico所属的上限范围</td></tr><tr><td align="center">openAcc</td><td align="center">借款人信用档案中未结信用额度的数量</td></tr><tr><td align="center">pubRec</td><td align="center">贬损公共记录的数量</td></tr><tr><td align="center">pubRecBankruptcies</td><td align="center">公开记录清除的数量</td></tr><tr><td align="center">revolBal</td><td align="center">信贷周转余额合计</td></tr><tr><td align="center">revolUtil</td><td align="center">循环额度利用率，或借款人使用的相对于所有可用循环信贷的信贷金额</td></tr><tr><td align="center">totalAcc</td><td align="center">借款人信用档案中当前的信用额度总数</td></tr><tr><td align="center">initialListStatus</td><td align="center">贷款的初始列表状态</td></tr><tr><td align="center">applicationType</td><td align="center">表明贷款是个人申请还是与两个共同借款人的联合申请</td></tr><tr><td align="center">earliesCreditLine</td><td align="center">借款人最早报告的信用额度开立的月份</td></tr><tr><td align="center">title</td><td align="center">借款人提供的贷款名称</td></tr><tr><td align="center">policyCode</td><td align="center">公开可用的策略_代码=1新产品不公开可用的策略_代码=2</td></tr><tr><td align="center">n系列匿名特征</td><td align="center">匿名特征n0-n14，为一些贷款人行为计数特征的处理</td></tr></tbody></table><p>提交结果为每个测试样本是1的概率，也就是y为1的概率。评价方法为AUC评估模型效果。</p><h1 id="方案总结"><a href="#方案总结" class="headerlink" title="方案总结"></a>方案总结</h1><h2 id="数据处理"><a href="#数据处理" class="headerlink" title="数据处理"></a>数据处理</h2><p>原数据中有贷款等级和贷款等级之子级两个类别特征，但因为有明显的大小关系，所以需要将其映射为数值。贷款等级范围为“A-G”，将其映射为“1-7”。子级在每个等级上又细分了5个数字等级，所以用“等级×5+细分等级”映射。</p><p>就业年限（年）特征也是具有明显大小关系的类别特征。首先将“10+ years”替换成“10 years”，“&lt; 1 year”替换成“0 years”。随后提取数字年份为新特征。</p><h2 id="特征工程"><a href="#特征工程" class="headerlink" title="特征工程"></a>特征工程</h2><h3 id="业务特征"><a href="#业务特征" class="headerlink" title="业务特征"></a>业务特征</h3><p>业务特征就做了两个没细挖。用贷款发放的年份减去借款人最早报告的信用额度开立的年份可以大致得到借款人的年龄（？）。贷款金额除以贷款期限（year）可以得到每年的负债，再除以年收入可以得到年负债比。</p><h3 id="暴力特征"><a href="#暴力特征" class="headerlink" title="暴力特征"></a>暴力特征</h3><p>暴力特征主要围绕类别特征展开，对类别特征进行批量无筛选式的特征构造。主要进行了一阶和二阶组合下的 count 运算。</p><p>也对数值特征进行了二阶相加构造，但对模型没有提升就删去了。</p><h3 id="欺诈率"><a href="#欺诈率" class="headerlink" title="欺诈率"></a>欺诈率</h3><p>类比点击率特征，针对是否会欺诈的01标签，同样也可以利用五折交叉统计计算欺诈率特征。欺诈率以类别为单位统计，所以同样可以对类别特征进行一阶和二阶下的暴力构造。</p><h2 id="模型融合"><a href="#模型融合" class="headerlink" title="模型融合"></a>模型融合</h2><p>模型融合采用树模型三兄弟：LightGBM，Xgboost和Catboost。融合方式采用指数加权融合，三个模型的权重都是0.5。</p>]]></content>
         <author>
             <name><![CDATA[LogicJake’s Blog]]></name>
+        </author>
+    </entry>
+    
+    <entry>
+        <id>https://www.suruifu.com/posts/616</id>
+        <title><![CDATA[Up！ Up！ Up！]]></title>
+        <updated>2021-04-13T03:49:27+08:00</updated>
+        <link href="https://www.suruifu.com/posts/616"/>
+        <content type="text/html" src="https://www.suruifu.com/posts/616"><![CDATA[<p>青春是最宝贵的，努力，努力，努力！</p>]]></content>
+        <author>
+            <name><![CDATA[苏瑞辅的个人网站]]></name>
         </author>
     </entry>
     
@@ -677,6 +764,19 @@
 <p>希望大家分享一下自己阅读论文的心得。</p>]]></content>
         <author>
             <name><![CDATA[A2OS 开源社区论坛]]></name>
+        </author>
+    </entry>
+    
+    <entry>
+        <id>https://www.suruifu.com/posts/612</id>
+        <title><![CDATA[会挽雕弓如满月]]></title>
+        <updated>2021-04-04T15:52:37+08:00</updated>
+        <link href="https://www.suruifu.com/posts/612"/>
+        <content type="text/html" src="https://www.suruifu.com/posts/612"><![CDATA[<p>事情从来没有简单过。</p>
+<p>昨天的努力为今天带来了希望，今天的冷静才能唤醒明天的梦想。</p>
+<p>我能行，我会赢。</p>]]></content>
+        <author>
+            <name><![CDATA[苏瑞辅的个人网站]]></name>
         </author>
     </entry>
     
