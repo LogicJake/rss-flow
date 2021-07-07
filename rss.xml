@@ -3,12 +3,23 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2021-07-07T12:19:44+08:00</updated>
+    <updated>2021-07-07T18:16:05+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
     </author>
     
+    
+    <entry>
+        <id>https://miaotony.xyz/2021/06/28/CTF_2021qiangwang/</id>
+        <title><![CDATA[CTF | 2021 强网杯线上赛 Web&Misc WriteUp]]></title>
+        <updated>2021-07-07T15:29:16+08:00</updated>
+        <link href="https://miaotony.xyz/2021/06/28/CTF_2021qiangwang/"/>
+        <content type="text/html" src="https://miaotony.xyz/2021/06/28/CTF_2021qiangwang/"><![CDATA[强网杯打得太顶太刺激了，题目还是挺有难度的，和队友一起来看了些题，之后又复现了一下。]]></content>
+        <author>
+            <name><![CDATA[MiaoTony]]></name>
+        </author>
+    </entry>
     
     <entry>
         <id>https://www.logicjake.xyz/2021/07/03/%E7%A7%8B%E6%8B%9B%E9%9D%A2%E7%BB%8F/</id>
@@ -253,17 +264,6 @@
         <updated>2021-05-31T10:46:22+08:00</updated>
         <link href="https://miaotony.xyz/2021/05/30/CTF_2021DASCTF_May/"/>
         <content type="text/html" src="https://miaotony.xyz/2021/05/30/CTF_2021DASCTF_May/"><![CDATA[这周末比赛好多啊，DASCTF May这次比较基础，于是看其他比赛题目之余摸鱼做了做misc题。]]></content>
-        <author>
-            <name><![CDATA[MiaoTony]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://miaotony.xyz/2021/05/26/CTF_2021MeiTuan/</id>
-        <title><![CDATA[CTF | 2021 美团CTF Misc WriteUp]]></title>
-        <updated>2021-05-26T13:00:26+08:00</updated>
-        <link href="https://miaotony.xyz/2021/05/26/CTF_2021MeiTuan/"/>
-        <content type="text/html" src="https://miaotony.xyz/2021/05/26/CTF_2021MeiTuan/"><![CDATA[周末有个美团网络安全高校挑战赛（MTCTF），晚上吃完饭来看了一眼，做了俩misc题玩玩。]]></content>
         <author>
             <name><![CDATA[MiaoTony]]></name>
         </author>
