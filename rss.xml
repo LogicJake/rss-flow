@@ -3,12 +3,34 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2021-07-18T12:18:04+08:00</updated>
+    <updated>2021-07-18T18:15:10+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
     </author>
     
+    
+    <entry>
+        <id>https://miaotony.xyz/2021/07/18/Pentest_2021bailingniao_Bludit/</id>
+        <title><![CDATA[Pentest | 2021 百灵鸟团队纳新玩家活动 Bludit v3.12.0 WriteUp]]></title>
+        <updated>2021-07-18T15:12:25+08:00</updated>
+        <link href="https://miaotony.xyz/2021/07/18/Pentest_2021bailingniao_Bludit/"/>
+        <content type="text/html" src="https://miaotony.xyz/2021/07/18/Pentest_2021bailingniao_Bludit/"><![CDATA[上个月底偶尔看到了个纳新的渗透测试题目，来摸鱼玩了玩，这里就随意记录一下。]]></content>
+        <author>
+            <name><![CDATA[MiaoTony]]></name>
+        </author>
+    </entry>
+    
+    <entry>
+        <id>https://miaotony.xyz/2021/06/20/Pentest_2021DozerCTF/</id>
+        <title><![CDATA[Pentest | 2021 DozerCTF 域渗透 Workthrough]]></title>
+        <updated>2021-07-18T14:29:06+08:00</updated>
+        <link href="https://miaotony.xyz/2021/06/20/Pentest_2021DozerCTF/"/>
+        <content type="text/html" src="https://miaotony.xyz/2021/06/20/Pentest_2021DozerCTF/"><![CDATA[五月底的DozerCTF中有个域渗透的题目，还是挺有意思的，趁这个机会就来学一下相关的知识，来练练手。]]></content>
+        <author>
+            <name><![CDATA[MiaoTony]]></name>
+        </author>
+    </entry>
     
     <entry>
         <id>https://www.logicjake.xyz/2021/07/03/%E7%A7%8B%E6%8B%9B%E9%9D%A2%E7%BB%8F/</id>
@@ -128,17 +150,6 @@
         <content type="text/html" src="https://blog.triplez.cn/posts/monthly-bookkeeping-workflow/"><![CDATA[个人记账工作流记录]]></content>
         <author>
             <name><![CDATA[TripleZ’s Blog]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://miaotony.xyz/2021/06/20/Penetration_2021DozerCTF/</id>
-        <title><![CDATA[Penetration | 2021 DozerCTF 域渗透 Workthrough]]></title>
-        <updated>2021-06-21T09:28:23+08:00</updated>
-        <link href="https://miaotony.xyz/2021/06/20/Penetration_2021DozerCTF/"/>
-        <content type="text/html" src="https://miaotony.xyz/2021/06/20/Penetration_2021DozerCTF/"><![CDATA[五月底的DozerCTF中有个域渗透的题目，还是挺有意思的，趁这个机会就来学一下相关的知识，来练练手。]]></content>
-        <author>
-            <name><![CDATA[MiaoTony]]></name>
         </author>
     </entry>
     
@@ -264,17 +275,6 @@
         <updated>2021-06-02T08:36:14+08:00</updated>
         <link href="https://miaotony.xyz/2021/05/31/CTF_2021chunqiu_Baby_steg/"/>
         <content type="text/html" src="https://miaotony.xyz/2021/05/31/CTF_2021chunqiu_Baby_steg/"><![CDATA[周末比赛多多，春秋杯的话就看了Misc Baby_steg一题，其中有几个之前没见过的点，这里顺手记录一下。]]></content>
-        <author>
-            <name><![CDATA[MiaoTony]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://miaotony.xyz/2021/05/30/CTF_2021DASCTF_May/</id>
-        <title><![CDATA[CTF | 2021 DASCTF May WriteUp]]></title>
-        <updated>2021-05-31T10:46:22+08:00</updated>
-        <link href="https://miaotony.xyz/2021/05/30/CTF_2021DASCTF_May/"/>
-        <content type="text/html" src="https://miaotony.xyz/2021/05/30/CTF_2021DASCTF_May/"><![CDATA[这周末比赛好多啊，DASCTF May这次比较基础，于是看其他比赛题目之余摸鱼做了做misc题。]]></content>
         <author>
             <name><![CDATA[MiaoTony]]></name>
         </author>
