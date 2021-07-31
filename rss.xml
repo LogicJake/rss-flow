@@ -3,12 +3,23 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2021-07-30T18:15:11+08:00</updated>
+    <updated>2021-07-31T00:40:54+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
     </author>
     
+    
+    <entry>
+        <id>https://miaotony.xyz/2021/07/29/Life_2021RedHatFinal_trip/</id>
+        <title><![CDATA[碎碎念 | 2021 红帽杯 网络安全大赛总决赛 广州游记]]></title>
+        <updated>2021-07-30T20:46:02+08:00</updated>
+        <link href="https://miaotony.xyz/2021/07/29/Life_2021RedHatFinal_trip/"/>
+        <content type="text/html" src="https://miaotony.xyz/2021/07/29/Life_2021RedHatFinal_trip/"><![CDATA[前几天去广州打了第四届红帽杯网络安全大赛总决赛，这里来随便记录一下在广州的游记吧~]]></content>
+        <author>
+            <name><![CDATA[MiaoTony]]></name>
+        </author>
+    </entry>
     
     <entry>
         <id>https://blog.zeddyu.info/2021/07/21/google-qual-2021/</id>
@@ -227,17 +238,6 @@
         <content type="text/html" src="https://blog.triplez.cn/posts/bills-export-methods/"><![CDATA[本文涵盖支付宝、微信，工行、交行借记卡，招行信用卡以及火币-币币交易的账单导出方法]]></content>
         <author>
             <name><![CDATA[TripleZ’s Blog]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://miaotony.xyz/2021/06/18/CTF_2021NewsCTF0601/</id>
-        <title><![CDATA[CTF | 2021 NewsCTF 6.1萌新赛 WriteUp]]></title>
-        <updated>2021-06-18T15:27:32+08:00</updated>
-        <link href="https://miaotony.xyz/2021/06/18/CTF_2021NewsCTF0601/"/>
-        <content type="text/html" src="https://miaotony.xyz/2021/06/18/CTF_2021NewsCTF0601/"><![CDATA[六一那几天有个小比赛，不过比较忙就简单看了几个题，随意写写好了。]]></content>
-        <author>
-            <name><![CDATA[MiaoTony]]></name>
         </author>
     </entry>
     
