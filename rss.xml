@@ -3,12 +3,23 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2021-08-08T18:14:45+08:00</updated>
+    <updated>2021-08-09T00:41:26+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
     </author>
     
+    
+    <entry>
+        <id>https://miaotony.xyz/2021/08/07/CTF_2021dianfengjike/</id>
+        <title><![CDATA[CTF | 2021 巅峰极客网络安全技能挑战赛 WriteUp]]></title>
+        <updated>2021-08-08T20:01:44+08:00</updated>
+        <link href="https://miaotony.xyz/2021/08/07/CTF_2021dianfengjike/"/>
+        <content type="text/html" src="https://miaotony.xyz/2021/08/07/CTF_2021dianfengjike/"><![CDATA[上周末摸鱼打了下巅峰极客网络安全技能挑战赛，题目好难啊喵呜呜，就复现一下随便写写好了。]]></content>
+        <author>
+            <name><![CDATA[MiaoTony]]></name>
+        </author>
+    </entry>
     
     <entry>
         <id>https://blog.stdioa.com/2020/09/using-beancount/</id>
@@ -104,17 +115,6 @@
         <updated>2021-07-18T15:12:25+08:00</updated>
         <link href="https://miaotony.xyz/2021/07/18/Pentest_2021bailingniao_Bludit/"/>
         <content type="text/html" src="https://miaotony.xyz/2021/07/18/Pentest_2021bailingniao_Bludit/"><![CDATA[上个月底偶尔看到了个纳新的渗透测试题目，来摸鱼玩了玩，这里就随意记录一下。]]></content>
-        <author>
-            <name><![CDATA[MiaoTony]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://miaotony.xyz/2021/06/20/Pentest_2021DozerCTF/</id>
-        <title><![CDATA[Pentest | 2021 DozerCTF 域渗透 Workthrough]]></title>
-        <updated>2021-07-18T14:29:06+08:00</updated>
-        <link href="https://miaotony.xyz/2021/06/20/Pentest_2021DozerCTF/"/>
-        <content type="text/html" src="https://miaotony.xyz/2021/06/20/Pentest_2021DozerCTF/"><![CDATA[五月底的DozerCTF中有个域渗透的题目，还是挺有意思的，趁这个机会就来学一下相关的知识，来练练手。]]></content>
         <author>
             <name><![CDATA[MiaoTony]]></name>
         </author>
