@@ -3,12 +3,23 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2021-08-10T12:20:07+08:00</updated>
+    <updated>2021-08-10T18:15:21+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
     </author>
     
+    
+    <entry>
+        <id>https://blog.triplez.cn/posts/beancount-lend-return-bookkeeping-method/</id>
+        <title><![CDATA[浅谈 beancount 借款还款交易记录方法]]></title>
+        <updated>2021-08-10T14:38:24+08:00</updated>
+        <link href="https://blog.triplez.cn/posts/beancount-lend-return-bookkeeping-method/"/>
+        <content type="text/html" src="https://blog.triplez.cn/posts/beancount-lend-return-bookkeeping-method/"><![CDATA[本文基于的假设是：友人 A 需要购买产品 B，但需要你来代他购买。探讨几种事件发生顺序的记账方法。]]></content>
+        <author>
+            <name><![CDATA[TripleZ’s Blog]]></name>
+        </author>
+    </entry>
     
     <entry>
         <id>https://miaotony.xyz/2021/08/07/CTF_2021dianfengjike/</id>
@@ -799,17 +810,6 @@
 <p>我能行，我会赢。</p>]]></content>
         <author>
             <name><![CDATA[苏瑞辅的个人网站]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://blog.triplez.cn/posts/macos-gnu-linux-commands/</id>
-        <title><![CDATA[macOS 上安装 GNU/Linux 的命令]]></title>
-        <updated>2021-03-31T14:51:23+08:00</updated>
-        <link href="https://blog.triplez.cn/posts/macos-gnu-linux-commands/"/>
-        <content type="text/html" src="https://blog.triplez.cn/posts/macos-gnu-linux-commands/"><![CDATA[macOS 上大部分命令都为 BSD 提供的命令，部分与 GNU Linux 的命令有稍许不同。这在开发的时候经常给我们带来一些额外的麻烦]]></content>
-        <author>
-            <name><![CDATA[TripleZ’s Blog]]></name>
         </author>
     </entry>
     
