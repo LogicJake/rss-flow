@@ -3,12 +3,27 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2021-08-20T00:38:19+08:00</updated>
+    <updated>2021-08-20T06:14:59+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
     </author>
     
+    
+    <entry>
+        <id>https://bbs.a2os.club/d/18-/1</id>
+        <title><![CDATA[涅槃之后又变成时代的眼泪了吗？]]></title>
+        <updated>2021-08-20T03:09:40+08:00</updated>
+        <link href="https://bbs.a2os.club/d/18-/1"/>
+        <content type="text/html" src="https://bbs.a2os.club/d/18-/1"><![CDATA[<p>不知道我这个ID有没有觉得眼熟？<br>
+看到这个论坛最新的帖子都是4月份的就很有感触<br>
+最好不要让lcj知道这个地方<br>
+不然他会屠版的<br>
+😅</p>]]></content>
+        <author>
+            <name><![CDATA[A2OS 开源社区论坛]]></name>
+        </author>
+    </entry>
     
     <entry>
         <id>https://www.logicjake.xyz/2021/07/03/%E7%A7%8B%E6%8B%9B%E9%9D%A2%E7%BB%8F/</id>
@@ -782,19 +797,6 @@
         <updated>2021-04-06T07:35:33+08:00</updated>
         <link href="https://bbs.a2os.club/d/8-push/1"/>
         <content type="text/html" src="https://bbs.a2os.club/d/8-push/1"><![CDATA[<p>比如 <a href="https://www.webpushr.com/" rel=" nofollow ugc">webpushr </a>提供的这种。</p>]]></content>
-        <author>
-            <name><![CDATA[A2OS 开源社区论坛]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://bbs.a2os.club/d/7-/1</id>
-        <title><![CDATA[如何阅读论文？]]></title>
-        <updated>2021-04-06T07:33:34+08:00</updated>
-        <link href="https://bbs.a2os.club/d/7-/1"/>
-        <content type="text/html" src="https://bbs.a2os.club/d/7-/1"><![CDATA[<p>虽然大家关注的领域不同，但肯定都会读不少论文。大家都是如何阅读论文的？是每篇都精读？还是看个摘要泛泛而过？</p>
-
-<p>希望大家分享一下自己阅读论文的心得。</p>]]></content>
         <author>
             <name><![CDATA[A2OS 开源社区论坛]]></name>
         </author>
