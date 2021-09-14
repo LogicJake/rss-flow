@@ -3,12 +3,23 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2021-09-14T12:19:37+08:00</updated>
+    <updated>2021-09-14T18:13:57+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
     </author>
     
+    
+    <entry>
+        <id>https://blog.stdioa.com/2021/09/homelab-share/</id>
+        <title><![CDATA[HomeLab 玩法简单分享]]></title>
+        <updated>2021-09-14T12:22:43+08:00</updated>
+        <link href="https://blog.stdioa.com/2021/09/homelab-share/"/>
+        <content type="text/html" src="https://blog.stdioa.com/2021/09/homelab-share/"><![CDATA[<p>大学毕业之前一个冲动买了台式机，又一个冲动买了台 Linux 主机。到现在这它已经跑了四年多了，简单分享下自己的玩法。</p>]]></content>
+        <author>
+            <name><![CDATA[Stdio’s Blog]]></name>
+        </author>
+    </entry>
     
     <entry>
         <id>https://www.logicjake.xyz/2021/07/03/%E7%A7%8B%E6%8B%9B%E9%9D%A2%E7%BB%8F/</id>
@@ -2172,17 +2183,6 @@ CFRelease(urlStr);
 <p><a rel="nofollow" href="https://www.noisyfox.io/moe-native-types.html">Working with native types: Advanced</a>，首发于<a rel="nofollow" href="https://www.noisyfox.io">狐狸的小小窝</a>。</p>]]></content>
         <author>
             <name><![CDATA[狐狸的小小窝]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://blog.stdioa.com/2019/06/go-internal-note/</id>
-        <title><![CDATA[《深入解析Go》笔记]]></title>
-        <updated>2019-06-24T08:40:49+08:00</updated>
-        <link href="https://blog.stdioa.com/2019/06/go-internal-note/"/>
-        <content type="text/html" src="https://blog.stdioa.com/2019/06/go-internal-note/"><![CDATA[<p>在 GitHub 上找到一本解读 Go 实现细节的好书，名叫<a href="https://github.com/tiancaiamao/go-internals/" target="_blank" rel="noopener">《深入解析 Go》</a>。<br>大致看了一遍，简单做了些笔记。</p>]]></content>
-        <author>
-            <name><![CDATA[Stdio’s Blog]]></name>
         </author>
     </entry>
     
