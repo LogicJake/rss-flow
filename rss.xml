@@ -3,12 +3,23 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2021-09-16T12:19:43+08:00</updated>
+    <updated>2021-09-16T18:14:39+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
     </author>
     
+    
+    <entry>
+        <id>https://miaotony.xyz/2021/08/15/CTF_2021DASCTF_July/</id>
+        <title><![CDATA[CTF | 2021 DASCTF July X CBCTF 4th 部分WriteUp]]></title>
+        <updated>2021-09-16T15:20:41+08:00</updated>
+        <link href="https://miaotony.xyz/2021/08/15/CTF_2021DASCTF_July/"/>
+        <content type="text/html" src="https://miaotony.xyz/2021/08/15/CTF_2021DASCTF_July/"><![CDATA[摸鱼打了个DASCTF July，主要看了看Web和Misc题目，大部分是结束后边做边写的，写得还是挺详细的吧，当然也少不了走弯路的地方。]]></content>
+        <author>
+            <name><![CDATA[MiaoTony]]></name>
+        </author>
+    </entry>
     
     <entry>
         <id>https://blog.stdioa.com/2021/09/homelab-share/</id>
@@ -267,17 +278,6 @@
         <updated>2021-07-30T20:46:02+08:00</updated>
         <link href="https://miaotony.xyz/2021/07/29/Life_2021RedHatFinal_trip/"/>
         <content type="text/html" src="https://miaotony.xyz/2021/07/29/Life_2021RedHatFinal_trip/"><![CDATA[前几天去广州打了第四届红帽杯网络安全大赛总决赛，这里来随便记录一下在广州的游记吧~]]></content>
-        <author>
-            <name><![CDATA[MiaoTony]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://miaotony.xyz/2021/07/19/Life_2021QiangwangFinal_trip/</id>
-        <title><![CDATA[碎碎念 | 2021 强网杯S5 全国网络安全挑战赛线下赛 郑州游记]]></title>
-        <updated>2021-07-22T09:25:48+08:00</updated>
-        <link href="https://miaotony.xyz/2021/07/19/Life_2021QiangwangFinal_trip/"/>
-        <content type="text/html" src="https://miaotony.xyz/2021/07/19/Life_2021QiangwangFinal_trip/"><![CDATA[前段时间去郑州打了个强网杯S5线下赛，顺便和师傅们在附近玩了玩，这里来写一下游记吧，喵~]]></content>
         <author>
             <name><![CDATA[MiaoTony]]></name>
         </author>
