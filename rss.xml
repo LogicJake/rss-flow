@@ -3,7 +3,7 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2021-10-19T06:16:04+08:00</updated>
+    <updated>2021-10-19T12:20:40+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
@@ -128,6 +128,43 @@
         <content type="text/html" src="https://blog.stdioa.com/2021/09/homelab-share/"><![CDATA[<p>大学毕业之前一个冲动买了台式机，又一个冲动买了台 Linux 主机。到现在它已经运行了四年多了，简单分享下自己的玩法。</p>]]></content>
         <author>
             <name><![CDATA[Stdio’s Blog]]></name>
+        </author>
+    </entry>
+    
+    <entry>
+        <id>https://www.suruifu.com/posts/662</id>
+        <title><![CDATA[“懒惰”，“堕落”不是一个duo！]]></title>
+        <updated>2021-09-03T08:53:30+08:00</updated>
+        <link href="https://www.suruifu.com/posts/662"/>
+        <content type="text/html" src="https://www.suruifu.com/posts/662"><![CDATA[<h2>逐字分析</h2>
+<ul>
+<li>“惰”
+<ul>
+<li>树心旁。和心、和心性相关</li>
+<li>用来描述一个人的性格，与“勤快”相关对应，如“懒惰”</li>
+<li>用来描述一个物质的属性，与“活跃”相对应，如“惰性气体”</li>
+</ul>
+</li>
+<li>“堕”
+<ul>
+<li>下面有一个土，表示掉在地上的意思。</li>
+<li>掉落、下落，表示方向</li>
+<li>如“堕落”、“堕胎”</li>
+</ul>
+</li>
+</ul>
+<h2>耦合点</h2>
+<ul>
+<li>“懒惰”会使人“堕落”</li>
+<li>“懒惰”表示性格，“堕落”强调结果</li>
+</ul>
+<h2>怎么回事呢？</h2>
+<p>因为我给客户，也是我的一个老师发送的合同里面出现了一个错别字。老师及时纠正了我的错误。<br />
+<img src="https://s.suruifu.com/www/2021/09/WeCom-Screenshot_20210903165132.png" alt="" /></p>
+<p>后来经过检索，发现网上也存在这样的错误。</p>
+<p><img src="https://s.suruifu.com/www/2021/09/WeCom-Screenshot_20210903165227.png" alt="" /></p>]]></content>
+        <author>
+            <name><![CDATA[苏瑞辅的个人网站]]></name>
         </author>
     </entry>
     
@@ -259,6 +296,39 @@
     </entry>
     
     <entry>
+        <id>https://www.suruifu.com/posts/640</id>
+        <title><![CDATA[如何使用OneNote发布博客]]></title>
+        <updated>2021-06-28T18:21:36+08:00</updated>
+        <link href="https://www.suruifu.com/posts/640"/>
+        <content type="text/html" src="https://www.suruifu.com/posts/640"><![CDATA[<ol style="margin-left: 63pt">
+<li><span style="font-family:微软雅黑">点击文件，发送，发送到博客<br />
+</span></li>
+</ol>
+<p><img src="https://s.suruifu.com/www/2021/06/062821_1821_OneNote1.png" alt=""/>
+    </p>
+<ol style="margin-left: 63pt">
+<li><span style="font-family:微软雅黑">选择博客提供商，比如说Wordpress<br />
+</span></li>
+<li><span style="font-family:微软雅黑">填写账号用户名，密码<br />
+</span></li>
+<li><span style="font-family:微软雅黑">图片使用博客系统<br />
+</span></li>
+</ol>
+<p> <br />
+ </p>
+<p><span style="font-family:微软雅黑">整个过程使用体验<strong>很好</strong>！<br />
+</span></p>
+<p><span style="font-family:微软雅黑">备注：这篇博客就是使用OneNote发布的<br />
+</span></p>
+<p><em><span style="font-family:微软雅黑">备注</span>2<span style="font-family:微软雅黑">： 我使用的是Office 365，换句话说我没有使用UWP版本的OneNote！</span></em></p>
+<p>
+<b>这是后面加的。我发现图片没有被正确添加，可能是因为我使用了oss的插件。这个可能还是需要调一下。</b></p>]]></content>
+        <author>
+            <name><![CDATA[苏瑞辅的个人网站]]></name>
+        </author>
+    </entry>
+    
+    <entry>
         <id>https://blog.triplez.cn/posts/monthly-bookkeeping-workflow/</id>
         <title><![CDATA[月度记账工作流]]></title>
         <updated>2021-06-27T04:57:49+08:00</updated>
@@ -288,6 +358,34 @@
         <content type="text/html" src="http://blog.qrzbing.cn/post/2021-ciscn-little-evil/"><![CDATA[<p>对 KLEE 的学习，一些小小的自动化操作。</p>]]></content>
         <author>
             <name><![CDATA[QRZ’s Blog]]></name>
+        </author>
+    </entry>
+    
+    <entry>
+        <id>https://www.suruifu.com/posts/632</id>
+        <title><![CDATA[【搞音乐】我也来搞音乐]]></title>
+        <updated>2021-06-06T13:13:05+08:00</updated>
+        <link href="https://www.suruifu.com/posts/632"/>
+        <content type="text/html" src="https://www.suruifu.com/posts/632"><![CDATA[<p>最近工作也很忙，怎么想起来研究一下音乐了呢？</p>
+<p>其一，因为可以忙里偷闲。同样是玩，我更想研究一点不一样的。</p>
+<p>其二，我发现学科之间是存在关联性的，看点别的反而能给自己的工作带来新的启迪。正所谓“他山之石，可以攻玉”。</p>
+<p>其三，我发现音乐是很高级的东西，我也想有所了解。</p>
+<p>其四，最近工作中认识了一位音乐家。</p>
+<p>我现在也没有钢琴，也没有电子琴，也没有任何乐器，也没有接触过音乐，也没有接触过任何乐器。当然，除了之前在前女友家摸过一次钢琴。</p>
+<p>我也不想变得多强，我想能看懂五线谱，能用钢琴弹出来我就心满意足了。不需要多厉害。</p>
+<p>但是我现在什么也没有，我本来想去练琴房研究一下，但是人家说提前预约，所以今天就没有玩成功。但是心里面还是放不下，所以找到了一个网页，这个网页只要会敲键盘就可以发出声音。但是操作起来比较麻烦，一个音阶的还好说，跨音阶的脑子就转不过来。因为你要做一个复杂的键位和电脑键盘的映射。</p>
+<p>我简单试了三个音乐片段，分别是小星星，打靶归来，国际歌。小星星是最简单的，打靶归来，略复杂一点，国际歌就很高级了。这里所说的高级和低级就说的是国际歌涉及到多个音阶之间的跳跃，对我这个初学者来说，用电脑键盘就很麻烦了。</p>
+<p>我把视频上传到了Bilibili，和大家交流学习。</p>
+<p>https://space.bilibili.com/76786111</p>
+<p>顺便说明呀，其实我连简谱的音高都分别不出来，我只是对电脑键盘很熟悉罢了。如果只涉及到一个1234567，没有高音和低音，我用电脑简单可以很轻松地按出来。</p>
+<p>后面我想，我要么弄个电子琴（500块左右吧），要么就去练琴房办个卡（10块钱一个小时）。据说这个行当里面也是存在鄙视链的，说是钢琴比较高级，电子琴比较垃圾。我觉得其实无所谓，这可能就跟编程语言里面互相争哪个语言更好的问题一样，没有什么意义。我认为编程语言没有什么好坏，只要知算法，懂数据结构，这些只是工具。对于钢琴，我猜呀，只要认识乐谱，能够把握节奏，也都能做好，只不过切换的时候需要一个适应的时间罢了。</p>
+<p>另外呢，我也不认识简谱里面的两个连一起下面加个下划线那样的，如果说，三个，两个加个下划线，三个再加个下划线就有点让人不知道该怎么操作了。比如说下面这个。</p>
+<p>图片</p>
+<p><img src="https://s.suruifu.com/www/2021/06/640.png" alt="" /></p>
+<p>谢谢大家，祝大家工作顺利，生活愉快！</p>
+<p>我去搬砖了，大家下期见！</p>]]></content>
+        <author>
+            <name><![CDATA[苏瑞辅的个人网站]]></name>
         </author>
     </entry>
     
@@ -490,6 +588,21 @@
     </entry>
     
     <entry>
+        <id>https://www.suruifu.com/posts/621</id>
+        <title><![CDATA[硬件只谈概率，软件才有是非]]></title>
+        <updated>2021-05-12T13:28:44+08:00</updated>
+        <link href="https://www.suruifu.com/posts/621"/>
+        <content type="text/html" src="https://www.suruifu.com/posts/621"><![CDATA[<p>最近做了一点硬件开发工作。</p>
+<p>要想控制一个东西，首先要测得准。测控测控，测是控的基础和基石。</p>
+<p>对应在编程工作中，要想控制一个模块，首先要有接口获取到模块的相关状态。</p>
+<p>但是如果当测量本身都会破坏模块工作状态的时候，就变成了不可测量模块的控制。这个时候所有问题都是概率性的。不能以绝对的是非眼光来看待。</p>
+<p>那为什么我们电脑显示器这么稳定呢？我想一方面是测试做得够，掌握了一点这种概率性的规律（电子云图）。另一方面是性能很高，冗余量很大。</p>]]></content>
+        <author>
+            <name><![CDATA[苏瑞辅的个人网站]]></name>
+        </author>
+    </entry>
+    
+    <entry>
         <id>http://blog.qrzbing.cn/about/</id>
         <title><![CDATA[About]]></title>
         <updated>2021-05-02T07:33:00+08:00</updated>
@@ -508,6 +621,17 @@
         <content type="text/html" src="https://blog.zeddyu.info/2021/04/20/tls-poison/"><![CDATA[<p>这是《一篇文章带你读懂 XXX 攻击》系列的第二篇文章，本篇文章主要讲述 TLS Poison 攻击对应的三种攻击方式、一些可能算是“新”的 DNS Rebinding 技巧以及一些关于 IP 选择探索等内容。</p>]]></content>
         <author>
             <name><![CDATA[Zedd’s Blog]]></name>
+        </author>
+    </entry>
+    
+    <entry>
+        <id>https://www.suruifu.com/posts/616</id>
+        <title><![CDATA[Up！ Up！ Up！]]></title>
+        <updated>2021-04-13T03:49:27+08:00</updated>
+        <link href="https://www.suruifu.com/posts/616"/>
+        <content type="text/html" src="https://www.suruifu.com/posts/616"><![CDATA[<p>青春是最宝贵的，努力，努力，努力！</p>]]></content>
+        <author>
+            <name><![CDATA[苏瑞辅的个人网站]]></name>
         </author>
     </entry>
     
