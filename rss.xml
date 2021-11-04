@@ -3,12 +3,23 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2021-11-04T12:20:28+08:00</updated>
+    <updated>2021-11-04T18:15:17+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
     </author>
     
+    
+    <entry>
+        <id>https://blog.vvzero.com/2021/11/04/Network-devices-at-my-home/</id>
+        <title><![CDATA[分享一下我的家庭网络布局]]></title>
+        <updated>2021-11-04T14:13:25+08:00</updated>
+        <link href="https://blog.vvzero.com/2021/11/04/Network-devices-at-my-home/"/>
+        <content type="text/html" src="https://blog.vvzero.com/2021/11/04/Network-devices-at-my-home/"><![CDATA[<blockquote><p>本文讨论地址 <a href="https://bbs.blog.vvzero.com/d/15-dis">https://bbs.blog.vvzero.com/d/15-dis</a></p></blockquote><h2 id="我的家庭网络拓扑图"><a href="#我的家庭网络拓扑图" class="headerlink" title="我的家庭网络拓扑图"></a>我的家庭网络拓扑图</h2><p><img src="https://img.vvzero.com/blog/Network-devices-at-my-home/1.jpg"></p><h3 id="数据流部分"><a href="#数据流部分" class="headerlink" title="数据流部分"></a>数据流部分</h3><ol><li>网络核心部分是 Nano Pi R2S 这个软路由，经过一年调教，已经能适应我这里的一切网络需求了。主要运行了 Wireguard、流量监控、网路唤醒等服务。因为我们小区只有百兆网，所以性能暂时够用。</li><li>几乎所有网络设备都通过中间这个交换机与软路由通讯，虽然不算什么好的交换机，但是同理，够用。</li><li>数据中心是用 intel NUC8 搭建的家庭服务器，主要部署了 emby、Nextcloud、qbittorrent 等服务，满足了家庭观影、数据存储等需求。</li><li>存储采用多个硬盘，目前放弃了阵列模式，家庭用的话还是单块盘来用性价比最高，经常冷备、热备就好。</li><li>家庭服务器通过 FRP 服务把 Nextcloud 服务映射到公网，方便在外看家庭数据。</li><li>主力机是一台 E3-1231 V3 的机器，为什么还在用好几年前的平台？因为满足我的需求了。</li><li>我把一台小米路由器当 AP 用了，目前可以满足所有智能家居、所有手机、平板的稳定联网。</li><li>智能家居方面，完全采用了小米的方案，好看就是王道。</li></ol><h3 id="功率电部分"><a href="#功率电部分" class="headerlink" title="功率电部分"></a>功率电部分</h3><ol><li>图中除了主力 PC、移动设备和智能家居，其他均部署在一个机柜内，所以两个插排就搞定了。</li><li>UPS 还是很有必要的，帮我至少挡住了两次意外停电。</li></ol>]]></content>
+        <author>
+            <name><![CDATA[VVBLOG]]></name>
+        </author>
+    </entry>
     
     <entry>
         <id>https://blog.vvzero.com/2021/08/31/Topuino-the-wonderful-Knickknack-for-server-monitoring/</id>
@@ -516,17 +527,6 @@
         <updated>2021-05-15T07:00:31+08:00</updated>
         <link href="https://blog.vvzero.com/2021/02/14/we-are-engaged/"/>
         <content type="text/html" src="https://blog.vvzero.com/2021/02/14/we-are-engaged/"><![CDATA[<blockquote><p>本文讨论地址 <a href="https://bbs.blog.vvzero.com/d/2-blog">https://bbs.blog.vvzero.com/d/2-blog</a></p></blockquote><p>2021年2月14日，情人节，农历正月初三，玲玲与瑾瑾喜订良缘。</p><p>互联网是有记忆的，在此，我就以计算机为担保，依网络见证！</p>]]></content>
-        <author>
-            <name><![CDATA[VVBLOG]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://blog.vvzero.com/2021/01/24/Become-a-CA-and-generate-self-signed-certificate/</id>
-        <title><![CDATA[如何成为 CA，并签发自己的证书]]></title>
-        <updated>2021-05-15T07:00:31+08:00</updated>
-        <link href="https://blog.vvzero.com/2021/01/24/Become-a-CA-and-generate-self-signed-certificate/"/>
-        <content type="text/html" src="https://blog.vvzero.com/2021/01/24/Become-a-CA-and-generate-self-signed-certificate/"><![CDATA[<blockquote><p>本文讨论地址 <a href="https://bbs.blog.vvzero.com/d/2-blog">https://bbs.blog.vvzero.com/d/2-blog</a></p></blockquote><blockquote><p>要读懂此文章，你需要了解对称加密、非对称加密的基本概念，并了解证书签发的基本流程。</p></blockquote><h2 id="工具准备"><a href="#工具准备" class="headerlink" title="工具准备"></a>工具准备</h2><ol><li>一台 Linux 主机</li><li>openssl</li></ol><h2 id="创建-CA-的私钥"><a href="#创建-CA-的私钥" class="headerlink" title="创建 CA 的私钥"></a>创建 CA 的私钥</h2><p>很容易理解，CA 也有自己的公钥和私钥。</p><p><code>openssl genrsa -des3 -out CAPrivate.key 2048</code></p><p>这个命令会生成一个私钥 <code>CAPrivate.key</code>，并且必须要填写私钥的密码。可以将 2048 改成 4096。不要奇怪这里只有一个私钥，其实公钥也保存在这个文件里了。</p><h2 id="创建根证书"><a href="#创建根证书" class="headerlink" title="创建根证书"></a>创建根证书</h2><p><code>openssl req -x509 -new -nodes -key CAPrivate.key -sha256 -days 365 -out CAPrivate.pem</code></p><p>根证书，顾名思义，肯定是自签发的。这个证书待会需要安装到你的终端设备里面，不然靠这个根证书签发的其他证书不会被信任。</p><p>这个命令里面需要填写很多信息，按照实际填写就好。</p><p>至此，作为一个简单的 CA，所有的文件都已经齐全了。</p><h2 id="创建待签发证书的私钥"><a href="#创建待签发证书的私钥" class="headerlink" title="创建待签发证书的私钥"></a>创建待签发证书的私钥</h2><p>这个私钥与 CA 无关，是待签发的下一级证书。这一步和下一步可以在另一台机器上完成，然后把文件传给保存 CA 信息的机器就好。</p><p><code>openssl genrsa -out MyPrivate.key 2048</code></p><p>同样，可以把 2048 改成 4096。</p><h2 id="创建-CSR"><a href="#创建-CSR" class="headerlink" title="创建 CSR"></a>创建 CSR</h2><p>可以理解为一个待发送给 CA、为你签发证书的一个请求。</p><p><code>openssl req -new -key MyPrivate.key -out MyRequest.csr</code></p><p>同样，这里需要填写很多信息，需要注意的是 <code>Common Name</code> 这个项目，如果你的证书是给 https 用的，这里就填你的域名。</p><h2 id="使用-CA-的私钥签发证书"><a href="#使用-CA-的私钥签发证书" class="headerlink" title="使用 CA 的私钥签发证书"></a>使用 CA 的私钥签发证书</h2><p><code>openssl x509 -req -in MyRequest.csr -CA CAPrivate.pem -CAkey CAPrivate.key -CAcreateserial -out X509Certificate.crt -days 365 -sha256</code></p><h2 id="试一试刚刚签发的证书"><a href="#试一试刚刚签发的证书" class="headerlink" title="试一试刚刚签发的证书"></a>试一试刚刚签发的证书</h2><ol><li>在待测试终端设备上安装 CA 的根证书 <code>CAPricate.pem</code>，比如 Windows、Android，某些浏览器必须单独安装证书。</li><li>把 <code>MyPrivate.key</code> 和 <code>X509Certificate.crt</code> 作为 HTTPS 服务（比如 Nginx）的私钥和证书，写好配置文件。</li><li>在浏览器里面试试看，应该可以显示小锁，且没有安全警告。</li></ol>]]></content>
         <author>
             <name><![CDATA[VVBLOG]]></name>
         </author>
