@@ -3,12 +3,23 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2021-11-04T18:15:17+08:00</updated>
+    <updated>2021-11-05T00:41:19+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
     </author>
     
+    
+    <entry>
+        <id>https://miaotony.xyz/2021/10/26/CTF_2021qiangwangnitai/</id>
+        <title><![CDATA[CTF | 2021 第四届“强网”拟态防御国际精英挑战赛 SU WriteUp]]></title>
+        <updated>2021-11-04T18:22:02+08:00</updated>
+        <link href="https://miaotony.xyz/2021/10/26/CTF_2021qiangwangnitai/"/>
+        <content type="text/html" src="https://miaotony.xyz/2021/10/26/CTF_2021qiangwangnitai/"><![CDATA[周末有个强网拟态防御的比赛，线上赛其实和拟态防御关系不大。最后队友成功带飞喵喵，打到了第二名。]]></content>
+        <author>
+            <name><![CDATA[MiaoTony]]></name>
+        </author>
+    </entry>
     
     <entry>
         <id>https://blog.vvzero.com/2021/11/04/Network-devices-at-my-home/</id>
@@ -207,17 +218,6 @@
         <updated>2021-08-31T15:31:58+08:00</updated>
         <link href="https://miaotony.xyz/2021/08/24/CTF_2021XiangYun/"/>
         <content type="text/html" src="https://miaotony.xyz/2021/08/24/CTF_2021XiangYun/"><![CDATA[又是一个打CTF的周末，这周打了个祥云杯，喵喵主要在看Misc题目，摸鱼好累，又不能出去玩了，喵呜呜。]]></content>
-        <author>
-            <name><![CDATA[MiaoTony]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://miaotony.xyz/2021/08/10/CTF_2021DASCTF_July_cybercms/</id>
-        <title><![CDATA[CTF | 2021 DASCTF July cybercms 一探再探]]></title>
-        <updated>2021-08-28T20:34:53+08:00</updated>
-        <link href="https://miaotony.xyz/2021/08/10/CTF_2021DASCTF_July_cybercms/"/>
-        <content type="text/html" src="https://miaotony.xyz/2021/08/10/CTF_2021DASCTF_July_cybercms/"><![CDATA[在前不久结束的DASCTF July中，有一道名为cybercms的web题目，当时打了半天没打通，赛后还是想不通就来稍微深入探究了一下。]]></content>
         <author>
             <name><![CDATA[MiaoTony]]></name>
         </author>
