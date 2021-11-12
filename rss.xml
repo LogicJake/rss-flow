@@ -3,12 +3,23 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2021-11-12T12:21:00+08:00</updated>
+    <updated>2021-11-12T18:16:16+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
     </author>
     
+    
+    <entry>
+        <id>https://miaotony.xyz/2021/11/02/CTF_2021donghua/</id>
+        <title><![CDATA[CTF | 2021 东华杯 大学生网络安全邀请赛 WriteUp]]></title>
+        <updated>2021-11-12T14:37:58+08:00</updated>
+        <link href="https://miaotony.xyz/2021/11/02/CTF_2021donghua/"/>
+        <content type="text/html" src="https://miaotony.xyz/2021/11/02/CTF_2021donghua/"><![CDATA[周日有东华杯这个上海市大学生网络安全大赛，和校内的师傅摸鱼打了一下，最后佛系摸到了上海市第三，全国第43。]]></content>
+        <author>
+            <name><![CDATA[MiaoTony]]></name>
+        </author>
+    </entry>
     
     <entry>
         <id>https://www.suruifu.com/posts/670</id>
@@ -178,17 +189,6 @@
         <updated>2021-09-22T15:44:13+08:00</updated>
         <link href="https://miaotony.xyz/2021/09/18/CTF_2021_5space/"/>
         <content type="text/html" src="https://miaotony.xyz/2021/09/18/CTF_2021_5space/"><![CDATA[上课和搬砖的闲暇时间摸鱼打了个第五空间网络安全大赛，也就随意看了看Misc题。]]></content>
-        <author>
-            <name><![CDATA[MiaoTony]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://miaotony.xyz/2021/08/15/CTF_2021DASCTF_July/</id>
-        <title><![CDATA[CTF | 2021 DASCTF July X CBCTF 4th 部分WriteUp]]></title>
-        <updated>2021-09-16T15:50:28+08:00</updated>
-        <link href="https://miaotony.xyz/2021/08/15/CTF_2021DASCTF_July/"/>
-        <content type="text/html" src="https://miaotony.xyz/2021/08/15/CTF_2021DASCTF_July/"><![CDATA[摸鱼打了个DASCTF July，主要看了看Web和Misc题目，大部分是结束后边做边写的，写得还是挺详细的吧，当然也少不了走弯路的地方。]]></content>
         <author>
             <name><![CDATA[MiaoTony]]></name>
         </author>
