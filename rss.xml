@@ -3,12 +3,34 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2021-11-14T18:16:32+08:00</updated>
+    <updated>2021-11-15T00:42:30+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
     </author>
     
+    
+    <entry>
+        <id>https://miaotony.xyz/2021/11/03/CTF_2021Hackergame/</id>
+        <title><![CDATA[CTF | 2021 USTC Hackergame WriteUp]]></title>
+        <updated>2021-11-14T19:17:10+08:00</updated>
+        <link href="https://miaotony.xyz/2021/11/03/CTF_2021Hackergame/"/>
+        <content type="text/html" src="https://miaotony.xyz/2021/11/03/CTF_2021Hackergame/"><![CDATA[今年的Hackergame又来了，题目很有梯度，也学到了许多，明年有机会的话还来。]]></content>
+        <author>
+            <name><![CDATA[MiaoTony]]></name>
+        </author>
+    </entry>
+    
+    <entry>
+        <id>https://miaotony.xyz/2021/10/19/CTF_2021ByteCTF/</id>
+        <title><![CDATA[CTF | 2021 ByteCTF Misc Writeup]]></title>
+        <updated>2021-11-14T18:22:39+08:00</updated>
+        <link href="https://miaotony.xyz/2021/10/19/CTF_2021ByteCTF/"/>
+        <content type="text/html" src="https://miaotony.xyz/2021/10/19/CTF_2021ByteCTF/"><![CDATA[周末有个字节跳动CTF，咱摸鱼来打了打，最后队友带飞，打到了第十，太顶啦！]]></content>
+        <author>
+            <name><![CDATA[MiaoTony]]></name>
+        </author>
+    </entry>
     
     <entry>
         <id>https://miaotony.xyz/2021/11/02/CTF_2021donghua/</id>
@@ -184,17 +206,6 @@
     </entry>
     
     <entry>
-        <id>https://miaotony.xyz/2021/09/18/CTF_2021_5space/</id>
-        <title><![CDATA[CTF | 2021 第五空间网络安全大赛线上赛 Misc WriteUp]]></title>
-        <updated>2021-09-22T15:44:13+08:00</updated>
-        <link href="https://miaotony.xyz/2021/09/18/CTF_2021_5space/"/>
-        <content type="text/html" src="https://miaotony.xyz/2021/09/18/CTF_2021_5space/"><![CDATA[上课和搬砖的闲暇时间摸鱼打了个第五空间网络安全大赛，也就随意看了看Misc题。]]></content>
-        <author>
-            <name><![CDATA[MiaoTony]]></name>
-        </author>
-    </entry>
-    
-    <entry>
         <id>https://blog.stdioa.com/2021/09/homelab-share/</id>
         <title><![CDATA[HomeLab 玩法简单分享]]></title>
         <updated>2021-09-16T06:41:52+08:00</updated>
@@ -239,17 +250,6 @@
 <p><img src="https://s.suruifu.com/www/2021/09/WeCom-Screenshot_20210903165227.png" alt="" /></p>]]></content>
         <author>
             <name><![CDATA[苏瑞辅的个人网站]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://miaotony.xyz/2021/08/24/CTF_2021XiangYun/</id>
-        <title><![CDATA[CTF | 2021 祥云杯 Misc WriteUp]]></title>
-        <updated>2021-08-31T15:31:58+08:00</updated>
-        <link href="https://miaotony.xyz/2021/08/24/CTF_2021XiangYun/"/>
-        <content type="text/html" src="https://miaotony.xyz/2021/08/24/CTF_2021XiangYun/"><![CDATA[又是一个打CTF的周末，这周打了个祥云杯，喵喵主要在看Misc题目，摸鱼好累，又不能出去玩了，喵呜呜。]]></content>
-        <author>
-            <name><![CDATA[MiaoTony]]></name>
         </author>
     </entry>
     
