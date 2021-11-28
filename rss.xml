@@ -3,12 +3,23 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2021-11-28T12:20:10+08:00</updated>
+    <updated>2021-11-28T18:15:24+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
     </author>
     
+    
+    <entry>
+        <id>https://blog.triplez.cn/posts/grub-rescue-oops/</id>
+        <title><![CDATA[grub rescue>,  Oops!]]></title>
+        <updated>2021-11-28T13:56:16+08:00</updated>
+        <link href="https://blog.triplez.cn/posts/grub-rescue-oops/"/>
+        <content type="text/html" src="https://blog.triplez.cn/posts/grub-rescue-oops/"><![CDATA[<p>教你如何修复丢失的 Linux GRUB 启动引导。</p>]]></content>
+        <author>
+            <name><![CDATA[TripleZ’s Blog]]></name>
+        </author>
+    </entry>
     
     <entry>
         <id>https://miaotony.xyz/2021/11/03/CTF_2021Hackergame/</id>
@@ -622,17 +633,6 @@
         <updated>2021-04-11T10:24:01+08:00</updated>
         <link href="https://blog.triplez.cn/posts/welcome-macat/"/>
         <content type="text/html" src="https://blog.triplez.cn/posts/welcome-macat/"><![CDATA[Welcome Macat!]]></content>
-        <author>
-            <name><![CDATA[TripleZ’s Blog]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://blog.triplez.cn/posts/migrate-mendeley-to-zotero/</id>
-        <title><![CDATA[如何从 Mendeley 迁移到 Zotero]]></title>
-        <updated>2021-04-06T14:30:03+08:00</updated>
-        <link href="https://blog.triplez.cn/posts/migrate-mendeley-to-zotero/"/>
-        <content type="text/html" src="https://blog.triplez.cn/posts/migrate-mendeley-to-zotero/"><![CDATA[Mendeley 的手机端已经无法使用，是时候将数据迁移至开源的 Zotero 上了]]></content>
         <author>
             <name><![CDATA[TripleZ’s Blog]]></name>
         </author>
