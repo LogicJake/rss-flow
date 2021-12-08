@@ -3,7 +3,7 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2021-12-08T06:17:10+08:00</updated>
+    <updated>2021-12-08T12:22:11+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
@@ -206,6 +206,17 @@
     </entry>
     
     <entry>
+        <id>https://bbs.a2os.club/d/20-hsts/1</id>
+        <title><![CDATA[论坛的 hsts 证书是不是过期了？]]></title>
+        <updated>2021-09-28T07:18:20+08:00</updated>
+        <link href="https://bbs.a2os.club/d/20-hsts/1"/>
+        <content type="text/html" src="https://bbs.a2os.club/d/20-hsts/1"><![CDATA[<p>论坛的 hsts 证书是不是过期了？</p>]]></content>
+        <author>
+            <name><![CDATA[A2OS 开源社区论坛]]></name>
+        </author>
+    </entry>
+    
+    <entry>
         <id>https://blog.stdioa.com/2021/09/homelab-share/</id>
         <title><![CDATA[HomeLab 玩法简单分享]]></title>
         <updated>2021-09-16T06:41:52+08:00</updated>
@@ -250,6 +261,33 @@
 <p><img src="https://s.suruifu.com/www/2021/09/WeCom-Screenshot_20210903165227.png" alt="" /></p>]]></content>
         <author>
             <name><![CDATA[苏瑞辅的个人网站]]></name>
+        </author>
+    </entry>
+    
+    <entry>
+        <id>https://bbs.a2os.club/d/19-/1</id>
+        <title><![CDATA[长时间未登录用户会被清理账号吗？]]></title>
+        <updated>2021-08-20T06:37:53+08:00</updated>
+        <link href="https://bbs.a2os.club/d/19-/1"/>
+        <content type="text/html" src="https://bbs.a2os.club/d/19-/1"><![CDATA[<p>我印象中很早前注册过论坛账号，在邮箱里也翻到20年4月重置密码的邮件，结果现在账号不存在了，同样的邮箱又重新注册了一个。<br>
+是会自动清理未登录用户，还是论坛重开了一次？</p>]]></content>
+        <author>
+            <name><![CDATA[A2OS 开源社区论坛]]></name>
+        </author>
+    </entry>
+    
+    <entry>
+        <id>https://bbs.a2os.club/d/18-/1</id>
+        <title><![CDATA[涅槃之后又变成时代的眼泪了吗？]]></title>
+        <updated>2021-08-20T03:09:40+08:00</updated>
+        <link href="https://bbs.a2os.club/d/18-/1"/>
+        <content type="text/html" src="https://bbs.a2os.club/d/18-/1"><![CDATA[<p>不知道我这个ID有没有觉得眼熟？<br>
+看到这个论坛最新的帖子都是4月份的就很有感触<br>
+最好不要让lcj知道这个地方<br>
+不然他会屠版的<br>
+😅</p>]]></content>
+        <author>
+            <name><![CDATA[A2OS 开源社区论坛]]></name>
         </author>
     </entry>
     
@@ -635,6 +673,31 @@
         <content type="text/html" src="https://blog.triplez.cn/posts/welcome-macat/"><![CDATA[Welcome Macat!]]></content>
         <author>
             <name><![CDATA[TripleZ’s Blog]]></name>
+        </author>
+    </entry>
+    
+    <entry>
+        <id>https://bbs.a2os.club/d/17-/1</id>
+        <title><![CDATA[食堂吃饭有感]]></title>
+        <updated>2021-04-07T04:10:34+08:00</updated>
+        <link href="https://bbs.a2os.club/d/17-/1"/>
+        <content type="text/html" src="https://bbs.a2os.club/d/17-/1"><![CDATA[<p>还是南航的食堂好啊，吃得香，便宜。<br>
+现在在外面，一顿抵得上以前两顿</p>]]></content>
+        <author>
+            <name><![CDATA[A2OS 开源社区论坛]]></name>
+        </author>
+    </entry>
+    
+    <entry>
+        <id>https://bbs.a2os.club/d/16-cloudflare-workers-cloudflare-pages/1</id>
+        <title><![CDATA[博客迁移记 · 从 Cloudflare Workers 到 Cloudflare Pages]]></title>
+        <updated>2021-04-06T11:54:13+08:00</updated>
+        <link href="https://bbs.a2os.club/d/16-cloudflare-workers-cloudflare-pages/1"/>
+        <content type="text/html" src="https://bbs.a2os.club/d/16-cloudflare-workers-cloudflare-pages/1"><![CDATA[<p><a href="https://blog.triplez.cn/posts/cf-workers-to-pages/" rel=" nofollow ugc">https://blog.triplez.cn/posts/cf-workers-to-pages/</a></p>
+
+<p>借用 BBS 当个谈笑风生区~</p>]]></content>
+        <author>
+            <name><![CDATA[A2OS 开源社区论坛]]></name>
         </author>
     </entry>
     
