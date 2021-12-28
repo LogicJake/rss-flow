@@ -3,12 +3,23 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2021-12-28T12:21:51+08:00</updated>
+    <updated>2021-12-28T18:15:56+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
     </author>
     
+    
+    <entry>
+        <id>https://blog.zeddyu.info/2021/12/27/2021-12-20-ANewNovelLFI/</id>
+        <title><![CDATA[hxp CTF 2021 - A New Novel LFI]]></title>
+        <updated>2021-12-27T07:32:24+08:00</updated>
+        <link href="https://blog.zeddyu.info/2021/12/27/2021-12-20-ANewNovelLFI/"/>
+        <content type="text/html" src="https://blog.zeddyu.info/2021/12/27/2021-12-20-ANewNovelLFI/"><![CDATA[<p>上周参与了 hxp CTF ，其中有两个 PHP Web 题目令人印象深刻，也产生了一种让我拍手称快的、对我来说算是新的 LFI 方法，这里就将本次比赛题目分析写一下。当然我不确定这个是不是新方法，若有错误，希望各位师傅们斧正，多多海涵</p>]]></content>
+        <author>
+            <name><![CDATA[Zedd’s Blog]]></name>
+        </author>
+    </entry>
     
     <entry>
         <id>https://blog.vvzero.com/2021/11/04/Network-devices-at-my-home/</id>
@@ -62,17 +73,6 @@
         <content type="text/html" src="https://blog.vvzero.com/2021/02/14/we-are-engaged/"><![CDATA[<blockquote><p>本文讨论地址 <a href="https://bbs.blog.vvzero.com/d/2-blog">https://bbs.blog.vvzero.com/d/2-blog</a></p></blockquote><p>2021年2月14日，情人节，农历正月初三，玲玲与瑾瑾喜订良缘。</p><p>互联网是有记忆的，在此，我就以计算机为担保，依网络见证！</p>]]></content>
         <author>
             <name><![CDATA[VVBLOG]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://blog.zeddyu.info/2021/12/20/2021-12-20-ANewNovelLFI/</id>
-        <title><![CDATA[hxp CTF 2021 - A New Novel LFI]]></title>
-        <updated>2021-12-20T07:32:24+08:00</updated>
-        <link href="https://blog.zeddyu.info/2021/12/20/2021-12-20-ANewNovelLFI/"/>
-        <content type="text/html" src="https://blog.zeddyu.info/2021/12/20/2021-12-20-ANewNovelLFI/"><![CDATA[<p>上周参与了 hxp CTF ，其中有两个 PHP Web 题目令人印象深刻，也产生了一种让我拍手称快的、对我来说算是新的 LFI 方法，这里就将本次比赛题目分析写一下。当然我不确定这个是不是新方法，若有错误，希望各位师傅们斧正，多多海涵</p>]]></content>
-        <author>
-            <name><![CDATA[Zedd’s Blog]]></name>
         </author>
     </entry>
     
