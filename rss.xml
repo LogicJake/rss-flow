@@ -3,12 +3,51 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2021-12-31T06:16:55+08:00</updated>
+    <updated>2021-12-31T12:21:46+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
     </author>
     
+    
+    <entry>
+        <id>https://miaotony.xyz/2021/11/30/CTF_2021NCTF/</id>
+        <title><![CDATA[CTF | 2021 NCTF/NJUPTCTF WriteUp]]></title>
+        <updated>2021-12-31T11:58:01+08:00</updated>
+        <link href="https://miaotony.xyz/2021/11/30/CTF_2021NCTF/"/>
+        <content type="text/html" src="https://miaotony.xyz/2021/11/30/CTF_2021NCTF/"><![CDATA[又是一年南邮校赛NCTF，今年的题目太难了啊，做不来做不来，本来还想恰烂钱的，最后摆烂了。]]></content>
+        <author>
+            <name><![CDATA[MiaoTony]]></name>
+        </author>
+    </entry>
+    
+    <entry>
+        <id>https://www.suruifu.com/posts/675</id>
+        <title><![CDATA[2021-12-31随笔]]></title>
+        <updated>2021-12-31T07:19:54+08:00</updated>
+        <link href="https://www.suruifu.com/posts/675"/>
+        <content type="text/html" src="https://www.suruifu.com/posts/675"><![CDATA[<p>2021年12月31日下午3点2分。</p>
+<p>现在很值得欣慰的是团队中的成员都逐步具有了独立完成一项任务的能力。</p>
+<p>年轻的时光是宝贵的，我不能虚度光阴。</p>
+<p>和别人逃避生活不一样，我要尽快娶妻生子。一个人挣很多钱是目标，我的目标不止于此。</p>
+<p>前几天花一千七百块钱买了一件羽绒服，但是吃了几顿烤鱼就有一些味道，不想穿了。</p>
+<p>我现在穿着去年买的相对廉价的羽绒服，上面还有猫的毛。裤子上也是。鞋子也脏得不行。一副衣冠不整的样子。</p>
+<p>为了更好的参与到工作中去，我把办公室搬到了厂房，外面的噪音很大，我这里有空调，有电灯，还有一个窗户。</p>
+<p>骑行的缘故，非常干，嘴非常干。</p>
+<p>最近处于工作的过渡态，主要是因为换了办公室。每天上下班需要很长时间，和团队之间的工作方式也需要磨合。</p>
+<p>嗓子也有点疼，喝水喝少了，也有可能是空调开多了。</p>
+<p>看着眼前的路实际上是混沌而模糊的。我不怕困难，我也不知道需要走多久，但我会走出来的。</p>
+<p>我从来不为生活压力大而感到伤感，我希望自己能够尽快理清生活的头绪，迎接更大的挑战。</p>
+<p>如果遇到困难就要去变通。我实在没有时间打扫房子了，我雇佣了一个保洁阿姨来打扫。</p>
+<p>现在上下班的通勤也实在是非常消耗时间，我希望可以改善这个问题。</p>
+<p>其实把所有时间都耗在工作里面，然后哭着喊着说累说难并不是努力工作的表现。我应该理清头绪，形成良好的工作生活节奏，才是对团队负责，对客户负责的表现。</p>
+<p>大家做事都喜欢着急，其实很多事情是急不得的。更加理智地制定计划是我对团队应负的责任。更加合理的承诺也是我对客户负责的表现。</p>
+<p>两年以来，我的亲人、朋友、团队、客户一直支持我的工作，我感到非常荣幸。我也不能辜负大家的期望，我要更加努力。</p>
+<p>在2022，我希望可以将团队做得更大，把产品做得更好。在春节前这一个月里面，我希望我可以调整好状态，为节后工作做出储备。</p>]]></content>
+        <author>
+            <name><![CDATA[苏瑞辅的个人网站]]></name>
+        </author>
+    </entry>
     
     <entry>
         <id>https://blog.zeddyu.info/2021/12/27/2021-12-20-ANewNovelLFI/</id>
@@ -213,17 +252,6 @@
 <p>苏瑞辅 2021-11-10 于汉庭酒店</p>]]></content>
         <author>
             <name><![CDATA[苏瑞辅的个人网站]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://miaotony.xyz/2021/10/26/CTF_2021qiangwangnitai/</id>
-        <title><![CDATA[CTF | 2021 第四届“强网”拟态防御国际精英挑战赛 SU WriteUp]]></title>
-        <updated>2021-11-04T18:22:02+08:00</updated>
-        <link href="https://miaotony.xyz/2021/10/26/CTF_2021qiangwangnitai/"/>
-        <content type="text/html" src="https://miaotony.xyz/2021/10/26/CTF_2021qiangwangnitai/"><![CDATA[周末有个强网拟态防御的比赛，线上赛其实和拟态防御关系不大。最后队友成功带飞喵喵，打到了第二名。]]></content>
-        <author>
-            <name><![CDATA[MiaoTony]]></name>
         </author>
     </entry>
     
@@ -598,21 +626,6 @@
         <content type="text/html" src="https://cosmosning.github.io/2020/09/13/intro-to-ml/"><![CDATA[<blockquote><p>最近上了一门课，叫做“智能信息检索”。老师推荐了一本教材 《Understanding Machine Learning: From Theory to Algorithms》（文末提供官方下载链接），来解释<strong>智能</strong>的含义。本文基于我对教材的理解，对其引言部分做了一些要点概括，供读者参考。</p></blockquote><h1 id="what-is-learning">What Is Learning？</h1><p>粗略地讲，<strong>学习是一个将经历（<em>experience</em>）转换为技能（<em>expertise</em>）或知识（<em>knowledge</em>）的过程</strong>。一般地，一个学习算法的<strong>输入</strong>是<strong>训练数据</strong>（代表经历），<strong>输出</strong>是<strong>技能</strong>。</p><p>一种常见的学习方法是 “记忆学习”（<em>learning by memorization</em>）。类似人类学习的“死记硬背”，这种学习方法有时候十分有效，但是它却缺失了学习系统中一个十分重要的能力，即<strong>泛化能力</strong>（<em>generalization</em>）。换句话讲，一个成功的学习系统理应能够依据已知知识，正确处理未知的情况。</p><div class="note info"><p><strong>泛化能力</strong> （<em>generalization</em>） 有时也被称作<strong>归纳推理</strong> （<em>inductive reasoning / inductive inference</em>）</p></div><p>然而，<strong>归纳推理可能会导致错误结论</strong>。那么怎样才能减少犯错呢？</p><p>答案是：在学习系统中<strong>引入先验知识</strong>（<em>prior knowledge</em>）！</p><div class="note info"><p><strong>先验知识</strong>（<em>prior knowledge</em>） 有时也被称作<strong>归纳偏好</strong> （<em>inductive bias</em>）</p></div><p>从书中举得几个例子来看，<strong>引入先验知识，使整个学习过程带有偏好，是一个成功的学习算法必然发生的事情</strong>（这种现象是 <strong>No-Free-Lunch Theorem</strong> 的具体表现）。粗略来说，学习算法开始训练时所引入的先验知识越强，从训练样本中学习就越简单。但是，先验知识越强，学习的灵活性也就越低，因为整个学习过程被这些预定假设束缚住了。</p><h1 id="when-we-need-machine-learning">When We Need Machine Learning？</h1><p>那么，在哪些情况下，我们需要利用机器学习解决问题呢？主要有以下两个方面：</p><ul><li>问题的复杂性（<em>complexity</em>）</li><li>任务的适应性需求（<em>adaptivity</em>）</li></ul><h2 id="tasks-that-are-to-complex-to-program">Tasks That Are to Complex to Program</h2><ul><li><em>Tasks Performed by Animals / Humans</em>：我们暂时无法理解一些我们能够处理的日常任务，例如驾驶汽车、语音识别、图像理解。以现有的知识，难以抽象出一个良好的程序去执行这些任务。然而，先进的机器学习程序，只要接受足够的训练样本训练，就可以从中学习经验，并在这些任务中达到不错的效果。</li><li><em>Tasks beyond Human Capabilities</em>：另一类适合用机器学习解决的问题是对巨大的且复杂的数据（例如宇宙空间数据、医疗数据、天气数据等）进行分析。这些数据的处理和分析通常超越了我们自身的分析能力。使用机器学习，可以充分利用计算机的能力，找到数据中有价值的信息。</li></ul><h2 id="adaptivity">Adaptivity</h2><ul><li>预先编程的程序有一个缺陷，即死板性（<em>rigidity</em>）。也就是说，一旦程序写好了，安装到系统中后，程序就不会变化了。然而，现实中许多任务都是在不断变化的。</li><li>而机器学习（其天生可以适应不同的输入数据）提供了一种解决此类任务的方案。</li></ul><h1 id="types-of-learning">Types of Learning</h1><h2 id="supervised-versus-unsupervised">Supervised versus Unsupervised</h2><p>如果将学习看作是一个“利用经历来获取技能”的过程，那么监督学习和非监督学习可以描述如下：</p><ul><li><strong>监督（<em>Supervised</em>）学习</strong>：在该场景中，“经历”（亦可称作训练样本）包含了十分重要的信息；而这些信息却在测试样本中丢失了。从监督学习中学习到的技能的目标是，预测测试数据中的确实信息。这就好像环境作为一名老师通过提供额外的信息（通常称作<strong>“标签”</strong> <em>label</em>）"监督"学生（学习算法）的学习。</li><li><strong>非监督（<em>Unsupervised</em>）学习</strong>：对于非监督学习来说，训练数据和测试数据几乎没什么区别。通常，这种学习方法通过处理输入数据，来达到<strong>总结数据</strong>、<strong>压缩数据</strong>的目标。<strong>聚类</strong>——将一个数据集分成几个子集，同一子集具有相似性——是非监督学习中一个典型的例子。</li><li>在监督与非监督之间，还存在一种不同的方法——<strong>强化学习</strong>。</li></ul><h2 id="active-versus-passive">Active versus Passive</h2><ul><li><strong>主动（<em>Active</em>）学习</strong>：主动学习在在训练过程中将会与环境交互。</li><li><strong>被动（<em>Passive</em>）学习</strong>：被动学习只会观测环境所提供的信息，而不会影响（influence）或指导（direct）它。</li></ul><div class="note info"><p><strong>例子</strong></p><ul><li>垃圾邮件识别通常是被动学习，因为它等着用户为它标记收到的邮件是否是垃圾邮件。</li><li>在主动学习的场景下，学习算法会在训练过程中要求用户标记它指定的邮件，或者甚至是由学习算法生成的邮件，来增强它对什么是垃圾邮件的理解。</li></ul></div><h2 id="helpful-of-the-teacher">Helpful of the Teacher</h2><ul><li>主动提供信息<ul><li>训练信息<strong>正相关</strong>——普通学习：例如，教师会不断尝试为学生提供最有用的信息，来达到某种学习目标。</li><li>训练信息<strong>负相关</strong>——<strong>对抗（<em>Adversarial</em>）学习</strong>：例如垃圾邮件生成器将会努力误导垃圾邮件识别器。</li></ul></li><li>被动提供信息<ul><li><strong>统计学习（<em>Statistical Learning</em>）</strong>：有时候，信息并不是他人主动提供的。例如科学家在认识自然时，环境，作为一位老师，并不会根据学生的需求主动的提供信息，因此是被动的提供信息。这种情况下，输入数据常常被认为是由某种随机过程（<em>random process</em>）产生。这样，就可以使用统计学习解决问题</li></ul></li></ul><h2 id="online-versus-batch-learning-protocol">Online versus Batch Learning Protocol</h2><ul><li><strong>在线学习（<em>Online Learning</em>）</strong>：学习算法必须在训练过程中，在线反馈。例如，股票交易员需要基于目前位置积累的经验，做出每日决策。虽说随着时间推移，他会称为一名专家，但是也可能在此过程中犯下代价高昂的错误。</li><li><strong>批处理学习（<em>Batch Learning</em>）</strong>：只有在处理大量的数据后，该算法才能获得所需的技能。在数据挖掘场景下，数据挖掘算法会处理大量的数据之后，才会得出相关的结论。</li></ul><h1 id="relations-to-other-fields">Relations to Other Fields</h1><h2 id="with-ai">With AI</h2><ul><li>机器学习是 AI 的一个分支。</li><li>机器学习更关注<strong>利用计算机的优势和独特的能力</strong>来<strong>补充</strong>人类的智能，因此常常处理一些远超人类能力的任务。</li><li>AI 更关注创造一个能够自动<strong>模仿</strong>智能行为的机器。</li></ul><h2 id="with-statistics">With Statistics</h2><ul><li>统计学：提出假设（专业人员） <span class="math inline">\(\rightarrow\)</span> <strong>验证假设</strong>（统计学）</li><li>机器学习：利用数据，<strong>挖掘规律</strong>，解释原因。</li><li>机器学习对<strong>算法</strong>层面的考虑更多</li><li>统计学常常关注数据的<strong>渐进性</strong>（<strong>无穷</strong>情况下的特性），机器学习则关注<strong>有限</strong>的样本空间</li><li>统计学通常<strong>预先假设数据分布</strong>，而机器学习是<strong>分布无关</strong>的（<em>distribution-free</em>）</li></ul><h1 id="reference">Reference</h1><p>Shai Shalev-Shwartz, Shai Ben-David. <a href="https://www.cs.huji.ac.il/~shais/UnderstandingMachineLearning/index.html" target="_blank" rel="noopener">Understanding Machine Learning: From Theory to Algorithms</a></p>]]></content>
         <author>
             <name><![CDATA[CosmosNing的个人博客]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://www.suruifu.com/posts/621</id>
-        <title><![CDATA[硬件只谈概率，软件才有是非]]></title>
-        <updated>2021-05-12T13:28:44+08:00</updated>
-        <link href="https://www.suruifu.com/posts/621"/>
-        <content type="text/html" src="https://www.suruifu.com/posts/621"><![CDATA[<p>最近做了一点硬件开发工作。</p>
-<p>要想控制一个东西，首先要测得准。测控测控，测是控的基础和基石。</p>
-<p>对应在编程工作中，要想控制一个模块，首先要有接口获取到模块的相关状态。</p>
-<p>但是如果当测量本身都会破坏模块工作状态的时候，就变成了不可测量模块的控制。这个时候所有问题都是概率性的。不能以绝对的是非眼光来看待。</p>
-<p>那为什么我们电脑显示器这么稳定呢？我想一方面是测试做得够，掌握了一点这种概率性的规律（电子云图）。另一方面是性能很高，冗余量很大。</p>]]></content>
-        <author>
-            <name><![CDATA[苏瑞辅的个人网站]]></name>
         </author>
     </entry>
     
