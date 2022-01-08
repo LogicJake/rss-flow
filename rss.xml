@@ -3,12 +3,24 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2022-01-08T06:17:00+08:00</updated>
+    <updated>2022-01-08T12:21:44+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
     </author>
     
+    
+    <entry>
+        <id>https://blog.zeddyu.info/2022/01/08/2022-01-08-TheEndOfLFI/</id>
+        <title><![CDATA[hxp CTF 2021 - The End Of LFI?]]></title>
+        <updated>2022-01-08T09:44:57+08:00</updated>
+        <link href="https://blog.zeddyu.info/2022/01/08/2022-01-08-TheEndOfLFI/"/>
+        <content type="text/html" src="https://blog.zeddyu.info/2022/01/08/2022-01-08-TheEndOfLFI/"><![CDATA[<p>[TOC]</p>
+<p>接上回 hxp CTF 的题目，本文介绍一下之前 counter 题目的 LFI 解法，以及令人极其赞叹的 LFI 新技巧，可以说是 The End Of LFI 了。</p>]]></content>
+        <author>
+            <name><![CDATA[Zedd’s Blog]]></name>
+        </author>
+    </entry>
     
     <entry>
         <id>https://miaotony.xyz/2022/01/01/CTF_2022GZTime0101/</id>
@@ -461,17 +473,6 @@
 <p>我去搬砖了，大家下期见！</p>]]></content>
         <author>
             <name><![CDATA[苏瑞辅的个人网站]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://blog.zeddyu.info/2021/05/19/tls-ctf/</id>
-        <title><![CDATA[TLS-Poison 攻击方式在 CTF 中的利用实践]]></title>
-        <updated>2021-05-19T21:32:27+08:00</updated>
-        <link href="https://blog.zeddyu.info/2021/05/19/tls-ctf/"/>
-        <content type="text/html" src="https://blog.zeddyu.info/2021/05/19/tls-ctf/"><![CDATA[<p>最近总结整理了 TLS Poison 攻击相关的知识，本文会继续讲 TLS Poison 利用，以及其在 CTF 的实际运用，也通过这个题目来聊聊 FTPS 相关知识。</p>]]></content>
-        <author>
-            <name><![CDATA[Zedd’s Blog]]></name>
         </author>
     </entry>
     
