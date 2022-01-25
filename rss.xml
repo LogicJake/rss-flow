@@ -3,12 +3,23 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2022-01-25T12:21:28+08:00</updated>
+    <updated>2022-01-25T18:16:11+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
     </author>
     
+    
+    <entry>
+        <id>https://blog.triplez.cn/posts/lexer-parser-toolchain/</id>
+        <title><![CDATA[Lexer & Parser Toolchain]]></title>
+        <updated>2022-01-25T13:29:19+08:00</updated>
+        <link href="https://blog.triplez.cn/posts/lexer-parser-toolchain/"/>
+        <content type="text/html" src="https://blog.triplez.cn/posts/lexer-parser-toolchain/"><![CDATA[最近接触的编译相关知识，主要是 flex 和 bison 的工具链，记录之。]]></content>
+        <author>
+            <name><![CDATA[TripleZ’s Blog]]></name>
+        </author>
+    </entry>
     
     <entry>
         <id>https://blog.vvzero.com/2022/01/24/Casual-talk-of-current-site-management/</id>
@@ -638,17 +649,6 @@
         <content type="text/html" src="http://blog.qrzbing.cn/about/"><![CDATA[关于我 一条咸鱼，努力提升自己中 目前方向：系统安全，研究逆向、Fuzzing。Rust 学习中。 爱好：业余无线电，游泳。 Call Sign: BG2EQV history 2021-05-02: 更换主题为 hugo-theme-even 2021-03-30:]]></content>
         <author>
             <name><![CDATA[QRZ’s Blog]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://blog.triplez.cn/posts/welcome-macat/</id>
-        <title><![CDATA[欢迎 Macat ！]]></title>
-        <updated>2021-04-11T10:24:01+08:00</updated>
-        <link href="https://blog.triplez.cn/posts/welcome-macat/"/>
-        <content type="text/html" src="https://blog.triplez.cn/posts/welcome-macat/"><![CDATA[Welcome Macat!]]></content>
-        <author>
-            <name><![CDATA[TripleZ’s Blog]]></name>
         </author>
     </entry>
     
