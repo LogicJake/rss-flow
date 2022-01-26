@@ -3,12 +3,23 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2022-01-26T12:19:50+08:00</updated>
+    <updated>2022-01-26T18:15:47+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
     </author>
     
+    
+    <entry>
+        <id>https://blog.triplez.cn/posts/chaosblade-specific-cpu-load/</id>
+        <title><![CDATA[chaosblade 生成指定 CPU 利用率负载的原理]]></title>
+        <updated>2022-01-26T14:21:45+08:00</updated>
+        <link href="https://blog.triplez.cn/posts/chaosblade-specific-cpu-load/"/>
+        <content type="text/html" src="https://blog.triplez.cn/posts/chaosblade-specific-cpu-load/"><![CDATA[使用混沌测试软件更简单地构造出指定 CPU 利用率的负载]]></content>
+        <author>
+            <name><![CDATA[TripleZ’s Blog]]></name>
+        </author>
+    </entry>
     
     <entry>
         <id>https://blog.triplez.cn/posts/lexer-parser-toolchain/</id>
@@ -432,17 +443,6 @@
         <updated>2021-06-27T04:57:49+08:00</updated>
         <link href="https://blog.triplez.cn/posts/monthly-bookkeeping-workflow/"/>
         <content type="text/html" src="https://blog.triplez.cn/posts/monthly-bookkeeping-workflow/"><![CDATA[个人记账工作流记录]]></content>
-        <author>
-            <name><![CDATA[TripleZ’s Blog]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://blog.triplez.cn/posts/bills-export-methods/</id>
-        <title><![CDATA[多种支付账户的账单导出及查看方法汇总]]></title>
-        <updated>2021-06-19T03:05:38+08:00</updated>
-        <link href="https://blog.triplez.cn/posts/bills-export-methods/"/>
-        <content type="text/html" src="https://blog.triplez.cn/posts/bills-export-methods/"><![CDATA[本文涵盖支付宝、微信，工行、交行借记卡，招行信用卡以及火币-币币交易的账单导出方法]]></content>
         <author>
             <name><![CDATA[TripleZ’s Blog]]></name>
         </author>
