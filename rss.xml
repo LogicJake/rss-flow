@@ -3,12 +3,23 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2022-02-18T00:53:42+08:00</updated>
+    <updated>2022-02-18T06:17:11+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
     </author>
     
+    
+    <entry>
+        <id>https://blog.vvzero.com/2022/02/18/thoughts-in-2022-2-suzhou-covid-19-epidemic/</id>
+        <title><![CDATA[苏州新冠疫情带来 2019 年 12 月的回忆]]></title>
+        <updated>2022-02-18T05:14:15+08:00</updated>
+        <link href="https://blog.vvzero.com/2022/02/18/thoughts-in-2022-2-suzhou-covid-19-epidemic/"/>
+        <content type="text/html" src="https://blog.vvzero.com/2022/02/18/thoughts-in-2022-2-suzhou-covid-19-epidemic/"><![CDATA[<p>苏州最近多地出现了新冠肺炎病人，我现在就在苏州。以前总是看到其他地方各种中高风险地区，各种全员核酸检测，现在我就身处其中。</p><p>很多人已经习惯了新闻里每天都会出现的疫情播报，习惯了每天戴口罩，但我总能记起 2019 年 12 月前后的一些琐碎细节，恍如隔世。</p><p>2019 年 12 月，我还在南航，大四上学期。这大概就是我“大学最幸福的时光”的最后一个多月吧，各种主要的困难课程都在大一大二结束了，大三又有大把的时间跟创新区的大神们学技术、吹牛逼，现在技术水平尚可，时间充裕，毕设就是小儿科，连校招都尘埃落定了，该干一番大事了。</p><p>大概 12 月 25 日左右，我在创新区度过了与往常一样幸福的一天后，晚上看到了“武汉出现新型冠状病毒”相关的新闻。当时我就有一点害怕，毕竟我当年也是生物课程的学霸，关于传染病相关的理论也略懂。只是不知道怎么办，想了想，于是去校门口药店买了一包医用口罩，黑色的，质量非常好，只是包装有点旧了，甚至落了灰尘。</p><p>第二天戴着口罩在路上走，倒也没有人侧目，就是自己感觉有点怪怪的，有点格格不入。到了导师实验室也就一个学长“哟，戴口罩干啥”，我嘿嘿傻笑。晚上从创新区回宿舍，遇到了陈学弟，问我咋了，我说武汉出现了新型肺炎，防范一下。陈学弟不以为意：“武汉离南京好远呢”，我：“逻辑距离其实挺近的，坐高铁几个小时而已”。</p><p>12 月 30 日左右，我陪玲玲坐校车去南航明故宫校区拿普通话考试证书。在校车上，当时当然不会有人戴口罩，我也没戴。我跟玲玲说了“肺炎”相关的问题，然后又在微信上问了高中同学王同学的意见（他当时在南医大学医），王同学：“小心点，这好像是新型冠状病毒造成的肺炎，去武汉的话得戴好口罩！”</p><p>玲玲和我好像都多了一丝忧愁，拿到证书后，我分了玲玲几个口罩。</p><p>2020 年 1 月中旬回家，刚好是全民大规模防疫的前夕。我坐大巴回家的，全车只有我一个人戴口罩，他们也并不知道接下来两三天会发生什么，当然不是过年的喜庆。</p><p>接下来的事情就众所周知了，只记得当时，我突然很反感与我共处一室的人咳嗽，我开始疯狂洗手，我再也不直接用手摸脸抠鼻……我还记得我变得很焦虑，在群里与大家吹水的话题由“Nginx 代理转发规则”变成了“新冠病毒特效药”。大年初三左右，同一个小区的姨妈来我家拜年，我也躲在自己房间里不见……</p><p>我曾跟玲玲开玩笑似的聊过：“细想起来，我们真的好惨好倒霉啊，大学刚要毕业，正是最有干劲的时候，结果新冠肺炎来了，全世界的情形因此急转而下，很多事情难度变得很大……”</p><p>没想到，现在已经是 2022 年 2 月了，四舍五入都快三年了。但我现在心态好得不行，城市周围就有病人，但我并不焦虑。只不过依旧像《生活大爆炸》里的 Sheldon 一样，特别爱卫生，周围有人有症状我都会离他远远的，依旧勤洗手，依旧不去摸脸……</p><p>我也依旧期待着，全世界彻底摆脱疫情阴霾的那一天。</p>]]></content>
+        <author>
+            <name><![CDATA[VVBLOG]]></name>
+        </author>
+    </entry>
     
     <entry>
         <id>https://www.logicjake.xyz/2021/12/01/%E7%AE%97%E6%B3%95%E7%A7%8B%E6%8B%9B%E4%B8%8A%E5%B2%B8%E5%8E%86%E7%A8%8B%E2%80%94%E5%A4%87%E6%88%98%E5%AE%9E%E4%B9%A0%E7%A7%8B%E6%8B%9B/</id>
@@ -126,17 +137,6 @@
         <updated>2022-01-17T08:39:56+08:00</updated>
         <link href="https://blog.vvzero.com/2021/08/31/Topuino-the-wonderful-Knickknack-for-server-monitoring/"/>
         <content type="text/html" src="https://blog.vvzero.com/2021/08/31/Topuino-the-wonderful-Knickknack-for-server-monitoring/"><![CDATA[<blockquote><p>我做了一个用来监控服务器的桌面小摆件</p></blockquote><p><img src="https://img.vvzero.com/blog/Topuino-the-wonderful-Knickknack-for-server-monitoring/1.png"></p><h2 id="什么是-Topuino"><a href="#什么是-Topuino" class="headerlink" title="什么是 Topuino"></a>什么是 Topuino</h2><p>Topuino 是我 DIY 的一个桌面小摆件，可以实现通用服务器或计算机的数据监控，包括 CPU 占用、RAM 占用、两个硬盘的可用空间、硬盘读写速度、网络 IO 速率。</p><h2 id="为什么叫-Topuino"><a href="#为什么叫-Topuino" class="headerlink" title="为什么叫 Topuino"></a>为什么叫 Topuino</h2><p>在 Linux 系列服务器上，我们通常使用 top 命令查看 CPU 内存占用，我最初的设想也是将 top 命令实物化，这就是 Topuino 中 Top 的由来。</p><p>在选型的时候，为了兼顾开发效率和成本，我选用了大名鼎鼎的 ESP8266 单片机，配合了 Arduino 开发框架，Arduino 则是 Topuino 中 uino 的由来。</p><h2 id="Topuino-有哪些亮点"><a href="#Topuino-有哪些亮点" class="headerlink" title="Topuino 有哪些亮点"></a>Topuino 有哪些亮点</h2><p>先看图解：</p><p><img src="https://img.vvzero.com/blog/Topuino-the-wonderful-Knickknack-for-server-monitoring/2.png"></p><ol><li>我觉得它挺好看，哑光黑的 PCB 底板富有科技感，红绿蓝三色 LED 层次分明，指示性强；</li><li>显示的参数满足大部分的需求，刷新率为 1 秒，CPU、内存、磁盘占用以百分比表示在柱状图上，磁盘、网络 IO 各以四位数码管显示，配合 KB、MB 单位显示，可以表示 0KB - 9999MB /s 的速率；</li><li>配置、操作方便。在需要监控的服务器上只需要跑一个 python 脚本即可；Topuino 首次上电后支持用手机或任何支持 Wi-Fi 的设备连接，并通过浏览器配置。若需要重新配置，通过按键即可恢复；</li><li>使用了通用的 USB-TypeC 接口（后期会做带电池版本）；</li><li>成本不高，谁都可以承担。</li></ol><p><img src="https://img.vvzero.com/blog/Topuino-the-wonderful-Knickknack-for-server-monitoring/3.jpg"></p><h2 id="Topuino-的工作原理"><a href="#Topuino-的工作原理" class="headerlink" title="Topuino 的工作原理"></a>Topuino 的工作原理</h2><ul><li>服务器部分很简单，主站使用了 Flask，维护一个数据库，保存着从站（被监控服务器）UUID 与运行参数的映射关系（实际上现在是用 python 的字典简单实现的）。主站接收从站的运行数据，并向 Topuino 回传数据；</li><li>服务器从站采用 python 的 psutil 库，获取所有的运行数据；</li><li>Topuino 硬件部分使用了 ESP-12F 作为 MCU，显示采用 LED 整列和数码管，显示驱动是 TM1638 芯片。</li></ul><p>附上原理图：</p><p><img src="https://img.vvzero.com/blog/Topuino-the-wonderful-Knickknack-for-server-monitoring/4.png"></p><p><img src="https://img.vvzero.com/blog/Topuino-the-wonderful-Knickknack-for-server-monitoring/5.png"></p><p><img src="https://img.vvzero.com/blog/Topuino-the-wonderful-Knickknack-for-server-monitoring/6.png"></p><p>PCB 打样交给专门的厂家，回来自己焊。</p><h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>你愿意在办公桌上放一个监控服务器的小摆件吗？至少，我做出来之后，很喜欢，就像看着一只猫一样。</p><p><img src="https://img.vvzero.com/blog/Topuino-the-wonderful-Knickknack-for-server-monitoring/7.png"></p><p>另：ESP8266 的代码初步开源在 <a href="https://github.com/Villivateur/Topuino">https://github.com/Villivateur/Topuino</a> ，供大家参考。服务器端代码因为太简单且写得太丑，以后再说吧~~</p>]]></content>
-        <author>
-            <name><![CDATA[VVBLOG]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://blog.vvzero.com/2021/04/16/A-little-pitty-for-PlatformIO/</id>
-        <title><![CDATA[对 PlatformIO 有点失望]]></title>
-        <updated>2022-01-17T08:39:56+08:00</updated>
-        <link href="https://blog.vvzero.com/2021/04/16/A-little-pitty-for-PlatformIO/"/>
-        <content type="text/html" src="https://blog.vvzero.com/2021/04/16/A-little-pitty-for-PlatformIO/"><![CDATA[<blockquote><p>PlatformIO 目前只是玩具，单片机开发还得用 Keil</p></blockquote><p>好久不碰单片机，现在想搞个项目，选型 STM32xxxxxx，想找一套“现代化”的 IDE，于是找到了 PlatformIO。</p><p>刚开始很新奇很激动，VSCode 开发环境很友好，各种单片机型号、库很丰富，而且 STM32 可以直接用 Arduino 开发，各种一键式部署。最主要的是商用免费，差点就选用了。</p><p>但是问题很快就出现了，Arduino 框架对于底层的封装太完美，我甚至不能方便地修改 SPI 或者 I2C 的引脚，而且 GPIO 读写速度也相较使用 CMSIS 慢很多，STM32duino 虽然仍然在发展，但是，我认为还处在“玩具”的阶段。</p><p>如果抛弃 Arduino 框架，去使用 CMSIS ，那也太不方便了，而且 STM32 标准库在 PlatformIO 里面目前居然只支持很少几款芯片（F10x 系列全系不支持）。如果我要用 FreeRTOS，FreeRTOS 官方目前也没有适配 PlatformIO。</p><p>最终还是回到 Keil，花钱的才是最好的。</p>]]></content>
         <author>
             <name><![CDATA[VVBLOG]]></name>
         </author>
