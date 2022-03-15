@@ -3,12 +3,23 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2022-03-14T18:20:11+08:00</updated>
+    <updated>2022-03-15T00:57:30+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
     </author>
     
+    
+    <entry>
+        <id>https://miaotony.xyz/2022/03/13/Pentest_2022_1337UPLIVECTF/</id>
+        <title><![CDATA[Pentest | 2022 1337UP LIVE CTF Workthrough]]></title>
+        <updated>2022-03-14T19:39:42+08:00</updated>
+        <link href="https://miaotony.xyz/2022/03/13/Pentest_2022_1337UPLIVECTF/"/>
+        <content type="text/html" src="https://miaotony.xyz/2022/03/13/Pentest_2022_1337UPLIVECTF/"><![CDATA[这周末看了看2022 1337UP LIVE CTF国际赛中的一道偏渗透的题目，这里来记录一下解题过程。]]></content>
+        <author>
+            <name><![CDATA[MiaoTony]]></name>
+        </author>
+    </entry>
     
     <entry>
         <id>https://blog.vvzero.com/2022/03/08/arm-cortex-a9-interrupt-with-fpu/</id>
@@ -193,17 +204,6 @@
         <updated>2022-01-01T20:59:37+08:00</updated>
         <link href="https://miaotony.xyz/2022/01/01/CTF_2022GZTime0101/"/>
         <content type="text/html" src="https://miaotony.xyz/2022/01/01/CTF_2022GZTime0101/"><![CDATA[2022新年快乐！来看了看GZTime的元旦解谜，随便写了写题解啦。]]></content>
-        <author>
-            <name><![CDATA[MiaoTony]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://miaotony.xyz/2021/11/30/CTF_2021NCTF/</id>
-        <title><![CDATA[CTF | 2021 NCTF/NJUPTCTF WriteUp]]></title>
-        <updated>2021-12-31T11:58:01+08:00</updated>
-        <link href="https://miaotony.xyz/2021/11/30/CTF_2021NCTF/"/>
-        <content type="text/html" src="https://miaotony.xyz/2021/11/30/CTF_2021NCTF/"><![CDATA[又是一年南邮校赛NCTF，今年的题目太难了啊，做不来做不来，本来还想恰烂钱的，最后摆烂了。]]></content>
         <author>
             <name><![CDATA[MiaoTony]]></name>
         </author>
