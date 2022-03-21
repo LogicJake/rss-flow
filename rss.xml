@@ -3,12 +3,23 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2022-03-21T12:24:15+08:00</updated>
+    <updated>2022-03-21T18:18:09+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
     </author>
     
+    
+    <entry>
+        <id>https://miaotony.xyz/2022/03/20/EE_LicheeRV_1_getting_started/</id>
+        <title><![CDATA[EE | Sipeed 荔枝派 LicheeRV | 1 开箱及上手入门]]></title>
+        <updated>2022-03-21T13:23:03+08:00</updated>
+        <link href="https://miaotony.xyz/2022/03/20/EE_LicheeRV_1_getting_started/"/>
+        <content type="text/html" src="https://miaotony.xyz/2022/03/20/EE_LicheeRV_1_getting_started/"><![CDATA[有新玩具了！最近整了个Sipeed 荔枝派 LicheeRV Dock 全志D1开发板，这篇博客就来记录一下开箱和上手的一些折腾过程。]]></content>
+        <author>
+            <name><![CDATA[MiaoTony]]></name>
+        </author>
+    </entry>
     
     <entry>
         <id>https://blog.zhuwenq.icu/2022/03/20/%E8%8E%AB%E9%87%8C%E6%96%AF%E9%81%8D%E5%8E%86/</id>
@@ -300,17 +311,6 @@
         <content type="text/html" src="https://blog.zeddyu.info/2021/12/27/2021-12-20-ANewNovelLFI/"><![CDATA[<p>上周参与了 hxp CTF ，其中有两个 PHP Web 题目令人印象深刻，也产生了一种让我拍手称快的、对我来说算是新的 LFI 方法，这里就将本次比赛题目分析写一下。当然我不确定这个是不是新方法，若有错误，希望各位师傅们斧正，多多海涵</p>]]></content>
         <author>
             <name><![CDATA[Zedd’s Blog]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://miaotony.xyz/2021/12/16/CTF_2021AsuriCTF_NUAACTF_Misc/</id>
-        <title><![CDATA[CTF | 2021 AsuriCTF / NUAACTF Misc 部分官方 WriteUp]]></title>
-        <updated>2021-12-16T22:44:44+08:00</updated>
-        <link href="https://miaotony.xyz/2021/12/16/CTF_2021AsuriCTF_NUAACTF_Misc/"/>
-        <content type="text/html" src="https://miaotony.xyz/2021/12/16/CTF_2021AsuriCTF_NUAACTF_Misc/"><![CDATA[上周末和Asuri战队的师傅们一起办了个AsuriCTF/NUAACTF，喵喵出了两道Misc题目，这里来写写题解和出题思路，顺便复盘一下比赛运维的故事，记录一下心得体会。]]></content>
-        <author>
-            <name><![CDATA[MiaoTony]]></name>
         </author>
     </entry>
     
