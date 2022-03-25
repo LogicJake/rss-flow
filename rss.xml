@@ -3,12 +3,23 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2022-03-25T12:50:36+08:00</updated>
+    <updated>2022-03-25T18:18:15+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
     </author>
     
+    
+    <entry>
+        <id>https://www.suruifu.com/posts/686</id>
+        <title><![CDATA[行百里者半九十]]></title>
+        <updated>2022-03-25T15:59:49+08:00</updated>
+        <link href="https://www.suruifu.com/posts/686"/>
+        <content type="text/html" src="https://www.suruifu.com/posts/686"><![CDATA[<p>很高兴能处于困难之中，我要沉着应对。</p>]]></content>
+        <author>
+            <name><![CDATA[苏瑞辅的个人网站]]></name>
+        </author>
+    </entry>
     
     <entry>
         <id>https://blog.zhuwenq.icu/2022/03/23/Integrating-Multimodal-Information-in-Large-Pretrained-Transformers/</id>
@@ -511,34 +522,6 @@
         <content type="text/html" src="http://blog.qrzbing.cn/post/2021-ciscn-little-evil/"><![CDATA[<p>对 KLEE 的学习，一些小小的自动化操作。</p>]]></content>
         <author>
             <name><![CDATA[QRZ’s Blog]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://www.suruifu.com/posts/632</id>
-        <title><![CDATA[【搞音乐】我也来搞音乐]]></title>
-        <updated>2021-06-06T13:13:05+08:00</updated>
-        <link href="https://www.suruifu.com/posts/632"/>
-        <content type="text/html" src="https://www.suruifu.com/posts/632"><![CDATA[<p>最近工作也很忙，怎么想起来研究一下音乐了呢？</p>
-<p>其一，因为可以忙里偷闲。同样是玩，我更想研究一点不一样的。</p>
-<p>其二，我发现学科之间是存在关联性的，看点别的反而能给自己的工作带来新的启迪。正所谓“他山之石，可以攻玉”。</p>
-<p>其三，我发现音乐是很高级的东西，我也想有所了解。</p>
-<p>其四，最近工作中认识了一位音乐家。</p>
-<p>我现在也没有钢琴，也没有电子琴，也没有任何乐器，也没有接触过音乐，也没有接触过任何乐器。当然，除了之前在前女友家摸过一次钢琴。</p>
-<p>我也不想变得多强，我想能看懂五线谱，能用钢琴弹出来我就心满意足了。不需要多厉害。</p>
-<p>但是我现在什么也没有，我本来想去练琴房研究一下，但是人家说提前预约，所以今天就没有玩成功。但是心里面还是放不下，所以找到了一个网页，这个网页只要会敲键盘就可以发出声音。但是操作起来比较麻烦，一个音阶的还好说，跨音阶的脑子就转不过来。因为你要做一个复杂的键位和电脑键盘的映射。</p>
-<p>我简单试了三个音乐片段，分别是小星星，打靶归来，国际歌。小星星是最简单的，打靶归来，略复杂一点，国际歌就很高级了。这里所说的高级和低级就说的是国际歌涉及到多个音阶之间的跳跃，对我这个初学者来说，用电脑键盘就很麻烦了。</p>
-<p>我把视频上传到了Bilibili，和大家交流学习。</p>
-<p>https://space.bilibili.com/76786111</p>
-<p>顺便说明呀，其实我连简谱的音高都分别不出来，我只是对电脑键盘很熟悉罢了。如果只涉及到一个1234567，没有高音和低音，我用电脑简单可以很轻松地按出来。</p>
-<p>后面我想，我要么弄个电子琴（500块左右吧），要么就去练琴房办个卡（10块钱一个小时）。据说这个行当里面也是存在鄙视链的，说是钢琴比较高级，电子琴比较垃圾。我觉得其实无所谓，这可能就跟编程语言里面互相争哪个语言更好的问题一样，没有什么意义。我认为编程语言没有什么好坏，只要知算法，懂数据结构，这些只是工具。对于钢琴，我猜呀，只要认识乐谱，能够把握节奏，也都能做好，只不过切换的时候需要一个适应的时间罢了。</p>
-<p>另外呢，我也不认识简谱里面的两个连一起下面加个下划线那样的，如果说，三个，两个加个下划线，三个再加个下划线就有点让人不知道该怎么操作了。比如说下面这个。</p>
-<p>图片</p>
-<p><img src="https://s.suruifu.com/www/2021/06/640.png" alt="" /></p>
-<p>谢谢大家，祝大家工作顺利，生活愉快！</p>
-<p>我去搬砖了，大家下期见！</p>]]></content>
-        <author>
-            <name><![CDATA[苏瑞辅的个人网站]]></name>
         </author>
     </entry>
     
