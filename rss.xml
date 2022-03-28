@@ -3,12 +3,23 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2022-03-27T18:16:29+08:00</updated>
+    <updated>2022-03-28T01:04:38+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
     </author>
     
+    
+    <entry>
+        <id>https://miaotony.xyz/2022/03/25/CTF_2022HFCTF/</id>
+        <title><![CDATA[CTF | 2022 数字中国创新大赛虎符网络安全赛道 初赛 WriteUp]]></title>
+        <updated>2022-03-27T21:49:20+08:00</updated>
+        <link href="https://miaotony.xyz/2022/03/25/CTF_2022HFCTF/"/>
+        <content type="text/html" src="https://miaotony.xyz/2022/03/25/CTF_2022HFCTF/"><![CDATA[上周末打了下虎符CTF，感觉题目总体而言难度挺大，也就Misc方向相对来说简单一点了，于是来玩了玩。]]></content>
+        <author>
+            <name><![CDATA[MiaoTony]]></name>
+        </author>
+    </entry>
     
     <entry>
         <id>https://www.suruifu.com/posts/686</id>
@@ -272,17 +283,6 @@
 <p>接上回 hxp CTF 的题目，本文介绍一下之前 counter 题目的 LFI 解法，以及令人极其赞叹的 LFI 新技巧，可以说是 The End Of LFI 了。</p>]]></content>
         <author>
             <name><![CDATA[Zedd’s Blog]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://miaotony.xyz/2022/01/01/CTF_2022GZTime0101/</id>
-        <title><![CDATA[CTF | 2022 GZTime's 元旦红包解谜 WriteUp]]></title>
-        <updated>2022-01-01T20:59:37+08:00</updated>
-        <link href="https://miaotony.xyz/2022/01/01/CTF_2022GZTime0101/"/>
-        <content type="text/html" src="https://miaotony.xyz/2022/01/01/CTF_2022GZTime0101/"><![CDATA[2022新年快乐！来看了看GZTime的元旦解谜，随便写了写题解啦。]]></content>
-        <author>
-            <name><![CDATA[MiaoTony]]></name>
         </author>
     </entry>
     
