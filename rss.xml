@@ -3,12 +3,23 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2022-03-31T12:26:39+08:00</updated>
+    <updated>2022-03-31T18:18:27+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
     </author>
     
+    
+    <entry>
+        <id>https://blog.triplez.cn/posts/systemd-binary-service-dynamic-linking/</id>
+        <title><![CDATA[通过 systemd 服务配置链接动态库]]></title>
+        <updated>2022-03-31T12:31:19+08:00</updated>
+        <link href="https://blog.triplez.cn/posts/systemd-binary-service-dynamic-linking/"/>
+        <content type="text/html" src="https://blog.triplez.cn/posts/systemd-binary-service-dynamic-linking/"><![CDATA[巧用 systemd 与 LD_LIBRARY_PATH]]></content>
+        <author>
+            <name><![CDATA[TripleZ’s Blog]]></name>
+        </author>
+    </entry>
     
     <entry>
         <id>https://blog.zhuwenq.icu/2022/03/30/Towards-a-Unified-View-of-Parameter-Efficient-Transfer-Learning/</id>
@@ -500,17 +511,6 @@
 <b>这是后面加的。我发现图片没有被正确添加，可能是因为我使用了oss的插件。这个可能还是需要调一下。</b></p>]]></content>
         <author>
             <name><![CDATA[苏瑞辅的个人网站]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://blog.triplez.cn/posts/monthly-bookkeeping-workflow/</id>
-        <title><![CDATA[月度记账工作流]]></title>
-        <updated>2021-06-27T04:57:49+08:00</updated>
-        <link href="https://blog.triplez.cn/posts/monthly-bookkeeping-workflow/"/>
-        <content type="text/html" src="https://blog.triplez.cn/posts/monthly-bookkeeping-workflow/"><![CDATA[个人记账工作流记录]]></content>
-        <author>
-            <name><![CDATA[TripleZ’s Blog]]></name>
         </author>
     </entry>
     
