@@ -3,12 +3,23 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2022-04-08T12:26:47+08:00</updated>
+    <updated>2022-04-08T18:18:37+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
     </author>
     
+    
+    <entry>
+        <id>https://blog.vvzero.com/2022/04/08/diy-to-combine-sukangma-and-xingchengma/</id>
+        <title><![CDATA[如何 DIY 一个苏康码与行程码“双码合一”的健康码 APP]]></title>
+        <updated>2022-04-08T13:00:02+08:00</updated>
+        <link href="https://blog.vvzero.com/2022/04/08/diy-to-combine-sukangma-and-xingchengma/"/>
+        <content type="text/html" src="https://blog.vvzero.com/2022/04/08/diy-to-combine-sukangma-and-xingchengma/"><![CDATA[<h2 id="背景介绍"><a href="#背景介绍" class="headerlink" title="背景介绍"></a>背景介绍</h2><p>众所周知的背景：</p><ol><li>苏康码打开很慢，在支付宝中如果没有快捷键，需要以下步骤：点击打开支付宝 -&gt; 点击健康码 -&gt; 点击立即查看，如果设置了长按图标打开健康码，也得至少两步；其他 APP 比如“苏周到”，可以实现长按快捷键后一步访问，但是其中存在三个步骤：APP 启动 -&gt; 健康码小程序启动 -&gt; 加载网页，这种不可理喻的框架，在某些低端机上冷启动，可能需要长达数十秒的时间；</li><li>行程卡打开也很慢，在微信小程序中打开，不知道为什么每次都让我确认一下“同意并授权运营商查询”，严重影响效率；</li><li>很多地方两个码都要查，于是慢*2，话说我也不知道为什么有关部门不把这两个码合二为一……</li></ol><p>所以干脆 DIY 一个。</p><h2 id="开发流程"><a href="#开发流程" class="headerlink" title="开发流程"></a>开发流程</h2><p>我想做出这样的效果：打开 APP 后，直接显示苏康码，滑动屏幕可切换到行程码，不需要任何多余的点击动作。</p><h3 id="技术栈选择"><a href="#技术栈选择" class="headerlink" title="技术栈选择"></a>技术栈选择</h3><p>我没有任何 APP 开发经验，所以相当于新手。因为最近用 C# 和 .NET 框架比较多，<a href="https://v2ex.com/t/844404">经 V2EX 网友提醒</a>，我选择了 Xamarin 框架。据说如果新手想快速尝试跨平台 APP 开发，用 flutter 比较好，但是……whatever，支持一下微软，及其宇宙第一 IDE。</p><h3 id="获取苏康码直链"><a href="#获取苏康码直链" class="headerlink" title="获取苏康码直链"></a>获取苏康码直链</h3><p>既然苏康码本质上是网页，而且我在朋友圈了解到，可以获取到直链而且是不需要认证的，只要 token 对就行了，那就简单了。</p><p>于是我决定使用 <a href="https://www.telerik.com/fiddler/fiddler-classic">Fiddler</a> 抓包，大致步骤就是：配好 Fiddler 的监听端口，然后保证电脑和手机在同一个局域网内，手机在 WiFi 设置里配置好 Fiddler 的代理。</p><p><img src="https://img.vvzero.com/blog/diy-to-combine-sukangma-and-xingchengma/1.png"></p><p>测试的 APP 是苏周到，不出所料，苏康码链接是 HTTPS 的，想解密只能在手机上安装一个证书然后中间人了。</p><p><img src="https://img.vvzero.com/blog/diy-to-combine-sukangma-and-xingchengma/2.png"></p><p>导出 Fiddler 的证书并复制到手机上，MIUI 安装证书的步骤也很简单，记得在抓完包之后删除这个证书就好。</p><p><img src="https://img.vvzero.com/blog/diy-to-combine-sukangma-and-xingchengma/3.png"></p><p>然后就可以解密 HTTPS 流量。理论上，对于现在的 Android 版本，APP 可以选择不信任用户安装的证书，但还好，苏康码并没有采取这样的机制。</p><p>解析出来的苏康码的直链很简单，就是 <a href="https://jsstm.jszwfw.gov.cn/jkmIndex.html?token=xxxxxxxxxxxxxxxx&amp;uuid=xxxxxxxxxxxxxxx">https://jsstm.jszwfw.gov.cn/jkmIndex.html?token=xxxxxxxxxxxxxxxx&amp;uuid=xxxxxxxxxxxxxxx</a> 这样的格式，直接访问就可以看到自己的苏康码界面。</p><h3 id="获取行程码直链"><a href="#获取行程码直链" class="headerlink" title="获取行程码直链"></a>获取行程码直链</h3><p>行程码直链更简单，直接就可以搜到： <a href="https://xc.caict.ac.cn/">https://xc.caict.ac.cn/</a> 。有趣的是，行程码居然是用 Vue 框架做的，如果只是普通的 HTML 表单页面的话，我也许会做一个自动发验证码查询的功能。</p><h3 id="APP-开发"><a href="#APP-开发" class="headerlink" title="APP 开发"></a>APP 开发</h3><p>安装移动端开发相关 SDK 后，启动宇宙最强 IDE，新建一个空项目叫 <code>ShuangShuangMa</code> （随便起一个名字，双双码），然后面向 Google 编程……基本上只要查一下怎么使用 WebView 以及如何实现滑动切换页面就好了。</p><p>代码非常简单，xaml 页面如下：</p><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">CarouselPage</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://xamarin.com/schemas/2014/forms&quot;</span></span></span><br><span class="line"><span class="tag">             <span class="attr">xmlns:x</span>=<span class="string">&quot;http://schemas.microsoft.com/winfx/2009/xaml&quot;</span></span></span><br><span class="line"><span class="tag">             <span class="attr">x:Class</span>=<span class="string">&quot;ShuangShuangMa.MainPage&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">ContentPage</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">StackLayout</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">WebView</span> <span class="attr">x:Name</span>=<span class="string">&quot;WebView_SuKangMa&quot;</span> <span class="attr">VerticalOptions</span>=<span class="string">&quot;FillAndExpand&quot;</span> /&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">Button</span> <span class="attr">Text</span>=<span class="string">&quot;点击刷新&quot;</span> <span class="attr">Margin</span>=<span class="string">&quot;50,10&quot;</span> <span class="attr">Clicked</span>=<span class="string">&quot;Button_RefreshSuKangMa_Clicked&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">StackLayout</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">ContentPage</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">ContentPage</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">StackLayout</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">WebView</span> <span class="attr">x:Name</span>=<span class="string">&quot;WebView_XingChengMa&quot;</span> <span class="attr">VerticalOptions</span>=<span class="string">&quot;FillAndExpand&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">StackLayout</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">ContentPage</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">CarouselPage</span>&gt;</span></span><br></pre></td></tr></table></figure><p>C# 逻辑如下：</p><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">using</span> Xamarin.Forms;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">ShuangShuangMa</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">partial</span> <span class="keyword">class</span> <span class="title">MainPage</span> : <span class="title">CarouselPage</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">MainPage</span>(<span class="params"></span>)</span></span><br><span class="line">        &#123;</span><br><span class="line">            InitializeComponent();</span><br><span class="line">            WebView_SuKangMa.Source = <span class="string">&quot;https://jsstm.jszwfw.gov.cn/jkmIndex.html?token=xxxxxx&amp;uuid=xxxxxx&quot;</span>;</span><br><span class="line">            WebView_XingChengMa.Source = <span class="string">&quot;https://xc.caict.ac.cn/&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Button_RefreshSuKangMa_Clicked</span>(<span class="params"><span class="built_in">object</span> sender, EventArgs e</span>)</span></span><br><span class="line">        &#123;</span><br><span class="line">            WebView_SuKangMa.Reload();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure><p>部分解释：</p><ol><li>添加刷新按钮是因为，WebView 在后台不会运行，而苏康码上的时间又是在前端运算的，所以防止再次打开应用后，苏康码的时间不对；</li><li>行程码网页在重新加载后就必须重新认证手机号，而 Android 应用在触发返回按钮后，会关闭所有的 WebView，所以需要在 <code>MainActivity.cs</code> 中添加以下代码以便把返回按钮当 Home 键用：</li></ol><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">OnBackPressed</span>(<span class="params"></span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    MoveTaskToBack(<span class="literal">true</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>当然，应用安装后得关闭电池优化、锁在后台，毕竟被清理掉之后又得重新认证行程码。</p><p>至此，APP 完成。</p><h2 id="效果展示"><a href="#效果展示" class="headerlink" title="效果展示"></a>效果展示</h2><p>效果见下面的视频：</p><video src='https://img.vvzero.com/blog/diy-to-combine-sukangma-and-xingchengma/4.mp4 ' type='video/mp4' controls='controls' width='320px'></video><p>话说，本来想着 Xamarin 是跨平台的，准备给玲玲的 iPhone 也整一个的，但无奈意识到自己没有 Mac，作罢。</p>]]></content>
+        <author>
+            <name><![CDATA[VVBLOG]]></name>
+        </author>
+    </entry>
     
     <entry>
         <id>https://blog.triplez.cn/posts/mastering-git-cherry-pick/</id>
@@ -18,6 +29,20 @@
         <content type="text/html" src="https://blog.triplez.cn/posts/mastering-git-cherry-pick/"><![CDATA[<p>本文希望教你如何成为一个 <code>git cherry-pick</code> 的 “master”！通过使用 <code>git cherry-pick</code> 来轻松地维护多个分支版本，再也不会让 multi-version maintaining  成为你心头上的那把令你屡次痛心的剑了！</p>]]></content>
         <author>
             <name><![CDATA[TripleZ’s Blog]]></name>
+        </author>
+    </entry>
+    
+    <entry>
+        <id>https://www.suruifu.com/posts/690</id>
+        <title><![CDATA[我很高兴能够经历现在的困难]]></title>
+        <updated>2022-04-07T15:13:28+08:00</updated>
+        <link href="https://www.suruifu.com/posts/690"/>
+        <content type="text/html" src="https://www.suruifu.com/posts/690"><![CDATA[<p>我现在的生活并不轻松，我在经历一些困难。</p>
+<p>我很高兴，我面对困难的时候并不是无能为力，而能冷静应对；我很高兴，我能够沉下心来，把握整体工作方向。</p>
+<p>我要逐步提升自己解决问题的水平、资源调度的水平；我希望我能逐步迎接更大的困难、更艰难的处境、更棘手的情况。</p>
+<p>我希望可以永远处于困难之中！</p>]]></content>
+        <author>
+            <name><![CDATA[苏瑞辅的个人网站]]></name>
         </author>
     </entry>
     
@@ -62,6 +87,17 @@
         <content type="text/html" src="https://miaotony.xyz/2022/03/25/CTF_2022HFCTF/"><![CDATA[上周末打了下虎符CTF，感觉题目总体而言难度挺大，也就Misc方向相对来说简单一点了，于是来玩了玩。]]></content>
         <author>
             <name><![CDATA[MiaoTony]]></name>
+        </author>
+    </entry>
+    
+    <entry>
+        <id>https://www.suruifu.com/posts/686</id>
+        <title><![CDATA[行百里者半九十]]></title>
+        <updated>2022-03-25T15:59:49+08:00</updated>
+        <link href="https://www.suruifu.com/posts/686"/>
+        <content type="text/html" src="https://www.suruifu.com/posts/686"><![CDATA[<p>很高兴能处于困难之中，我要沉着应对。</p>]]></content>
+        <author>
+            <name><![CDATA[苏瑞辅的个人网站]]></name>
         </author>
     </entry>
     
@@ -275,17 +311,6 @@
     </entry>
     
     <entry>
-        <id>https://blog.vvzero.com/2021/09/27/Mapuino-a-cute-knickknack-for-web-access-monitor/</id>
-        <title><![CDATA[Mapuino - 一个硬件极客风的 WEB 访客地图显示摆件]]></title>
-        <updated>2022-01-17T08:39:56+08:00</updated>
-        <link href="https://blog.vvzero.com/2021/09/27/Mapuino-a-cute-knickknack-for-web-access-monitor/"/>
-        <content type="text/html" src="https://blog.vvzero.com/2021/09/27/Mapuino-a-cute-knickknack-for-web-access-monitor/"><![CDATA[<h2 id="Mapuino-是什么"><a href="#Mapuino-是什么" class="headerlink" title="Mapuino 是什么"></a>Mapuino 是什么</h2><p>Mapuino 是一个简单的摆件，或者叫“玩具”。你可以在自己的个人博客、主页或者任何可以插入个性代码的社交网站（如 V2EX）上添加一行 URL，然后就可以在 Mapuino 上观赏全国哪些地方的人正在访问你的网站。</p><p><img src="https://img.vvzero.com/blog/Mapuino-a-cute-knickknack-for-web-access-monitor/1.jpg"></p><h2 id="Mapuino-不是什么"><a href="#Mapuino-不是什么" class="headerlink" title="Mapuino 不是什么"></a>Mapuino 不是什么</h2><p>Mapuino 不是生产力工具，它功能单一，仅供娱乐。但它真的可以给你的生活带来一些小乐趣。</p><h2 id="Mapuino-的历史故事"><a href="#Mapuino-的历史故事" class="headerlink" title="Mapuino 的历史故事"></a>Mapuino 的历史故事</h2><p>2017 年秋学季，我上大二，有幸加入学校的学生 IT 创新创业区，并认识了 suruifu 同学，当时我所在的部门叫“物联网创新区”。圣诞前夜，suruifu 同学在创新区内给我分享了一个外国小哥的 youtube 视频。视频中，外国小哥做了一个圣诞树，神奇之处是，只要有人 ping 他的电脑 ip，圣诞树上就会随机亮起一个 LED。很多人一起 ping 的时候，圣诞树就会闪闪发光。</p><p>suruifu 同学感慨：“这才是物联网！”</p><p>而后，到了今年，一个月以前，我做了第一个小摆件 <a href="https://blog.vvzero.com/2021/08/31/Topuino-the-wonderful-Knickknack-for-server-monitoring/">Topuino</a>。</p><p>用同样的技术栈，我又做了 Mapuino。</p><h2 id="Mapuino-的工作模式"><a href="#Mapuino-的工作模式" class="headerlink" title="Mapuino 的工作模式"></a>Mapuino 的工作模式</h2><p>Mapuino 与 Topuino 类似，在配置之后，会连接 Wi-Fi 并从服务器获取数据，在每个周期内（比如 1 分钟），所有在上一个周期访问过你网站的用户，其所在省级行政区的 LED 将会亮起。</p><h2 id="Mapuino-的工作原理"><a href="#Mapuino-的工作原理" class="headerlink" title="Mapuino 的工作原理"></a>Mapuino 的工作原理</h2><p>硬件部分与 Topuino 非常类似，采用 ESP8266 作为 MCU，TM1638 作为 LED 驱动。</p><p>Mapuino 会以 1 分钟为周期向服务器发起请求，服务器返回上一个周期哪些地区有用户访问了指定 URL。此 URL 可以嵌入在任何网页中，比如通过 JS 发起请求，或者假装是一个 img 标签，或者也可以用各类站长测速工具直接 DDOS 这个 URL……</p><p>服务端直接解析访问此 URL 的 IP 所在地（目前使用了高德的 API），并临时存储。</p><p><img src="https://img.vvzero.com/blog/Mapuino-a-cute-knickknack-for-web-access-monitor/2.jpg"></p><h2 id="与-Topuino-相比的改进"><a href="#与-Topuino-相比的改进" class="headerlink" title="与 Topuino 相比的改进"></a>与 Topuino 相比的改进</h2><ol><li>体积更小，<del>可以白嫖部分 PCB 打样厂的免费额度</del>；</li><li>调整了下面两个固定孔的位置，可以直接拧上两个螺柱，方便放在桌上；</li><li>隐藏了 Wi-Fi 天线；</li><li>成本更低。</li></ol><h2 id="代码与开源"><a href="#代码与开源" class="headerlink" title="代码与开源"></a>代码与开源</h2><p>硬件端: <a href="https://github.com/Villivateur/Mapuino">https://github.com/Villivateur/Mapuino</a></p><p>服务端: <a href="https://github.com/Villivateur/MapuinoServer">https://github.com/Villivateur/MapuinoServer</a></p><h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>我又有其他点子啦，下一个做啥呢？</p>]]></content>
-        <author>
-            <name><![CDATA[VVBLOG]]></name>
-        </author>
-    </entry>
-    
-    <entry>
         <id>https://blog.zeddyu.info/2022/01/08/2022-01-08-TheEndOfLFI/</id>
         <title><![CDATA[hxp CTF 2021 - The End Of LFI?]]></title>
         <updated>2022-01-08T09:44:57+08:00</updated>
@@ -294,6 +319,34 @@
 <p>接上回 hxp CTF 的题目，本文介绍一下之前 counter 题目的 LFI 解法，以及令人极其赞叹的 LFI 新技巧，可以说是 The End Of LFI 了。</p>]]></content>
         <author>
             <name><![CDATA[Zedd’s Blog]]></name>
+        </author>
+    </entry>
+    
+    <entry>
+        <id>https://www.suruifu.com/posts/675</id>
+        <title><![CDATA[2021-12-31随笔]]></title>
+        <updated>2021-12-31T07:19:54+08:00</updated>
+        <link href="https://www.suruifu.com/posts/675"/>
+        <content type="text/html" src="https://www.suruifu.com/posts/675"><![CDATA[<p>2021年12月31日下午3点2分。</p>
+<p>现在很值得欣慰的是团队中的成员都逐步具有了独立完成一项任务的能力。</p>
+<p>年轻的时光是宝贵的，我不能虚度光阴。</p>
+<p>和别人逃避生活不一样，我要尽快娶妻生子。一个人挣很多钱是目标，我的目标不止于此。</p>
+<p>前几天花一千七百块钱买了一件羽绒服，但是吃了几顿烤鱼就有一些味道，不想穿了。</p>
+<p>我现在穿着去年买的相对廉价的羽绒服，上面还有猫的毛。裤子上也是。鞋子也脏得不行。一副衣冠不整的样子。</p>
+<p>为了更好的参与到工作中去，我把办公室搬到了厂房，外面的噪音很大，我这里有空调，有电灯，还有一个窗户。</p>
+<p>骑行的缘故，非常干，嘴非常干。</p>
+<p>最近处于工作的过渡态，主要是因为换了办公室。每天上下班需要很长时间，和团队之间的工作方式也需要磨合。</p>
+<p>嗓子也有点疼，喝水喝少了，也有可能是空调开多了。</p>
+<p>看着眼前的路实际上是混沌而模糊的。我不怕困难，我也不知道需要走多久，但我会走出来的。</p>
+<p>我从来不为生活压力大而感到伤感，我希望自己能够尽快理清生活的头绪，迎接更大的挑战。</p>
+<p>如果遇到困难就要去变通。我实在没有时间打扫房子了，我雇佣了一个保洁阿姨来打扫。</p>
+<p>现在上下班的通勤也实在是非常消耗时间，我希望可以改善这个问题。</p>
+<p>其实把所有时间都耗在工作里面，然后哭着喊着说累说难并不是努力工作的表现。我应该理清头绪，形成良好的工作生活节奏，才是对团队负责，对客户负责的表现。</p>
+<p>大家做事都喜欢着急，其实很多事情是急不得的。更加理智地制定计划是我对团队应负的责任。更加合理的承诺也是我对客户负责的表现。</p>
+<p>两年以来，我的亲人、朋友、团队、客户一直支持我的工作，我感到非常荣幸。我也不能辜负大家的期望，我要更加努力。</p>
+<p>在2022，我希望可以将团队做得更大，把产品做得更好。在春节前这一个月里面，我希望我可以调整好状态，为节后工作做出储备。</p>]]></content>
+        <author>
+            <name><![CDATA[苏瑞辅的个人网站]]></name>
         </author>
     </entry>
     
@@ -320,6 +373,36 @@
     </entry>
     
     <entry>
+        <id>https://www.suruifu.com/posts/670</id>
+        <title><![CDATA[2021.11.10随想]]></title>
+        <updated>2021-11-10T08:30:45+08:00</updated>
+        <link href="https://www.suruifu.com/posts/670"/>
+        <content type="text/html" src="https://www.suruifu.com/posts/670"><![CDATA[<p>不知道是因为我是一个理工科的学生，还是因为我在为了高考进行了太多论述文的训练。每次写东西，我都希望理清我的思路，让我的逻辑非常严谨。带着这样的态度写博客，结果就是往往不能表述太多的感情，更像是一种情况汇报。</p>
+<p>我没有把我的博客定义为一个技术博客，因为我不认为自己在技术上有什么高大的见解。我想，其实如果不写题目，随便写一点自己的想法，想到哪里写道哪里或许会更有意思一点。</p>
+<p>我现在在哪里呢？我现在在汉庭酒店里面。今天下午出来办事，事情并不像预想中那么顺利，所以想找个地方休息一下。按照之前的做法，我可能会去肯德基，或者其他地方。但是这一次我选择了去开一个钟点房。</p>
+<p>我不认为自己是多么牛逼的，但是至少我的想法一直是特别的。我最近觉得其实住在酒店里面比自己租房住要开心得多。有这种想法一方面原因是我看国外的大佬都是住在酒店里面的。另一方面，从我自身的情况出发，我对居住环境的整洁有着极高的要求。但是租来的房子都是很多年之前装修的了，从底子上来说就已经破旧了，而且每天打扫房间是需要很多时间的。我觉得我不能浪费时间来做这些事情。那怎么办呢？我是去找一个保姆？其实也做不到，因为并没有那么大的工作量。权衡之下，还是酒店好一点。</p>
+<p>我现在住的这个酒店房间，我问了一下住一个月的话，是五千多块钱。我算了一下还行。但是这件事情有一个阻力，就是我爸爸在这件事情上并不支持我，我爸说酒店是人性中最肮脏的地方。因为我爸爸就在酒店工作，我也没有办法反驳。但我感觉在大城市的高端酒店应该不会像他说得那么恶劣，那么凶险。</p>
+<p>今天我看到了一副景观，让我深有感慨。我在来酒店之前，我想在南航的操场上呆一会儿，我试着躺下来，我看到了蓝色的天空，虽然并没有云彩。我在想上一次我看到这么大的天空是什么时候呢？每天都在城市中生活，天空被高楼大厦切割成了小块、缝隙。所以说在大城市中可能连看到的机会都没有。那么说肯定不在大城市中，那就是在我家里，我已经很长时间没有回过我的村里面，上一次回去应该还是大一暑假或者寒假的时候。那个时候我有看过这个天空吗？我想应该也没有。因为那个时候心情是浮躁的，我没有精力，没有心情抬头看一下。我明白了，那肯定是我小的时候了。在我小的时候每天都在田间地头玩耍，玩虫子、看云彩。</p>
+<p>我是一个喜欢超越，喜欢进步的人。我一辈子都不可能回到田间地头了。如果有可能的话，那就是在我玩尽人生浮华的时候。</p>
+<p>现在我有了一个新的笔记本电脑，所以出门在外也可以打打字，写写博客，感慨一下人生。我还为我的笔记本电脑配了一个华为随身路由器，现在感觉使用体验也是不错的。</p>
+<p>我突然想了一个写文章的方法，今天是2021.11.10。</p>
+<p>2021年11月10日。现在一个项目刚刚取得阶段进展，公司整体运转良好，本月需要完结的项目很多，工作压力较大。但是一旦熬过这一段时间，公司的发展就会更上一层楼。过去几天也非常忙，我的状态也很好。为了按时交付项目，我基本上不玩手机，每天晚上10点准时休息，早上4点开始准备起床，白天工作一整天。</p>
+<p>2020年11月10日。去年这个时候我在做什么呢？去年的这个时候我在和宾思鲁开展项目，这是把我带到中惠大厦写字楼的项目。当时工作压力也很大，但是并没有良好的工作状态。每天作息时间比较混乱。也就是那段时间的压力，让我平添了很多白头发。</p>
+<p>2019年11月10日。我想那个时候快考研了。我压力很大，我生活很乱。我并没有找到人生的方向，我不知道以后我要去做什么。我和单同学之间的感情也逐渐疏远。在那个时候我们都不知道未来的疫情会把我们的生活影响成什么样子。</p>
+<p>2018年11月10日。如果没有记错的话，这个时间应该是我和单同学天天在一起的时间。我刚刚从成绩落后的阴影中走出来，就遇到了单同学。这一段时间非常累，既要搞对象，又要学习。难呐。单同学是伟大的。</p>
+<p>2017年11月10日。如果我没有记错的话，这个时间影响是刚刚加入创新区，开启了和冯同学一起探索计算机科学奥妙的旅程。</p>
+<p>2016年11月10日。这段时间应该是刚刚加入大学，我开设了自己的微信公众号。然后忙于各种社团生活，主要是学生助理学校的生活让我成长很多。我在这个时候应该也是每天钻研技术，主要是通过网上的博客学习PHP和MySQL。</p>
+<p>2015年11月10日。这个时候应该是那个冬天，经常要模拟考试。记得有一次我考试之前生病回家了，然后回来之后就考了很好的名称，好像还进入了年纪前三十名。我当时就分析，有的时候生病可以让人处于没有防御的休眠状态，反而能考得更好。</p>
+<p>2014年11月10日。这个时候我应该还在小实验班。小实验班的同学的确一个个很厉害。老师们似乎都不太看得起我。</p>
+<p>哎，不想写了，有这个时间不如躺下休息会儿，然后投入到紧张的工作中去。</p>
+<p>希望今天晚上的工作一切顺利，希望家人身体健康，希望公司越做越好，希望世界和平，希望疫情退却。</p>
+<p>苏瑞辅 2021-11-10 于汉庭酒店</p>]]></content>
+        <author>
+            <name><![CDATA[苏瑞辅的个人网站]]></name>
+        </author>
+    </entry>
+    
+    <entry>
         <id>https://blog.zeddyu.info/2021/09/30/2021-09-30-FromHexoToHugo/</id>
         <title><![CDATA[从 Hexo 搬迁至 Hugo]]></title>
         <updated>2021-09-29T17:15:01+08:00</updated>
@@ -338,6 +421,43 @@
         <content type="text/html" src="https://blog.stdioa.com/2021/09/homelab-share/"><![CDATA[<p>大学毕业之前一个冲动买了台式机，又一个冲动买了台 Linux 主机。到现在它已经运行了四年多了，简单分享下自己的玩法。</p>]]></content>
         <author>
             <name><![CDATA[Stdio’s Blog]]></name>
+        </author>
+    </entry>
+    
+    <entry>
+        <id>https://www.suruifu.com/posts/662</id>
+        <title><![CDATA[“懒惰”，“堕落”不是一个duo！]]></title>
+        <updated>2021-09-03T08:53:30+08:00</updated>
+        <link href="https://www.suruifu.com/posts/662"/>
+        <content type="text/html" src="https://www.suruifu.com/posts/662"><![CDATA[<h2>逐字分析</h2>
+<ul>
+<li>“惰”
+<ul>
+<li>树心旁。和心、和心性相关</li>
+<li>用来描述一个人的性格，与“勤快”相关对应，如“懒惰”</li>
+<li>用来描述一个物质的属性，与“活跃”相对应，如“惰性气体”</li>
+</ul>
+</li>
+<li>“堕”
+<ul>
+<li>下面有一个土，表示掉在地上的意思。</li>
+<li>掉落、下落，表示方向</li>
+<li>如“堕落”、“堕胎”</li>
+</ul>
+</li>
+</ul>
+<h2>耦合点</h2>
+<ul>
+<li>“懒惰”会使人“堕落”</li>
+<li>“懒惰”表示性格，“堕落”强调结果</li>
+</ul>
+<h2>怎么回事呢？</h2>
+<p>因为我给客户，也是我的一个老师发送的合同里面出现了一个错别字。老师及时纠正了我的错误。<br />
+<img src="https://s.suruifu.com/www/2021/09/WeCom-Screenshot_20210903165132.png" alt="" /></p>
+<p>后来经过检索，发现网上也存在这样的错误。</p>
+<p><img src="https://s.suruifu.com/www/2021/09/WeCom-Screenshot_20210903165227.png" alt="" /></p>]]></content>
+        <author>
+            <name><![CDATA[苏瑞辅的个人网站]]></name>
         </author>
     </entry>
     
