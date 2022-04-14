@@ -3,7 +3,7 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2022-04-14T12:29:07+08:00</updated>
+    <updated>2022-04-14T18:18:01+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
@@ -26,7 +26,230 @@
         <title><![CDATA[Mastering Git Cherry-pick]]></title>
         <updated>2022-04-07T16:33:11+08:00</updated>
         <link href="https://blog.triplez.cn/posts/mastering-git-cherry-pick/"/>
-        <content type="text/html" src="https://blog.triplez.cn/posts/mastering-git-cherry-pick/"><![CDATA[<p>本文希望教你如何成为一个 <code>git cherry-pick</code> 的 “master”！通过使用 <code>git cherry-pick</code> 来轻松地维护多个分支版本，再也不会让 multi-version maintaining  成为你心头上的那把令你屡次痛心的剑了！</p>]]></content>
+        <content type="text/html" src="https://blog.triplez.cn/posts/mastering-git-cherry-pick/"><![CDATA[<p>本文希望教你如何成为一个 <code>git cherry-pick</code> 的 “master”！通过使用 <code>git cherry-pick</code> 来轻松地维护多个分支版本，再也不会让 multi-version maintaining  成为你心头上的那把令你屡次痛心的剑了！</p>
+<p>本文所有内容都会基于以下（精心构造的）示例，该例子涵盖了大部分工程上容易出现的 Git log pattern（如有其他 corner-case ，欢迎<a href="mailto:me@triplez.cn">联系我</a>，一起努力让该文变得对大家更有帮助）。</p>
+<p>贯穿本文的示例场景，这是该示例基于时间序的 Git 提交历史。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ git --no-pager log --oneline --graph --date-order
+* f2c1619 <span style="color:#f92672">(</span>HEAD -&gt; red<span style="color:#f92672">)</span> R6
+*   e6899ea R5 merge branch <span style="color:#e6db74">&#39;blue&#39;</span> into <span style="color:#e6db74">&#39;red&#39;</span>
+|<span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>* <span style="color:#ae81ff">\ </span>  0979d45 R4 merge branch <span style="color:#e6db74">&#39;green&#39;</span> into <span style="color:#e6db74">&#39;red&#39;</span>
+|<span style="color:#ae81ff">\ \
+</span><span style="color:#ae81ff"></span>| | * 186da41 <span style="color:#f92672">(</span>blue<span style="color:#f92672">)</span> B3
+| * | c950910 <span style="color:#f92672">(</span>green<span style="color:#f92672">)</span> G3
+* | | 17e2629 R3
+| | * 69edfc9 B2
+| * | 059425a G2
+| * | 05719c8 G1
+| | * ebb218d B1
+| |/
+* / 8c6595b R2
+|/
+* 6581ff8 R1
+* 2787f8f <span style="color:#f92672">(</span>master<span style="color:#f92672">)</span> init commit
+</code></pre></div><details>
+<summary>快速创建该示例。</summary>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mkdir cherry-pick; cd cherry-pick/
+git init
+echo <span style="color:#e6db74">&#34;init&#34;</span> &gt;&gt; init; git add -A; git commit -m <span style="color:#e6db74">&#34;init commit&#34;</span>; sleep <span style="color:#ae81ff">1</span>
+git checkout -b red
+echo <span style="color:#e6db74">&#34;red&#34;</span> &gt;&gt; red; git add -A; git commit -m <span style="color:#e6db74">&#34;R1&#34;</span>; sleep <span style="color:#ae81ff">1</span>
+git branch green
+git branch blue
+echo <span style="color:#e6db74">&#34;red&#34;</span> &gt;&gt; red; git add -A; git commit -m <span style="color:#e6db74">&#34;R2&#34;</span>; sleep <span style="color:#ae81ff">1</span>
+git checkout blue
+echo <span style="color:#e6db74">&#34;blue&#34;</span> &gt;&gt; blue; git add -A; git commit -m <span style="color:#e6db74">&#34;B1&#34;</span>; sleep <span style="color:#ae81ff">1</span>
+git checkout green
+echo <span style="color:#e6db74">&#34;green&#34;</span> &gt;&gt; green; git add -A; git commit -m <span style="color:#e6db74">&#34;G1&#34;</span>; sleep <span style="color:#ae81ff">1</span>
+echo <span style="color:#e6db74">&#34;green&#34;</span> &gt;&gt; green; git add -A; git commit -m <span style="color:#e6db74">&#34;G2&#34;</span>; sleep <span style="color:#ae81ff">1</span>
+git checkout blue
+echo <span style="color:#e6db74">&#34;blue&#34;</span> &gt;&gt; blue; git add -A; git commit -m <span style="color:#e6db74">&#34;B2&#34;</span>; sleep <span style="color:#ae81ff">1</span>
+git checkout red
+echo <span style="color:#e6db74">&#34;red&#34;</span> &gt;&gt; red; git add -A; git commit -m <span style="color:#e6db74">&#34;R3&#34;</span>; sleep <span style="color:#ae81ff">1</span>
+git checkout green
+echo <span style="color:#e6db74">&#34;green&#34;</span> &gt;&gt; green; git add -A; git commit -m <span style="color:#e6db74">&#34;G3&#34;</span>; sleep <span style="color:#ae81ff">1</span>
+git checkout blue
+echo <span style="color:#e6db74">&#34;blue&#34;</span> &gt;&gt; blue; git add -A; git commit -m <span style="color:#e6db74">&#34;B3&#34;</span>; sleep <span style="color:#ae81ff">1</span>
+git checkout red
+git merge green -m <span style="color:#e6db74">&#34;R4 merge branch &#39;green&#39; into &#39;red&#39;&#34;</span>; sleep <span style="color:#ae81ff">1</span>
+git merge blue -m <span style="color:#e6db74">&#34;R5 merge branch &#39;blue&#39; into &#39;red&#39;&#34;</span>; sleep <span style="color:#ae81ff">1</span>
+echo <span style="color:#e6db74">&#34;red&#34;</span> &gt;&gt; red; git add -A; git commit -m <span style="color:#e6db74">&#34;R6&#34;</span>; sleep <span style="color:#ae81ff">1</span>
+
+git --no-pager log --oneline --graph --date-order
+</code></pre></div></details>
+<br/>
+<p>当前 Git 提交历史示意图如下。</p>
+<p><img src="https://blog.triplez.cn/img/mastering-git-cherry-pick/git-cherry-pick-overall.jpg" alt="git-cherry-pick-overall" title="提交记录示意图"></p>
+<p>Git cherry-pick 的命令的基本原理是根据用户所选择的提交，根据提交中的差异信息（diff）将这些提交移植至用户目标版本中。如将 hotfix 应用至其他 LTS 版本中是该功能的一个典型应用。</p>
+<p><code>git cherry-pick</code> 的大致用法为：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">git cherry-pick <span style="color:#f92672">[</span>options<span style="color:#f92672">]</span> &lt;commit&gt;...
+</code></pre></div><p>此处的 <code>&lt;commit&gt;...</code> 即为用户希望移植的提交（集合），这是本文讨论的要点。</p>
+<p><code>&lt;commit&gt;</code> 可以为单一提交（commit），也可以为一个版本区间（revision range）。若为 revision range，则该命令会将该 revision range 中的所有 commit 都解析出来，最终成为一连串的单一 commit <sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>。<code>cherry-pick</code> 可以同时接受多个 <code>&lt;commit&gt;</code> ，此时表现类似于 <code>git rev-list</code> 中的 <code>--no-walk</code> 行为<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>。</p>
+<p>那我们依次来讨论 <code>&lt;commit&gt;...</code> 为单一 commit 以及 revision range 的情况。</p>
+<h2 id="single-commit">Single commit</h2>
+<h3 id="normal-commit">Normal commit</h3>
+<p>回到上文的例子，如果仅需要将 <code>G2</code> 选取出来，我们可以这样操作。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># 回到 master 新建一条分支用于测试</span>
+$ git checkout master
+$ git checkout -b cp-single-normal-commit
+<span style="color:#75715e"># G2 的提交 SHA 值为 059425a</span>
+$ git cherry-pick 059425a
+</code></pre></div><p>此时会出现合并冲突（merge conflict），输出如下所示。</p>
+<pre><code>CONFLICT (modify/delete): green deleted in HEAD and modified in 059425a (G2). Version 059425a (G2) of green left in tree.
+error: could not apply 059425a... G2
+hint: after resolving the conflicts, mark the corrected paths
+hint: with 'git add &lt;paths&gt;' or 'git rm &lt;paths&gt;'
+hint: and commit the result with 'git commit'
+</code></pre><p>这段内容告知我们这些信息：<code>green</code> 文件在当前（暂存）版本 <code>HEAD</code> 中并不存在，但在选取的 <code>G2</code> 提交中存在。如果需要该文件，则使用 <code>git add</code> 将其提交至暂存区，若希望保留当前暂存版本的状态，即删除该文件，则使用 <code>git rm</code> 将 <code>green</code> 文件舍弃。</p>
+<p>我们希望在选取 G2 之后能够保留 <code>green</code> 文件，故采取如下操作。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># 将 green 提交至暂存区</span>
+$ git add green
+<span style="color:#75715e"># 已修复所有合并冲突，继续进行 cherry-pick</span>
+$ git cherry-pick --continue
+</code></pre></div><p>此时 cherry-pick 操作已经完成，如果继续执行 <code>git cherry-pick --continue</code> ，则此时会显示 <code>error: no cherry-pick or revert in progress</code> ，即当前没有进行任何 cherry-pick 任务。</p>
+<p>查看一下当前的提交记录，则会发现 <code>G2</code> 已经在我们当前的分支 <code>cp-single-normal-commit</code> 上了。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ git --no-pager log --oneline --graph --date-order
+* <span style="color:#ae81ff">0457362</span> <span style="color:#f92672">(</span>HEAD -&gt; cp-single-normal-commit<span style="color:#f92672">)</span> G2
+* 2787f8f <span style="color:#f92672">(</span>master<span style="color:#f92672">)</span> init commit
+</code></pre></div><h3 id="merge-commit">Merge commit</h3>
+<p>那如果我们想选取一个 merge commit 呢，比如将 <code>R4</code> 选取出来。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># 回到 master 新建一条分支用于测试</span>
+$ git checkout master
+$ git checkout -b cp-single-merge-commit
+<span style="color:#75715e"># R4 的提交 SHA 值为 0979d45</span>
+$ git cherry-pick 0979d45
+</code></pre></div><p>当执行完这条 <code>cherry-pick</code> 命令之后，你会得到以下输出。</p>
+<pre><code>error: commit 0979d45f1b46f72730188c5c01b3f2c7f41b18e6 is a merge but no -m option was given.
+fatal: cherry-pick failed
+</code></pre><p>默认情况下，<code>cherry-pick</code> 不处理 merge commit 并直接报错。因为在 merge commit 中，会有多个 parent 信息，但此时 Git 并不知道该使用哪个 parent 作为 mainline。在错误信息中，也同时提示了我们，如果要选取 merge commit ，则需要使用 <code>-m</code> （亦为 <code>--mainline</code>）选项来指定哪个 parent 是主线<sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup>。</p>
+<p>通过 <code>git show</code> 命令可以获得 merge commit 的多个 parent，且从 1 开始编号。由于该例中我们需要选取的 mainline parent 是 <code>R3(17e2629)</code> ，因此在 <code>cherry-pick</code> 中选择的是 <code>-m 1</code>。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ git --no-pager show 0979d45
+commit 0979d45f1b46f72730188c5c01b3f2c7f41b18e6
+Merge: 17e2629 c950910
+Author: Triple-Z &lt;me@triplez.cn&gt;
+Date:   Thu Mar <span style="color:#ae81ff">31</span> 01:29:31 <span style="color:#ae81ff">2022</span> +0800
+
+    R4 merge branch <span style="color:#e6db74">&#39;green&#39;</span> into <span style="color:#e6db74">&#39;red&#39;</span>
+</code></pre></div><p>让我们再来试一次。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ git cherry-pick -m <span style="color:#ae81ff">1</span> 0979d45
+</code></pre></div><p><code>cherry-pick</code> 圆满完成！此时再看一下当前的提交记录，则发现在 <code>cp-single-merge-commit</code> 分支上产生了一个新的 <code>R4</code> 提交。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ git --no-pager log --oneline --graph --date-order
+* 987aba7 <span style="color:#f92672">(</span>HEAD -&gt; cp-single-merge-commit<span style="color:#f92672">)</span> R4 merge branch <span style="color:#e6db74">&#39;green&#39;</span> into <span style="color:#e6db74">&#39;red&#39;</span>
+* 2787f8f <span style="color:#f92672">(</span>master<span style="color:#f92672">)</span> init commit
+</code></pre></div><p>现在我们再来讲讲刚刚的 <code>-m 1</code> 发生了什么。如果现在去看 <code>cp-single-merge-commit</code> 这个测试分支上的文件，则会发现有 <code>green</code> ，而没有 <code>red</code> 。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ ls -lh
+total <span style="color:#ae81ff">16</span>
+-rw-r--r--  <span style="color:#ae81ff">1</span> triplez  staff    18B  <span style="color:#ae81ff">4</span>  <span style="color:#ae81ff">7</span> 19:06 green
+-rw-r--r--  <span style="color:#ae81ff">1</span> triplez  staff     5B  <span style="color:#ae81ff">3</span> <span style="color:#ae81ff">31</span> 01:29 init
+</code></pre></div><p>这是因为我们在选取 merge commit 时，使用的是 mainline 1 ，即 <code>red</code> 分支。因此 <code>cherry-pick</code> 事实是以 <code>red</code> 为基础，寻找 mainline 2 <code>green</code> 分支与 <code>red</code> 的差异，选取的就是 <code>green</code> 分支上所做的修改了。</p>
+<h2 id="revision-range">Revision range</h2>
+<p>Git 中可用多种方法来表示 revision （版本，或修订快照）<sup id="fnref:4"><a href="#fn:4" class="footnote-ref" role="doc-noteref">4</a></sup>，这里我们主要讨论 revision range（版本区间）<sup id="fnref:5"><a href="#fn:5" class="footnote-ref" role="doc-noteref">5</a></sup>。</p>
+<p>对于 revision range，有以下六种表示法：</p>
+<ol>
+<li>
+<p><code>^&lt;rev&gt;</code> ：（脱字符-表示法）表示<strong>排除</strong> <code>&lt;rev&gt;</code> 以及它<u>所有可到达</u>的父辈 commit。</p>
+</li>
+<li>
+<p><code>&lt;r1&gt;..&lt;r2&gt;</code>（两点-范围表示法）：等同于 <code>^r1 r2</code> ，即 <strong>包含</strong> <code>&lt;r2&gt;</code> 以及其可到达的父辈 commit ，并<strong>排除</strong> <code>&lt;r1&gt;</code> 以及其可到达的父辈 commit。</p>
+<blockquote>
+<p>如果需要包括 <code>&lt;r1&gt;</code>，可使用这种写法：<code>&lt;r1&gt;^..&lt;r2&gt;</code> 。</p>
+</blockquote>
+</li>
+<li>
+<p><code>&lt;r1&gt;...&lt;r2&gt;</code> （三点-对称差分表示法）：<strong>包含</strong>所有 <code>&lt;r1&gt;</code> <u>或</u> <code>&lt;r2&gt;</code> 及其可到达的父辈 commit，并<strong>排除</strong> <code>&lt;r1&gt;</code> <u>和</u> <code>&lt;r2&gt;</code> 两者可到达的<u>共同</u>父辈 commit。</p>
+</li>
+<li>
+<p><code>&lt;rev&gt;^@</code> ：<strong>包含</strong> <code>&lt;rev&gt;</code> 的所有父辈，但<strong>排除</strong> <code>&lt;rev&gt;</code> 本身。</p>
+</li>
+<li>
+<p><code>&lt;rev&gt;^!</code> ：<strong>包含</strong> <code>&lt;rev&gt;</code> 本身，但<strong>排除</strong> <code>&lt;rev&gt;</code> 所有父辈。即表示单个 <code>&lt;rev&gt;</code> commit。</p>
+<blockquote>
+<p>注意： <code>&lt;rev&gt;</code> （表示 <code>&lt;rev&gt;</code> 及其所有父辈）在 revision range 的语境中不同于 <code>&lt;rev&gt;^!</code> 。仅有指定 <code>--no-walk</code> 参数时，两者才可以认为是相同的（都仅表示 <code>&lt;rev&gt;</code> 本身）。</p>
+</blockquote>
+</li>
+<li>
+<p><code>&lt;rev&gt;^-[&lt;n&gt;]</code> ：<strong>包含</strong> <code>&lt;rev&gt;</code> 及其所有父辈，但<strong>排除</strong> <code>&lt;rev&gt;</code> 的第 <code>&lt;n&gt;</code> 个 parent 及其可到达的所有父辈。 <code>&lt;n&gt;</code> 的缺省值为 1。</p>
+</li>
+</ol>
+<p>看起来很复杂，我们来用文中的场景来举两个范围表示法的例子。</p>
+<p>首先，考虑 <code>&lt;r1&gt;</code> 和 <code>&lt;r2&gt;</code> 都在同一分支上的情况，如 <code>G1 (05719c8)</code> 和 <code>G3 (c950910)</code>。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># 回到 master 新建一条分支用于测试</span>
+$ git checkout master
+$ git checkout -b cp-range-same-branch
+<span style="color:#75715e"># G1 的提交 SHA 值为 05719c8，G3 的 SHA 值为 c950910</span>
+$ git cherry-pick 05719c8^..c950910
+</code></pre></div><p><code>05719c8(G1)^..c950910(G3)</code> 的含义应当是：</p>
+<ul>
+<li><strong>包含</strong> <code>G3</code> 及其所有父辈。</li>
+<li>并<strong>排除</strong> <code>G1</code> 的所有父辈（不排除 <code>G1</code>）。</li>
+</ul>
+<p>因此结果应当是选出从 <code>G1</code> 到 <code>G3</code> 的所有提交，示意图如下，黄色为被包含的节点，灰色则代表被排除的节点。</p>
+<p><img src="https://blog.triplez.cn/img/mastering-git-cherry-pick/git-cherry-pick-g1-g3.jpg" alt="git-cherry-pick-g1-g3" title="git cheery-pick G1^..G3"></p>
+<p>让我们再看看当前的提交记录。Bingo！ <code>G1</code> ，<code>G2</code> ，<code>G3</code> 这三个提交已经被选取出来了。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ git --no-pager log --oneline --graph --date-order
+* 32eac39 <span style="color:#f92672">(</span>HEAD -&gt; cp-range-same-branch<span style="color:#f92672">)</span> G3
+* d3b1130 G2
+* c82c4c7 G1
+* 2787f8f <span style="color:#f92672">(</span>master<span style="color:#f92672">)</span> init commit
+</code></pre></div><p>那 <code>&lt;r1&gt;</code> 和 <code>&lt;r2&gt;</code> 在不同分支上，是什么情况呢？</p>
+<p>我们以 <code>G1 (05719c8)</code> 和 <code>B2 (69edfc9)</code> 作为用例。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># 回到 master 新建一条分支用于测试</span>
+$ git checkout master
+$ git checkout -b cp-range-diff-branch
+<span style="color:#75715e"># G1 的提交 SHA 值为 05719c8，B2 的 SHA 值为 69edfc9</span>
+$ git cherry-pick 05719c8^..69edfc9
+</code></pre></div><p><code>05719c8(G1)^..69edfc9(B2)</code> 的含义应当是：</p>
+<ul>
+<li><strong>包含</strong> <code>B2</code> 及其所有父辈。</li>
+<li>并<strong>排除</strong> <code>G1</code> 的所有父辈（不排除 <code>G1</code>）。</li>
+</ul>
+<p>由于 <code>B2</code> 及其所有父辈中，并不包括 <code>G1</code>。因此我们可以将 <code>G1^..B2</code> 理解为包含 <code>B2</code> 及其所有父辈，且排除 <code>B2</code> 和 <code>G1</code> 的共同父辈后的结果。自然就只剩下 <code>B1</code> 和 <code>B2</code> 两个 commit 了。示意图如下，黄色为被包含的节点，灰色则代表被排除的节点。</p>
+<p><img src="https://blog.triplez.cn/img/mastering-git-cherry-pick/git-cherry-pick-g1-b2.jpg" alt="git-cherry-pick-g1-b2" title="git cherry-pick G1^..B2"></p>
+<p>让我们再看看当前的提交记录，确实是只选择了 <code>B1</code> 和 <code>B2</code> 两个提交。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ git --no-pager log --oneline --graph --date-order
+* e63f214 <span style="color:#f92672">(</span>HEAD -&gt; cp-range-diff-branch<span style="color:#f92672">)</span> B2
+* aed6717 B1
+* 2787f8f <span style="color:#f92672">(</span>master<span style="color:#f92672">)</span> init commit
+</code></pre></div><h2 id="rerere">Rerere</h2>
+<p>Rerere 是“重用已记录的冲突解决方案（reuse recorded resolution）”，它是一种简化冲突解决的方法<sup id="fnref:6"><a href="#fn:6" class="footnote-ref" role="doc-noteref">6</a></sup> <sup id="fnref:7"><a href="#fn:7" class="footnote-ref" role="doc-noteref">7</a></sup>。</p>
+<p>如果你经常进行大量的 merge, rebase 或 cherry-pick，或在维护一个长期不同于主干的分支<sup id="fnref:8"><a href="#fn:8" class="footnote-ref" role="doc-noteref">8</a></sup>，那么非常建议开启 <code>rerere</code> 功能。</p>
+<p>开启 <code>rerere</code> 非常简单，仅需要进行一次全局配置即可。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ git config --global rerere.enabled true
+</code></pre></div><blockquote>
+<p>在本地仓库中直接创建 <code>.git/rr-cache</code> 文件夹，也可以为该仓库开启 <code>rerere</code>。</p>
+</blockquote>
+<h2 id="whats-next">What&rsquo;s next</h2>
+<p>在笔者撰写该文的过程中，也看到了 Microsoft 的 Raymond Chen 写的 <a href="https://devblogs.microsoft.com/oldnewthing/20180323-01/?p=98325">Stop cherry-picking, start merging 系列文章</a>，他在其中提及了许多工程实践中 cherry-pick 可能导致的 pitfall。接下来的时间里，笔者将会逐一阅读该系列文章，并根据文中案例去分析 cherry-pick 是否能够在常用软件开发工作流给我们带来足够的收益，以及，是否应该 stop cherry-picking, start merging。</p>
+<p>只有在深入了解工具后，我们才能更好地运用工具，真正实现效率提升。</p>
+<section class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1" role="doc-endnote">
+<p>git-cherry-pick &lt;commit&gt;&hellip; <br/><a href="https://git-scm.com/docs/git-cherry-pick#Documentation/git-cherry-pick.txt-ltcommitgt82308203">https://git-scm.com/docs/git-cherry-pick#Documentation/git-cherry-pick.txt-ltcommitgt82308203</a> <a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2" role="doc-endnote">
+<p>git-rev-list &ndash;no-walk<br/><a href="https://git-scm.com/docs/git-rev-list#Documentation/git-rev-list.txt---no-walksortedunsorted">https://git-scm.com/docs/git-rev-list#Documentation/git-rev-list.txt---no-walksortedunsorted</a> <a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:3" role="doc-endnote">
+<p>git-cherry-pick -m, &ndash;mainline<br/><a href="https://git-scm.com/docs/git-cherry-pick#Documentation/git-cherry-pick.txt--mltparent-numbergt">https://git-scm.com/docs/git-cherry-pick#Documentation/git-cherry-pick.txt--mltparent-numbergt</a> <a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:4" role="doc-endnote">
+<p>gitrevisions: Specifying Revisions<br/><a href="https://git-scm.com/docs/gitrevisions/#_specifying_revisions">https://git-scm.com/docs/gitrevisions/#_specifying_revisions</a> <a href="#fnref:4" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:5" role="doc-endnote">
+<p>gitrevisions: Specifying Ranges<br/><a href="https://git-scm.com/docs/gitrevisions/#_specifying_ranges">https://git-scm.com/docs/gitrevisions/#_specifying_ranges</a> <a href="#fnref:5" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:6" role="doc-endnote">
+<p>Pro Git (zh): Git 工具 - Rerere<br/><a href="https://git-scm.com/book/zh/v2/Git-%E5%B7%A5%E5%85%B7-Rerere#ef_rerere">https://git-scm.com/book/zh/v2/Git-%E5%B7%A5%E5%85%B7-Rerere#ef_rerere</a> <a href="#fnref:6" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:7" role="doc-endnote">
+<p>Pro Git (en): Git Tools - Rerere<br/><a href="https://git-scm.com/book/en/v2/Git-Tools-Rerere">https://git-scm.com/book/en/v2/Git-Tools-Rerere</a> <a href="#fnref:7" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:8" role="doc-endnote">
+<p>Pro Git (zh): 分布式 Git - 维护项目 - Rerere<br/><a href="https://git-scm.com/book/zh/v2/%E5%88%86%E5%B8%83%E5%BC%8F-Git-%E7%BB%B4%E6%8A%A4%E9%A1%B9%E7%9B%AE#_rerere">https://git-scm.com/book/zh/v2/%E5%88%86%E5%B8%83%E5%BC%8F-Git-%E7%BB%B4%E6%8A%A4%E9%A1%B9%E7%9B%AE#_rerere</a> <a href="#fnref:8" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</section>]]></content>
         <author>
             <name><![CDATA[TripleZ’s Blog]]></name>
         </author>
@@ -62,7 +285,81 @@
         <title><![CDATA[通过 systemd 服务配置链接动态库]]></title>
         <updated>2022-03-31T12:31:19+08:00</updated>
         <link href="https://blog.triplez.cn/posts/systemd-binary-service-dynamic-linking/"/>
-        <content type="text/html" src="https://blog.triplez.cn/posts/systemd-binary-service-dynamic-linking/"><![CDATA[巧用 systemd 与 LD_LIBRARY_PATH]]></content>
+        <content type="text/html" src="https://blog.triplez.cn/posts/systemd-binary-service-dynamic-linking/"><![CDATA[<h2 id="序">序</h2>
+<p>在设置动态链接的方法中，<code>rpath</code> 有其自身的问题<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> ， <code>ld.so.conf</code> 为 OS 全局配置，可能会因为单一服务的动态库版本而影响到其他服务，不是一个优雅的方法。</p>
+<p>那如何才能不借助 <code>rpath</code> 和 <code>ld.so.conf</code> ，即能使目标服务找到对应的动态链接库，又能不影响其他服务呢？</p>
+<h2 id="ld_library_path">LD_LIBRARY_PATH</h2>
+<p>对于动态链接库的路径配置而言，除了 <code>rpath</code> 和 <code>ld.so.conf</code> ，还有 <code>LD_LIBRARY_PATH</code>。只要在二进制启动的环境中设置 ``LD_LIBRARY_PATH<code>变量，则</code>glibc` 会将该变量中的路径配置作为动态链接库的查找路径之一，使得二进制可执行文件能够正常链接到其依赖的动态链接库。</p>
+<p><code>LD_LIBRARY_PATH</code> 会在当前 shell session 中“全局”生效，不过，由于笔者服务采用 systemd 来管理其生命周期，按照上述思路，应该只需要在服务启动前，将 <code>LD_LIBRARY_PATH</code> 注入启动环境即可，这样还能够借助 systemd 来实现一定程度的环境“隔离”。systemd 服务配置中的 <code>Environment</code> 字段是用于描述启动环境的环境变量的，我们先在这里加入 <code>LD_LIBRARY_PATH</code> （如下），重新加载 systemd 配置并重启服务，观察效果。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-diff" data-lang="diff"> [Unit]
+ Description=Nginx
+ After=syslog.target network.target remote-fs.target nss-lookup.target
+
+ [Service]
+ User=triplez
+ Group=triplez
+ Type=forking
+<span style="color:#a6e22e">+Environment=&#34;LD_LIBRARY_PATH=/your/path/to/openssl/lib:/your/path/to/jemalloc/lib:/your/path/to/luajit/lib&#34;
+</span><span style="color:#a6e22e"></span> PIDFile=/run/nginx/nginx.pid
+ RuntimeDirectory=nginx
+ RuntimeDirectoryMode=0755
+ ExecStartPre=/your/path/to/nginx -t
+ ExecStart=/your/path/to/nginx
+ ExecReload=/bin/kill -s HUP $MAINPID
+ ExecStop=/bin/kill -s QUIT $MAINPID
+
+ PrivateTmp=true
+ Restart=always
+
+ [Install]
+ WantedBy=multi-user.target
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ sudo systemctl daemon-reload
+$ sudo systemctl restart nginx.service
+</code></pre></div><p>事实上，对于大多数服务，只需要加入环境变量即可解决问题。但很不幸的是，由于我们的服务需要监听 1024 及以下端口（如 80、443），笔者对二进制可执行文件进行了 <code>setcap</code> 操作，赋予其监听低位端口的能力。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ sudo getcap /your/path/to/nginx
+/your/path/to/nginx <span style="color:#f92672">=</span> cap_net_bind_service+ep
+</code></pre></div><h2 id="capability">Capability</h2>
+<p>由于该文件含有 capability，<code>glibc</code> 会将 <code>LD_LIBRARY_PATH</code> 忽略<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup> <sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup>，导致服务还是无法正确链接到动态库上。</p>
+<p>了解原因之后，接下来要做的事情也很清晰了：一是先将二进制可执行文件上的 capability 移除（<code>chown</code> 就可以将其移除， <code>setcap -ep</code> 亦可），二是利用 systemd 的服务配置来实现配置 capability （如下）。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-diff" data-lang="diff"> [Unit]
+ Description=Nginx
+ After=syslog.target network.target remote-fs.target nss-lookup.target
+
+ [Service]
+ User=triplez
+ Group=triplez
+ Type=forking
+ Environment=&#34;LD_LIBRARY_PATH=/your/path/to/openssl/lib:/your/path/to/jemalloc/lib:/your/path/to/luajit/lib&#34;
+ PIDFile=/run/nginx/nginx.pid
+ RuntimeDirectory=nginx
+ RuntimeDirectoryMode=0755
+ ExecStartPre=/your/path/to/nginx -t
+ ExecStart=/your/path/to/nginx
+ ExecReload=/bin/kill -s HUP $MAINPID
+ ExecStop=/bin/kill -s QUIT $MAINPID
+
+<span style="color:#a6e22e">+CapabilityBoundingSet=CAP_NET_BIND_SERVICE
+</span><span style="color:#a6e22e">+AmbientCapabilities=CAP_NET_BIND_SERVICE
+</span><span style="color:#a6e22e"></span> PrivateTmp=true
+ Restart=always
+
+ [Install]
+ WantedBy=multi-user.target
+</code></pre></div><p>再次重新加载 systemd 配置并重启服务，问题完美解决。</p>
+<section class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1" role="doc-endnote">
+<p>RpathIssue<br/><a href="https://wiki.debian.org/RpathIssue">https://wiki.debian.org/RpathIssue</a> <a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2" role="doc-endnote">
+<p>Use of file capabilities disables LD_LIBRARY_PATH - Red Hat Bugzilla<br/><a href="https://bugzilla.redhat.com/show_bug.cgi?id=448594">https://bugzilla.redhat.com/show_bug.cgi?id=448594</a> <a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:3" role="doc-endnote">
+<p>shared libraries - Linux capabilities (setcap) seems to disable LD_LIBRARY_PATH - Stack Overflow<br/><a href="https://stackoverflow.com/questions/9843178/linux-capabilities-setcap-seems-to-disable-ld-library-path">https://stackoverflow.com/questions/9843178/linux-capabilities-setcap-seems-to-disable-ld-library-path</a> <a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</section>]]></content>
         <author>
             <name><![CDATA[TripleZ’s Blog]]></name>
         </author>
@@ -271,7 +568,90 @@
         <title><![CDATA[chaosblade 生成指定 CPU 利用率负载的原理]]></title>
         <updated>2022-01-26T14:21:45+08:00</updated>
         <link href="https://blog.triplez.cn/posts/chaosblade-specific-cpu-load/"/>
-        <content type="text/html" src="https://blog.triplez.cn/posts/chaosblade-specific-cpu-load/"><![CDATA[使用混沌测试软件更简单地构造出指定 CPU 利用率的负载]]></content>
+        <content type="text/html" src="https://blog.triplez.cn/posts/chaosblade-specific-cpu-load/"><![CDATA[<p>最近笔者在做的一个降级功能，与机器资源情况密切相关。然而在测试时发现控制 CPU 利用率来构造测试条件，并不是一个容易的事情。借助时间片的思想，笔者用一个非常简单的 shell 一定程度上解决了这个问题。但转念一想，对于混沌测试的软件，这应该是个必备能力。查找了一下 chaosblade 的相关资料，果然支持生成指定 CPU 利用率的负载。故读了读其这部分源码，看看它是怎么实现的。</p>
+<p>使用 <code>chaosblade</code> 来构造指定 CPU 利用率的负载非常简单：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">blade create cpu load --cpu-percent <span style="color:#ae81ff">80</span>
+</code></pre></div><p>即能够生成使 CPU 利用率到达 80% 的负载。</p>
+<p><code>burncpu</code> 的核心逻辑位于这里： <a href="https://github.com/chaosblade-io/chaosblade-exec-os/blob/318c52d83a851bc75012abc7d880d4f440f1f972/exec/bin/burncpu/burncpu.go#L140-L168">https://github.com/chaosblade-io/chaosblade-exec-os/blob/318c52d83a851bc75012abc7d880d4f440f1f972/exec/bin/burncpu/burncpu.go#L140-L168</a></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">burnCpu</span>() {
+
+	<span style="color:#a6e22e">runtime</span>.<span style="color:#a6e22e">GOMAXPROCS</span>(<span style="color:#a6e22e">cpuCount</span>)
+
+	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">totalCpuPercent</span> []<span style="color:#66d9ef">float64</span>
+	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">curProcess</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">process</span>.<span style="color:#a6e22e">Process</span>
+	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">curCpuPercent</span> <span style="color:#66d9ef">float64</span>
+	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">err</span> <span style="color:#66d9ef">error</span>
+
+	<span style="color:#a6e22e">totalCpuPercent</span>, <span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">cpu</span>.<span style="color:#a6e22e">Percent</span>(<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span>, <span style="color:#66d9ef">false</span>)  <span style="color:#75715e">// 获取当前所有 CPU 一秒内平均利用率
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">curProcess</span>, <span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">process</span>.<span style="color:#a6e22e">NewProcess</span>(int32(<span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Getpid</span>()))
+	<span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">curCpuPercent</span>, <span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">curProcess</span>.<span style="color:#a6e22e">CPUPercent</span>()  <span style="color:#75715e">// 获取当前进程的 CPU 利用率
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">otherCpuPercent</span> <span style="color:#f92672">:=</span> (<span style="color:#ae81ff">100.0</span> <span style="color:#f92672">-</span> (<span style="color:#a6e22e">totalCpuPercent</span>[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">-</span> <span style="color:#a6e22e">curCpuPercent</span>)) <span style="color:#f92672">/</span> <span style="color:#ae81ff">100.0</span>  <span style="color:#75715e">// 除去已有进程，可操作的 CPU 利用率。值的范围为 [0, 1]
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">go</span> <span style="color:#66d9ef">func</span>() {
+		<span style="color:#a6e22e">t</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">NewTicker</span>(<span style="color:#ae81ff">3</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span>)
+		<span style="color:#66d9ef">for</span> {
+			<span style="color:#66d9ef">select</span> {
+			<span style="color:#75715e">// timer 3s
+</span><span style="color:#75715e"></span>			<span style="color:#66d9ef">case</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">C</span>:
+				<span style="color:#a6e22e">totalCpuPercent</span>, <span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">cpu</span>.<span style="color:#a6e22e">Percent</span>(<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span>, <span style="color:#66d9ef">false</span>)
+				<span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span>				<span style="color:#a6e22e">curCpuPercent</span>, <span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">curProcess</span>.<span style="color:#a6e22e">CPUPercent</span>()
+				<span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span>				<span style="color:#a6e22e">otherCpuPercent</span> = (<span style="color:#ae81ff">100.0</span> <span style="color:#f92672">-</span> (<span style="color:#a6e22e">totalCpuPercent</span>[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">-</span> <span style="color:#a6e22e">curCpuPercent</span>)) <span style="color:#f92672">/</span> <span style="color:#ae81ff">100.0</span>
+			}
+		}
+	}()  <span style="color:#75715e">// 每 3s 更新一次 totalCpuPercent, curCpuPercent 和 otherCpuPercent
+</span><span style="color:#75715e"></span>
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">climbTime</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> {  <span style="color:#75715e">// 不需要爬坡时间
+</span><span style="color:#75715e"></span>		<span style="color:#a6e22e">slopePercent</span> = float64(<span style="color:#a6e22e">cpuPercent</span>)  <span style="color:#75715e">// 爬坡值与目标值一致
+</span><span style="color:#75715e"></span>	} <span style="color:#66d9ef">else</span> {
+		<span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span>	}
+
+    <span style="color:#75715e">// cpuCount 是由 runtime.NumCPU() 得来，获取的是当前 CPU 的逻辑核数量
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> &lt; <span style="color:#a6e22e">cpuCount</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
+		<span style="color:#66d9ef">go</span> <span style="color:#66d9ef">func</span>() {
+			<span style="color:#a6e22e">busy</span> <span style="color:#f92672">:=</span> int64(<span style="color:#ae81ff">0</span>)
+			<span style="color:#a6e22e">idle</span> <span style="color:#f92672">:=</span> int64(<span style="color:#ae81ff">0</span>)
+			<span style="color:#a6e22e">all</span> <span style="color:#f92672">:=</span> int64(<span style="color:#ae81ff">10000000</span>)    <span style="color:#75715e">// 设定 10ms 为一个周期
+</span><span style="color:#75715e"></span>			<span style="color:#a6e22e">dx</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0.0</span>
+			<span style="color:#a6e22e">ds</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Duration</span>(<span style="color:#ae81ff">0</span>)
+			<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; ; <span style="color:#a6e22e">i</span> = (<span style="color:#a6e22e">i</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">%</span> <span style="color:#ae81ff">1000</span> {  <span style="color:#75715e">// 死循环
+</span><span style="color:#75715e"></span>				<span style="color:#a6e22e">startTime</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Now</span>().<span style="color:#a6e22e">UnixNano</span>()
+				<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> {  <span style="color:#75715e">// 每 1000 次进入
+</span><span style="color:#75715e"></span>                    <span style="color:#75715e">// 这个赋值语句是整个 burncpu 的灵魂。
+</span><span style="color:#75715e"></span>                    <span style="color:#75715e">// 我们最终希望获得的是 slopePercent% 的 CPU 利用率
+</span><span style="color:#75715e"></span>                    <span style="color:#75715e">// 应该生成的 CPU 压力即为 (slopePercent - totalCpuPercent[0])%
+</span><span style="color:#75715e"></span>                    <span style="color:#75715e">// 理想条件下，我们只需对 (slopePercent - totalCpuPercent[0]) 个 0.1ms 时间片设置为 busy 状态即可
+</span><span style="color:#75715e"></span>                    <span style="color:#75715e">// 但由于系统中存在其他进程，burncpu 无法真正获得到 (slopePercent - totalCpuPercent[0]) 个 0.1ms 时间片
+</span><span style="color:#75715e"></span>                    <span style="color:#75715e">// 因此需要按比例放大时间片的个数，而这个比例则是当时 burncpu 实际可用的 CPU 利用率
+</span><span style="color:#75715e"></span>                    <span style="color:#75715e">// 将这个赋值语句转换为如下方程，则更好理解了：
+</span><span style="color:#75715e"></span>                    <span style="color:#75715e">//   slopePercent  = totalCpuPercent + dx * otherCpuPercent
+</span><span style="color:#75715e"></span>                    <span style="color:#75715e">//       ^                 ^           ^                 ^
+</span><span style="color:#75715e"></span>                    <span style="color:#75715e">// 最终获得的CPU利用率 当前CPU利用率 一个周期内busy的时间片个数 burnCpu真正可操作的CPU比例
+</span><span style="color:#75715e"></span>					<span style="color:#a6e22e">dx</span> = (<span style="color:#a6e22e">slopePercent</span> <span style="color:#f92672">-</span> <span style="color:#a6e22e">totalCpuPercent</span>[<span style="color:#ae81ff">0</span>]) <span style="color:#f92672">/</span> <span style="color:#a6e22e">otherCpuPercent</span>
+					<span style="color:#a6e22e">busy</span> = <span style="color:#a6e22e">busy</span> <span style="color:#f92672">+</span> int64(<span style="color:#a6e22e">dx</span><span style="color:#f92672">*</span><span style="color:#ae81ff">100000</span>)  <span style="color:#75715e">// 有 dx 个 0.1ms 需要为 busy 状态
+</span><span style="color:#75715e"></span>					<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">busy</span> &lt; <span style="color:#ae81ff">0</span> {
+						<span style="color:#a6e22e">busy</span> = <span style="color:#ae81ff">0</span>
+					}
+					<span style="color:#a6e22e">idle</span> = <span style="color:#a6e22e">all</span> <span style="color:#f92672">-</span> <span style="color:#a6e22e">busy</span>
+					<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">idle</span> &lt; <span style="color:#ae81ff">0</span> {
+						<span style="color:#a6e22e">idle</span> = <span style="color:#ae81ff">0</span>
+					}
+					<span style="color:#a6e22e">ds</span>, <span style="color:#a6e22e">_</span> = <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">ParseDuration</span>(<span style="color:#a6e22e">strconv</span>.<span style="color:#a6e22e">FormatInt</span>(<span style="color:#a6e22e">idle</span>, <span style="color:#ae81ff">10</span>) <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;ns&#34;</span>)
+				}
+				<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Now</span>().<span style="color:#a6e22e">UnixNano</span>()<span style="color:#f92672">-</span><span style="color:#a6e22e">startTime</span> &lt; <span style="color:#a6e22e">busy</span> {
+				}  <span style="color:#75715e">// 阻塞 CPU，使 CPU 位于 busy 状态，直至设定的时间片结束
+</span><span style="color:#75715e"></span>				<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Sleep</span>(<span style="color:#a6e22e">ds</span>) <span style="color:#75715e">// 空闲 CPU，使 CPU 处于 idle 状态，直至设定的时间片结束
+</span><span style="color:#75715e"></span>				<span style="color:#a6e22e">runtime</span>.<span style="color:#a6e22e">Gosched</span>()
+			}
+		}()
+	}
+	<span style="color:#66d9ef">select</span> {}  <span style="color:#75715e">// 阻塞 burnCpu 函数，保活 goroutines
+</span><span style="color:#75715e"></span>}
+</code></pre></div>]]></content>
         <author>
             <name><![CDATA[TripleZ’s Blog]]></name>
         </author>
@@ -282,7 +662,159 @@
         <title><![CDATA[Lexer & Parser Toolchain]]></title>
         <updated>2022-01-25T13:29:19+08:00</updated>
         <link href="https://blog.triplez.cn/posts/lexer-parser-toolchain/"/>
-        <content type="text/html" src="https://blog.triplez.cn/posts/lexer-parser-toolchain/"><![CDATA[最近接触的编译相关知识，主要是 flex 和 bison 的工具链，记录之。]]></content>
+        <content type="text/html" src="https://blog.triplez.cn/posts/lexer-parser-toolchain/"><![CDATA[<blockquote>
+<p>推荐一个非常好的编译器工具链入门教程： <a href="https://pandolia.net/tinyc/index.html">https://pandolia.net/tinyc/index.html</a></p>
+</blockquote>
+<h2 id="lexer---flex">Lexer - flex</h2>
+<p>flex 文件格式：</p>
+<blockquote>
+<p><a href="https://pandolia.net/tinyc/ch8_flex.html">https://pandolia.net/tinyc/ch8_flex.html</a></p>
+</blockquote>
+<pre><code class="language-lex" data-lang="lex">%{
+Declarations
+%}
+
+Definitions
+
+%%
+Rules
+%%
+
+User subroutines
+</code></pre><ul>
+<li>
+<p>Declarations：声明，会被原样复制入 <code>lex.yy.c</code> 。一般用于声明全局变量和函数。</p>
+</li>
+<li>
+<p>Definitions：定义，可以定义正则表达式的名字，用于 Rules 中使用，通过名字直接使用预定义的正则表达式。</p>
+</li>
+<li>
+<p>Rules：规则，每一行都是一条规则，由匹配模式 pattern （正则表达式）和事件 action （C 代码）组成。</p>
+</li>
+<li>
+<p>User subroutines：用户定义过程，会被原样复制到 <code>lex.yy.c</code> 的最末尾。</p>
+</li>
+<li>
+<p><code>yywrap()</code> 用于把多个输入文件打包成一个输入，当 <code>yylex</code> 将一个文件读入到结尾 EOF 时，会向 <code>yywrap</code> 询问是否继续。若需连续解析多个文件，需要在 yywrap 中打开文件，并返回 0。返回 1 则表示后面没有文件可以读取了，使得 <code>yylex</code> 函数结束。</p>
+</li>
+<li>
+<p><code>yytext</code>：刚刚匹配到的字符串的值。</p>
+</li>
+<li>
+<p><code>yyleng</code>：刚刚匹配到的字符串的长度。</p>
+</li>
+</ul>
+<p>如一个简单的计算器实现：</p>
+<pre><code class="language-lex" data-lang="lex">%{
+#include &quot;y.tab.h&quot;
+%}
+
+%%
+[0-9]+          { yylval = atoi(yytext); return T_NUM; }
+[-/+*()\n]      { return yytext[0]; }
+.               { return 0; /* end when meet everything else */ }
+%%
+
+int yywrap(void) { 
+    return 1;
+}
+</code></pre><h2 id="parser---yaccbison">Parser - Yacc/Bison</h2>
+<p>bison 可以认为是 yacc 的开源实现。</p>
+<p>Bison 文件的格式：</p>
+<blockquote>
+<p><a href="https://pandolia.net/tinyc/ch13_bison.html">https://pandolia.net/tinyc/ch13_bison.html</a></p>
+</blockquote>
+<pre><code class="language-yacc" data-lang="yacc">%{
+Declarations
+%}
+
+Definitions
+
+%%
+Productions
+%%
+
+User subroutines
+</code></pre><ul>
+<li>
+<p>Declarations：声明，会被原样复制入 <code>y.tab.c</code> 。一般用于声明全局变量和函数。</p>
+</li>
+<li>
+<p>Definitions：定义，可以定义 bison 专有的变量。</p>
+<ul>
+<li><code>%token</code>：单字符 token （token type 值与字符的 ASCII 码相同）不需要使用 <code>%token</code> 进行预定义，其他类型的 token 都需要使用 <code>%token</code> 进行预定义。bison 会自动为 token 分配一个编号，并写入 <code>y.tab.h</code> 中，因此在 flex 文件中是可以直接调用的。</li>
+<li><code>%left</code> 、<code>%right</code>：表示符号是左（左向右）、右（右向左）结合的。</li>
+<li><code>%nonassoc</code> ：表示符号是不可结合的，如 <code>x op y op z</code> 是非法的。</li>
+<li><code>%prec</code>：上下文依赖的优先级，如「负号」就是一个很典型的例子，见 <a href="https://www.gnu.org/software/bison/manual/html_node/Contextual-Precedence.html">Context-Dependent Precedence</a>。</li>
+<li>更多定义可见 <a href="https://www.gnu.org/software/bison/manual/html_node/Declarations.html">bison Declarations</a>。</li>
+</ul>
+</li>
+<li>
+<p>Productions：</p>
+<ul>
+<li>
+<p><code>:</code> 代表 <code>-&gt;</code>，或 EBNF 式中的 <code>=</code>。</p>
+</li>
+<li>
+<p><code>|</code> 用于分隔同一个非终结符的不同产生式。</p>
+</li>
+<li>
+<p><code>/* empty */</code> ，若产生式右边为 $\epsilon$ 时，不需要写任何符号，可写为注释 <code>/* empty */</code>。</p>
+</li>
+<li>
+<p><code>;</code> 表示结束一个非终结符的产生式。</p>
+</li>
+<li>
+<p>每个产生式后面花括号内，都是一段 C 代码，可在产生式被应用时执行。</p>
+</li>
+<li>
+<p>例：</p>
+<pre><code class="language-yacc" data-lang="yacc">s : S E '\n'       { printf(&quot;ans = %d\n&quot;, $2); }
+  | /* empty */    { /* empty */}
+  ;
+</code></pre></li>
+</ul>
+</li>
+<li>
+<p>User subroutines：用户定义过程，会被原样复制到 <code>y.tab.c</code> 的最末尾。</p>
+</li>
+</ul>
+<p>bison 会将语法产生式以及符号优先级转换成一个 C 语言的 LALR(1) 动作表，输出到 <code>y.tab.c</code> 中。并会将这个动作表转换为可读形式输出至 <code>y.output</code> 中。</p>
+<p>bison 会根据自定义语法文件在 <code>y.tab.c</code> 中生成一个函数 <code>int yyparse(void)</code> 。这个函数按照 LR(1) 解析流程，对词法分析中得到的 token 流进行解析。每当读取下一个符号时，就会执行一次 <code>x = yylex()</code> 。每当要执行一个折叠动作（reduce）时，相应的产生式后的 C 代码将被执行，执行完后将相应的状态出栈。</p>
+<p>若 token 流不合法，<code>yyparse</code> 会在第一次出错的地方终止，并调用 <code>yyerror</code> 函数，最后返回 1。</p>
+<p>在 reduce 动作时，可用 <code>$1</code>, <code>$2</code> &hellip; <code>$n</code> 来引用属性栈的属性（可以认为是产生式中的第 n 个属性内容，并在最后将这个状态下的属性出栈。其中，<code>$$</code> 代表产生式左侧的终结符，可在 reduce 动作设置 <code>$$</code> 的值，最后将 <code>$$</code> 入栈。</p>
+<p>如一个简单的计算器实现：</p>
+<pre><code class="language-yacc" data-lang="yacc">%{
+#include &lt;stdio.h&gt;
+void yyerror(const char* msg) {}
+int yylex();
+%}
+
+%token T_NUM
+
+%left '+' '-'
+%left '*' '/'
+
+%%
+
+S   :   S E '\n'        { printf(&quot;ans = %d\n&quot;, $2); }
+    |   /* empty */     { /* empty */ }
+    ;
+
+E   :   E '+' E         { $$ = $1 + $3; }
+    |   E '-' E         { $$ = $1 - $3; }
+    |   E '*' E         { $$ = $1 * $3; }
+    |   E '/' E         { $$ = $1 / $3; }
+    |   T_NUM           { $$ = $1; }
+    |   '(' E ')'       { $$ = $2; }
+    ;
+
+%%
+
+int main() {
+    return yyparse();
+}
+</code></pre>]]></content>
         <author>
             <name><![CDATA[TripleZ’s Blog]]></name>
         </author>
@@ -366,7 +898,58 @@
         <title><![CDATA[grub rescue>,  Oops!]]></title>
         <updated>2021-11-28T13:56:16+08:00</updated>
         <link href="https://blog.triplez.cn/posts/grub-rescue-oops/"/>
-        <content type="text/html" src="https://blog.triplez.cn/posts/grub-rescue-oops/"><![CDATA[<p>教你如何修复丢失的 Linux GRUB 启动引导。</p>]]></content>
+        <content type="text/html" src="https://blog.triplez.cn/posts/grub-rescue-oops/"><![CDATA[<p>教你如何修复丢失的 Linux GRUB 启动引导。</p>
+<h2 id="起因">起因</h2>
+<p>为了再将神船 Z7 用起来，笔者决定扩展其仅有 200GB 的游戏分区空间。然而由于可用空间的位置并不连续，Windows 自带磁盘工具无法处理这种情况，且笔者并不希望将分区转为动态分区，因此使用了一个第三方软件 <a href="https://www.easeus.com/partition-manager/epm-free.html">EaseUS Partition Master Free</a> 来完成磁盘数据的迁移和分区重分配工作。就在设置好分区，重启了之后，屏幕上赫然显示着一个命令行界面：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">error: unknown filesystem.
+Entering rescue mode...
+grub rescue&gt; 
+</code></pre></div><p>Oops！难道重新分个区就把系统搞挂了吗？！<code>grub rescue&gt;</code> 这个命令行界面在我心中一直是噩梦般的存在，之前遇到都只能选择计算机三大法宝之一：重装来解决问题。</p>
+<p>既然双系统里的 Linux 进不去了，那我试试直接进 Windows？于是重启了一下机器，通过 BIOS 直接进入了系统盘位于 SSD 中的 Windows。好家伙，这能正常启动，那问题就不大了。</p>
+<p>Windows 磁盘分区的重分配工作得到了验证，看上去非常完美。笔者用于存储游戏的专用分区已经扩容至 ~450GB ，那接下来还是修复下 Linux 启动引导的问题吧。</p>
+<p>经过一番简单的搜索，笔者摸清了其中大概的原因：在进行 Windows 磁盘操作时，对整个 HDD 做了分区、合并等处理，导致 GPT 元数据发生了改变，Linux 的引导程序 GRUB 自然就无法找到之前的 <code>/boot</code> 启动分区了，这也是报出 <code>error: unknown filesystem</code> 的原因。</p>
+<h2 id="在-grub-rescue-中修复启动项">在 grub rescue 中修复启动项</h2>
+<p>由于是硬盘元数据发生了改变导致 GRUB 失效，那我们的思路就是更新 GRUB 中的配置。</p>
+<p>首先要找到目前 Linux 的 <code>/boot</code> 启动分区的位置，在 <code>grub rescue</code> 中，可以用 <code>ls</code> 来寻找：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">grub rescue&gt; ls
+<span style="color:#f92672">(</span>hd0<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>hd0,gpt7<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>hd0,gpt6<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>hd0,gpt5<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>hd0,gpt4<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>hd0,gpt3<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>hd0,gpt2<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>hd0,gpt1<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>hd1<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>hd1,gpt3<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>hd1,gpt2<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>hd1,gpt1<span style="color:#f92672">)</span>
+</code></pre></div><p>直接输入 <code>ls</code> ，即可得到所有的分区位置。但是启动分区到底是哪个呢？我们可以继续用 <code>ls</code> 来查找，先试试 <code>(hd0,gpt1)</code> 这个分区吧。</p>
+<blockquote>
+<p>此处要注意的是，我们要查找的是 <code>/boot/grub</code> 这个文件夹目录存在的分区。由于笔者的 <code>/boot</code> 启动分区是单独挂载的，所以查找的路径是 <code>&lt;partition&gt;/grub</code> 。若安装的 Linux 并没有单独挂载 <code>/boot</code> 启动分区，则查找路径应为 <code>&lt;partition&gt;/boot/grub</code>。</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">grub rescue&gt; ls <span style="color:#f92672">(</span>hd0,gpt1<span style="color:#f92672">)</span>/grub
+error: unknown filesystem.
+</code></pre></div><p>输出为 <code>error: unknown filesystem.</code> ，说明这个分区并不是我们想要的启动分区，那再试试下一个分区。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">grub rescue&gt; ls <span style="color:#f92672">(</span>hd0,gpt2<span style="color:#f92672">)</span>/grub
+./ ../ x86_64-efi/ grubenv themes/ fonts/ grub.cfg
+</code></pre></div><p>Bingo！这就是我们要找的东西丫！好，记下这个分区 <code>(hd0,gpt2)</code>，它就是我们宝贵的启动分区。</p>
+<p>接下来就是给 GRUB 修改启动配置，只要改两个参数即可：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">grub rescue&gt; set root<span style="color:#f92672">=(</span>hd0,gpt2<span style="color:#f92672">)</span>
+grub rescue&gt; set prefix<span style="color:#f92672">=(</span>hd0,gpt2<span style="color:#f92672">)</span>/grub
+</code></pre></div><ul>
+<li>将 <code>root</code> 设置为启动分区。</li>
+<li>将 <code>prefix</code> 设置为 <code>grub</code> 安装文件夹。若 <code>/boot</code> 未挂载单独分区，也可能为 <code>&lt;partition&gt;/boot/grub</code>。</li>
+</ul>
+<p>配置也修改好了之后，重新使 GRUB 进入普通模式就可以找回我们的启动项了！</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">grub rescue&gt; insmod normal
+grub rescue&gt; normal
+</code></pre></div><p>执行完后，应该能看到我们熟悉的 GRUB 引导界面了。</p>
+<h2 id="持久化">持久化</h2>
+<p>事实上，这样的修复只是暂时的，我们还需要对 GRUB 配置进行持久化的更新，否则每次开机都要这样操作一遍。</p>
+<p>进入 Linux，打开终端，输入如下命令，GRUB 就会自动更新配置。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ sudo update-grub
+$ sudo grub-install /dev/sda
+</code></pre></div><p><code>/dev/sda</code> 为 Linux 的安装磁盘。</p>
+<p>可以再重启一次计算机，验证 Linux 启动引导是否修复成功。</p>
+<h2 id="references">References</h2>
+<ul>
+<li>Repair Linux boot failures in GRUB 2 rescue mode</br>
+<a href="https://www.howtoforge.com/tutorial/repair-linux-boot-with-grub-rescue/">https://www.howtoforge.com/tutorial/repair-linux-boot-with-grub-rescue/</a></li>
+<li>grub rescue 救援模式的处理</br>
+<a href="http://xstarcd.github.io/wiki/Linux/grub_rescue.html">http://xstarcd.github.io/wiki/Linux/grub_rescue.html</a></li>
+<li>Linux 系统引导失败，出现 grub rescue 恢复界面 - 少数派</br>
+<a href="https://sspai.com/post/55875">https://sspai.com/post/55875</a></li>
+</ul>]]></content>
         <author>
             <name><![CDATA[TripleZ’s Blog]]></name>
         </author>
