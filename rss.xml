@@ -3,12 +3,23 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2022-04-23T12:24:01+08:00</updated>
+    <updated>2022-04-23T18:17:17+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
     </author>
     
+    
+    <entry>
+        <id>https://www.suruifu.com/posts/694</id>
+        <title><![CDATA[过去的再也回不来]]></title>
+        <updated>2022-04-23T14:03:00+08:00</updated>
+        <link href="https://www.suruifu.com/posts/694"/>
+        <content type="text/html" src="https://www.suruifu.com/posts/694"><![CDATA[<p>过去的，就过去了，再也回不来的。珍惜现在，珍爱生活。</p>]]></content>
+        <author>
+            <name><![CDATA[苏瑞辅的个人网站]]></name>
+        </author>
+    </entry>
     
     <entry>
         <id>https://blog.zhuwenq.icu/2022/04/22/XLNet/</id>
@@ -1004,43 +1015,6 @@ $ sudo grub-install /dev/sda
         <content type="text/html" src="https://blog.stdioa.com/2021/09/homelab-share/"><![CDATA[<p>大学毕业之前一个冲动买了台式机，又一个冲动买了台 Linux 主机。到现在它已经运行了四年多了，简单分享下自己的玩法。</p>]]></content>
         <author>
             <name><![CDATA[Stdio’s Blog]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://www.suruifu.com/posts/662</id>
-        <title><![CDATA[“懒惰”，“堕落”不是一个duo！]]></title>
-        <updated>2021-09-03T08:53:30+08:00</updated>
-        <link href="https://www.suruifu.com/posts/662"/>
-        <content type="text/html" src="https://www.suruifu.com/posts/662"><![CDATA[<h2>逐字分析</h2>
-<ul>
-<li>“惰”
-<ul>
-<li>树心旁。和心、和心性相关</li>
-<li>用来描述一个人的性格，与“勤快”相关对应，如“懒惰”</li>
-<li>用来描述一个物质的属性，与“活跃”相对应，如“惰性气体”</li>
-</ul>
-</li>
-<li>“堕”
-<ul>
-<li>下面有一个土，表示掉在地上的意思。</li>
-<li>掉落、下落，表示方向</li>
-<li>如“堕落”、“堕胎”</li>
-</ul>
-</li>
-</ul>
-<h2>耦合点</h2>
-<ul>
-<li>“懒惰”会使人“堕落”</li>
-<li>“懒惰”表示性格，“堕落”强调结果</li>
-</ul>
-<h2>怎么回事呢？</h2>
-<p>因为我给客户，也是我的一个老师发送的合同里面出现了一个错别字。老师及时纠正了我的错误。<br />
-<img src="https://s.suruifu.com/www/2021/09/WeCom-Screenshot_20210903165132.png" alt="" /></p>
-<p>后来经过检索，发现网上也存在这样的错误。</p>
-<p><img src="https://s.suruifu.com/www/2021/09/WeCom-Screenshot_20210903165227.png" alt="" /></p>]]></content>
-        <author>
-            <name><![CDATA[苏瑞辅的个人网站]]></name>
         </author>
     </entry>
     
