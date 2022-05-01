@@ -3,12 +3,23 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2022-05-01T06:18:44+08:00</updated>
+    <updated>2022-05-01T12:25:16+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
     </author>
     
+    
+    <entry>
+        <id>http://blog.qrzbing.cn/post/2022-rustlings/</id>
+        <title><![CDATA[Rustlings 实验]]></title>
+        <updated>2022-05-01T07:33:22+08:00</updated>
+        <link href="http://blog.qrzbing.cn/post/2022-rustlings/"/>
+        <content type="text/html" src="http://blog.qrzbing.cn/post/2022-rustlings/"><![CDATA[<p><a href="https://github.com/rust-lang/rustlings">rustlings</a> : Rust 小练习</p>]]></content>
+        <author>
+            <name><![CDATA[QRZ’s Blog]]></name>
+        </author>
+    </entry>
     
     <entry>
         <id>https://miaotony.xyz/2022/03/20/EE_LicheeRV_1_getting_started/</id>
@@ -2240,17 +2251,6 @@ pinentry-mode loopback
 <p>这一年来也计划整理个人笔记软件，在尝试了数个软件后，有印象笔记，为知笔记，有道云笔记，onenote及一堆开源笔记应用，都不太满足我的需求。最后发现了notion这个东西贼香（主要对学生免费了），最后就选择了它。不过这也导致我手上一堆笔记分散在各处，打算后面整理清楚<del>水</del>几篇blog出来。</p>]]></content>
         <author>
             <name><![CDATA[Creedowl’s Blog]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>http://blog.qrzbing.cn/post/from-0-to-travis/</id>
-        <title><![CDATA[使用 Travis CI 自动部署 Hexo 博客]]></title>
-        <updated>2019-10-01T20:28:15+08:00</updated>
-        <link href="http://blog.qrzbing.cn/post/from-0-to-travis/"/>
-        <content type="text/html" src="http://blog.qrzbing.cn/post/from-0-to-travis/"><![CDATA[<p>最近一直在 Manjaro 和 Windows 之间切换，现在学习都已经在 Manjaro 上进行了，但是博客还在 Windows 上。虽然迁移过来并不难，但还是太麻烦了。另外写博客还要开电脑，的确有点麻烦。作为一个懒人当然是动动手自动推送最好，我就想到了用 <a href="https://travis-ci.org/">Travis CI</a> 来自动部署博客。</p>]]></content>
-        <author>
-            <name><![CDATA[QRZ’s Blog]]></name>
         </author>
     </entry>
     
