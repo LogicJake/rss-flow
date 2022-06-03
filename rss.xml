@@ -3,7 +3,7 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2022-06-03T06:19:56+08:00</updated>
+    <updated>2022-06-03T12:27:17+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
@@ -13,7 +13,7 @@
     <entry>
         <id>https://miaotony.xyz/2022/05/31/CTF_2022CISCN_preliminary/</id>
         <title><![CDATA[CTF | 2022 CISCN 初赛 WriteUp]]></title>
-        <updated>2022-06-02T19:37:16+08:00</updated>
+        <updated>2022-06-03T12:02:42+08:00</updated>
         <link href="https://miaotony.xyz/2022/05/31/CTF_2022CISCN_preliminary/"/>
         <content type="text/html" src="https://miaotony.xyz/2022/05/31/CTF_2022CISCN_preliminary/"><![CDATA[又是一年一度的国赛，今年知识问答和场景实操加起来持续10h，比去年轻松了不少，这篇来记录一下初赛的writeup。]]></content>
         <author>
