@@ -3,12 +3,23 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2022-06-10T12:30:58+08:00</updated>
+    <updated>2022-06-10T18:19:30+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
     </author>
     
+    
+    <entry>
+        <id>https://blog.stdioa.com/2022/06/encode-ipv6-into-utf8/</id>
+        <title><![CDATA[一种 IPv6 地址编码方案]]></title>
+        <updated>2022-06-10T12:57:53+08:00</updated>
+        <link href="https://blog.stdioa.com/2022/06/encode-ipv6-into-utf8/"/>
+        <content type="text/html" src="https://blog.stdioa.com/2022/06/encode-ipv6-into-utf8/"><![CDATA[<p>又搞了一些骚操作：把一个 IPv6 地址压缩成一个短字符串。</p>]]></content>
+        <author>
+            <name><![CDATA[Stdio’s Blog]]></name>
+        </author>
+    </entry>
     
     <entry>
         <id>https://miaotony.xyz/2022/05/31/CTF_2022CISCN_preliminary/</id>
@@ -2469,17 +2480,6 @@ $ sudo grub-install /dev/sda
 <p>之后的例题代码需要完成第三章，等到时候在做。</p>]]></content>
         <author>
             <name><![CDATA[Zwlin’s Blog]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://blog.stdioa.com/2020/09/using-beancount/</id>
-        <title><![CDATA[开始使用 Beancount]]></title>
-        <updated>2021-08-04T02:58:19+08:00</updated>
-        <link href="https://blog.stdioa.com/2020/09/using-beancount/"/>
-        <content type="text/html" src="https://blog.stdioa.com/2020/09/using-beancount/"><![CDATA[<p>使用 Beancount 记账已经有将近两个月了，简单写一写我都做了什么。</p>]]></content>
-        <author>
-            <name><![CDATA[Stdio’s Blog]]></name>
         </author>
     </entry>
     
