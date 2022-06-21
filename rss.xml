@@ -3,7 +3,7 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2022-06-21T12:34:40+08:00</updated>
+    <updated>2022-06-21T18:18:45+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
@@ -22,7 +22,7 @@
 <p>我选择 starship 的原因是他给了我更多自定义终端的可能，而且语法简单，配置文件写起来也毫无障碍，我不喜欢 ys 主题的 git status 功能，而且我想给我的终端加上 Haskell 的提示，这些都可以通过 starship 做到。</p>
 <p>但是 starship 的自定义功能现在还稍显孱弱,当我想实现不同的发行版提示不同的图标，这一点在 Powerlevel10k 可以做到，但是 statrship 就暂时没有办法很方便的配置（<a href="https://github.com/starship/starship/issues/3251">相关issue</a>），我也很期待 starship 未来的开发。</p>
 <h2 id="neovimhttpsgithubcomneovimneovim"><a href="https://github.com/neovim/neovim">neovim</a></h2>
-<p>noevim 是更加现在的 vim，在之前的博客中也介绍了，这里就不多描述了。</p>
+<p>noevim 是更加现代的 vim，在之前的博客中也介绍了，这里就不多描述了。</p>
 <h2 id="bathttpsgithubcomsharkdpbat"><a href="https://github.com/sharkdp/bat">bat</a></h2>
 <p>bat 是一个更加现代化的 cat ，支持语法高亮和 git 集成，我个人是把完全使用 bat 来替换 cat 了，在我日常使用中，bat 对于 cat 的行为几乎是完全兼容的。
 我设置了 alias 来无缝迁移到 bat：</p>
