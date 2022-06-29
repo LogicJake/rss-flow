@@ -3,7 +3,7 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2022-06-29T06:19:10+08:00</updated>
+    <updated>2022-06-29T12:30:36+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
@@ -989,6 +989,17 @@ $ sudo systemctl restart nginx.service
     </entry>
     
     <entry>
+        <id>https://blog.zeddyu.info/2022/02/21/2022-02-21-PracticalTimingTimeless/</id>
+        <title><![CDATA[Writeup for A More Secure Pastebin - Practical Timeless Timing in Browser]]></title>
+        <updated>2022-02-21T10:09:57+08:00</updated>
+        <link href="https://blog.zeddyu.info/2022/02/21/2022-02-21-PracticalTimingTimeless/"/>
+        <content type="text/html" src="https://blog.zeddyu.info/2022/02/21/2022-02-21-PracticalTimingTimeless/"><![CDATA[<p>本次 TQLCTF 我主要负责了 A More Secure Pastebin 的出题工作，通过该种攻击可以在一定网络波动内探测极小时间（1ms甚至更小）差异内的信息泄漏，以下是本题的出题 writeup 以及一些出题过程记录。</p>]]></content>
+        <author>
+            <name><![CDATA[Zedd’s Blog]]></name>
+        </author>
+    </entry>
+    
+    <entry>
         <id>https://www.logicjake.xyz/2021/12/01/%E7%AE%97%E6%B3%95%E7%A7%8B%E6%8B%9B%E4%B8%8A%E5%B2%B8%E5%8E%86%E7%A8%8B%E2%80%94%E5%A4%87%E6%88%98%E5%AE%9E%E4%B9%A0%E7%A7%8B%E6%8B%9B/</id>
         <title><![CDATA[推荐算法上岸历程—备战实习秋招]]></title>
         <updated>2022-01-29T09:31:17+08:00</updated>
@@ -1414,17 +1425,6 @@ $ sudo grub-install /dev/sda
         <link href="https://blog.zeddyu.info/2021/08/02/cybrics-checkin-2021/"/>
         <content type="text/html" src="https://blog.zeddyu.info/2021/08/02/cybrics-checkin-2021/"><![CDATA[<p>This is the fork of my friend&rsquo;s blog: <a class="link" href="https://blog.soreatu.com/posts/writeup-for-web-checkin-in-cybrics-ctf-2021/" target="_blank" rel="noopener"
 >Writeup for Web-Checkin in CyBRICS CTF 2021</a>. We have worked together for two days to solve the hardest web CheckIn in the CybricsCTF 2021. It is nearly a crypto challenge but I think it deserves a writeup.</p>]]></content>
-        <author>
-            <name><![CDATA[Zedd’s Blog]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://blog.zeddyu.info/2021/07/21/google-qual-2021/</id>
-        <title><![CDATA[Two Webs' Writeup in Google CTF Quals 2021]]></title>
-        <updated>2021-07-21T02:58:54+08:00</updated>
-        <link href="https://blog.zeddyu.info/2021/07/21/google-qual-2021/"/>
-        <content type="text/html" src="https://blog.zeddyu.info/2021/07/21/google-qual-2021/"><![CDATA[<p>I played Google CTF Quals 2021 and here is my writeup.</p>]]></content>
         <author>
             <name><![CDATA[Zedd’s Blog]]></name>
         </author>
