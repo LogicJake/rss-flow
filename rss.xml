@@ -3,12 +3,40 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2022-07-03T06:18:15+08:00</updated>
+    <updated>2022-07-03T12:24:46+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
     </author>
     
+    
+    <entry>
+        <id>https://www.suruifu.com/posts/714</id>
+        <title><![CDATA[单庄园对苏瑞辅优点的列举]]></title>
+        <updated>2022-07-03T08:19:53+08:00</updated>
+        <link href="https://www.suruifu.com/posts/714"/>
+        <content type="text/html" src="https://www.suruifu.com/posts/714"><![CDATA[<h2>说明</h2>
+<ol>
+<li>这是手搞，没有合并及整理，没有整理句子使语句通顺</li>
+<li>过去的事情就过去了，我们都要向前看，这里只是做个记录</li>
+</ol>
+<h2>原文</h2>
+<ul>
+<li>目标拆解与完成技术</li>
+<li>每天都很坚持</li>
+<li>每天保持事情的好奇</li>
+<li>决策效率高</li>
+<li>有自己的追求</li>
+<li>对自己有奇妙的自信</li>
+<li>乐观</li>
+<li>语言鲜活，思维清析</li>
+<li>做事情很负责</li>
+<li>做事情有信念</li>
+</ul>]]></content>
+        <author>
+            <name><![CDATA[苏瑞辅的个人网站]]></name>
+        </author>
+    </entry>
     
     <entry>
         <id>https://www.suruifu.com/posts/712</id>
@@ -383,6 +411,7 @@
 <li>Email: <a href="mailto:blog@zwlin.mozmail.com">blog@zwlin.mozmail.com</a></li>
 <li>GitHub: <a href="https://github.com/Zwlin98">@Zwlin98</a></li>
 <li>Telegram: <a href="https://t.me/zwlin98">@zwlin98</a></li>
+<li>Telegram Channel: <a href="https://t.me/Zwlin_channel">Zwlin&rsquo;s Channel</a></li>
 </ul>]]></content>
         <author>
             <name><![CDATA[Zwlin’s Blog]]></name>
@@ -952,17 +981,6 @@ $ sudo systemctl restart nginx.service
         <content type="text/html" src="https://miaotony.xyz/2022/03/25/CTF_2022HFCTF/"><![CDATA[上周末打了下虎符CTF，感觉题目总体而言难度挺大，也就Misc方向相对来说简单一点了，于是来玩了玩。]]></content>
         <author>
             <name><![CDATA[MiaoTony]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://www.suruifu.com/posts/686</id>
-        <title><![CDATA[行百里者半九十]]></title>
-        <updated>2022-03-25T15:59:49+08:00</updated>
-        <link href="https://www.suruifu.com/posts/686"/>
-        <content type="text/html" src="https://www.suruifu.com/posts/686"><![CDATA[<p>很高兴能处于困难之中，我要沉着应对。</p>]]></content>
-        <author>
-            <name><![CDATA[苏瑞辅的个人网站]]></name>
         </author>
     </entry>
     
