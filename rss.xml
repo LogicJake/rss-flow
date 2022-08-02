@@ -3,12 +3,51 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2022-08-02T01:45:36+08:00</updated>
+    <updated>2022-08-02T06:19:16+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
     </author>
     
+    
+    <entry>
+        <id>https://www.suruifu.com/posts/714</id>
+        <title><![CDATA[单庄园对苏瑞辅优点的列举]]></title>
+        <updated>2022-07-03T08:19:53+08:00</updated>
+        <link href="https://www.suruifu.com/posts/714"/>
+        <content type="text/html" src="https://www.suruifu.com/posts/714"><![CDATA[<h2>说明</h2>
+<ol>
+<li>这是手搞，没有合并及整理，没有整理句子使语句通顺</li>
+<li>过去的事情就过去了，我们都要向前看，这里只是做个记录</li>
+</ol>
+<h2>原文</h2>
+<ul>
+<li>目标拆解与完成技术</li>
+<li>每天都很坚持</li>
+<li>每天保持事情的好奇</li>
+<li>决策效率高</li>
+<li>有自己的追求</li>
+<li>对自己有奇妙的自信</li>
+<li>乐观</li>
+<li>语言鲜活，思维清晰</li>
+<li>做事情很负责</li>
+<li>做事情有信念</li>
+</ul>]]></content>
+        <author>
+            <name><![CDATA[苏瑞辅的个人网站]]></name>
+        </author>
+    </entry>
+    
+    <entry>
+        <id>https://www.suruifu.com/posts/712</id>
+        <title><![CDATA[成就别人就是成就自己]]></title>
+        <updated>2022-06-28T15:08:36+08:00</updated>
+        <link href="https://www.suruifu.com/posts/712"/>
+        <content type="text/html" src="https://www.suruifu.com/posts/712"><![CDATA[]]></content>
+        <author>
+            <name><![CDATA[苏瑞辅的个人网站]]></name>
+        </author>
+    </entry>
     
     <entry>
         <id>https://blog.zwlin.io/post/modern-unix/</id>
@@ -66,6 +105,17 @@
 <p>上文介绍的都是我非常常用的一些工具，非常推荐朋友们试试，我相信你会喜欢的。</p>]]></content>
         <author>
             <name><![CDATA[Zwlin’s Blog]]></name>
+        </author>
+    </entry>
+    
+    <entry>
+        <id>https://www.suruifu.com/posts/699</id>
+        <title><![CDATA[20220611]]></title>
+        <updated>2022-06-11T00:23:54+08:00</updated>
+        <link href="https://www.suruifu.com/posts/699"/>
+        <content type="text/html" src="https://www.suruifu.com/posts/699"><![CDATA[<p>经过一段时间的努力工作，生活逐步入正轨，走出了一地鸡毛的处境。我要继续努力工作，绘制更加宏伟的人生画卷。</p>]]></content>
+        <author>
+            <name><![CDATA[苏瑞辅的个人网站]]></name>
         </author>
     </entry>
     
@@ -420,6 +470,17 @@
         <content type="text/html" src="https://miaotony.xyz/2022/04/26/CTF_2022T-Star/"><![CDATA[前几天AK了个腾讯的T-Star高校挑战赛，题目比较偏向Misc和Web，这里记录一下解题过程。]]></content>
         <author>
             <name><![CDATA[MiaoTony]]></name>
+        </author>
+    </entry>
+    
+    <entry>
+        <id>https://www.suruifu.com/posts/694</id>
+        <title><![CDATA[过去的再也回不来]]></title>
+        <updated>2022-04-23T14:03:00+08:00</updated>
+        <link href="https://www.suruifu.com/posts/694"/>
+        <content type="text/html" src="https://www.suruifu.com/posts/694"><![CDATA[<p>过去的，就过去了，再也回不来的。珍惜现在，珍爱生活。</p>]]></content>
+        <author>
+            <name><![CDATA[苏瑞辅的个人网站]]></name>
         </author>
     </entry>
     
@@ -810,6 +871,20 @@ $ git cherry-pick 05719c8^..69edfc9
 </section>]]></content>
         <author>
             <name><![CDATA[TripleZ’s Blog]]></name>
+        </author>
+    </entry>
+    
+    <entry>
+        <id>https://www.suruifu.com/posts/690</id>
+        <title><![CDATA[我很高兴能够经历现在的困难]]></title>
+        <updated>2022-04-07T15:13:28+08:00</updated>
+        <link href="https://www.suruifu.com/posts/690"/>
+        <content type="text/html" src="https://www.suruifu.com/posts/690"><![CDATA[<p>我现在的生活并不轻松，我在经历一些困难。</p>
+<p>我很高兴，我面对困难的时候并不是无能为力，而能冷静应对；我很高兴，我能够沉下心来，把握整体工作方向。</p>
+<p>我要逐步提升自己解决问题的水平、资源调度的水平；我希望我能逐步迎接更大的困难、更艰难的处境、更棘手的情况。</p>
+<p>我希望可以永远处于困难之中！</p>]]></content>
+        <author>
+            <name><![CDATA[苏瑞辅的个人网站]]></name>
         </author>
     </entry>
     
