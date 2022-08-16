@@ -3,12 +3,24 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2022-08-16T01:26:09+08:00</updated>
+    <updated>2022-08-16T06:19:58+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
     </author>
     
+    
+    <entry>
+        <id>https://blog.zeddyu.info/2022/08/16/2022-08-10-h2-push/</id>
+        <title><![CDATA[A Magic Way of XSS in HTTP/2]]></title>
+        <updated>2022-08-16T02:27:21+08:00</updated>
+        <link href="https://blog.zeddyu.info/2022/08/16/2022-08-10-h2-push/"/>
+        <content type="text/html" src="https://blog.zeddyu.info/2022/08/16/2022-08-10-h2-push/"><![CDATA[<p>上周周末结束的 corCTF 中有一个题目提出了一种很有意思的攻击，该攻击方式可以利用 HTTP/2 Server Push 机制 XSS 到其他域，尽管利用条件有点苛刻，但是我个人非常喜欢这种 Magic 的攻击方式。（在征求了原作者 <a class="link" href="https://larry.sh/" target="_blank" rel="noopener"
+>@ehhthing</a> 同意下将该方法分享给大家）</p>]]></content>
+        <author>
+            <name><![CDATA[Zedd’s Blog]]></name>
+        </author>
+    </entry>
     
     <entry>
         <id>https://blog.zwlin.io/post/go-append/</id>
@@ -1415,18 +1427,6 @@
         <content type="text/html" src="https://blog.stdioa.com/2021/09/homelab-share/"><![CDATA[<p>大学毕业之前一个冲动买了台式机，又一个冲动买了台 Linux 主机。到现在它已经运行了四年多了，简单分享下自己的玩法。</p>]]></content>
         <author>
             <name><![CDATA[Stdio’s Blog]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://blog.zeddyu.info/2021/08/02/cybrics-checkin-2021/</id>
-        <title><![CDATA[Writeup for Web-Checkin in CyBRICS CTF 2021 (Mirror)]]></title>
-        <updated>2021-08-02T00:32:27+08:00</updated>
-        <link href="https://blog.zeddyu.info/2021/08/02/cybrics-checkin-2021/"/>
-        <content type="text/html" src="https://blog.zeddyu.info/2021/08/02/cybrics-checkin-2021/"><![CDATA[<p>This is the fork of my friend&rsquo;s blog: <a class="link" href="https://blog.soreatu.com/posts/writeup-for-web-checkin-in-cybrics-ctf-2021/" target="_blank" rel="noopener"
->Writeup for Web-Checkin in CyBRICS CTF 2021</a>. We have worked together for two days to solve the hardest web CheckIn in the CybricsCTF 2021. It is nearly a crypto challenge but I think it deserves a writeup.</p>]]></content>
-        <author>
-            <name><![CDATA[Zedd’s Blog]]></name>
         </author>
     </entry>
     
