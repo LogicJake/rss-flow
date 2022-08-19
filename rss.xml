@@ -3,12 +3,112 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2022-08-19T06:21:32+08:00</updated>
+    <updated>2022-08-19T12:28:59+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
     </author>
     
+    
+    <entry>
+        <id>https://blog.zwlin.io/post/ebpf-intro/</id>
+        <title><![CDATA[[笔记] ebpf 指北（一）]]></title>
+        <updated>2022-08-19T05:28:27+08:00</updated>
+        <link href="https://blog.zwlin.io/post/ebpf-intro/"/>
+        <content type="text/html" src="https://blog.zwlin.io/post/ebpf-intro/"><![CDATA[<h2 id="ebpf-是什么">ebpf 是什么？</h2>
+<p>对于我来说，最让我感到豁然开朗的解释的是 Brendan Gregg 大师在其<a href="https://www.brendangregg.com/blog/2019-01-01/learn-ebpf-tracing.html">博文</a>中提到的:</p>
+<blockquote>
+<p><strong>eBPF</strong> does to Linux what JavaScript does to HTML. (Sort of.) … In reality, eBPF is more like the v8 virtual machine that runs JavaScript, rather than JavaScript itself. eBPF is part of the Linux kernel.</p>
+</blockquote>
+<p>实际上我看了很多对于 ebpf 的“<a href="https://ebpf.io/what-is-ebpf#what-is-ebpf">正式</a>”释义依旧云里雾里，大师的解释让我对于 ebpf 一下子不再心怀畏惧：认为其需要高深的 Linux 内核知识，需要充分的内核知识储备。</p>
+<p>之后我就开始了我的 ebpf 体验之旅，发现确实以我对于 Linux 内核粗浅的认识，一样可以使用 ebpf （当然也得益于 <a href="https://github.com/iovisor/bcc">bcc</a> 这一好用的工具），因此记录下我在了解和学习 ebpf / bcc 过程中踩的一些坑。</p>
+<h2 id="bpf-compiler-collection-bcc">BPF Compiler Collection (BCC)</h2>
+<p>BCC 是一个 BPF 编译器集合，包含了用于构建 BPF 程序的编程框架和库，并提供了大量可以直接使用的工具。</p>
+<blockquote>
+<p>BCC makes BPF programs easier to write, with kernel instrumentation in C (and includes a C wrapper around LLVM), and front-ends in Python and lua. It is suited for many tasks, including performance analysis and network traffic control.</p>
+</blockquote>
+<p>如何安装以及环境配置等问题就不多提了，我使用的是 Arch Linux，可以在 <a href="https://github.com/iovisor/bcc/blob/master/INSTALL.md">Installing BCC</a> 上查看如何在各种Linux 发行版上安装 BCC（对内核要求较高）。</p>
+<h2 id="一个-ebpf-程序">一个 ebpf 程序</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="ch">#!/usr/bin/env python3</span>
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl"><span class="kn">from</span> <span class="nn">bcc</span> <span class="kn">import</span> <span class="n">BPF</span>
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl"><span class="n">ebpf_c_text</span> <span class="o">=</span> <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="ln"> 5</span><span class="cl"><span class="s2">int kprobe__sys_clone(void *ctx)
+</span></span></span><span class="line"><span class="ln"> 6</span><span class="cl"><span class="s2">{
+</span></span></span><span class="line"><span class="ln"> 7</span><span class="cl"><span class="s2"> bpf_trace_printk(&#34;Hello, World!</span><span class="se">\\</span><span class="s2">n&#34;);
+</span></span></span><span class="line"><span class="ln"> 8</span><span class="cl"><span class="s2"> return 0;
+</span></span></span><span class="line"><span class="ln"> 9</span><span class="cl"><span class="s2">}
+</span></span></span><span class="line"><span class="ln">10</span><span class="cl"><span class="s2">&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="ln">11</span><span class="cl">
+</span></span><span class="line"><span class="ln">12</span><span class="cl"><span class="n">b</span> <span class="o">=</span> <span class="n">BPF</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">ebpf_c_text</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">13</span><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s2">&#34;Your first ebpf Program... Ctrl-C to stop&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">14</span><span class="cl"><span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="ln">15</span><span class="cl"> <span class="n">b</span><span class="o">.</span><span class="n">trace_print</span><span class="p">()</span>
+</span></span><span class="line"><span class="ln">16</span><span class="cl"><span class="k">except</span> <span class="ne">KeyboardInterrupt</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+</span></span><span class="line"><span class="ln">17</span><span class="cl"> <span class="n">exit</span><span class="p">()</span>
+</span></span></code></pre></div><p>这个程序稍微改造了一下 <a href="https://github.com/iovisor/bcc/blob/master/docs/tutorial_bcc_python_developer.md">bcc Python Developer Tutorial</a> 的第一个例程，在刚开始学 ebpf 时，我对这个例程感到非常疑惑，仿佛回到了刚学编程的那个时候。可以看出，这里内嵌了一个 C 代码，然后程序本体是Python 代码，然后这个 <code>kprobe__sys_clone</code> 函数的声明也很让人摸不着头脑。</p>
+<p>实际上搞懂这些首先需要知道 ebpf 程序是如何开发然后载入内核并执行的，如图所示：</p>
+<p><img src="ebpf.png" alt="ebpf"></p>
+<ol>
+<li>使用 C 语言开发一个 eBPF 程序；</li>
+<li>借助 LLVM 把 eBPF 程序编译成 BPF 字节码；</li>
+<li>通过 bpf 系统调用，把 BPF 字节码提交给内核；</li>
+<li>内核验证并运行 BPF 字节码，并把相应的状态保存到 BPF maps 中；</li>
+<li>用户程序通过 BPF maps 查询 BPF 字节码的运行状态。</li>
+</ol>
+<p>当然这几步你可以手动去完成，但是显然 BCC 抽象了这一过程，例程中只要完成第 1 步 和第 5 步即可。这里的 ebpf_c_text 就是 C 开发的一个 eBPF 程序，之后就是 BCC 来完成第2/3步,用 Python 完成数据的读取（当然这里还没有用到 bpf 的 maps）。到此为止，这个 Python 程序的大题框架我们已经认识。还有一些细节我们没理解。我们先看看运行结果：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="ln">1</span><span class="cl">chmod +x first_ebpf.py
+</span></span><span class="line"><span class="ln">2</span><span class="cl">./first_ebpf.py <span class="c1">#需要root权限或 sudo ./first_ebpf.py</span>
+</span></span></code></pre></div><p>Output：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="ln">1</span><span class="cl">Your first ebpf Program... Ctrl-C to stop
+</span></span><span class="line"><span class="ln">2</span><span class="cl">b&#39; zsh-27651 [024] d..31 184376.953730: bpf_trace_printk: Hello, World!&#39;
+</span></span><span class="line"><span class="ln">3</span><span class="cl">b&#39; zsh-27651 [024] d..31 184377.212267: bpf_trace_printk: Hello, World!&#39;
+</span></span><span class="line"><span class="ln">4</span><span class="cl">...
+</span></span><span class="line"><span class="ln">5</span><span class="cl">^C
+</span></span></code></pre></div><p>我们知道，clone 是创建子进程系统调用，因此当有进程创建子进程，例如输入 ls 命令，就会触发这个 ebpf 程序。输出如上所示。</p>
+<p>剩下的问题就是理解程序到底做了什么(<a href="https://github.com/iovisor/bcc/blob/master/docs/reference_guide.md">文档链接</a>):</p>
+<ul>
+<li>
+<p><code>int kprobe__sys_clone(void *ctx)</code> :</p>
+<blockquote>
+<p><code>kprobe__</code> is a special prefix that creates a kprobe (dynamic tracing of a kernel function call) for the kernel function name provided as the remainder. You can also use kprobes by declaring a normal C function, then using the Python <code>BPF.attach_kprobe()</code> (covered later) to associate it with a kernel function.</p>
+<p>Arguments are specified on the function declaration: kprobe__<em>kernel_function_name</em>(struct pt_regs *ctx [, <em>argument1</em> &hellip;])</p>
+<p>The first argument is always <code>struct pt_regs *</code>, the remainder are the arguments to the function (they don&rsquo;t need to be specified, if you don&rsquo;t intend to use them).</p>
+<p>kprobe__ 是一个特殊的前缀，用来追踪其后缀代表的内核函数调用，其第一个参数固定为 <code>struct pt_regs *ctx</code>，其余参数是待追踪的函数的参数(如果不打算使用它们，则不需要指定它们)。</p>
+</blockquote>
+</li>
+<li>
+<p><code>bpf_trace_printk()</code>:</p>
+<blockquote>
+<p><code>bpf_trace_printk</code> is a simple kernel facility for printf() to the common trace_pipe (/sys/kernel/debug/tracing/trace_pipe).</p>
+<p>可以把 <code>bpf_trace_printk()</code> 简单理解为 ebpf 专用的 printf，但是有许多限制，一般只在调试时使用（参考文档）</p>
+</blockquote>
+</li>
+<li>
+<p><code>BPF()</code></p>
+<blockquote>
+<p>Creates a BPF object. This is the main object for defining a BPF program, and interacting with its output.</p>
+<p>创建一个 BPF 对象，完成上述的第 2/3 步。</p>
+</blockquote>
+</li>
+<li>
+<p><code>b.trace_print()</code></p>
+<blockquote>
+<p>This method continually reads the globally shared /sys/kernel/debug/tracing/trace_pipe file and prints its contents.</p>
+<p>trace_print() 持续读取全局共享的 /sys/kernel/debug/tracing/trace_pipe 文件并打印其内容。显然该方法是对应<code>bpf_trace_printk()</code> 的用户态程序，ebf 在内核写入到 trace_pipe，python 程序在用户态不停的读取。</p>
+</blockquote>
+</li>
+</ul>
+<p>这几个核心的函数解释完成，程序的逻辑也就不难理解了：每当 <code>sys_clone</code> 被调用，ebpf 程序输出一个<code>Hello World</code> 到 <code>trace_pipe</code> ,然后 <code>Python</code> 持续读取 <code>trace_pipe</code> 并输出。</p>
+<h3 id="待续">待续…</h3>
+<h2 id="reference">Reference</h2>
+<p><a href="https://ebpf.io/what-is-ebpf">eBPF Documentation: What is eBPF?</a></p>
+<p><a href="https://www.brendangregg.com/blog/2019-01-01/learn-ebpf-tracing.html">Learn eBPF Tracing: Tutorial and Examples</a></p>
+<p><a href="https://github.com/iovisor/bcc/blob/master/docs/reference_guide.md">bcc Reference Guide</a></p>]]></content>
+        <author>
+            <name><![CDATA[Zwlin’s Blog]]></name>
+        </author>
+    </entry>
     
     <entry>
         <id>https://blog.zeddyu.info/2022/08/16/2022-08-10-h2-push/</id>
@@ -448,36 +548,6 @@
 <li>
 <p><a href="https://github.com/nshen/learn-neovim-lua">Neovim 配置实战</a></p>
 </li>
-</ul>]]></content>
-        <author>
-            <name><![CDATA[Zwlin’s Blog]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://blog.zwlin.io/about/</id>
-        <title><![CDATA[About]]></title>
-        <updated>2022-05-10T01:41:51+08:00</updated>
-        <link href="https://blog.zwlin.io/about/"/>
-        <content type="text/html" src="https://blog.zwlin.io/about/"><![CDATA[<h2 id="heading">👏</h2>
-<p>这是我的博客，主要记录我学习与生活过程中的一些记录与思考，以及我的一些作品，内容虽然可能有些简单，但是你要是感兴趣，订阅 <a href="https://blog.zwlin.io/index.xml">RSS</a> 关注我，我会非常开心！😊</p>
-<h3 id="关于我">关于我</h3>
-<p>我是 Zwlin，98年出生，目前计科研究生在读，研究偏向软件工程，主要关注<strong>配置文件与云原生</strong>。本科开始学习编程，打过三年<code>ICPC</code>。</p>
-<p>我热爱开源，喜欢探索各种新技术，捣鼓各种电子产品。</p>
-<h3 id="关于语言">关于语言</h3>
-<p>在本科竞赛时期一直用<code>C++</code>写代码，在退役之后就基本不怎么用了，比较喜欢没有太多历史包袱的新语言，像Go，Rust(还没来的及学)。</p>
-<ul>
-<li><code>Go</code> 是我最常用的语言，我喜欢她的简洁，也讨厌她的简洁。她对于并发的抽象很像学校里学习到的，CSP也很好理解，用Go写并发真的很快乐。</li>
-<li><code>Haskell</code> 也是一门非常优雅的语言，我对于函数式编程的认识，来自于SICP这本书中的<code>Scheme</code>,之后就逐渐喜欢上了函数式的一些特性与思想进而学习了<code>Haskell</code>。<code>Haskell</code>的强类型也和<code>Go</code>有异曲同工之感，<code>Haskell</code>的类型约束给我一种强烈的信心，通过类型检查的代码基本就是写对了。</li>
-<li><code>Python</code> <em>Life is short, you need Python!</em> 在我写一些小脚本的时候，或者验证一些的想法时，往往就会打开<code>vim</code>或者<code>jupyter</code>，<code>Python</code>会很快的告诉我答案，<code>Python</code>也非常适合用来做原型语言，在有了原型之后，再用别的语言完善。</li>
-</ul>
-<h3 id="找到我">找到我</h3>
-<p>欢迎和我交流任何有关技术的话题! 你可以通过以下方式找到我:</p>
-<ul>
-<li>Email: <a href="mailto:blog@zwlin.mozmail.com">blog@zwlin.mozmail.com</a></li>
-<li>GitHub: <a href="https://github.com/Zwlin98">@Zwlin98</a></li>
-<li>Telegram: <a href="https://t.me/zwlin98">@zwlin98</a></li>
-<li>Telegram Channel: <a href="https://t.me/Zwlin_channel">Zwlin&rsquo;s Channel</a></li>
 </ul>]]></content>
         <author>
             <name><![CDATA[Zwlin’s Blog]]></name>
