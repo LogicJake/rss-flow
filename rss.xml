@@ -3,12 +3,23 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2022-08-20T18:17:47+08:00</updated>
+    <updated>2022-08-21T01:15:47+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
     </author>
     
+    
+    <entry>
+        <id>https://miaotony.xyz/2022/06/30/CTF_2022MRCTF/</id>
+        <title><![CDATA[CTF | 2022 MRCTF WriteUp]]></title>
+        <updated>2022-08-20T18:17:26+08:00</updated>
+        <link href="https://miaotony.xyz/2022/06/30/CTF_2022MRCTF/"/>
+        <content type="text/html" src="https://miaotony.xyz/2022/06/30/CTF_2022MRCTF/"><![CDATA[四月底的一个周末，和群友组了个小队，来这个比赛打着玩一玩。]]></content>
+        <author>
+            <name><![CDATA[MiaoTony]]></name>
+        </author>
+    </entry>
     
     <entry>
         <id>https://blog.zwlin.io/post/ebpf-intro/</id>
@@ -1043,17 +1054,6 @@
         <updated>2022-03-27T21:49:20+08:00</updated>
         <link href="https://miaotony.xyz/2022/03/25/CTF_2022HFCTF/"/>
         <content type="text/html" src="https://miaotony.xyz/2022/03/25/CTF_2022HFCTF/"><![CDATA[上周末打了下虎符CTF，感觉题目总体而言难度挺大，也就Misc方向相对来说简单一点了，于是来玩了玩。]]></content>
-        <author>
-            <name><![CDATA[MiaoTony]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://miaotony.xyz/2022/03/13/Pentest_2022_1337UPLIVECTF/</id>
-        <title><![CDATA[Pentest | 2022 1337UP LIVE CTF Workthrough]]></title>
-        <updated>2022-03-14T19:39:42+08:00</updated>
-        <link href="https://miaotony.xyz/2022/03/13/Pentest_2022_1337UPLIVECTF/"/>
-        <content type="text/html" src="https://miaotony.xyz/2022/03/13/Pentest_2022_1337UPLIVECTF/"><![CDATA[这周末看了看2022 1337UP LIVE CTF国际赛中的一道偏渗透的题目，这里来记录一下解题过程。]]></content>
         <author>
             <name><![CDATA[MiaoTony]]></name>
         </author>
