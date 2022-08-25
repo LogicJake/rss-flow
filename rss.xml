@@ -3,7 +3,7 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2022-08-25T06:30:12+08:00</updated>
+    <updated>2022-08-25T12:31:25+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
@@ -293,17 +293,6 @@
         <content type="text/html" src="https://www.suruifu.com/posts/699"><![CDATA[<p>经过一段时间的努力工作，生活逐步入正轨，走出了一地鸡毛的处境。我要继续努力工作，绘制更加宏伟的人生画卷。</p>]]></content>
         <author>
             <name><![CDATA[苏瑞辅的个人网站]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://blog.stdioa.com/2022/06/encode-ipv6-into-utf8/</id>
-        <title><![CDATA[一种 IPv6 地址编码方案]]></title>
-        <updated>2022-06-10T12:57:53+08:00</updated>
-        <link href="https://blog.stdioa.com/2022/06/encode-ipv6-into-utf8/"/>
-        <content type="text/html" src="https://blog.stdioa.com/2022/06/encode-ipv6-into-utf8/"><![CDATA[<p>又搞了一些骚操作：把一个 IPv6 地址压缩成一个短字符串。</p>]]></content>
-        <author>
-            <name><![CDATA[Stdio’s Blog]]></name>
         </author>
     </entry>
     
@@ -1490,28 +1479,6 @@
     </entry>
     
     <entry>
-        <id>https://blog.stdioa.com/2021/09/homelab-share/</id>
-        <title><![CDATA[HomeLab 玩法简单分享]]></title>
-        <updated>2021-09-16T06:41:52+08:00</updated>
-        <link href="https://blog.stdioa.com/2021/09/homelab-share/"/>
-        <content type="text/html" src="https://blog.stdioa.com/2021/09/homelab-share/"><![CDATA[<p>大学毕业之前一个冲动买了台式机，又一个冲动买了台 Linux 主机。到现在它已经运行了四年多了，简单分享下自己的玩法。</p>]]></content>
-        <author>
-            <name><![CDATA[Stdio’s Blog]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://blog.stdioa.com/2021/07/scrape-prometheus-metrics-outside-kubernetes/</id>
-        <title><![CDATA[在 K3S 集群外监控集群内的指标]]></title>
-        <updated>2021-07-11T11:58:14+08:00</updated>
-        <link href="https://blog.stdioa.com/2021/07/scrape-prometheus-metrics-outside-kubernetes/"/>
-        <content type="text/html" src="https://blog.stdioa.com/2021/07/scrape-prometheus-metrics-outside-kubernetes/"><![CDATA[<p><s>吃饱了撑的</s>，尝试一下 Prometheus 在 K3S 集群外抓取集群内指标的若干姿势。</p>]]></content>
-        <author>
-            <name><![CDATA[Stdio’s Blog]]></name>
-        </author>
-    </entry>
-    
-    <entry>
         <id>http://blog.qrzbing.cn/post/2021-ciscn-little-evil/</id>
         <title><![CDATA[CISCN 2021 Little Evil]]></title>
         <updated>2021-06-07T12:25:50+08:00</updated>
@@ -2337,17 +2304,6 @@ gu install --jvm llvm-toolchain</pre>
     </entry>
     
     <entry>
-        <id>https://blog.stdioa.com/2021/02/alpine-time-call/</id>
-        <title><![CDATA[由 TT-RSS 解析数据库地址失败引出的一个问题]]></title>
-        <updated>2021-02-23T12:59:07+08:00</updated>
-        <link href="https://blog.stdioa.com/2021/02/alpine-time-call/"/>
-        <content type="text/html" src="https://blog.stdioa.com/2021/02/alpine-time-call/"><![CDATA[<p>水一篇文章，主要用来告诫自己认真看文档。🌚</p>]]></content>
-        <author>
-            <name><![CDATA[Stdio’s Blog]]></name>
-        </author>
-    </entry>
-    
-    <entry>
         <id>https://nuaa-s3lab.github.io/dailyPaper/2021/0129.html</id>
         <title><![CDATA[2021-01-29 论文推荐]]></title>
         <updated>2021-01-29T00:00:00+08:00</updated>
@@ -2399,17 +2355,6 @@ gu install --jvm llvm-toolchain</pre>
         <content type="text/html" src="https://nuaa-s3lab.github.io/dailyPaper/2021/0125.html"><![CDATA[2021-01-25 论文推荐]]></content>
         <author>
             <name><![CDATA[S3lab 每日论文推荐]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://blog.stdioa.com/2020/12/protobuf-upgrade/</id>
-        <title><![CDATA[protobuf 升级后带来的一些坑]]></title>
-        <updated>2020-12-27T06:53:32+08:00</updated>
-        <link href="https://blog.stdioa.com/2020/12/protobuf-upgrade/"/>
-        <content type="text/html" src="https://blog.stdioa.com/2020/12/protobuf-upgrade/"><![CDATA[<p>前段时间把公司某项目依赖的 <code>github.com/golang/protobuf</code> 的版本从 v1.3.3 升级到了 v1.4.2，本文记录了升级过程中遇到的一些问题。</p>]]></content>
-        <author>
-            <name><![CDATA[Stdio’s Blog]]></name>
         </author>
     </entry>
     
