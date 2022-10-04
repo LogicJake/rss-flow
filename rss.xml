@@ -3,12 +3,23 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2022-10-04T06:29:35+08:00</updated>
+    <updated>2022-10-04T12:37:02+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
     </author>
     
+    
+    <entry>
+        <id>https://miaotony.xyz/2022/09/30/CTF_2022ByteCTF/</id>
+        <title><![CDATA[CTF | 2022 ByteCTF WriteUp]]></title>
+        <updated>2022-10-04T11:25:13+08:00</updated>
+        <link href="https://miaotony.xyz/2022/09/30/CTF_2022ByteCTF/"/>
+        <content type="text/html" src="https://miaotony.xyz/2022/09/30/CTF_2022ByteCTF/"><![CDATA[上周末打了下ByteCTF，题目还是挺不错的，可是喵喵太菜，这里只能来写点简单题的writeup了。]]></content>
+        <author>
+            <name><![CDATA[MiaoTony]]></name>
+        </author>
+    </entry>
     
     <entry>
         <id>https://blog.vvzero.com/2022/09/18/Ethernet-Wiring/</id>
@@ -661,17 +672,6 @@
         <content type="text/html" src="http://blog.qrzbing.cn/post/2022-rustlings/"><![CDATA[<p><a href="https://github.com/rust-lang/rustlings">rustlings</a> : Rust 小练习</p>]]></content>
         <author>
             <name><![CDATA[QRZ’s Blog]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://miaotony.xyz/2022/03/20/EE_LicheeRV_1_getting_started/</id>
-        <title><![CDATA[EE | Sipeed 荔枝派 LicheeRV | 1 开箱及上手入门]]></title>
-        <updated>2022-04-27T09:35:10+08:00</updated>
-        <link href="https://miaotony.xyz/2022/03/20/EE_LicheeRV_1_getting_started/"/>
-        <content type="text/html" src="https://miaotony.xyz/2022/03/20/EE_LicheeRV_1_getting_started/"><![CDATA[有新玩具了！最近整了个Sipeed 荔枝派 LicheeRV Dock 全志D1开发板，这篇博客就来记录一下开箱和上手的一些折腾过程。]]></content>
-        <author>
-            <name><![CDATA[MiaoTony]]></name>
         </author>
     </entry>
     
