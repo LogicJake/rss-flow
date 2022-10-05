@@ -3,7 +3,7 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2022-10-05T12:35:06+08:00</updated>
+    <updated>2022-10-05T18:31:47+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
@@ -18,6 +18,17 @@
         <content type="text/html" src="https://miaotony.xyz/2022/09/30/CTF_2022ByteCTF/"><![CDATA[上周末打了下ByteCTF，题目还是挺不错的，可是喵喵太菜，这里只能来写点简单题的writeup了。]]></content>
         <author>
             <name><![CDATA[MiaoTony]]></name>
+        </author>
+    </entry>
+    
+    <entry>
+        <id>https://blog.zeddyu.info/2022/09/27/2022-09-28-TheEndOfAFR/</id>
+        <title><![CDATA[The End of AFR]]></title>
+        <updated>2022-09-27T11:30:04+08:00</updated>
+        <link href="https://blog.zeddyu.info/2022/09/27/2022-09-28-TheEndOfAFR/"/>
+        <content type="text/html" src="https://blog.zeddyu.info/2022/09/27/2022-09-28-TheEndOfAFR/"><![CDATA[<p>本篇通过对 DownUnder CTF 2022 中一道题的讲解来介绍一种比较 trick 的通过侧信道读取文件内容的方法。</p>]]></content>
+        <author>
+            <name><![CDATA[Zedd’s Blog]]></name>
         </author>
     </entry>
     
@@ -1519,17 +1530,6 @@
 </ul>]]></content>
         <author>
             <name><![CDATA[TripleZ’s Blog]]></name>
-        </author>
-    </entry>
-    
-    <entry>
-        <id>https://blog.zeddyu.info/2021/09/30/2021-09-30-FromHexoToHugo/</id>
-        <title><![CDATA[从 Hexo 搬迁至 Hugo]]></title>
-        <updated>2021-09-29T17:15:01+08:00</updated>
-        <link href="https://blog.zeddyu.info/2021/09/30/2021-09-30-FromHexoToHugo/"/>
-        <content type="text/html" src="https://blog.zeddyu.info/2021/09/30/2021-09-30-FromHexoToHugo/"><![CDATA[<p>由于之前突发奇想，看到某些同学的博客确实好看，心血来潮便花了大概几个晚上把博客生成工具从原来的 Hexo 迁移到了 Hugo 上，便有了这次搬迁记录，也算是给其他想迁移小伙伴一个参考。</p>]]></content>
-        <author>
-            <name><![CDATA[Zedd’s Blog]]></name>
         </author>
     </entry>
     
