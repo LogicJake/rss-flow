@@ -3,7 +3,7 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2022-10-17T06:51:52+08:00</updated>
+    <updated>2022-10-17T12:38:25+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
@@ -1040,7 +1040,7 @@
 <p>在设置动态链接的方法中，<code>rpath</code> 有其自身的问题<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> ， <code>ld.so.conf</code> 为 OS 全局配置，可能会因为单一服务的动态库版本而影响到其他服务，不是一个优雅的方法。</p>
 <p>那如何才能不借助 <code>rpath</code> 和 <code>ld.so.conf</code> ，即能使目标服务找到对应的动态链接库，又能不影响其他服务呢？</p>
 <h2 id="ld_library_path">LD_LIBRARY_PATH</h2>
-<p>对于动态链接库的路径配置而言，除了 <code>rpath</code> 和 <code>ld.so.conf</code> ，还有 <code>LD_LIBRARY_PATH</code>。只要在二进制启动的环境中设置 ``LD_LIBRARY_PATH<code>变量，则</code>glibc` 会将该变量中的路径配置作为动态链接库的查找路径之一，使得二进制可执行文件能够正常链接到其依赖的动态链接库。</p>
+<p>对于动态链接库的路径配置而言，除了 <code>rpath</code> 和 <code>ld.so.conf</code> ，还有 <code>LD_LIBRARY_PATH</code>。只要在二进制启动的环境中设置 <code>LD_LIBRARY_PATH</code> 变量，则 <code>glibc</code> 会将该变量中的路径配置作为动态链接库的查找路径之一，使得二进制可执行文件能够正常链接到其依赖的动态链接库。</p>
 <p><code>LD_LIBRARY_PATH</code> 会在当前 shell session 中“全局”生效，不过，由于笔者服务采用 systemd 来管理其生命周期，按照上述思路，应该只需要在服务启动前，将 <code>LD_LIBRARY_PATH</code> 注入启动环境即可，这样还能够借助 systemd 来实现一定程度的环境“隔离”。systemd 服务配置中的 <code>Environment</code> 字段是用于描述启动环境的环境变量的，我们先在这里加入 <code>LD_LIBRARY_PATH</code> （如下），重新加载 systemd 配置并重启服务，观察效果。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-diff" data-lang="diff"><span class="line"><span class="cl"> [Unit]
 </span></span><span class="line"><span class="cl"> Description=Nginx
