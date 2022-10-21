@@ -3,7 +3,7 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2022-10-21T12:37:19+08:00</updated>
+    <updated>2022-10-21T18:25:42+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
@@ -787,7 +787,29 @@
         <content type="text/html" src="https://blog.triplez.cn/posts/mastering-git-cherry-pick/"><![CDATA[<p>本文希望教你如何成为一个 <code>git cherry-pick</code> 的 “master”！通过使用 <code>git cherry-pick</code> 来轻松地维护多个分支版本，再也不会让 multi-version maintaining  成为你心头上的那把令你屡次痛心的剑了！</p>
 <p>本文所有内容都会基于以下（精心构造的）示例，该例子涵盖了大部分工程上容易出现的 Git log pattern（如有其他 corner-case ，欢迎<a href="mailto:me@triplez.cn">联系我</a>，一起努力让该文变得对大家更有帮助）。</p>
 <p>贯穿本文的示例场景，这是该示例基于时间序的 Git 提交历史。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ git --no-pager log --oneline --graph --date-order
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt" id="hl-0-1"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-0-1"> 1</a>
+</span><span class="lnt" id="hl-0-2"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-0-2"> 2</a>
+</span><span class="lnt" id="hl-0-3"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-0-3"> 3</a>
+</span><span class="lnt" id="hl-0-4"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-0-4"> 4</a>
+</span><span class="lnt" id="hl-0-5"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-0-5"> 5</a>
+</span><span class="lnt" id="hl-0-6"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-0-6"> 6</a>
+</span><span class="lnt" id="hl-0-7"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-0-7"> 7</a>
+</span><span class="lnt" id="hl-0-8"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-0-8"> 8</a>
+</span><span class="lnt" id="hl-0-9"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-0-9"> 9</a>
+</span><span class="lnt" id="hl-0-10"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-0-10">10</a>
+</span><span class="lnt" id="hl-0-11"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-0-11">11</a>
+</span><span class="lnt" id="hl-0-12"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-0-12">12</a>
+</span><span class="lnt" id="hl-0-13"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-0-13">13</a>
+</span><span class="lnt" id="hl-0-14"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-0-14">14</a>
+</span><span class="lnt" id="hl-0-15"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-0-15">15</a>
+</span><span class="lnt" id="hl-0-16"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-0-16">16</a>
+</span><span class="lnt" id="hl-0-17"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-0-17">17</a>
+</span><span class="lnt" id="hl-0-18"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-0-18">18</a>
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ git --no-pager log --oneline --graph --date-order
 </span></span><span class="line"><span class="cl">* f2c1619 <span class="o">(</span>HEAD -&gt; red<span class="o">)</span> R6
 </span></span><span class="line"><span class="cl">*   e6899ea R5 merge branch <span class="s1">&#39;blue&#39;</span> into <span class="s1">&#39;red&#39;</span>
 </span></span><span class="line"><span class="cl"><span class="p">|</span><span class="se">\
@@ -805,9 +827,42 @@
 </span></span><span class="line"><span class="cl"><span class="p">|</span>/
 </span></span><span class="line"><span class="cl">* 6581ff8 R1
 </span></span><span class="line"><span class="cl">* 2787f8f <span class="o">(</span>master<span class="o">)</span> init commit
-</span></span></code></pre></div><details>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><details>
 <summary><mark>快速创建该示例。</mark></summary>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">mkdir cherry-pick<span class="p">;</span> <span class="nb">cd</span> cherry-pick/
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt" id="hl-1-1"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-1"> 1</a>
+</span><span class="lnt" id="hl-1-2"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-2"> 2</a>
+</span><span class="lnt" id="hl-1-3"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-3"> 3</a>
+</span><span class="lnt" id="hl-1-4"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-4"> 4</a>
+</span><span class="lnt" id="hl-1-5"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-5"> 5</a>
+</span><span class="lnt" id="hl-1-6"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-6"> 6</a>
+</span><span class="lnt" id="hl-1-7"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-7"> 7</a>
+</span><span class="lnt" id="hl-1-8"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-8"> 8</a>
+</span><span class="lnt" id="hl-1-9"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-9"> 9</a>
+</span><span class="lnt" id="hl-1-10"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-10">10</a>
+</span><span class="lnt" id="hl-1-11"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-11">11</a>
+</span><span class="lnt" id="hl-1-12"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-12">12</a>
+</span><span class="lnt" id="hl-1-13"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-13">13</a>
+</span><span class="lnt" id="hl-1-14"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-14">14</a>
+</span><span class="lnt" id="hl-1-15"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-15">15</a>
+</span><span class="lnt" id="hl-1-16"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-16">16</a>
+</span><span class="lnt" id="hl-1-17"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-17">17</a>
+</span><span class="lnt" id="hl-1-18"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-18">18</a>
+</span><span class="lnt" id="hl-1-19"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-19">19</a>
+</span><span class="lnt" id="hl-1-20"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-20">20</a>
+</span><span class="lnt" id="hl-1-21"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-21">21</a>
+</span><span class="lnt" id="hl-1-22"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-22">22</a>
+</span><span class="lnt" id="hl-1-23"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-23">23</a>
+</span><span class="lnt" id="hl-1-24"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-24">24</a>
+</span><span class="lnt" id="hl-1-25"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-25">25</a>
+</span><span class="lnt" id="hl-1-26"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-26">26</a>
+</span><span class="lnt" id="hl-1-27"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-27">27</a>
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">mkdir cherry-pick<span class="p">;</span> <span class="nb">cd</span> cherry-pick/
 </span></span><span class="line"><span class="cl">git init
 </span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;init&#34;</span> &gt;&gt; init<span class="p">;</span> git add -A<span class="p">;</span> git commit -m <span class="s2">&#34;init commit&#34;</span><span class="p">;</span> sleep <span class="m">1</span>
 </span></span><span class="line"><span class="cl">git checkout -b red
@@ -834,7 +889,9 @@
 </span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;red&#34;</span> &gt;&gt; red<span class="p">;</span> git add -A<span class="p">;</span> git commit -m <span class="s2">&#34;R6&#34;</span><span class="p">;</span> sleep <span class="m">1</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">git --no-pager log --oneline --graph --date-order
-</span></span></code></pre></div></details>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></details>
 <br/>
 <p>当前 Git 提交历史示意图如下。</p>
 <figure class="align-center ">
@@ -846,66 +903,172 @@
 
 <p>Git cherry-pick 的命令的基本原理是根据用户所选择的提交，根据提交中的差异信息（diff）将这些提交移植至用户目标版本中。如将 hotfix 应用至其他 LTS 版本中是该功能的一个典型应用。</p>
 <p><code>git cherry-pick</code> 的大致用法为：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">git cherry-pick <span class="o">[</span>options<span class="o">]</span> &lt;commit&gt;...
-</span></span></code></pre></div><p>此处的 <code>&lt;commit&gt;...</code> 即为用户希望移植的提交（集合），这是本文讨论的要点。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt" id="hl-2-1"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-2-1">1</a>
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">git cherry-pick <span class="o">[</span>options<span class="o">]</span> &lt;commit&gt;...
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>此处的 <code>&lt;commit&gt;...</code> 即为用户希望移植的提交（集合），这是本文讨论的要点。</p>
 <p><code>&lt;commit&gt;</code> 可以为单一提交（commit），也可以为一个版本区间（revision range）。若为 revision range，则该命令会将该 revision range 中的所有 commit 都解析出来，最终成为一连串的单一 commit <sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>。<code>cherry-pick</code> 可以同时接受多个 <code>&lt;commit&gt;</code> ，此时表现类似于 <code>git rev-list</code> 中的 <code>--no-walk</code> 行为<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>。</p>
 <p>那我们依次来讨论 <code>&lt;commit&gt;...</code> 为单一 commit 以及 revision range 的情况。</p>
 <h2 id="single-commit">Single commit</h2>
 <h3 id="normal-commit">Normal commit</h3>
 <p>回到上文的例子，如果仅需要将 <code>G2</code> 选取出来，我们可以这样操作。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 回到 master 新建一条分支用于测试</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt" id="hl-3-1"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-3-1">1</a>
+</span><span class="lnt" id="hl-3-2"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-3-2">2</a>
+</span><span class="lnt" id="hl-3-3"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-3-3">3</a>
+</span><span class="lnt" id="hl-3-4"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-3-4">4</a>
+</span><span class="lnt" id="hl-3-5"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-3-5">5</a>
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 回到 master 新建一条分支用于测试</span>
 </span></span><span class="line"><span class="cl">$ git checkout master
 </span></span><span class="line"><span class="cl">$ git checkout -b cp-single-normal-commit
 </span></span><span class="line"><span class="cl"><span class="c1"># G2 的提交 SHA 值为 059425a</span>
 </span></span><span class="line"><span class="cl">$ git cherry-pick 059425a
-</span></span></code></pre></div><p>此时会出现合并冲突（merge conflict），输出如下所示。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">CONFLICT (modify/delete): green deleted in HEAD and modified in 059425a (G2). Version 059425a (G2) of green left in tree.
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>此时会出现合并冲突（merge conflict），输出如下所示。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt" id="hl-4-1"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-4-1">1</a>
+</span><span class="lnt" id="hl-4-2"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-4-2">2</a>
+</span><span class="lnt" id="hl-4-3"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-4-3">3</a>
+</span><span class="lnt" id="hl-4-4"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-4-4">4</a>
+</span><span class="lnt" id="hl-4-5"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-4-5">5</a>
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">CONFLICT (modify/delete): green deleted in HEAD and modified in 059425a (G2). Version 059425a (G2) of green left in tree.
 </span></span><span class="line"><span class="cl">error: could not apply 059425a... G2
 </span></span><span class="line"><span class="cl">hint: after resolving the conflicts, mark the corrected paths
 </span></span><span class="line"><span class="cl">hint: with &#39;git add &lt;paths&gt;&#39; or &#39;git rm &lt;paths&gt;&#39;
 </span></span><span class="line"><span class="cl">hint: and commit the result with &#39;git commit&#39;
-</span></span></code></pre></div><p>这段内容告知我们这些信息：<code>green</code> 文件在当前（暂存）版本 <code>HEAD</code> 中并不存在，但在选取的 <code>G2</code> 提交中存在。如果需要该文件，则使用 <code>git add</code> 将其提交至暂存区，若希望保留当前暂存版本的状态，即删除该文件，则使用 <code>git rm</code> 将 <code>green</code> 文件舍弃。</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这段内容告知我们这些信息：<code>green</code> 文件在当前（暂存）版本 <code>HEAD</code> 中并不存在，但在选取的 <code>G2</code> 提交中存在。如果需要该文件，则使用 <code>git add</code> 将其提交至暂存区，若希望保留当前暂存版本的状态，即删除该文件，则使用 <code>git rm</code> 将 <code>green</code> 文件舍弃。</p>
 <p>我们希望在选取 G2 之后能够保留 <code>green</code> 文件，故采取如下操作。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 将 green 提交至暂存区</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt" id="hl-5-1"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-5-1">1</a>
+</span><span class="lnt" id="hl-5-2"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-5-2">2</a>
+</span><span class="lnt" id="hl-5-3"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-5-3">3</a>
+</span><span class="lnt" id="hl-5-4"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-5-4">4</a>
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 将 green 提交至暂存区</span>
 </span></span><span class="line"><span class="cl">$ git add green
 </span></span><span class="line"><span class="cl"><span class="c1"># 已修复所有合并冲突，继续进行 cherry-pick</span>
 </span></span><span class="line"><span class="cl">$ git cherry-pick --continue
-</span></span></code></pre></div><p>此时 cherry-pick 操作已经完成，如果继续执行 <code>git cherry-pick --continue</code> ，则此时会显示 <code>error: no cherry-pick or revert in progress</code> ，即当前没有进行任何 cherry-pick 任务。</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>此时 cherry-pick 操作已经完成，如果继续执行 <code>git cherry-pick --continue</code> ，则此时会显示 <code>error: no cherry-pick or revert in progress</code> ，即当前没有进行任何 cherry-pick 任务。</p>
 <p>查看一下当前的提交记录，则会发现 <code>G2</code> 已经在我们当前的分支 <code>cp-single-normal-commit</code> 上了。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ git --no-pager log --oneline --graph --date-order
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt" id="hl-6-1"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-6-1">1</a>
+</span><span class="lnt" id="hl-6-2"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-6-2">2</a>
+</span><span class="lnt" id="hl-6-3"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-6-3">3</a>
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ git --no-pager log --oneline --graph --date-order
 </span></span><span class="line"><span class="cl">* <span class="m">0457362</span> <span class="o">(</span>HEAD -&gt; cp-single-normal-commit<span class="o">)</span> G2
 </span></span><span class="line"><span class="cl">* 2787f8f <span class="o">(</span>master<span class="o">)</span> init commit
-</span></span></code></pre></div><h3 id="merge-commit">Merge commit</h3>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="merge-commit">Merge commit</h3>
 <p>那如果我们想选取一个 merge commit 呢，比如将 <code>R4</code> 选取出来。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 回到 master 新建一条分支用于测试</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt" id="hl-7-1"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-7-1">1</a>
+</span><span class="lnt" id="hl-7-2"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-7-2">2</a>
+</span><span class="lnt" id="hl-7-3"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-7-3">3</a>
+</span><span class="lnt" id="hl-7-4"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-7-4">4</a>
+</span><span class="lnt" id="hl-7-5"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-7-5">5</a>
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 回到 master 新建一条分支用于测试</span>
 </span></span><span class="line"><span class="cl">$ git checkout master
 </span></span><span class="line"><span class="cl">$ git checkout -b cp-single-merge-commit
 </span></span><span class="line"><span class="cl"><span class="c1"># R4 的提交 SHA 值为 0979d45</span>
 </span></span><span class="line"><span class="cl">$ git cherry-pick 0979d45
-</span></span></code></pre></div><p>当执行完这条 <code>cherry-pick</code> 命令之后，你会得到以下输出。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">error: commit 0979d45f1b46f72730188c5c01b3f2c7f41b18e6 is a merge but no -m option was given.
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>当执行完这条 <code>cherry-pick</code> 命令之后，你会得到以下输出。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt" id="hl-8-1"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-8-1">1</a>
+</span><span class="lnt" id="hl-8-2"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-8-2">2</a>
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">error: commit 0979d45f1b46f72730188c5c01b3f2c7f41b18e6 is a merge but no -m option was given.
 </span></span><span class="line"><span class="cl">fatal: cherry-pick failed
-</span></span></code></pre></div><p>默认情况下，<code>cherry-pick</code> 不处理 merge commit 并直接报错。因为在 merge commit 中，会有多个 parent 信息，但此时 Git 并不知道该使用哪个 parent 作为 mainline。在错误信息中，也同时提示了我们，如果要选取 merge commit ，则需要使用 <code>-m</code> （亦为 <code>--mainline</code>）选项来指定哪个 parent 是主线<sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup>。</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>默认情况下，<code>cherry-pick</code> 不处理 merge commit 并直接报错。因为在 merge commit 中，会有多个 parent 信息，但此时 Git 并不知道该使用哪个 parent 作为 mainline。在错误信息中，也同时提示了我们，如果要选取 merge commit ，则需要使用 <code>-m</code> （亦为 <code>--mainline</code>）选项来指定哪个 parent 是主线<sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup>。</p>
 <p>通过 <code>git show</code> 命令可以获得 merge commit 的多个 parent，且从 1 开始编号。由于该例中我们需要选取的 mainline parent 是 <code>R3(17e2629)</code> ，因此在 <code>cherry-pick</code> 中选择的是 <code>-m 1</code>。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ git --no-pager show 0979d45
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt" id="hl-9-1"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-9-1">1</a>
+</span><span class="lnt" id="hl-9-2"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-9-2">2</a>
+</span><span class="lnt" id="hl-9-3"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-9-3">3</a>
+</span><span class="lnt" id="hl-9-4"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-9-4">4</a>
+</span><span class="lnt" id="hl-9-5"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-9-5">5</a>
+</span><span class="lnt" id="hl-9-6"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-9-6">6</a>
+</span><span class="lnt" id="hl-9-7"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-9-7">7</a>
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ git --no-pager show 0979d45
 </span></span><span class="line"><span class="cl">commit 0979d45f1b46f72730188c5c01b3f2c7f41b18e6
 </span></span><span class="line"><span class="cl">Merge: 17e2629 c950910
 </span></span><span class="line"><span class="cl">Author: Triple-Z &lt;me@triplez.cn&gt;
 </span></span><span class="line"><span class="cl">Date:   Thu Mar <span class="m">31</span> 01:29:31 <span class="m">2022</span> +0800
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    R4 merge branch <span class="s1">&#39;green&#39;</span> into <span class="s1">&#39;red&#39;</span>
-</span></span></code></pre></div><p>让我们再来试一次。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ git cherry-pick -m <span class="m">1</span> 0979d45
-</span></span></code></pre></div><p><code>cherry-pick</code> 圆满完成！此时再看一下当前的提交记录，则发现在 <code>cp-single-merge-commit</code> 分支上产生了一个新的 <code>R4</code> 提交。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ git --no-pager log --oneline --graph --date-order
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>让我们再来试一次。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt" id="hl-10-1"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-10-1">1</a>
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ git cherry-pick -m <span class="m">1</span> 0979d45
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>cherry-pick</code> 圆满完成！此时再看一下当前的提交记录，则发现在 <code>cp-single-merge-commit</code> 分支上产生了一个新的 <code>R4</code> 提交。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt" id="hl-11-1"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-11-1">1</a>
+</span><span class="lnt" id="hl-11-2"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-11-2">2</a>
+</span><span class="lnt" id="hl-11-3"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-11-3">3</a>
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ git --no-pager log --oneline --graph --date-order
 </span></span><span class="line"><span class="cl">* 987aba7 <span class="o">(</span>HEAD -&gt; cp-single-merge-commit<span class="o">)</span> R4 merge branch <span class="s1">&#39;green&#39;</span> into <span class="s1">&#39;red&#39;</span>
 </span></span><span class="line"><span class="cl">* 2787f8f <span class="o">(</span>master<span class="o">)</span> init commit
-</span></span></code></pre></div><p>现在我们再来讲讲刚刚的 <code>-m 1</code> 发生了什么。如果现在去看 <code>cp-single-merge-commit</code> 这个测试分支上的文件，则会发现有 <code>green</code> ，而没有 <code>red</code> 。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ ls -lh
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>现在我们再来讲讲刚刚的 <code>-m 1</code> 发生了什么。如果现在去看 <code>cp-single-merge-commit</code> 这个测试分支上的文件，则会发现有 <code>green</code> ，而没有 <code>red</code> 。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt" id="hl-12-1"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-12-1">1</a>
+</span><span class="lnt" id="hl-12-2"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-12-2">2</a>
+</span><span class="lnt" id="hl-12-3"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-12-3">3</a>
+</span><span class="lnt" id="hl-12-4"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-12-4">4</a>
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ ls -lh
 </span></span><span class="line"><span class="cl">total <span class="m">16</span>
 </span></span><span class="line"><span class="cl">-rw-r--r--  <span class="m">1</span> triplez  staff    18B  <span class="m">4</span>  <span class="m">7</span> 19:06 green
 </span></span><span class="line"><span class="cl">-rw-r--r--  <span class="m">1</span> triplez  staff     5B  <span class="m">3</span> <span class="m">31</span> 01:29 init
-</span></span></code></pre></div><p>这是因为我们在选取 merge commit 时，使用的是 mainline 1 ，即 <code>red</code> 分支。因此 <code>cherry-pick</code> 事实是以 <code>red</code> 为基础，寻找 mainline 2 <code>green</code> 分支与 <code>red</code> 的差异，选取的就是 <code>green</code> 分支上所做的修改了。</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这是因为我们在选取 merge commit 时，使用的是 mainline 1 ，即 <code>red</code> 分支。因此 <code>cherry-pick</code> 事实是以 <code>red</code> 为基础，寻找 mainline 2 <code>green</code> 分支与 <code>red</code> 的差异，选取的就是 <code>green</code> 分支上所做的修改了。</p>
 <h2 id="revision-range">Revision range</h2>
 <p>Git 中可用多种方法来表示 revision （版本，或修订快照）<sup id="fnref:4"><a href="#fn:4" class="footnote-ref" role="doc-noteref">4</a></sup>，这里我们主要讨论 revision range（版本区间）<sup id="fnref:5"><a href="#fn:5" class="footnote-ref" role="doc-noteref">5</a></sup>。</p>
 <p>对于 revision range，有以下六种表示法：</p>
@@ -937,12 +1100,23 @@
 </ol>
 <p>看起来很复杂，我们来用文中的场景来举两个范围表示法的例子。</p>
 <p>首先，考虑 <code>&lt;r1&gt;</code> 和 <code>&lt;r2&gt;</code> 都在同一分支上的情况，如 <code>G1 (05719c8)</code> 和 <code>G3 (c950910)</code>。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 回到 master 新建一条分支用于测试</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt" id="hl-13-1"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-13-1">1</a>
+</span><span class="lnt" id="hl-13-2"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-13-2">2</a>
+</span><span class="lnt" id="hl-13-3"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-13-3">3</a>
+</span><span class="lnt" id="hl-13-4"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-13-4">4</a>
+</span><span class="lnt" id="hl-13-5"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-13-5">5</a>
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 回到 master 新建一条分支用于测试</span>
 </span></span><span class="line"><span class="cl">$ git checkout master
 </span></span><span class="line"><span class="cl">$ git checkout -b cp-range-same-branch
 </span></span><span class="line"><span class="cl"><span class="c1"># G1 的提交 SHA 值为 05719c8，G3 的 SHA 值为 c950910</span>
 </span></span><span class="line"><span class="cl">$ git cherry-pick 05719c8^..c950910
-</span></span></code></pre></div><p><code>05719c8(G1)^..c950910(G3)</code> 的含义应当是：</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>05719c8(G1)^..c950910(G3)</code> 的含义应当是：</p>
 <ul>
 <li><strong>包含</strong> <code>G3</code> 及其所有父辈。</li>
 <li>并<strong>排除</strong> <code>G1</code> 的所有父辈（不排除 <code>G1</code>）。</li>
@@ -956,19 +1130,41 @@
 </figure>
 
 <p>让我们再看看当前的提交记录。Bingo！ <code>G1</code> ，<code>G2</code> ，<code>G3</code> 这三个提交已经被选取出来了。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ git --no-pager log --oneline --graph --date-order
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt" id="hl-14-1"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-14-1">1</a>
+</span><span class="lnt" id="hl-14-2"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-14-2">2</a>
+</span><span class="lnt" id="hl-14-3"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-14-3">3</a>
+</span><span class="lnt" id="hl-14-4"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-14-4">4</a>
+</span><span class="lnt" id="hl-14-5"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-14-5">5</a>
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ git --no-pager log --oneline --graph --date-order
 </span></span><span class="line"><span class="cl">* 32eac39 <span class="o">(</span>HEAD -&gt; cp-range-same-branch<span class="o">)</span> G3
 </span></span><span class="line"><span class="cl">* d3b1130 G2
 </span></span><span class="line"><span class="cl">* c82c4c7 G1
 </span></span><span class="line"><span class="cl">* 2787f8f <span class="o">(</span>master<span class="o">)</span> init commit
-</span></span></code></pre></div><p>那 <code>&lt;r1&gt;</code> 和 <code>&lt;r2&gt;</code> 在不同分支上，是什么情况呢？</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>那 <code>&lt;r1&gt;</code> 和 <code>&lt;r2&gt;</code> 在不同分支上，是什么情况呢？</p>
 <p>我们以 <code>G1 (05719c8)</code> 和 <code>B2 (69edfc9)</code> 作为用例。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 回到 master 新建一条分支用于测试</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt" id="hl-15-1"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-15-1">1</a>
+</span><span class="lnt" id="hl-15-2"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-15-2">2</a>
+</span><span class="lnt" id="hl-15-3"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-15-3">3</a>
+</span><span class="lnt" id="hl-15-4"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-15-4">4</a>
+</span><span class="lnt" id="hl-15-5"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-15-5">5</a>
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 回到 master 新建一条分支用于测试</span>
 </span></span><span class="line"><span class="cl">$ git checkout master
 </span></span><span class="line"><span class="cl">$ git checkout -b cp-range-diff-branch
 </span></span><span class="line"><span class="cl"><span class="c1"># G1 的提交 SHA 值为 05719c8，B2 的 SHA 值为 69edfc9</span>
 </span></span><span class="line"><span class="cl">$ git cherry-pick 05719c8^..69edfc9
-</span></span></code></pre></div><p><code>05719c8(G1)^..69edfc9(B2)</code> 的含义应当是：</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>05719c8(G1)^..69edfc9(B2)</code> 的含义应当是：</p>
 <ul>
 <li><strong>包含</strong> <code>B2</code> 及其所有父辈。</li>
 <li>并<strong>排除</strong> <code>G1</code> 的所有父辈（不排除 <code>G1</code>）。</li>
@@ -982,16 +1178,33 @@
 </figure>
 
 <p>让我们再看看当前的提交记录，确实是只选择了 <code>B1</code> 和 <code>B2</code> 两个提交。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ git --no-pager log --oneline --graph --date-order
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt" id="hl-16-1"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-16-1">1</a>
+</span><span class="lnt" id="hl-16-2"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-16-2">2</a>
+</span><span class="lnt" id="hl-16-3"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-16-3">3</a>
+</span><span class="lnt" id="hl-16-4"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-16-4">4</a>
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ git --no-pager log --oneline --graph --date-order
 </span></span><span class="line"><span class="cl">* e63f214 <span class="o">(</span>HEAD -&gt; cp-range-diff-branch<span class="o">)</span> B2
 </span></span><span class="line"><span class="cl">* aed6717 B1
 </span></span><span class="line"><span class="cl">* 2787f8f <span class="o">(</span>master<span class="o">)</span> init commit
-</span></span></code></pre></div><h2 id="rerere">Rerere</h2>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="rerere">Rerere</h2>
 <p>Rerere 是“重用已记录的冲突解决方案（reuse recorded resolution）”，它是一种简化冲突解决的方法<sup id="fnref:6"><a href="#fn:6" class="footnote-ref" role="doc-noteref">6</a></sup> <sup id="fnref:7"><a href="#fn:7" class="footnote-ref" role="doc-noteref">7</a></sup>。</p>
 <p>如果你经常进行大量的 merge, rebase 或 cherry-pick，或在维护一个长期不同于主干的分支<sup id="fnref:8"><a href="#fn:8" class="footnote-ref" role="doc-noteref">8</a></sup>，那么非常建议开启 <code>rerere</code> 功能。</p>
 <p>开启 <code>rerere</code> 非常简单，仅需要进行一次全局配置即可。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ git config --global rerere.enabled <span class="nb">true</span>
-</span></span></code></pre></div><blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt" id="hl-17-1"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-17-1">1</a>
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ git config --global rerere.enabled <span class="nb">true</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
 <p>在本地仓库中直接创建 <code>.git/rr-cache</code> 文件夹，也可以为该仓库开启 <code>rerere</code>。</p>
 </blockquote>
 <h2 id="whats-next">What&rsquo;s next</h2>
@@ -1042,7 +1255,33 @@
 <h2 id="ld_library_path">LD_LIBRARY_PATH</h2>
 <p>对于动态链接库的路径配置而言，除了 <code>rpath</code> 和 <code>ld.so.conf</code> ，还有 <code>LD_LIBRARY_PATH</code>。只要在二进制启动的环境中设置 <code>LD_LIBRARY_PATH</code> 变量，则 <code>glibc</code> 会将该变量中的路径配置作为动态链接库的查找路径之一，使得二进制可执行文件能够正常链接到其依赖的动态链接库。</p>
 <p><code>LD_LIBRARY_PATH</code> 会在当前 shell session 中“全局”生效，不过，由于笔者服务采用 systemd 来管理其生命周期，按照上述思路，应该只需要在服务启动前，将 <code>LD_LIBRARY_PATH</code> 注入启动环境即可，这样还能够借助 systemd 来实现一定程度的环境“隔离”。systemd 服务配置中的 <code>Environment</code> 字段是用于描述启动环境的环境变量的，我们先在这里加入 <code>LD_LIBRARY_PATH</code> （如下），重新加载 systemd 配置并重启服务，观察效果。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-diff" data-lang="diff"><span class="line"><span class="cl"> [Unit]
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt" id="hl-0-1"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-0-1"> 1</a>
+</span><span class="lnt" id="hl-0-2"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-0-2"> 2</a>
+</span><span class="lnt" id="hl-0-3"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-0-3"> 3</a>
+</span><span class="lnt" id="hl-0-4"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-0-4"> 4</a>
+</span><span class="lnt" id="hl-0-5"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-0-5"> 5</a>
+</span><span class="lnt" id="hl-0-6"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-0-6"> 6</a>
+</span><span class="lnt" id="hl-0-7"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-0-7"> 7</a>
+</span><span class="lnt" id="hl-0-8"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-0-8"> 8</a>
+</span><span class="lnt" id="hl-0-9"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-0-9"> 9</a>
+</span><span class="lnt" id="hl-0-10"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-0-10">10</a>
+</span><span class="lnt" id="hl-0-11"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-0-11">11</a>
+</span><span class="lnt" id="hl-0-12"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-0-12">12</a>
+</span><span class="lnt" id="hl-0-13"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-0-13">13</a>
+</span><span class="lnt" id="hl-0-14"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-0-14">14</a>
+</span><span class="lnt" id="hl-0-15"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-0-15">15</a>
+</span><span class="lnt" id="hl-0-16"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-0-16">16</a>
+</span><span class="lnt" id="hl-0-17"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-0-17">17</a>
+</span><span class="lnt" id="hl-0-18"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-0-18">18</a>
+</span><span class="lnt" id="hl-0-19"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-0-19">19</a>
+</span><span class="lnt" id="hl-0-20"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-0-20">20</a>
+</span><span class="lnt" id="hl-0-21"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-0-21">21</a>
+</span><span class="lnt" id="hl-0-22"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-0-22">22</a>
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-diff" data-lang="diff"><span class="line"><span class="cl"> [Unit]
 </span></span><span class="line"><span class="cl"> Description=Nginx
 </span></span><span class="line"><span class="cl"> After=syslog.target network.target remote-fs.target nss-lookup.target
 </span></span><span class="line"><span class="cl">
@@ -1064,15 +1303,61 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"> [Install]
 </span></span><span class="line"><span class="cl"> WantedBy=multi-user.target
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ sudo systemctl daemon-reload
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt" id="hl-1-1"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-1">1</a>
+</span><span class="lnt" id="hl-1-2"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-2">2</a>
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ sudo systemctl daemon-reload
 </span></span><span class="line"><span class="cl">$ sudo systemctl restart nginx.service
-</span></span></code></pre></div><p>事实上，对于大多数服务，只需要加入环境变量即可解决问题。但很不幸的是，由于我们的服务需要监听 1024 及以下端口（如 80、443），笔者对二进制可执行文件进行了 <code>setcap</code> 操作，赋予其监听低位端口的能力。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ sudo getcap /your/path/to/nginx
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>事实上，对于大多数服务，只需要加入环境变量即可解决问题。但很不幸的是，由于我们的服务需要监听 1024 及以下端口（如 80、443），笔者对二进制可执行文件进行了 <code>setcap</code> 操作，赋予其监听低位端口的能力。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt" id="hl-2-1"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-2-1">1</a>
+</span><span class="lnt" id="hl-2-2"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-2-2">2</a>
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ sudo getcap /your/path/to/nginx
 </span></span><span class="line"><span class="cl">/your/path/to/nginx <span class="o">=</span> cap_net_bind_service+ep
-</span></span></code></pre></div><h2 id="capability">Capability</h2>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="capability">Capability</h2>
 <p>由于该文件含有 capability，<code>glibc</code> 会将 <code>LD_LIBRARY_PATH</code> 忽略<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup> <sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup>，导致服务还是无法正确链接到动态库上。</p>
 <p>了解原因之后，接下来要做的事情也很清晰了：一是先将二进制可执行文件上的 capability 移除（<code>chown</code> 就可以将其移除， <code>setcap -ep</code> 亦可），二是利用 systemd 的服务配置来实现配置 capability （如下）。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-diff" data-lang="diff"><span class="line"><span class="cl"> [Unit]
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt" id="hl-3-1"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-3-1"> 1</a>
+</span><span class="lnt" id="hl-3-2"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-3-2"> 2</a>
+</span><span class="lnt" id="hl-3-3"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-3-3"> 3</a>
+</span><span class="lnt" id="hl-3-4"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-3-4"> 4</a>
+</span><span class="lnt" id="hl-3-5"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-3-5"> 5</a>
+</span><span class="lnt" id="hl-3-6"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-3-6"> 6</a>
+</span><span class="lnt" id="hl-3-7"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-3-7"> 7</a>
+</span><span class="lnt" id="hl-3-8"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-3-8"> 8</a>
+</span><span class="lnt" id="hl-3-9"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-3-9"> 9</a>
+</span><span class="lnt" id="hl-3-10"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-3-10">10</a>
+</span><span class="lnt" id="hl-3-11"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-3-11">11</a>
+</span><span class="lnt" id="hl-3-12"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-3-12">12</a>
+</span><span class="lnt" id="hl-3-13"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-3-13">13</a>
+</span><span class="lnt" id="hl-3-14"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-3-14">14</a>
+</span><span class="lnt" id="hl-3-15"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-3-15">15</a>
+</span><span class="lnt" id="hl-3-16"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-3-16">16</a>
+</span><span class="lnt" id="hl-3-17"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-3-17">17</a>
+</span><span class="lnt" id="hl-3-18"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-3-18">18</a>
+</span><span class="lnt" id="hl-3-19"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-3-19">19</a>
+</span><span class="lnt" id="hl-3-20"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-3-20">20</a>
+</span><span class="lnt" id="hl-3-21"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-3-21">21</a>
+</span><span class="lnt" id="hl-3-22"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-3-22">22</a>
+</span><span class="lnt" id="hl-3-23"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-3-23">23</a>
+</span><span class="lnt" id="hl-3-24"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-3-24">24</a>
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-diff" data-lang="diff"><span class="line"><span class="cl"> [Unit]
 </span></span><span class="line"><span class="cl"> Description=Nginx
 </span></span><span class="line"><span class="cl"> After=syslog.target network.target remote-fs.target nss-lookup.target
 </span></span><span class="line"><span class="cl">
@@ -1096,7 +1381,9 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"> [Install]
 </span></span><span class="line"><span class="cl"> WantedBy=multi-user.target
-</span></span></code></pre></div><p>再次重新加载 systemd 配置并重启服务，问题完美解决。</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>再次重新加载 systemd 配置并重启服务，问题完美解决。</p>
 <div class="footnotes" role="doc-endnotes">
 <hr>
 <ol>
@@ -1200,10 +1487,99 @@
         <link href="https://blog.triplez.cn/posts/chaosblade-specific-cpu-load/"/>
         <content type="text/html" src="https://blog.triplez.cn/posts/chaosblade-specific-cpu-load/"><![CDATA[<p>最近笔者在做的一个降级功能，与机器资源情况密切相关。然而在测试时发现控制 CPU 利用率来构造测试条件，并不是一个容易的事情。借助时间片的思想，笔者用一个非常简单的 shell 一定程度上解决了这个问题。但转念一想，对于混沌测试的软件，这应该是个必备能力。查找了一下 chaosblade 的相关资料，果然支持生成指定 CPU 利用率的负载。故读了读其这部分源码，看看它是怎么实现的。</p>
 <p>使用 <code>chaosblade</code> 来构造指定 CPU 利用率的负载非常简单：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">blade create cpu load --cpu-percent <span class="m">80</span>
-</span></span></code></pre></div><p>即能够生成使 CPU 利用率到达 80% 的负载。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt" id="hl-0-1"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-0-1">1</a>
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">blade create cpu load --cpu-percent <span class="m">80</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>即能够生成使 CPU 利用率到达 80% 的负载。</p>
 <p><code>burncpu</code> 的核心逻辑位于这里： <a href="https://github.com/chaosblade-io/chaosblade-exec-os/blob/318c52d83a851bc75012abc7d880d4f440f1f972/exec/bin/burncpu/burncpu.go#L140-L168">https://github.com/chaosblade-io/chaosblade-exec-os/blob/318c52d83a851bc75012abc7d880d4f440f1f972/exec/bin/burncpu/burncpu.go#L140-L168</a></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">burnCpu</span><span class="p">()</span> <span class="p">{</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt" id="hl-1-1"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-1"> 1</a>
+</span><span class="lnt" id="hl-1-2"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-2"> 2</a>
+</span><span class="lnt" id="hl-1-3"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-3"> 3</a>
+</span><span class="lnt" id="hl-1-4"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-4"> 4</a>
+</span><span class="lnt" id="hl-1-5"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-5"> 5</a>
+</span><span class="lnt" id="hl-1-6"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-6"> 6</a>
+</span><span class="lnt" id="hl-1-7"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-7"> 7</a>
+</span><span class="lnt" id="hl-1-8"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-8"> 8</a>
+</span><span class="lnt" id="hl-1-9"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-9"> 9</a>
+</span><span class="lnt" id="hl-1-10"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-10">10</a>
+</span><span class="lnt" id="hl-1-11"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-11">11</a>
+</span><span class="lnt" id="hl-1-12"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-12">12</a>
+</span><span class="lnt" id="hl-1-13"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-13">13</a>
+</span><span class="lnt" id="hl-1-14"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-14">14</a>
+</span><span class="lnt" id="hl-1-15"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-15">15</a>
+</span><span class="lnt" id="hl-1-16"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-16">16</a>
+</span><span class="lnt" id="hl-1-17"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-17">17</a>
+</span><span class="lnt" id="hl-1-18"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-18">18</a>
+</span><span class="lnt" id="hl-1-19"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-19">19</a>
+</span><span class="lnt" id="hl-1-20"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-20">20</a>
+</span><span class="lnt" id="hl-1-21"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-21">21</a>
+</span><span class="lnt" id="hl-1-22"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-22">22</a>
+</span><span class="lnt" id="hl-1-23"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-23">23</a>
+</span><span class="lnt" id="hl-1-24"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-24">24</a>
+</span><span class="lnt" id="hl-1-25"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-25">25</a>
+</span><span class="lnt" id="hl-1-26"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-26">26</a>
+</span><span class="lnt" id="hl-1-27"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-27">27</a>
+</span><span class="lnt" id="hl-1-28"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-28">28</a>
+</span><span class="lnt" id="hl-1-29"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-29">29</a>
+</span><span class="lnt" id="hl-1-30"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-30">30</a>
+</span><span class="lnt" id="hl-1-31"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-31">31</a>
+</span><span class="lnt" id="hl-1-32"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-32">32</a>
+</span><span class="lnt" id="hl-1-33"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-33">33</a>
+</span><span class="lnt" id="hl-1-34"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-34">34</a>
+</span><span class="lnt" id="hl-1-35"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-35">35</a>
+</span><span class="lnt" id="hl-1-36"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-36">36</a>
+</span><span class="lnt" id="hl-1-37"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-37">37</a>
+</span><span class="lnt" id="hl-1-38"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-38">38</a>
+</span><span class="lnt" id="hl-1-39"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-39">39</a>
+</span><span class="lnt" id="hl-1-40"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-40">40</a>
+</span><span class="lnt" id="hl-1-41"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-41">41</a>
+</span><span class="lnt" id="hl-1-42"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-42">42</a>
+</span><span class="lnt" id="hl-1-43"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-43">43</a>
+</span><span class="lnt" id="hl-1-44"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-44">44</a>
+</span><span class="lnt" id="hl-1-45"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-45">45</a>
+</span><span class="lnt" id="hl-1-46"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-46">46</a>
+</span><span class="lnt" id="hl-1-47"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-47">47</a>
+</span><span class="lnt" id="hl-1-48"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-48">48</a>
+</span><span class="lnt" id="hl-1-49"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-49">49</a>
+</span><span class="lnt" id="hl-1-50"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-50">50</a>
+</span><span class="lnt" id="hl-1-51"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-51">51</a>
+</span><span class="lnt" id="hl-1-52"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-52">52</a>
+</span><span class="lnt" id="hl-1-53"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-53">53</a>
+</span><span class="lnt" id="hl-1-54"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-54">54</a>
+</span><span class="lnt" id="hl-1-55"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-55">55</a>
+</span><span class="lnt" id="hl-1-56"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-56">56</a>
+</span><span class="lnt" id="hl-1-57"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-57">57</a>
+</span><span class="lnt" id="hl-1-58"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-58">58</a>
+</span><span class="lnt" id="hl-1-59"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-59">59</a>
+</span><span class="lnt" id="hl-1-60"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-60">60</a>
+</span><span class="lnt" id="hl-1-61"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-61">61</a>
+</span><span class="lnt" id="hl-1-62"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-62">62</a>
+</span><span class="lnt" id="hl-1-63"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-63">63</a>
+</span><span class="lnt" id="hl-1-64"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-64">64</a>
+</span><span class="lnt" id="hl-1-65"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-65">65</a>
+</span><span class="lnt" id="hl-1-66"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-66">66</a>
+</span><span class="lnt" id="hl-1-67"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-67">67</a>
+</span><span class="lnt" id="hl-1-68"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-68">68</a>
+</span><span class="lnt" id="hl-1-69"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-69">69</a>
+</span><span class="lnt" id="hl-1-70"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-70">70</a>
+</span><span class="lnt" id="hl-1-71"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-71">71</a>
+</span><span class="lnt" id="hl-1-72"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-72">72</a>
+</span><span class="lnt" id="hl-1-73"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-73">73</a>
+</span><span class="lnt" id="hl-1-74"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-74">74</a>
+</span><span class="lnt" id="hl-1-75"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-75">75</a>
+</span><span class="lnt" id="hl-1-76"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-76">76</a>
+</span><span class="lnt" id="hl-1-77"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-77">77</a>
+</span><span class="lnt" id="hl-1-78"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-78">78</a>
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">burnCpu</span><span class="p">()</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">	<span class="nx">runtime</span><span class="p">.</span><span class="nf">GOMAXPROCS</span><span class="p">(</span><span class="nx">cpuCount</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
@@ -1281,7 +1657,9 @@
 </span></span><span class="line"><span class="cl">	<span class="p">}</span>
 </span></span><span class="line"><span class="cl">	<span class="k">select</span> <span class="p">{}</span>  <span class="c1">// 阻塞 burnCpu 函数，保活 goroutines
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
-</span></span></code></pre></div>]]></content>
+</span></span></code></pre></td></tr></table>
+</div>
+</div>]]></content>
         <author>
             <name><![CDATA[TripleZ’s Blog]]></name>
         </author>
@@ -1300,7 +1678,22 @@
 <blockquote>
 <p><a href="https://pandolia.net/tinyc/ch8_flex.html">https://pandolia.net/tinyc/ch8_flex.html</a></p>
 </blockquote>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">%{
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt" id="hl-0-1"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-0-1"> 1</a>
+</span><span class="lnt" id="hl-0-2"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-0-2"> 2</a>
+</span><span class="lnt" id="hl-0-3"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-0-3"> 3</a>
+</span><span class="lnt" id="hl-0-4"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-0-4"> 4</a>
+</span><span class="lnt" id="hl-0-5"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-0-5"> 5</a>
+</span><span class="lnt" id="hl-0-6"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-0-6"> 6</a>
+</span><span class="lnt" id="hl-0-7"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-0-7"> 7</a>
+</span><span class="lnt" id="hl-0-8"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-0-8"> 8</a>
+</span><span class="lnt" id="hl-0-9"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-0-9"> 9</a>
+</span><span class="lnt" id="hl-0-10"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-0-10">10</a>
+</span><span class="lnt" id="hl-0-11"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-0-11">11</a>
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">%{
 </span></span><span class="line"><span class="cl">Declarations
 </span></span><span class="line"><span class="cl">%}
 </span></span><span class="line"><span class="cl">
@@ -1311,7 +1704,9 @@
 </span></span><span class="line"><span class="cl">%%
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">User subroutines
-</span></span></code></pre></div><ul>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
 <li>
 <p>Declarations：声明，会被原样复制入 <code>lex.yy.c</code> 。一般用于声明全局变量和函数。</p>
 </li>
@@ -1335,7 +1730,24 @@
 </li>
 </ul>
 <p>如一个简单的计算器实现：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">%{
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt" id="hl-1-1"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-1"> 1</a>
+</span><span class="lnt" id="hl-1-2"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-2"> 2</a>
+</span><span class="lnt" id="hl-1-3"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-3"> 3</a>
+</span><span class="lnt" id="hl-1-4"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-4"> 4</a>
+</span><span class="lnt" id="hl-1-5"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-5"> 5</a>
+</span><span class="lnt" id="hl-1-6"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-6"> 6</a>
+</span><span class="lnt" id="hl-1-7"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-7"> 7</a>
+</span><span class="lnt" id="hl-1-8"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-8"> 8</a>
+</span><span class="lnt" id="hl-1-9"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-9"> 9</a>
+</span><span class="lnt" id="hl-1-10"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-10">10</a>
+</span><span class="lnt" id="hl-1-11"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-11">11</a>
+</span><span class="lnt" id="hl-1-12"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-12">12</a>
+</span><span class="lnt" id="hl-1-13"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-13">13</a>
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">%{
 </span></span><span class="line"><span class="cl">#include &#34;y.tab.h&#34;
 </span></span><span class="line"><span class="cl">%}
 </span></span><span class="line"><span class="cl">
@@ -1348,13 +1760,30 @@
 </span></span><span class="line"><span class="cl">int yywrap(void) { 
 </span></span><span class="line"><span class="cl">    return 1;
 </span></span><span class="line"><span class="cl">}
-</span></span></code></pre></div><h2 id="parser---yaccbison">Parser - Yacc/Bison</h2>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="parser---yaccbison">Parser - Yacc/Bison</h2>
 <p>bison 可以认为是 yacc 的开源实现。</p>
 <p>Bison 文件的格式：</p>
 <blockquote>
 <p><a href="https://pandolia.net/tinyc/ch13_bison.html">https://pandolia.net/tinyc/ch13_bison.html</a></p>
 </blockquote>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">%{
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt" id="hl-2-1"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-2-1"> 1</a>
+</span><span class="lnt" id="hl-2-2"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-2-2"> 2</a>
+</span><span class="lnt" id="hl-2-3"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-2-3"> 3</a>
+</span><span class="lnt" id="hl-2-4"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-2-4"> 4</a>
+</span><span class="lnt" id="hl-2-5"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-2-5"> 5</a>
+</span><span class="lnt" id="hl-2-6"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-2-6"> 6</a>
+</span><span class="lnt" id="hl-2-7"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-2-7"> 7</a>
+</span><span class="lnt" id="hl-2-8"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-2-8"> 8</a>
+</span><span class="lnt" id="hl-2-9"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-2-9"> 9</a>
+</span><span class="lnt" id="hl-2-10"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-2-10">10</a>
+</span><span class="lnt" id="hl-2-11"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-2-11">11</a>
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">%{
 </span></span><span class="line"><span class="cl">Declarations
 </span></span><span class="line"><span class="cl">%}
 </span></span><span class="line"><span class="cl">
@@ -1365,7 +1794,9 @@
 </span></span><span class="line"><span class="cl">%%
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">User subroutines
-</span></span></code></pre></div><ul>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
 <li>
 <p>Declarations：声明，会被原样复制入 <code>y.tab.c</code> 。一般用于声明全局变量和函数。</p>
 </li>
@@ -1399,10 +1830,19 @@
 </li>
 <li>
 <p>例：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">s : S E &#39;\n&#39;       { printf(&#34;ans = %d\n&#34;, $2); }
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt" id="hl-3-1"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-3-1">1</a>
+</span><span class="lnt" id="hl-3-2"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-3-2">2</a>
+</span><span class="lnt" id="hl-3-3"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-3-3">3</a>
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">s : S E &#39;\n&#39;       { printf(&#34;ans = %d\n&#34;, $2); }
 </span></span><span class="line"><span class="cl">  | /* empty */    { /* empty */}
 </span></span><span class="line"><span class="cl">  ;
-</span></span></code></pre></div></li>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
 </ul>
 </li>
 <li>
@@ -1414,7 +1854,41 @@
 <p>若 token 流不合法，<code>yyparse</code> 会在第一次出错的地方终止，并调用 <code>yyerror</code> 函数，最后返回 1。</p>
 <p>在 reduce 动作时，可用 <code>$1</code>, <code>$2</code> &hellip; <code>$n</code> 来引用属性栈的属性（可以认为是产生式中的第 n 个属性内容，并在最后将这个状态下的属性出栈。其中，<code>$$</code> 代表产生式左侧的终结符，可在 reduce 动作设置 <code>$$</code> 的值，最后将 <code>$$</code> 入栈。</p>
 <p>如一个简单的计算器实现：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">%{
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt" id="hl-4-1"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-4-1"> 1</a>
+</span><span class="lnt" id="hl-4-2"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-4-2"> 2</a>
+</span><span class="lnt" id="hl-4-3"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-4-3"> 3</a>
+</span><span class="lnt" id="hl-4-4"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-4-4"> 4</a>
+</span><span class="lnt" id="hl-4-5"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-4-5"> 5</a>
+</span><span class="lnt" id="hl-4-6"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-4-6"> 6</a>
+</span><span class="lnt" id="hl-4-7"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-4-7"> 7</a>
+</span><span class="lnt" id="hl-4-8"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-4-8"> 8</a>
+</span><span class="lnt" id="hl-4-9"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-4-9"> 9</a>
+</span><span class="lnt" id="hl-4-10"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-4-10">10</a>
+</span><span class="lnt" id="hl-4-11"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-4-11">11</a>
+</span><span class="lnt" id="hl-4-12"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-4-12">12</a>
+</span><span class="lnt" id="hl-4-13"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-4-13">13</a>
+</span><span class="lnt" id="hl-4-14"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-4-14">14</a>
+</span><span class="lnt" id="hl-4-15"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-4-15">15</a>
+</span><span class="lnt" id="hl-4-16"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-4-16">16</a>
+</span><span class="lnt" id="hl-4-17"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-4-17">17</a>
+</span><span class="lnt" id="hl-4-18"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-4-18">18</a>
+</span><span class="lnt" id="hl-4-19"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-4-19">19</a>
+</span><span class="lnt" id="hl-4-20"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-4-20">20</a>
+</span><span class="lnt" id="hl-4-21"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-4-21">21</a>
+</span><span class="lnt" id="hl-4-22"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-4-22">22</a>
+</span><span class="lnt" id="hl-4-23"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-4-23">23</a>
+</span><span class="lnt" id="hl-4-24"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-4-24">24</a>
+</span><span class="lnt" id="hl-4-25"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-4-25">25</a>
+</span><span class="lnt" id="hl-4-26"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-4-26">26</a>
+</span><span class="lnt" id="hl-4-27"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-4-27">27</a>
+</span><span class="lnt" id="hl-4-28"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-4-28">28</a>
+</span><span class="lnt" id="hl-4-29"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-4-29">29</a>
+</span><span class="lnt" id="hl-4-30"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-4-30">30</a>
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">%{
 </span></span><span class="line"><span class="cl">#include &lt;stdio.h&gt;
 </span></span><span class="line"><span class="cl">void yyerror(const char* msg) {}
 </span></span><span class="line"><span class="cl">int yylex();
@@ -1444,7 +1918,9 @@
 </span></span><span class="line"><span class="cl">int main() {
 </span></span><span class="line"><span class="cl">    return yyparse();
 </span></span><span class="line"><span class="cl">}
-</span></span></code></pre></div>]]></content>
+</span></span></code></pre></td></tr></table>
+</div>
+</div>]]></content>
         <author>
             <name><![CDATA[TripleZ’s Blog]]></name>
         </author>
@@ -1481,45 +1957,102 @@
         <content type="text/html" src="https://blog.triplez.cn/posts/grub-rescue-oops/"><![CDATA[<p>教你如何修复丢失的 Linux GRUB 启动引导。</p>
 <h2 id="起因">起因</h2>
 <p>为了再将神船 Z7 用起来，笔者决定扩展其仅有 200GB 的游戏分区空间。然而由于可用空间的位置并不连续，Windows 自带磁盘工具无法处理这种情况，且笔者并不希望将分区转为动态分区，因此使用了一个第三方软件 <a href="https://www.easeus.com/partition-manager/epm-free.html">EaseUS Partition Master Free</a> 来完成磁盘数据的迁移和分区重分配工作。就在设置好分区，重启了之后，屏幕上赫然显示着一个命令行界面：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">error: unknown filesystem.
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt" id="hl-0-1"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-0-1">1</a>
+</span><span class="lnt" id="hl-0-2"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-0-2">2</a>
+</span><span class="lnt" id="hl-0-3"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-0-3">3</a>
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">error: unknown filesystem.
 </span></span><span class="line"><span class="cl">Entering rescue mode...
 </span></span><span class="line"><span class="cl">grub rescue&gt; 
-</span></span></code></pre></div><p>Oops！难道重新分个区就把系统搞挂了吗？！<code>grub rescue&gt;</code> 这个命令行界面在我心中一直是噩梦般的存在，之前遇到都只能选择计算机三大法宝之一：重装来解决问题。</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Oops！难道重新分个区就把系统搞挂了吗？！<code>grub rescue&gt;</code> 这个命令行界面在我心中一直是噩梦般的存在，之前遇到都只能选择计算机三大法宝之一：重装来解决问题。</p>
 <p>既然双系统里的 Linux 进不去了，那我试试直接进 Windows？于是重启了一下机器，通过 BIOS 直接进入了系统盘位于 SSD 中的 Windows。好家伙，这能正常启动，那问题就不大了。</p>
 <p>Windows 磁盘分区的重分配工作得到了验证，看上去非常完美。笔者用于存储游戏的专用分区已经扩容至 ~450GB ，那接下来还是修复下 Linux 启动引导的问题吧。</p>
 <p>经过一番简单的搜索，笔者摸清了其中大概的原因：在进行 Windows 磁盘操作时，对整个 HDD 做了分区、合并等处理，导致 GPT 元数据发生了改变，Linux 的引导程序 GRUB 自然就无法找到之前的 <code>/boot</code> 启动分区了，这也是报出 <code>error: unknown filesystem</code> 的原因。</p>
 <h2 id="在-grub-rescue-中修复启动项">在 grub rescue 中修复启动项</h2>
 <p>由于是硬盘元数据发生了改变导致 GRUB 失效，那我们的思路就是更新 GRUB 中的配置。</p>
 <p>首先要找到目前 Linux 的 <code>/boot</code> 启动分区的位置，在 <code>grub rescue</code> 中，可以用 <code>ls</code> 来寻找：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">grub rescue&gt; ls
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt" id="hl-1-1"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-1">1</a>
+</span><span class="lnt" id="hl-1-2"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-1-2">2</a>
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">grub rescue&gt; ls
 </span></span><span class="line"><span class="cl"><span class="o">(</span>hd0<span class="o">)</span> <span class="o">(</span>hd0,gpt7<span class="o">)</span> <span class="o">(</span>hd0,gpt6<span class="o">)</span> <span class="o">(</span>hd0,gpt5<span class="o">)</span> <span class="o">(</span>hd0,gpt4<span class="o">)</span> <span class="o">(</span>hd0,gpt3<span class="o">)</span> <span class="o">(</span>hd0,gpt2<span class="o">)</span> <span class="o">(</span>hd0,gpt1<span class="o">)</span> <span class="o">(</span>hd1<span class="o">)</span> <span class="o">(</span>hd1,gpt3<span class="o">)</span> <span class="o">(</span>hd1,gpt2<span class="o">)</span> <span class="o">(</span>hd1,gpt1<span class="o">)</span>
-</span></span></code></pre></div><p>直接输入 <code>ls</code> ，即可得到所有的分区位置。但是启动分区到底是哪个呢？我们可以继续用 <code>ls</code> 来查找，先试试 <code>(hd0,gpt1)</code> 这个分区吧。</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>直接输入 <code>ls</code> ，即可得到所有的分区位置。但是启动分区到底是哪个呢？我们可以继续用 <code>ls</code> 来查找，先试试 <code>(hd0,gpt1)</code> 这个分区吧。</p>
 <blockquote>
 <p>此处要注意的是，我们要查找的是 <code>/boot/grub</code> 这个文件夹目录存在的分区。由于笔者的 <code>/boot</code> 启动分区是单独挂载的，所以查找的路径是 <code>&lt;partition&gt;/grub</code> 。若安装的 Linux 并没有单独挂载 <code>/boot</code> 启动分区，则查找路径应为 <code>&lt;partition&gt;/boot/grub</code>。</p>
 </blockquote>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">grub rescue&gt; ls <span class="o">(</span>hd0,gpt1<span class="o">)</span>/grub
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt" id="hl-2-1"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-2-1">1</a>
+</span><span class="lnt" id="hl-2-2"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-2-2">2</a>
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">grub rescue&gt; ls <span class="o">(</span>hd0,gpt1<span class="o">)</span>/grub
 </span></span><span class="line"><span class="cl">error: unknown filesystem.
-</span></span></code></pre></div><p>输出为 <code>error: unknown filesystem.</code> ，说明这个分区并不是我们想要的启动分区，那再试试下一个分区。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">grub rescue&gt; ls <span class="o">(</span>hd0,gpt2<span class="o">)</span>/grub
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>输出为 <code>error: unknown filesystem.</code> ，说明这个分区并不是我们想要的启动分区，那再试试下一个分区。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt" id="hl-3-1"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-3-1">1</a>
+</span><span class="lnt" id="hl-3-2"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-3-2">2</a>
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">grub rescue&gt; ls <span class="o">(</span>hd0,gpt2<span class="o">)</span>/grub
 </span></span><span class="line"><span class="cl">./ ../ x86_64-efi/ grubenv themes/ fonts/ grub.cfg
-</span></span></code></pre></div><p>Bingo！这就是我们要找的东西丫！好，记下这个分区 <code>(hd0,gpt2)</code>，它就是我们宝贵的启动分区。</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Bingo！这就是我们要找的东西丫！好，记下这个分区 <code>(hd0,gpt2)</code>，它就是我们宝贵的启动分区。</p>
 <p>接下来就是给 GRUB 修改启动配置，只要改两个参数即可：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">grub rescue&gt; <span class="nb">set</span> <span class="nv">root</span><span class="o">=(</span>hd0,gpt2<span class="o">)</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt" id="hl-4-1"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-4-1">1</a>
+</span><span class="lnt" id="hl-4-2"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-4-2">2</a>
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">grub rescue&gt; <span class="nb">set</span> <span class="nv">root</span><span class="o">=(</span>hd0,gpt2<span class="o">)</span>
 </span></span><span class="line"><span class="cl">grub rescue&gt; <span class="nb">set</span> <span class="nv">prefix</span><span class="o">=(</span>hd0,gpt2<span class="o">)</span>/grub
-</span></span></code></pre></div><ul>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
 <li>将 <code>root</code> 设置为启动分区。</li>
 <li>将 <code>prefix</code> 设置为 <code>grub</code> 安装文件夹。若 <code>/boot</code> 未挂载单独分区，也可能为 <code>&lt;partition&gt;/boot/grub</code>。</li>
 </ul>
 <p>配置也修改好了之后，重新使 GRUB 进入普通模式就可以找回我们的启动项了！</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">grub rescue&gt; insmod normal
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt" id="hl-5-1"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-5-1">1</a>
+</span><span class="lnt" id="hl-5-2"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-5-2">2</a>
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">grub rescue&gt; insmod normal
 </span></span><span class="line"><span class="cl">grub rescue&gt; normal
-</span></span></code></pre></div><p>执行完后，应该能看到我们熟悉的 GRUB 引导界面了。</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>执行完后，应该能看到我们熟悉的 GRUB 引导界面了。</p>
 <h2 id="持久化">持久化</h2>
 <p>事实上，这样的修复只是暂时的，我们还需要对 GRUB 配置进行持久化的更新，否则每次开机都要这样操作一遍。</p>
 <p>进入 Linux，打开终端，输入如下命令，GRUB 就会自动更新配置。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">$ sudo update-grub
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt" id="hl-6-1"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-6-1">1</a>
+</span><span class="lnt" id="hl-6-2"><a style="outline: none; text-decoration:none; color:inherit" href="#hl-6-2">2</a>
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">$ sudo update-grub
 </span></span><span class="line"><span class="cl">$ sudo grub-install /dev/sda
-</span></span></code></pre></div><p><code>/dev/sda</code> 为 Linux 的安装磁盘。</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>/dev/sda</code> 为 Linux 的安装磁盘。</p>
 <p>可以再重启一次计算机，验证 Linux 启动引导是否修复成功。</p>
 <h2 id="references">References</h2>
 <ul>
