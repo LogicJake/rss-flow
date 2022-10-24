@@ -3,7 +3,7 @@
     <generator>NUAA</generator>
     <id>https://blogroll.a2os.club</id>
     <title>NUAARSS</title>
-    <updated>2022-10-24T01:53:38+08:00</updated>
+    <updated>2022-10-24T06:55:56+08:00</updated>
     <link href="https://blogroll.a2os.club"/>
     <author>
         <name>NUAARSS</name>
@@ -576,6 +576,7 @@
         <updated>2022-05-17T13:50:17+08:00</updated>
         <link href="https://blog.zwlin.io/post/2022-nvim/"/>
         <content type="text/html" src="https://blog.zwlin.io/post/2022-nvim/"><![CDATA[<p>在前不久，我把我的<code>nvim</code>配置从<code>vimscript</code>全部迁移到了<code>lua</code>。故在此记录一下我的<code>neovim</code>配置方案。</p>
+<p>2022-10-24 (更新分支no-lsp)</p>
 <h2 id="大致目录结构">大致目录结构</h2>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="c1"># ~/.config/nvim</span>
 </span></span><span class="line"><span class="ln"> 2</span><span class="cl">.
@@ -663,6 +664,8 @@
 <p><code>lsp</code>和代码补全的配置估计是我折腾<code>neovim</code>插件的最复杂的地方，不过在<code>neovim</code>官方出品了<code>lsp</code>的集成插件以及有了非常强大<code>nvim-cmp</code>的之后，在我的更新配置体验中，没有特别复杂的部分，根据文档即可完成配置。</p>
 <p>LSP的各种设置都放在了lsp文件夹中，入口文件是setup.lua,没有什么特别的配置，有兴趣的直接可以参考我的<a href="https://github.com/Zwlin98/nvim">nvim配置</a>。</p>
 <p>我的<code>nvim</code>配置放在了 <a href="https://github.com/Zwlin98/nvim">github</a>, 应该会随着我的使用更新，不保证会和写下此文时一致。</p>
+<h2 id="no-lsp-版本">NO-LSP 版本</h2>
+<p>发现了新的需求，在一些不需要编辑代码、只需要修改部分配置文件，或者配置非常差的机器上不需要 lsp 的支持，故而新建了<code>no-lsp</code>分支删去了部分和 lsp 有关的插件，性能更强，速度更快。</p>
 <h2 id="参考资料">参考资料</h2>
 <ul>
 <li>
